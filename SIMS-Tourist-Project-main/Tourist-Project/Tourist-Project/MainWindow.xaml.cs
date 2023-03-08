@@ -22,7 +22,27 @@ namespace Tourist_Project
     {
         public MainWindow()
         {
+            DataContext = this;
             InitializeComponent();
+
+        }
+
+        private void OwnerButtonClick(object sender, RoutedEventArgs e)
+        {
+            var ownerShowWindow = new OwnerShowWindow();
+            ownerShowWindow.Show();
+        }
+        private void Guest1ButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Guest2ButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void GuideButtonClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

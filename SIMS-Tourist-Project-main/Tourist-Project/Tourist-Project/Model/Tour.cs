@@ -9,21 +9,21 @@ namespace Tourist_Project.Model
 {
     public class Tour
     {
-        int id;
-        string name;
-        int locationId;
-        Location location;
-        string description;
-        string language;
-        int maxGuestsNumber;
-        //TODO TourPoint tourPoint
-        DateTime tourStart;
-        int duration;
-        int imageId;
-        Image image;
+        int id { get; set; }
+        string name { get; set; }
+        int locationId { get; set; }
+        Location location { get; set; }
+        string description { get; set; }
+        string language { get; set; }
+        int maxGuestsNumber { get; set; }
+        List<TourPoint> tourPoints { get; set; }
+        DateTime tourStart { get; set; }
+        int duration    { get; set; }
+        int imageId { get; set; }
+        Image image { get; set; }
 
 
-        public Tour(int id, string name, int locationId, Location location, string description, string language, int maxGuestsNumber, DateTime tourStart, int duration, Image image)
+        public Tour(int id, string name, int locationId, Location location, string description, string language, int maxGuestsNumber, List<TourPoint> tourPoints, DateTime tourStart, int duration, Image image)
         {
             this.id = id;
             this.name = name;
@@ -32,6 +32,8 @@ namespace Tourist_Project.Model
             this.description = description;
             this.language = language;
             this.maxGuestsNumber = maxGuestsNumber;
+            this.tourPoints = new List<TourPoint>();
+            this.tourPoints = tourPoints;
             this.tourStart = tourStart;
             this.duration = duration;
             this.image = image;

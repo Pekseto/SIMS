@@ -2,7 +2,7 @@
 
 namespace Tourist_Project.Model
 {
-
+    public enum AccommodationType { Apartment, House, Cottage }
 	public class Accommodation
 	{
 		int Id { get; set; }
@@ -27,5 +27,6 @@ namespace Tourist_Project.Model
             this.image = image;
             this.ownerId = ownerId;
         }
+
     }
 }

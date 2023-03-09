@@ -14,5 +14,16 @@ namespace Tourist_Project.Model
             this.password = password;
             this.role = role;
         }
+        public string[] ToCSV()
+        {
+            string[] csvValues = {Id.ToString(), password, role.ToString()};
+            return csvValues;
+        }
+        public void FromCSV(string[] values)
+        {
+            Id = Convert.ToInt32(values[0]);
+            password = values[1];
+            role = Convert.ToInt32(values[2]);
+        }
     }
 }

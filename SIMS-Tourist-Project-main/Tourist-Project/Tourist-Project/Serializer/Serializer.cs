@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Tourist_Project.Serializer
 {
-    class Serializer<T> where T: ISerializable, new()
+    public class Serializer<T> where T: ISerializable, new()
     {
         private const char Delimiter = '|';
 

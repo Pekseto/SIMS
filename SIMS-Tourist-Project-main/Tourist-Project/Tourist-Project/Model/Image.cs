@@ -10,6 +10,9 @@ namespace Tourist_Project.Model
         private int id;
         public int Id
         {
+
+            get => id; 
+            set => id = value; 
         }
         private String url;
         public String Url
@@ -17,6 +20,9 @@ namespace Tourist_Project.Model
             get => url;
             set => url = value;
         }
+       
+        public Image()
+        {
         }
         public Image(int id, string url)
         {

@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="660" Width="600" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <Button Content="Owner" Height="160" Click="OwnerButtonClick"/>
+        <Button Content="Guest 1" Height="160" Click="Guest1ButtonClick"/>
+        <Button Content="Guest 2" Height="160" Click="Guest1ButtonClick"/>
+        <Button Content="Guide" Height="160" Click="GuideButtonClick"/>
+    </StackPanel>
 </Window>

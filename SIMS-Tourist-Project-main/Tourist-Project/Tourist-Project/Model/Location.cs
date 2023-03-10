@@ -3,7 +3,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-  public class Location : ISerializable
+
     {
         private int id;
         public int Id

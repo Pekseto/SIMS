@@ -1,4 +1,4 @@
-﻿namespace InitialProject.Serializer
+﻿namespace Tourist_Project.Serializer
 {
     public interface ISerializable
     {

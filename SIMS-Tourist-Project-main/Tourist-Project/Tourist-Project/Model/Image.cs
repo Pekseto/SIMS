@@ -4,15 +4,23 @@ namespace Tourist_Project.Model
 {
     public class Image
     {
-        int Id { get; set; }
-        String url { get; set; }
-        int entityId { get; set; }
+        public int Id { get; set; }
+        string url { get; set; }
 
-        public Image(int id, string url, int entityId)
+        public Image() { }
+        public Image(string url)
         {
-            Id = id;
             this.url = url;
-            this.entityId = entityId;
+        }
+        public string[] ToCSV()
+        {
+            string[] csvValues = {Id.ToString(), url};
+            return csvValues;
+        }
+        public void FromCSV(string[] values)
+        {
+            Id = Convert.ToInt32(values[0]);
+            url = values[1];
         }
     }
 }

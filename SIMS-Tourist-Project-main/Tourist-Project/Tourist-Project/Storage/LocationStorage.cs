@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project
+namespace Tourist_Project.Storage
 {
     public class LocationStorage
     {

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tourist_Project.Dao;
 using Tourist_Project.Model;
 
-namespace Tourist_Project
+namespace Tourist_Project.Controller
 {
     public class LocationController
     {
@@ -33,12 +34,12 @@ namespace Tourist_Project
 
         public Location GetOne(int id)
         {
-            foreach(Location location in locationDao.GetAll())
-            {
-                if(location.Id == id)
-                    return location;
-            }
-            return null;
+            return locationDao.GetAll().Find(location => location.Id == id);
+        }
+
+        public int GetId(string city, string country)
+        {
+            return locationDao.GetAll().Find(location => location.City == city && location.Country == country).Id;
         }
     }
 }

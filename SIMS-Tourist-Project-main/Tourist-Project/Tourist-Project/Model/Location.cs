@@ -11,8 +11,18 @@ namespace Tourist_Project.Model
             get => id;
             set => id = value;
         }
-		String City { get; set; }
-		String Country { get; set; }
+        private String city;
+        public String City
+        {
+            get => city;
+            set => city = value;
+        }
+        private String country;
+        public String Country
+        {
+            get => country;
+            set => country = value;
+        }
 
         public Location()
         {

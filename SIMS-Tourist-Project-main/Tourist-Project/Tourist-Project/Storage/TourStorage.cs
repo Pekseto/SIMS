@@ -6,26 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Model;
 
-namespace Tourist_Project
+namespace Tourist_Project.Storage
 {
     public class TourStorage
     {
         private const string fileName = "";
-        private Serializer<Tour> serilizer;
+        private Serializer<Tour> serializer;
 
         public TourStorage()
         {
-            serilizer = new Serializer<Tour>();
+            serializer = new Serializer<Tour>();
         }
 
         public List<Tour> GetAll()
         {
-            return serilizer.FromCSV(fileName);
+            return serializer.FromCSV(fileName);
         }
 
         public void Save(List<Tour> tours)
         {
-            serilizer.ToCSV(fileName, tours);
+            serializer.ToCSV(fileName, tours);
         }
     }
 }

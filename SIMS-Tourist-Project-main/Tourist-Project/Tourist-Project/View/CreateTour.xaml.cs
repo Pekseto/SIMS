@@ -14,7 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using Tourist_Project.Controller;
 using Tourist_Project.Model;
+using Image = Tourist_Project.Model.Image;
 
 namespace Tourist_Project.View
 {
@@ -24,6 +26,8 @@ namespace Tourist_Project.View
     public partial class CreateTour : Window
     {
         private TourController tourController { get; set; }
+        private LocationController locationController { get; set; }
+        private ImageController imageController { get; set; }
         public CreateTour()
         {
             InitializeComponent();
@@ -31,17 +35,19 @@ namespace Tourist_Project.View
 
         public void Create()
         {
-            
+            Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
+
+            Image image = new Image(imageController.GetId(Url.Text), Url.Text);
             Tour tour = new Tour();
 
             tour.Location = location;
-            tour.LocationId = location.Id; //TODO
+            tour.LocationId = location.Id;
             tour.Description = Description.Text;
             tour.Language = Language.Text;
             tour.MaxGuestsNumber = Convert.ToInt32(MaxGuestsNumber.Text);
             tour.StartTime = Convert.ToDateTime(StartTime.Text);
             tour.Duration = Convert.ToInt32(Duration.Text);
-            tour.Image = image;
+            tour.Image = image; 
             tourController.Create(tour);
             this.Close();
         }

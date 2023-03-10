@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tourist_Project.Dao;
 using Tourist_Project.Model;
 
-namespace Tourist_Project
+namespace Tourist_Project.Controller
 {
     public class TourController
     {
@@ -33,12 +34,7 @@ namespace Tourist_Project
 
         public Tour GetOne(int id)
         {
-            foreach(Tour tour in tourDao.GetAll())
-            {
-                if (tour.Id == id)
-                    return tour;
-            }
-            return null;
+            return tourDao.GetAll().Find(tour => tour.Id == id);
         }
     }
 }

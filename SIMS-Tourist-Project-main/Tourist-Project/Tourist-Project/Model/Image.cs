@@ -1,18 +1,49 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
+using System.Printing;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-    public class Image
+    public class Image : ISerializable
     {
-        int Id { get; set; }
-        String url { get; set; }
-        int entityId { get; set; }
+        private int id;
+        public int Id
+        {
+            get => id; 
+            set => id = value; 
+        }
+        private String url;
+        public String Url
+        {
+            get => url;
+            set => url = value;
+        }
+       
+        public Image()
+        {
 
-        public Image(int id, string url, int entityId)
+        }
+        public Image(int id, string url)
         {
             Id = id;
-            this.url = url;
-            this.entityId = entityId;
+            this.Url = url;
+        }
+
+        public string[] ToCSV()
+        {
+            string[] csvValues =
+            {
+                Id.ToString(),
+                Url
+            };
+            return csvValues;
+        }
+
+        public void FromCSV(string[] values)
+        {
+            Id = int.Parse(values[0]);
+            Url = values[1];
         }
     }
 }

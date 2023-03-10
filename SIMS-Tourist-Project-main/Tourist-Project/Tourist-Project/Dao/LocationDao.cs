@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Model;
+using Tourist_Project.Storage;
 
-namespace Tourist_Project
+namespace Tourist_Project.Dao
 {
     public class LocationDao
     {
@@ -21,7 +22,7 @@ namespace Tourist_Project
         public int NextId()
         {
             //Trebalo bi da vrati dobar Id proveri sa Id koji ce se dobiti za Tour
-            return locationStorage.GetAll().Max(location => location.Id) + 1; 
+            return locationStorage.GetAll().Max(location => location.Id) + 1;
         }
 
         public void Add(Location location)

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Model;
+using Tourist_Project.Storage;
 
-namespace Tourist_Project
+namespace Tourist_Project.Dao
 {   //TODO: Interface for Observer
     public class TourDAO
     {

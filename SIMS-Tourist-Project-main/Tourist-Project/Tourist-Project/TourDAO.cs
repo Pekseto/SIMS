@@ -15,7 +15,7 @@ namespace Tourist_Project
         public TourDAO()
         {
             tourStorage = new TourStorage();
-            tours = new List<Tour>();
+            tours = new List<Tour>(); //Treba proslediti punu listu ne praznu!
         }
 
         public int NextId()
@@ -41,7 +41,7 @@ namespace Tourist_Project
         public void Save(List<Tour> tours)
         {
             tourStorage.Save(tours);
-            this.tours = tours;
+            this.tours = tours; //Da li je ovo potrebno uopste?
             //TODO: NotifyObservers();
         }
     }

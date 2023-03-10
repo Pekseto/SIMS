@@ -17,6 +17,7 @@ namespace Tourist_Project.Model
             set => url = value;
         }
 
+
         public Image()
         {
 

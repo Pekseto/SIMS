@@ -1,0 +1,59 @@
+﻿<Window x:Class="Tourist_Project.View.CreateTour"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tourist_Project.View"
+        xmlns:model="clr-namespace:Tourist_Project.Model"
+        mc:Ignorable="d"
+        Title="CreateTour" Height="600" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="540"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Height="30" Content="Name:"/>
+            <Label Grid.Row="1" Grid.Column="0" Height="30" Content="City and Country:"/>
+            <Label Grid.Row="2" Grid.Column="0" Height="30" Content="Description:"/>
+            <Label Grid.Row="3" Grid.Column="0" Height="30" Content="Language:"/>
+            <Label Grid.Row="4" Grid.Column="0" Height="30" Content="Maximum number of guests:"/>
+            <Label Grid.Row="5" Grid.Column="0" Height="30" Content="The start of tour:"/>
+            <Label Grid.Row="6" Grid.Column="0" Height="30" Content="Duration:"/>
+            <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Image:"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" Name="City" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" Name="Country" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="Description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="Language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="MaxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Name="StartTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="Duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="Url" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Create"></Button>
+            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Cancle"></Button>
+        </Grid>
+        
+    </Grid>
+</Window>

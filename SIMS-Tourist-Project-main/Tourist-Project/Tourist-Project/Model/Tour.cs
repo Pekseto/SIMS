@@ -4,54 +4,130 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xaml.Schema;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-    public class Tour
+    public class Tour : ISerializable
     {
-        int id { get; set; }
-        string name { get; set; }
-        int locationId { get; set; }
-        Location location { get; set; }
-        string description { get; set; }
-        string language { get; set; }
-        int maxGuestsNumber { get; set; }
-        List<TourPoint> tourPoints { get; set; }
-        DateTime tourStart { get; set; }
-        int duration    { get; set; }
-        int imageId { get; set; }
-        Image image { get; set; }
-
-
-        public Tour(int id, string name, int locationId, Location location, string description, string language, int maxGuestsNumber, List<TourPoint> tourPoints, DateTime tourStart, int duration, Image image)
+        int id;
+        public int Id
         {
-            this.id = id;
-            this.name = name;
-            this.locationId = locationId;
-            this.location = location;
-            this.description = description;
-            this.language = language;
-            this.maxGuestsNumber = maxGuestsNumber;
+            get => id;
+            set => id = value;
+        }
+
+        int locationId;
+        public int LocationId
+        {
+            get => locationId;
+            set => locationId = value;
+        }
+
+        Location location;
+        public Location Location
+        {
+            get => location;
+            set => location = value;
+        }
+
+        string name;
+        public string Name
+        {
+            get => name;
+            set => name = value;
+        }
+
+        string description;
+        public string Description
+        {
+            get => description;
+            set => description = value;
+        }
+
+        string language;
+        public string Language
+        {
+            get => language;
+            set => language = value;
+        }
+
+        int maxGuestsNumber;
+        public int MaxGuestsNumber
+        {
+            get => maxGuestsNumber;
+            set => maxGuestsNumber = value;
+        }
+
+        List<TourPoint> tourPoints;
+        public List<TourPoint> TourPoints
+        {
+            get => tourPoints;
+            set => tourPoints = value;
+        }
+
+        DateTime startTime;
+        public DateTime StartTime
+        {
+            get => startTime;
+            set => startTime = value;
+        }
+
+        int duration;
+        public int Duration
+        {
+            get => duration;
+            set => duration = value;
+        }
+
+        int imageId;
+        public int ImageId
+        {
+            get => imageId;
+            set => imageId = value;
+        }
+
+        Image image;
+        public Image Image
+        {
+            get => image;
+            set => image = value;
+        }
+
+        public Tour()
+        {
             this.tourPoints = new List<TourPoint>();
-            this.tourPoints = tourPoints;
-            this.tourStart = tourStart;
-            this.duration = duration;
-            this.image = image;
+        }
+
+        public Tour(int id, string name, int locationId, Location location, string description, string language, int maxGuestsNumber, List<TourPoint> tourPoints, DateTime startTime, int duration, Image image)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.LocationId = locationId;
+            this.Location = location;
+            this.Description = description;
+            this.Language = language;
+            this.MaxGuestsNumber = maxGuestsNumber;
+            this.TourPoints = new List<TourPoint>();
+            this.TourPoints = tourPoints;
+            this.StartTime = startTime;
+            this.Duration = duration;
+            this.Image = image;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues =
             {
-                id.ToString(),
-                name,
-                locationId.ToString(),
-                description,
-                language,
-                maxGuestsNumber.ToString(),
-                tourStart.ToString(),
-                duration.ToString(),
-                imageId.ToString()
+                Id.ToString(),
+                Name,
+                LocationId.ToString(),
+                Description,
+                Language,
+                MaxGuestsNumber.ToString(),
+                StartTime.ToString(),
+                Duration.ToString(),
+                ImageId.ToString()
             };
 
             return csvValues;
@@ -59,15 +135,15 @@ namespace Tourist_Project.Model
 
         public void FromCSV(string[] values)
         {
-            id = Convert.ToInt32(values[0]);
-            name = values[1];
-            locationId = Convert.ToInt32(values[2]);
-            description = values[3];
-            language = values[4];
-            maxGuestsNumber = Convert.ToInt32(values[5]);
-            tourStart = Convert.ToDateTime(values[6]);
-            duration = Convert.ToInt32(values[7]);
-            imageId = Convert.ToInt32(values[8]);
+            Id = int.Parse(values[0]);
+            Name = values[1];
+            LocationId = int.Parse(values[2]);
+            Description = values[3];
+            Language = values[4];
+            MaxGuestsNumber = int.Parse(values[5]);
+            StartTime = DateTime.Parse(values[6]);
+            Duration = int.Parse(values[7]);
+            ImageId = int.Parse(values[8]);
         }
     }
 }

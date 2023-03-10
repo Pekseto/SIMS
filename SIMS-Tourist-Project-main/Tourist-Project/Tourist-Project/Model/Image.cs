@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics.Metrics;
+using System.Printing;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-    public class Image
+    public class Image : ISerializable
     {
         private int id;
         public int Id
@@ -16,7 +19,6 @@ namespace Tourist_Project.Model
             get => url;
             set => url = value;
         }
-
 
         public Image()
         {

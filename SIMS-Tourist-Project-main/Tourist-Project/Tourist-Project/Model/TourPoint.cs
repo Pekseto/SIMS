@@ -21,17 +21,11 @@ namespace Tourist_Project.Model
             set => name = value;
         }
         int tourId;
-        public int TourId
-        {
-            get => tourId;
-            set => tourId = value;
-        }
 
-        public TourPoint(int id, string name, int tourId)
+        public TourPoint(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-            this.TourId = tourId;
         }
 
         public string[] ToCSV()
@@ -39,8 +33,7 @@ namespace Tourist_Project.Model
             string[] csvValues =
             {
                 Id.ToString(),
-                Name,
-                TourId.ToString()
+                Name
             };
 
             return csvValues;
@@ -50,7 +43,6 @@ namespace Tourist_Project.Model
         {
             Id = int.Parse(values[0]);
             Name = values[1];
-            TourId = int.Parse(values[2]);
         }
     }
 }

@@ -23,6 +23,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -33,26 +34,34 @@
             <Label Grid.Row="2" Grid.Column="0" Height="30" Content="Description:"/>
             <Label Grid.Row="3" Grid.Column="0" Height="30" Content="Language:"/>
             <Label Grid.Row="4" Grid.Column="0" Height="30" Content="Maximum number of guests:"/>
-            <Label Grid.Row="5" Grid.Column="0" Height="30" Content="The start of tour:"/>
-            <Label Grid.Row="6" Grid.Column="0" Height="30" Content="Duration:"/>
-            <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Image:"/>
+            <Label Grid.Row="5" Grid.Column="0" Height="30" Content="Checkpoints: "></Label>
+            <Label Grid.Row="6" Grid.Column="0" Height="30" Content="The start of tour:"/>
+            <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Duration:"/>
+            <Label Grid.Row="8" Grid.Column="0" Height="30" Content="Image:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" Name="City" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" Name="Country" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" Name="City" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBoxItem Content="Belgrade"/>
+                <ComboBoxItem Content="Novi Sad"/>
+            </ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" Name="Country" Text="{Binding Path=Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBoxItem Content="Serbia"/>
+            </ComboBox>
             <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="Description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="Language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="MaxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Name="StartTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="Duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="Url" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="Checkpoint" Text="{Binding Path=Checkpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Grid.Row="5" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddCheckpointClick" Margin="0 0 30 0"></Button>
+            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="StartTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="Duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="Url" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Create"></Button>
-            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Cancel"></Button>
+            <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CreateClick"></Button>
+            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CancelClick"></Button>
         </Grid>
         
     </Grid>

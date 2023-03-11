@@ -25,20 +25,26 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class CreateTour : Window
     {
-        private TourController tourController { get; set; }
-        private LocationController locationController { get; set; }
-        private ImageController imageController { get; set; }
+        private TourController tourController;
+        private LocationController locationController;
+        private ImageController imageController;
+        private Tour tour;
         public CreateTour()
         {
             InitializeComponent();
+            DataContext = this;
+            tourController = new TourController();
+            locationController = new LocationController();
+            imageController = new ImageController();
+            tour = new Tour();
+
         }
 
-        public void Create(object sender, RoutedEventArgs e)
+        public void CreateClick(object sender, RoutedEventArgs e)
         {
             Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
 
             Image image = new Image(imageController.GetId(Url.Text), Url.Text);
-            Tour tour = new Tour();
 
             tour.Location = location;
             tour.LocationId = location.Id;
@@ -51,9 +57,20 @@ namespace Tourist_Project.View
             tourController.Create(tour);
             this.Close();
         }
-        public void Cancel(object sender, RoutedEventArgs e)
+        public void CancelClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void AddCheckpointClick(object sender, RoutedEventArgs e)
+        {
+            TourPoint checkpoint = new TourPoint(tourPointController.GetId(Checkpoint.Text), Checkpoint.Text); //TODO
+
+            if (!string.IsNullOrWhiteSpace(Checkpoint.Text))
+            {
+                tour.TourPoints.Add(checkpoint);
+                
+            }
         }
     }
 }

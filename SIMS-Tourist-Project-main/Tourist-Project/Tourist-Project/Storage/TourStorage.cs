@@ -10,7 +10,7 @@ namespace Tourist_Project.Storage
 {
     public class TourStorage
     {
-        private const string fileName = "";
+        private const string fileName = "\\...\\...\\SIMS-Tourist-Project-main\\Tourist-Project\\Tourist-Project\\Data\\tours.csv";
         private Serializer<Tour> serializer;
 
         public TourStorage()

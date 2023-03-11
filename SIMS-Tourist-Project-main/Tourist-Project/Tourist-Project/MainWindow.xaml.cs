@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourist_Project.View;
 
 namespace Tourist_Project
 {
@@ -42,7 +43,8 @@ namespace Tourist_Project
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {
-
+            var CreateTour = new CreateTour();
+            CreateTour.Show();
         }
     }
 }

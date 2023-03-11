@@ -7,14 +7,14 @@ namespace Tourist_Project.Model
 	public class Accommodation : ISerializable
 	{
 		public int Id { get; set; }
-		string Name { get; set; }
-		Location Location { get; set; }
-		AccommodationType type { get; set; }
-		int maxGuestNum { get; set; }
-		int minStayingDays { get; set; }
-		int daysBeforeCancel { get; set; }
-		Image image { get; set; }
-		int ownerId { get; set; }
+		public string Name { get; set; }
+		public Location Location { get; set; }
+		public AccommodationType type { get; set; }
+		public int maxGuestNum { get; set; }
+		public int minStayingDays { get; set; }
+		public int daysBeforeCancel { get; set; }
+		public Image image { get; set; }
+		public int ownerId { get; set; }
         public User user { get; set; }
         public Accommodation() { }
         public Accommodation(string name, Location location, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, Image image)

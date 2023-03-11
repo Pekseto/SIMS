@@ -31,6 +31,8 @@ namespace Tourist_Project
             InitializeComponent();
             DataContext = this;
             accommodationController = controller;
+            locationController = new LocationController();
+            imageController = new ImageController();
         }
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)

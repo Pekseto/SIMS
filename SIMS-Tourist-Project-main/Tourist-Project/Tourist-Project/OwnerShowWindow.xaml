@@ -15,7 +15,7 @@
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
-                <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding maxGuestsNum}" Width="auto"></DataGridTextColumn>
+                <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding maxGuestNum}" Width="auto"></DataGridTextColumn>
                 <DataGridTextColumn Header="MinStayingDays" Binding="{Binding minStayingDays}" Width="auto"></DataGridTextColumn>
                 <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding daysBeforeCancel}" Width="auto"></DataGridTextColumn>
             </DataGrid.Columns>

@@ -43,6 +43,28 @@ namespace Tourist_Project
             var addWindow = new AddAccommodation(accommodationController);
             addWindow.Show();
         }
+        private void ViewButtonClick(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new AddAccommodation(accommodationController);
+            addWindow.Show();
+        }
+        private void UpdateButtonClick(object sender, RoutedEventArgs e)
+        {
+            var addWindow = new AddAccommodation(accommodationController);
+            addWindow.Show();
+        }
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (selectedAccommodation != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure?", "Delete comment",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    accommodationController.Delete(selectedAccommodation);
+                }
+            }
+        }
 
         public void Update()
         {

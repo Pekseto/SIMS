@@ -8,6 +8,7 @@ namespace Tourist_Project.Model
 		string password { get; set; }
 		int role { get; set; }
 
+        public User() { }
         public User(int id, string password, int role)
         {
             Id = id;

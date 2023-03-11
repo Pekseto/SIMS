@@ -14,7 +14,8 @@ namespace Tourist_Project.Model
 		public int minStayingDays { get; set; }
 		public int daysBeforeCancel { get; set; }
 		public Image image { get; set; }
-		public int ownerId { get; set; }
+        public string imageUrl { get; set; }
+		//public int ownerId { get; set; }
         public User user { get; set; }
         public Accommodation() { }
         public Accommodation(string name, Location location, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, Image image)
@@ -26,10 +27,11 @@ namespace Tourist_Project.Model
             this.minStayingDays = minStayingDays;
             this.daysBeforeCancel = daysBeforeCancel;
             this.image = image;
+            imageUrl = image.Url;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), type.ToString(), maxGuestNum.ToString(), minStayingDays.ToString(), daysBeforeCancel.ToString(), image.Id.ToString(), ownerId.ToString() };
+            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), type.ToString(), maxGuestNum.ToString(), minStayingDays.ToString(), daysBeforeCancel.ToString(), image.Id.ToString(), user.Id.ToString() };
             return csvValues;
         }
 
@@ -43,7 +45,7 @@ namespace Tourist_Project.Model
             minStayingDays = Convert.ToInt32(values[5]);
             daysBeforeCancel = Convert.ToInt32(values[6]);
             image = new Image() { Id = Convert.ToInt32(values[7]) };
-            ownerId = Convert.ToInt32(values[8]);
+            user = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Tourist_Project.Storage
 {
     public class ImageStorage
     {
-        private const string fileName = "";
+        private const string FilePath = "../../../Data/locations.csv";
         private Serializer<Image> serializer;
 
         public ImageStorage()
@@ -20,12 +20,12 @@ namespace Tourist_Project.Storage
 
         public List<Image> GetAll()
         {
-            return serializer.FromCSV(fileName);
+            return serializer.FromCSV(FilePath);
         }
 
         public void Save(List<Image> images)
         {
-            serializer.ToCSV(fileName, images);
+            serializer.ToCSV(FilePath, images);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,8 @@ namespace Tourist_Project
     public partial class AddAccommodation : Window
     {
         public static AccommodationController accommodationController;
+        public static LocationController locationController;
+        public static ImageController imageController;
         public AddAccommodation(AccommodationController controller)
         {
             InitializeComponent();
@@ -32,9 +35,9 @@ namespace Tourist_Project
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            Location location = new Location();
-            Model.Image image = new Model.Image();
-            Accommodation newAccommodation = new Accommodation(Name.Text, location.Id, Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), image.Id);
+            Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
+            Model.Image image = new Model.Image(imageController.GetId(Url.Text), Url.Text);
+            Accommodation newAccommodation = new Accommodation(Name.Text, location, Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), image);
             accommodationController.Add(newAccommodation);
             Close();
         }

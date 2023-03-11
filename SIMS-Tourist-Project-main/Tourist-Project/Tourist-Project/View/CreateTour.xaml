@@ -52,7 +52,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Create"></Button>
-            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Cancle"></Button>
+            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Cancel"></Button>
         </Grid>
         
     </Grid>

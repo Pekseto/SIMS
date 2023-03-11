@@ -33,7 +33,7 @@ namespace Tourist_Project.View
             InitializeComponent();
         }
 
-        public void Create()
+        public void Create(object sender, RoutedEventArgs e)
         {
             Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
 
@@ -50,6 +50,10 @@ namespace Tourist_Project.View
             tour.Image = image; 
             tourController.Create(tour);
             this.Close();
+        }
+        public void Cancel(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

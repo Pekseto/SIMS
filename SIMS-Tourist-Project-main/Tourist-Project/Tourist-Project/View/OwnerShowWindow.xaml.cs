@@ -38,20 +38,20 @@ namespace Tourist_Project
             Accommodations = new ObservableCollection<Accommodation>(accommodationController.GetAll());
         }
 
-        private void AddButtonClick(object sender, RoutedEventArgs e)
+        private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
         {
-            var addWindow = new AddAccommodation(accommodationController);
-            addWindow.Show();
+            var createWindow = new AccommodationForm(accommodationController);
+            createWindow.Show();
         }
-        private void ViewButtonClick(object sender, RoutedEventArgs e)
+        private void ShowViewAccommodationForm(object sender, RoutedEventArgs e)
         {
-            var addWindow = new AddAccommodation(accommodationController);
-            addWindow.Show();
+            var viewWindow = new AccommodationForm(accommodationController, selectedAccommodation);
+            viewWindow.Show();
         }
-        private void UpdateButtonClick(object sender, RoutedEventArgs e)
+        private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
         {
-            var addWindow = new AddAccommodation(accommodationController);
-            addWindow.Show();
+            var updateWindow = new AccommodationForm(selectedAccommodation, accommodationController);
+            updateWindow.Show();
         }
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {

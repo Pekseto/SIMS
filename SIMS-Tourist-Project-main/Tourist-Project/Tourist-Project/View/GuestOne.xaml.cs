@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.Controller;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
 
@@ -28,29 +27,22 @@ namespace Tourist_Project.View
         public Accommodation selectedAccommodation { get; set; }
 
         public int SelectedIndex { get; set; }
-        
-        public static AccommodationController accommodationController;
+     
         public GuestOne()
         {
             InitializeComponent();
             DataContext = this;
-            
 
-            accommodationController = new AccommodationController();
-            accommodationController.Subscribe(this);//znaci da ce ovde prikazivati sve promene u listama - ovaj prozor je subskrajbovan na kontroler?
-            Accommodations = new ObservableCollection<Accommodation>(accommodationController.GetAll());
         }
 
         public void Update()
         {
-            Accommodations.Clear();
-            foreach (var accommodation in accommodationController.GetAll())
-                accommodationController.Add(accommodation);
+
         }
 
         private void SearchByNameClick(object sender, RoutedEventArgs e)
         {
-            var searchWindow = new SearchWindow(accommodationController);
+            var searchWindow = new SearchWindow();
             searchWindow.Show();
         }
 
@@ -58,25 +50,25 @@ namespace Tourist_Project.View
 
         private void SearchByTypeClick(object sender, RoutedEventArgs e)
         {
-            var searchWindow = new SearchWindow(accommodationController);
+            var searchWindow = new SearchWindow();
             searchWindow.Show();
         }
 
         private void SearchByLocationClick(object sender, RoutedEventArgs e)
         {
-            var searchWindow = new SearchWindow(accommodationController);
+            var searchWindow = new SearchWindow();
             searchWindow.Show();
         }
 
         private void SearchByNumberOfGuestsClick(object sender, RoutedEventArgs e)
         {
-            var searchWindow = new SearchWindow(accommodationController);
+            var searchWindow = new SearchWindow();
             searchWindow.Show();
         }
 
         private void SearchByDaysForResClick(object sender, RoutedEventArgs e)
         {
-            var searchWindow = new SearchWindow(accommodationController);
+            var searchWindow = new SearchWindow();
             searchWindow.Show();
         }
 

@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.Controller;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 
@@ -26,7 +25,7 @@ namespace Tourist_Project
     {
         private readonly ImageRepository imageRepository;
         private readonly AccommodationRepository accommodationRepository;
-        public AccommodationForm(AccommodationController controller)
+        public AccommodationForm()
         {
             InitializeComponent();
             DataContext = this;
@@ -35,7 +34,7 @@ namespace Tourist_Project
             Title = "Create new accommodation";
         }
 
-        public AccommodationForm(AccommodationController controller, Accommodation selectedAccommodation)
+        public AccommodationForm(Accommodation selectedAccommodation)
         {
             InitializeComponent();
             DataContext = this;
@@ -53,7 +52,7 @@ namespace Tourist_Project
             btnSave.Visibility = Visibility.Collapsed;
             Title = "View accommodation";
         }
-        public AccommodationForm(Accommodation selectedAccommodation, AccommodationController controller)
+        public AccommodationForm(Accommodation selectedAccommodation, OwnerShowWindow ownerShowWindow)
         {
             InitializeComponent();
             DataContext = this;

@@ -9,7 +9,7 @@
     <StackPanel>
         <Button Content="Owner" Height="160" Click="OwnerButtonClick"/>
         <Button Content="Guest 1" Height="160" Click="Guest1ButtonClick"/>
-        <Button Content="Guest 2" Height="160" Click="Guest1ButtonClick"/>
+        <Button Content="Guest 2" Height="160" Click="Guest2ButtonClick"/>
         <Button Content="Guide" Height="160" Click="GuideButtonClick"/>
     </StackPanel>
 </Window>

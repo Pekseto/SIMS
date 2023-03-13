@@ -105,19 +105,6 @@ namespace Tourist_Project.Model
                 }
             }
         }
-        string imageUrl;
-        public string ImageUrl
-        {
-            get => imageUrl;
-            set
-            {
-                if (value != imageUrl)
-                {
-                    imageUrl = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
         //public int ownerId { get; set; }
         public User user { get; set; }
 
@@ -137,11 +124,10 @@ namespace Tourist_Project.Model
             this.MinStayingDays = minStayingDays;
             this.DaysBeforeCancel = daysBeforeCancel;
             this.Image = image;
-            imageUrl = image.Url;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), Image.Id.ToString(), user.Id.ToString() };
+            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), Image.Id.ToString()};
             return csvValues;
         }
 
@@ -155,7 +141,7 @@ namespace Tourist_Project.Model
             MinStayingDays = Convert.ToInt32(values[5]);
             DaysBeforeCancel = Convert.ToInt32(values[6]);
             Image = new Image() { Id = Convert.ToInt32(values[7]) };
-            user = new User() { Id = Convert.ToInt32(values[8]) };
+            //user = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Controller;
 using Tourist_Project.Model;
+using Tourist_Project.Repository;
 
 namespace Tourist_Project
 {
@@ -23,16 +24,14 @@ namespace Tourist_Project
     /// </summary>
     public partial class AccommodationForm : Window
     {
-        public static AccommodationController accommodationController;
-        public static LocationController locationController;
-        public static ImageController imageController;
+        private readonly ImageRepository imageRepository;
+        private readonly AccommodationRepository accommodationRepository;
         public AccommodationForm(AccommodationController controller)
         {
             InitializeComponent();
             DataContext = this;
-            accommodationController = controller;
-            locationController = new LocationController();
-            imageController = new ImageController();
+            imageRepository = new ImageRepository();
+            accommodationRepository = new AccommodationRepository();
             Title = "Create new accommodation";
         }
 
@@ -40,10 +39,9 @@ namespace Tourist_Project
         {
             InitializeComponent();
             DataContext = this;
+            imageRepository = new ImageRepository();
+            accommodationRepository = new AccommodationRepository();
             EnableEditing();
-            accommodationController = controller;
-            locationController = new LocationController();
-            imageController = new ImageController();
             Name.Text = selectedAccommodation.Name;
             Country.Text = selectedAccommodation.Location.Country;
             City.Text = selectedAccommodation.Location.City;
@@ -59,9 +57,8 @@ namespace Tourist_Project
         {
             InitializeComponent();
             DataContext = this;
-            accommodationController = controller;
-            locationController = new LocationController();
-            imageController = new ImageController();
+            imageRepository = new ImageRepository();
+            accommodationRepository = new AccommodationRepository();
             Name.Text = selectedAccommodation.Name;
             Country.Text = selectedAccommodation.Location.Country;
             City.Text = selectedAccommodation.Location.City;
@@ -70,7 +67,6 @@ namespace Tourist_Project
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
             Url.Text = selectedAccommodation.Image.Url;
-            btnSave.Visibility = Visibility.Collapsed;
             Title = "Update accommodation";
         }
         private void EnableEditing()
@@ -86,12 +82,7 @@ namespace Tourist_Project
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
-            locationController.Create(location);
-            Model.Image image = new Model.Image(imageController.GetId(Url.Text), Url.Text);
-            imageController.Create(image);
-            Accommodation newAccommodation = new Accommodation(Name.Text, location, Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), image);
-            accommodationController.Add(newAccommodation);
+            //Accommodation newAccommodation = new Accommodation(Name.Text, location, Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), image);
             Close();
         }
 

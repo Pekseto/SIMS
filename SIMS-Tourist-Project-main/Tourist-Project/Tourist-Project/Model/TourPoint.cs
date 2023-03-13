@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-    public class TourPoint
+    public class TourPoint : ISerializable
     {
         private int id;
         public int Id
@@ -20,27 +21,31 @@ namespace Tourist_Project.Model
             get => name;
             set => name = value;
         }
-        int tourId;
+        private int tourId;
         public int TourId
         {
             get => tourId;
             set => tourId = value;
         }
 
-        public TourPoint(int id, string name, int tourId)
+        public TourPoint()
         {
-            this.Id = id;
-            this.Name = name;
-            this.TourId = tourId;
+
+        }
+
+        public TourPoint(string name, int tourId)
+        {
+            this.name = name;
+            this.tourId = tourId;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues =
             {
-                Id.ToString(),
-                Name,
-                TourId.ToString()
+                id.ToString(),
+                name,
+                tourId.ToString(),
             };
 
             return csvValues;
@@ -48,9 +53,9 @@ namespace Tourist_Project.Model
 
         public void FromCSV(string[] values)
         {
-            Id = int.Parse(values[0]);
-            Name = values[1];
-            TourId = int.Parse(values[2]);
+            id = int.Parse(values[0]);
+            name = values[1];
+            tourId = int.Parse(values[2]);
         }
     }
 }

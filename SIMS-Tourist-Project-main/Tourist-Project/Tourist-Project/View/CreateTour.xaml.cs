@@ -14,9 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using Tourist_Project.Controller;
 using Tourist_Project.Model;
-using Accommodation = Tourist_Project.Model.Accommodation;
+using Tourist_Project.Repository;
+using Image = Tourist_Project.Model.Image;
 
 namespace Tourist_Project.View
 {
@@ -25,31 +25,46 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class CreateTour : Window
     {
-        private TourController tourController { get; set; }
+        private TourRepository tourRepository;
+        private LocationRepository locationRepository;
+        private TourPointRepository tourPointRepository;
+        private Tour tour;
+
         public CreateTour()
         {
             InitializeComponent();
+            DataContext = this;
+            tourRepository = new TourRepository();
+            locationRepository = new LocationRepository();
+            tour = new Tour();
         }
 
-        public void Create(object sender, RoutedEventArgs e)
+        public void CreateClick(object sender, RoutedEventArgs e)
         {
-            Location location = new Location(City.Text, Country.Text);
-            //Image image = new Image(Url.Text);
-            Tour tour = new Tour();
 
-            tour.Location = location;
-            tour.LocationId = location.Id;
-            tour.Description = Description.Text;
-            tour.Language = Language.Text;
-            tour.MaxGuestsNumber = Convert.ToInt32(MaxGuestsNumber.Text);
-            tour.StartTime = Convert.ToDateTime(StartTime.Text);
-            tour.Duration = Convert.ToInt32(Duration.Text);
-            tourController.Create(tour);
+            Image image = new Image(Url.Text);
+            //imageRepository.Save(Image);
+
+            //Proveriti prilikom dodavanja
+            tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
+            tourRepository.Save(tour);
             this.Close();
         }
-        public void Cancel(object sender, RoutedEventArgs e)
+        public void CancelClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        public void AddCheckpointClick(object sender, RoutedEventArgs e)
+        {
+            TourPoint tourPoint = new TourPoint(Checkpoint.Text, tourRepository.NextId());
+            tourPointRepository.Save(tourPoint);
+
+            if (!string.IsNullOrWhiteSpace(Checkpoint.Text))
+            {
+                tour.TourPoints.Add(tourPoint);
+                
+            }
         }
     }
 }

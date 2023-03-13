@@ -34,6 +34,7 @@ namespace Tourist_Project.Model
         {
 
         }
+
         public Location(string city, string country)
         {
             City = city;

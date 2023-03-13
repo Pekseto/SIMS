@@ -44,6 +44,10 @@ namespace Tourist_Project.DAO
             _storage.Save(_accommodations);
             NotifyObservers();
         }
+        public List<Accommodation> GetById(int id)
+        {
+            return _accommodations.FindAll(c => c.Id == id);
+        }
         public List<Accommodation> GetByUser(User user)
         {
             return _accommodations.FindAll(c => c.user.Id == user.Id);

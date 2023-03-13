@@ -10,7 +10,7 @@ namespace Tourist_Project.Controller
 {
     public class LocationController
     {
-        private LocationDao locationDao;
+        private readonly LocationDao locationDao;
 
         public LocationController()
         {
@@ -31,7 +31,6 @@ namespace Tourist_Project.Controller
         {
             locationDao.Add(location);
         }
-
         public Location GetOne(int id)
         {
             return locationDao.GetAll().Find(location => location.Id == id);

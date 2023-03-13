@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Printing;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
@@ -12,13 +14,27 @@ namespace Tourist_Project.Model
         {
 
             get => id; 
-            set => id = value; 
+            set
+            {
+                if (value != id)
+                {
+                    id = value;
+                    OnPropertyChanged();
+                }
+            }
         }
-        private String url;
-        public String Url
+        private string url;
+        public string Url
         {
             get => url;
-            set => url = value;
+            set
+            {
+                if (value != url)
+                {
+                    url = value;
+                    OnPropertyChanged();
+                }
+            }
         }
        
         public Image()
@@ -29,7 +45,12 @@ namespace Tourist_Project.Model
             Id = id;
             this.Url = url;
         }
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public string[] ToCSV()
         {
             string[] csvValues =

@@ -23,14 +23,7 @@ namespace Tourist_Project.Model
             get => locationId;
             set => locationId = value;
         }
-
-        Location location;
-        public Location Location
-        {
-            get => location;
-            set => location = value;
-        }
-
+        
         string name;
         public string Name
         {
@@ -87,32 +80,23 @@ namespace Tourist_Project.Model
             set => imageId = value;
         }
 
-        Image image;
-        public Image Image
-        {
-            get => image;
-            set => image = value;
-        }
-
         public Tour()
         {
             this.tourPoints = new List<TourPoint>();
         }
 
-        public Tour(int id, string name, int locationId, Location location, string description, string language, int maxGuestsNumber, List<TourPoint> tourPoints, DateTime startTime, int duration, Image image)
+        public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId)
         {
-            this.Id = id;
+            this.TourPoints = new List<TourPoint>();
+
             this.Name = name;
             this.LocationId = locationId;
-            this.Location = location;
             this.Description = description;
             this.Language = language;
             this.MaxGuestsNumber = maxGuestsNumber;
-            this.TourPoints = new List<TourPoint>();
-            this.TourPoints = tourPoints;
             this.StartTime = startTime;
             this.Duration = duration;
-            this.Image = image;
+            this.imageId = imageId;
         }
 
         public string[] ToCSV()

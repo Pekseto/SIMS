@@ -24,9 +24,8 @@ namespace Tourist_Project.Model
         public Image()
         {
         }
-        public Image(int id, string url)
+        public Image(string url)
         {
-            Id = id;
             this.Url = url;
         }
 

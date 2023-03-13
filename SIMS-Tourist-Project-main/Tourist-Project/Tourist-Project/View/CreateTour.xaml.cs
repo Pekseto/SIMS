@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using Tourist_Project.Controller;
 using Tourist_Project.Model;
+using Tourist_Project.Repository;
 using Image = Tourist_Project.Model.Image;
 
 namespace Tourist_Project.View
@@ -25,36 +26,29 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class CreateTour : Window
     {
-        private TourController tourController;
-        private LocationController locationController;
+        private TourRepository tourRepository;
+        private LocationRepository locationRepository;
         private ImageController imageController;
+        private TourPointRepository tourPointRepository;
         private Tour tour;
         public CreateTour()
         {
             InitializeComponent();
             DataContext = this;
-            tourController = new TourController();
-            locationController = new LocationController();
+            tourRepository = new TourRepository();
+            locationRepository = new LocationRepository();
             imageController = new ImageController();
             tour = new Tour();
-
         }
 
         public void CreateClick(object sender, RoutedEventArgs e)
         {
-            Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
+            Image image = new Image(Url.Text);
+            //imageRepository.Save(Image);
 
-            Image image = new Image(imageController.GetId(Url.Text), Url.Text);
-
-            tour.Location = location;
-            tour.LocationId = location.Id;
-            tour.Description = Description.Text;
-            tour.Language = Language.Text;
-            tour.MaxGuestsNumber = Convert.ToInt32(MaxGuestsNumber.Text);
-            tour.StartTime = Convert.ToDateTime(StartTime.Text);
-            tour.Duration = Convert.ToInt32(Duration.Text);
-            tour.Image = image; 
-            tourController.Create(tour);
+            //Proveriti prilikom dodavanja
+            tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
+            tourRepository.Save(tour);
             this.Close();
         }
         public void CancelClick(object sender, RoutedEventArgs e)
@@ -64,11 +58,12 @@ namespace Tourist_Project.View
 
         public void AddCheckpointClick(object sender, RoutedEventArgs e)
         {
-            TourPoint checkpoint = new TourPoint(tourPointController.GetId(Checkpoint.Text), Checkpoint.Text); //TODO
+            TourPoint tourPoint = new TourPoint(Checkpoint.Text, tourRepository.NextId());
+            tourPointRepository.Save(tourPoint);
 
             if (!string.IsNullOrWhiteSpace(Checkpoint.Text))
             {
-                tour.TourPoints.Add(checkpoint);
+                tour.TourPoints.Add(tourPoint);
                 
             }
         }

@@ -31,9 +31,8 @@ namespace Tourist_Project.Model
 
         }
 
-        public Location(int id, string city, string country)
+        public Location(string city, string country)
         {
-            Id = id;
             City = city;
             Country = country;
         }

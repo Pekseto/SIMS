@@ -43,8 +43,8 @@ namespace Tourist_Project
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {
-            var CreateTour = new CreateTour();
-            CreateTour.Show();
+            var guideShowWindow = new GuideShowWindow();
+            guideShowWindow.Show();
         }
     }
 }

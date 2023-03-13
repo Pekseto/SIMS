@@ -35,7 +35,10 @@ namespace Tourist_Project.Dao
         public List<Tour> GetAll()
         {
             //TODO:
-
+            foreach (Tour tour in tourStorage.GetAll())
+            {
+                tours.Add(tour);
+            }
             return tours;
         }
 

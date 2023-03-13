@@ -31,9 +31,9 @@ namespace Tourist_Project.Controller
         {
             locationDao.Add(location);
         }
-        public Location GetOne(int id)
+        public Location GetOne(string city)
         {
-            return locationDao.GetAll().Find(location => location.Id == id);
+            return locationDao.GetAll().Find(location => location.City == city);
         }
 
         public int GetId(string city, string country)

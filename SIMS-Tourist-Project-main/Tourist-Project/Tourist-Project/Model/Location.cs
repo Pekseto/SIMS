@@ -25,19 +25,20 @@ namespace Tourist_Project.Model
             get => country;
             set => country = value;
         }
-
+        string fullName
+        {
+            get => fullName;
+            set => fullName = City + " " + Country;
+        }
         public Location()
         {
 
         }
-
-        public Location(int id, string city, string country)
+        public Location(string city, string country)
         {
-            Id = id;
             City = city;
             Country = country;
         }
-
         public string[] ToCSV()
         {
             string[] csvValues =
@@ -48,12 +49,15 @@ namespace Tourist_Project.Model
             };
             return csvValues;
         }
-
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);
             City = values[1];
             Country = values[2];
+        }
+        public override string ToString()
+        {
+            return City + Country;
         }
     }
 }

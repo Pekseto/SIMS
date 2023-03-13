@@ -22,11 +22,6 @@ namespace Tourist_Project.Controller
             return imageDao.GetAll();
         }
 
-        public void Save(List<Image> images)
-        {
-            imageDao.Save(images);
-        }
-
         public void Create(Image image)
         {
             imageDao.Add(image);

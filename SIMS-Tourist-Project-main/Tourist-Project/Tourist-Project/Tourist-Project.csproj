@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\add.png" />
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\edit.png" />

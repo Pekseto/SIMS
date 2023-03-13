@@ -87,7 +87,9 @@ namespace Tourist_Project
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
             Location location = new Location(locationController.GetId(City.Text, Country.Text), City.Text, Country.Text);
+            locationController.Create(location);
             Model.Image image = new Model.Image(imageController.GetId(Url.Text), Url.Text);
+            imageController.Create(image);
             Accommodation newAccommodation = new Accommodation(Name.Text, location, Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), image);
             accommodationController.Add(newAccommodation);
             Close();

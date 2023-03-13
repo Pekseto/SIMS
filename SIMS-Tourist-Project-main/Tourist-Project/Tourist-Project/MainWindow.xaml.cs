@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourist_Project.View;
 
 namespace Tourist_Project
 {
@@ -34,7 +35,8 @@ namespace Tourist_Project
         }
         private void Guest1ButtonClick(object sender, RoutedEventArgs e)
         {
-
+            var guestOne = new GuestOne();
+            guestOne.Show();
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)
         {

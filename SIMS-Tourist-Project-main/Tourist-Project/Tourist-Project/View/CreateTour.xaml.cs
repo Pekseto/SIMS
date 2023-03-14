@@ -28,6 +28,7 @@ namespace Tourist_Project.View
         private TourRepository tourRepository;
         private LocationRepository locationRepository;
         private TourPointRepository tourPointRepository;
+        private ImageRepository imageRepository;
         private Tour tour;
 
         public CreateTour()
@@ -36,6 +37,8 @@ namespace Tourist_Project.View
             DataContext = this;
             tourRepository = new TourRepository();
             locationRepository = new LocationRepository();
+            tourPointRepository = new TourPointRepository();
+            imageRepository = new ImageRepository();
             tour = new Tour();
         }
 
@@ -43,16 +46,17 @@ namespace Tourist_Project.View
         {
 
             Image image = new Image(Url.Text);
-            //imageRepository.Save(Image);
+            imageRepository.Save(image);
 
             //Proveriti prilikom dodavanja
             tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
             tourRepository.Save(tour);
+            GuideShowWindow.Tours.Add(tour);
             this.Close();
         }
         public void CancelClick(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         public void AddCheckpointClick(object sender, RoutedEventArgs e)
@@ -63,6 +67,7 @@ namespace Tourist_Project.View
             if (!string.IsNullOrWhiteSpace(Checkpoint.Text))
             {
                 tour.TourPoints.Add(tourPoint);
+                Checkpoint.Clear();
                 
             }
         }

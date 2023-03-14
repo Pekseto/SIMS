@@ -48,17 +48,17 @@
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedTour, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Description" Binding="{Binding maxGuestNum}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Language" Binding="{Binding minStayingDays}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="MaxGuestsNumber" Binding="{Binding daysBeforeCancel}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="StartTime" Binding="{Binding daysBeforeCancel}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding daysBeforeCancel}" Width="auto"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="150"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="100"></DataGridTextColumn>
+                    <DataGridTextColumn Header="MaxGuestsNumber" Binding="{Binding MaxGuestsNumber}" Width="100"></DataGridTextColumn>
+                    <DataGridTextColumn Header="StartTime" Binding="{Binding StartTime}" Width="170"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

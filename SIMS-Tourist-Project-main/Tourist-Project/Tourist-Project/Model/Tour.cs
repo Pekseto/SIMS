@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xaml.Schema;
@@ -21,35 +23,70 @@ namespace Tourist_Project.Model
         public int LocationId
         {
             get => locationId;
-            set => locationId = value;
+            set
+            {
+                if (value != locationId)
+                {
+                    locationId = value;
+                    OnPropertyChanged("LocationId");
+                }
+            }
         }
         
         string name;
         public string Name
         {
             get => name;
-            set => name = value;
+            set
+            {
+                if (value != name)
+                {
+                    name = value;
+                    OnPropertyChanged("Name");
+                }
+            }
         }
 
         string description;
         public string Description
         {
             get => description;
-            set => description = value;
+            set
+            {
+                if (value != description)
+                {
+                    description = value;
+                    OnPropertyChanged("Description");
+                }
+            }
         }
 
         string language;
         public string Language
         {
             get => language;
-            set => language = value;
+            set
+            {
+                if (value != language)
+                {
+                    language = value;
+                    OnPropertyChanged("Language");
+                }
+            }
         }
 
         int maxGuestsNumber;
         public int MaxGuestsNumber
         {
             get => maxGuestsNumber;
-            set => maxGuestsNumber = value;
+            set
+            {
+                if (value != maxGuestsNumber)
+                {
+                    maxGuestsNumber = value;
+                    OnPropertyChanged("MaxGuestsNumber");
+                }
+            }
         }
 
         List<TourPoint> tourPoints;
@@ -63,21 +100,48 @@ namespace Tourist_Project.Model
         public DateTime StartTime
         {
             get => startTime;
-            set => startTime = value;
+            set
+            {
+                if (value != startTime)
+                {
+                    startTime = value;
+                    OnPropertyChanged("StartTime");
+                }
+            }
         }
 
         int duration;
         public int Duration
         {
             get => duration;
-            set => duration = value;
+            set
+            {
+                if (value != duration)
+                {
+                    duration = value;
+                    OnPropertyChanged("Duration");
+                }
+            }
         }
 
         int imageId;
         public int ImageId
         {
             get => imageId;
-            set => imageId = value;
+            set
+            {
+                if (value != imageId)
+                {
+                    imageId = value;
+                    OnPropertyChanged("ImageId");
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Tour()

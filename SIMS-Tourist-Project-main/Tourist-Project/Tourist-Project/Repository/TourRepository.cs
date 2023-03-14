@@ -10,7 +10,7 @@ namespace Tourist_Project.Repository
 {
     public class TourRepository
     {
-        private const string filePath = "../../.../Data/tours.csv";
+        private const string filePath = "../../../Data/tours.csv";
         private readonly Serializer<Tour> serializer;
         private List<Tour> tours;
 

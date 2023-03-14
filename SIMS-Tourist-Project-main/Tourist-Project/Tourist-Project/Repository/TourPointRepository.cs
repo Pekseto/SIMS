@@ -11,7 +11,7 @@ namespace Tourist_Project.Repository
 {
     public class TourPointRepository
     {
-        private const string filePath = "../../.../Data/tourPoints.csv";
+        private const string filePath = "../../../Data/tourPoints.csv";
         private readonly Serializer<TourPoint> serializer;
         private List<TourPoint> tourPoints;
 

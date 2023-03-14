@@ -1,9 +1,10 @@
 ﻿using System;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-	public class GuestReview
-	{
+	public class GuestReview : ISerializable
+    {
 		public int Id { get; set; }
 		public User owner { get; set; }
 		public User guest { get; set; }
@@ -32,6 +33,10 @@ namespace Tourist_Project.Model
             cleanlinessGrade = Convert.ToInt32(values[3]);
             ruleGrade = Convert.ToInt32(values[4]);
             comment = values[5];
+        }
+        public bool IsReviewed()
+        {
+            return cleanlinessGrade != 0 && ruleGrade != 0 && comment != null;
         }
     }
 }

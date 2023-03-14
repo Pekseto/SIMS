@@ -14,22 +14,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
+using Tourist_Project.Repository;
 
 namespace Tourist_Project
 {
     /// <summary>
     /// Interaction logic for OwnerShowWindow.xaml
     /// </summary>
-    public partial class OwnerShowWindow : Window, IObserver
+    public partial class OwnerShowWindow : Window
     {
-        public ObservableCollection<Accommodation> Accommodations { get; set; }
+        public static ObservableCollection<Accommodation> accommodations { get; set; }
         public Accommodation selectedAccommodation { get; set; }
         //public User LoggedInUser { get; set; }
+        private readonly AccommodationRepository accommodationRepository;
         public OwnerShowWindow()
         {
             InitializeComponent();
             DataContext = this;
             //LoggedInUser = user;
+            accommodationRepository = new AccommodationRepository();
+            accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -55,12 +59,10 @@ namespace Tourist_Project
                     MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    accommodationRepository.Delete(selectedAccommodation);
+                    accommodations.Remove(selectedAccommodation);
                 }
             }
-        }
-
-        public void Update()
-        {
         }
     }
 }

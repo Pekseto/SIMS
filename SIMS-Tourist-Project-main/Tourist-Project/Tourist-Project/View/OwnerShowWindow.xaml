@@ -48,7 +48,7 @@
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-        <DataGrid ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="auto">

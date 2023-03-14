@@ -10,7 +10,7 @@ namespace Tourist_Project.Repository
 {
     public class LocationRepository
     {
-        private const string filePath = "";
+        private const string filePath = "../../../Data/locations.csv";
         private readonly Serializer<Location> serializer;
         private List<Location> locations;
 
@@ -33,6 +33,15 @@ namespace Tourist_Project.Repository
                     return location.Id;
             }
             return -1;
+        }
+        public Location GetLocation(int id)
+        {
+            foreach (Location location in locations)
+            {
+                if(location.Id == id)
+                    return location;
+            }
+            return null;
         }
     }
 }

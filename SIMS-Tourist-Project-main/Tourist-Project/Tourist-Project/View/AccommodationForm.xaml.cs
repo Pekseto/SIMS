@@ -85,12 +85,12 @@ namespace Tourist_Project
             if(SelectedAccommodation != null)
             {
                 SelectedAccommodation.Name = Name.Text;
-                SelectedAccommodation.Location = FindLocation();
+                SelectedAccommodation.LocationId = GetId();
                 SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
                 SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
                 SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
                 SelectedAccommodation.DaysBeforeCancel = int.Parse(DaysBeforeCancel.Text);
-                SelectedAccommodation.Image =  CreateImage();
+                SelectedAccommodation.ImageId =  CreateImage();
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
                 {
@@ -101,23 +101,23 @@ namespace Tourist_Project
             }
             else
             {
-                Accommodation newAccommodation = new Accommodation(Name.Text, FindLocation(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
             }
             Close();
         }
 
-        private Location FindLocation()
+        private int GetId()
         {
-            return locationRepository.GetLocation(locationRepository.GetId(City.Text, Country.Text));
+            return locationRepository.GetId(City.Text, Country.Text);
         }
 
-        private Image CreateImage()
+        private int CreateImage()
         {
             Image newImage = new Image(Url.Text);
             Image savedImage = imageRepository.Save(newImage);
-            return savedImage;
+            return savedImage.Id;
         }
 
         private void CancelButtonClick(object sender, RoutedEventArgs e)

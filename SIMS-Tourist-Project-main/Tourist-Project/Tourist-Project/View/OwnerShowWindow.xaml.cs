@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +29,29 @@ namespace Tourist_Project
         public Accommodation selectedAccommodation { get; set; }
         //public User LoggedInUser { get; set; }
         private readonly AccommodationRepository accommodationRepository;
+        private readonly LocationRepository locationRepository;
+        private readonly ImageRepository imageRepository;
+        private string locationFullName;
+        public string LocationFullName
+        {
+            get => locationFullName;
+            set
+            {
+                if (value != locationFullName)
+                {
+                    locationFullName = FindLocation(selectedAccommodation.LocationId);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public OwnerShowWindow()
         {
             InitializeComponent();
@@ -63,6 +88,15 @@ namespace Tourist_Project
                     accommodations.Remove(selectedAccommodation);
                 }
             }
+        }
+        public string FindLocation(int id)
+        {
+            Location location = locationRepository.GetLocation(id);
+            if (location != null)
+            {
+                return location.City + " " + location.Country;
+            }
+            return null;
         }
     }
 }

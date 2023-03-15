@@ -71,7 +71,7 @@ namespace Tourist_Project
             MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
-            //Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
+            Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
             btnSave.Visibility = Visibility.Collapsed;
             Title = "View accommodation";
         }
@@ -101,7 +101,7 @@ namespace Tourist_Project
             MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
-            //Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
+            Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
             Title = "Update accommodation";
         }
         private void EnableEditing()

@@ -8,7 +8,6 @@ namespace Tourist_Project.Repository
 {
 	public class AccommodationDTORepository
 	{
-		private List<AccommodationDTO> accommodationDTOs;
 		private readonly AccommodationRepository accommodationRepository;
 		public AccommodationDTORepository()
 		{

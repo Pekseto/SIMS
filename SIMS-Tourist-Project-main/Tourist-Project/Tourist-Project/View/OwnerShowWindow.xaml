@@ -53,6 +53,13 @@
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="auto">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Image" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImageUrl}"></Image>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationFullName}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding MaxGuestNum}" Width="*"></DataGridTextColumn>

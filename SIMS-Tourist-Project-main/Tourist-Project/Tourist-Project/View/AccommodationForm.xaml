@@ -33,6 +33,6 @@
         <xctk:IntegerUpDown x:Name="DaysBeforeCancel" Grid.Column="1" Margin="10,320,10,160" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
         <TextBox x:Name="Url" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
         <Button x:Name="btnSave" Content="Confirm" Click="ConfirmButtonClick" Margin="75,458,115,22"/>
-                <Button Content="Cancel" Click="CancelButtonClick" Margin="100,458,100,22" Grid.Column="1"/>
+        <Button Content="Cancel" Click="CancelButtonClick" Margin="100,458,100,22" Grid.Column="1"/>
     </Grid>
 </Window>

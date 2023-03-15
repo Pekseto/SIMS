@@ -27,21 +27,11 @@ namespace Tourist_Project.Repository
 
         public int GetId(string city, string country)
         {
-            foreach (Location location in locations)
-            {
-                if (location.City == city && location.Country == country)
-                    return location.Id;
-            }
-            return -1;
+            return locations.Find(x => x.City == city && x.Country == country).Id;
         }
         public Location GetLocation(int id)
         {
-            foreach (Location location in locations)
-            {
-                if(location.Id == id)
-                    return location;
-            }
-            return null;
+            return locations.Find(c => c.Id == id);
         }
     }
 }

@@ -48,13 +48,13 @@
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-        <DataGrid ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid ItemsSource="{Binding accommodationDTOs, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=selectedAccommodationDTO, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="auto">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Location" Binding="{Binding LocationFullName, UpdateSourceTrigger=PropertyChanged}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Location" Binding="{Binding LocationFullName}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding MaxGuestNum}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="MinStayingDays" Binding="{Binding MinStayingDays}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding DaysBeforeCancel}" Width="*"></DataGridTextColumn>

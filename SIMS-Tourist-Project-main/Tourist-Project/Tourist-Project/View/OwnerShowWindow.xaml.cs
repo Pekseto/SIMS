@@ -14,9 +14,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.DTO;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
 using Tourist_Project.Repository;
+using Image = Tourist_Project.Model.Image;
 
 namespace Tourist_Project
 {
@@ -26,24 +28,16 @@ namespace Tourist_Project
     public partial class OwnerShowWindow : Window
     {
         public static ObservableCollection<Accommodation> accommodations { get; set; }
+        public static ObservableCollection<Location> locations { get; set; }
+        public static ObservableCollection<Image> images { get; set; }
+        public static ObservableCollection<AccommodationDTO> accommodationDTOs { get; set; }
         public Accommodation selectedAccommodation { get; set; }
+        public AccommodationDTO selectedAccommodationDTO { get; set; }
         //public User LoggedInUser { get; set; }
         private readonly AccommodationRepository accommodationRepository;
         private readonly LocationRepository locationRepository;
         private readonly ImageRepository imageRepository;
-        private string locationFullName;
-        public string LocationFullName
-        {
-            get => locationFullName;
-            set
-            {
-                if (value != locationFullName)
-                {
-                    locationFullName = FindLocation(selectedAccommodation.LocationId);
-                    OnPropertyChanged();
-                }
-            }
-        }
+        private readonly AccommodationDTORepository accommodationDTORepository;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -58,7 +52,13 @@ namespace Tourist_Project
             DataContext = this;
             //LoggedInUser = user;
             accommodationRepository = new AccommodationRepository();
+            locationRepository = new LocationRepository();
+            imageRepository = new ImageRepository();
+            accommodationDTORepository = new AccommodationDTORepository();
             accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
+            locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            images = new ObservableCollection<Image>(imageRepository.GetAll());
+            accommodationDTOs = new ObservableCollection<AccommodationDTO>(accommodationDTORepository.createDTOs(accommodations, locations, images));
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -68,35 +68,28 @@ namespace Tourist_Project
         }
         private void ShowViewAccommodationForm(object sender, RoutedEventArgs e)
         {
+            selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
             var viewWindow = new AccommodationForm(selectedAccommodation);
             viewWindow.Show();
         }
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
         {
+            selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
             var updateWindow = new AccommodationForm(selectedAccommodation, this);
             updateWindow.Show();
         }
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            if (selectedAccommodation != null)
+            if (selectedAccommodationDTO != null)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure?", "Delete comment",
                     MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    accommodationRepository.Delete(selectedAccommodation);
+                    accommodationRepository.Delete(selectedAccommodationDTO.AccommodationId);
                     accommodations.Remove(selectedAccommodation);
                 }
             }
-        }
-        public string FindLocation(int id)
-        {
-            Location location = locationRepository.GetLocation(id);
-            if (location != null)
-            {
-                return location.City + " " + location.Country;
-            }
-            return null;
         }
     }
 }

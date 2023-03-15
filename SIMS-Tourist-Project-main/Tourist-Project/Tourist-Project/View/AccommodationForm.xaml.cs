@@ -29,6 +29,10 @@ namespace Tourist_Project
         private readonly LocationRepository locationRepository;
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation;
+        public static ObservableCollection<Location> Locations { get;  set; }
+        public static ObservableCollection<string> countries { get; set; }
+        public static ObservableCollection<string> cities { get; set; }
+        public static ObservableCollection<Image> Images { get;  set; }
         public AccommodationForm()
         {
             InitializeComponent();
@@ -36,6 +40,16 @@ namespace Tourist_Project
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository();
             locationRepository = new LocationRepository();
+            cities = new ObservableCollection<string>();
+            countries = new ObservableCollection<string>();
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            Images = new ObservableCollection<Image>(imageRepository.GetAll());
+            foreach(var location in Locations)
+            {
+                //cities.Add(location.City);
+                if (!countries.Contains(location.Country))
+                    countries.Add(location.Country);
+            }
             Title = "Create new accommodation";
         }
 
@@ -46,8 +60,18 @@ namespace Tourist_Project
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository();
             locationRepository = new LocationRepository();
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            Images = new ObservableCollection<Image>(imageRepository.GetAll());
             EnableEditing();
             SelectedAccommodation = selectedAccommodation;
+            Name.Text = selectedAccommodation.Name;
+            Country.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).Country.ToString();
+            City.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).City.ToString();
+            Type.Text = selectedAccommodation.Type.ToString();
+            MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
+            MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
+            DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
+            //Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
             btnSave.Visibility = Visibility.Collapsed;
             Title = "View accommodation";
         }
@@ -58,7 +82,18 @@ namespace Tourist_Project
             imageRepository = new ImageRepository();
             accommodationRepository = new AccommodationRepository();
             locationRepository = new LocationRepository();
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            Images = new ObservableCollection<Image>(imageRepository.GetAll());
+            cities = new ObservableCollection<string>();
+            countries = new ObservableCollection<string>();
+            foreach (var location in Locations)
+            {
+                cities.Add(location.City);
+                if (!countries.Contains(location.Country))
+                    countries.Add(location.Country);
+            }
             SelectedAccommodation = selectedAccommodation;
+            SelectedAccommodation.Location = locationRepository.GetLocation(selectedAccommodation.LocationId);
             Name.Text = selectedAccommodation.Name;
             Country.Text = selectedAccommodation.Location.Country;
             City.Text = selectedAccommodation.Location.City;
@@ -66,7 +101,7 @@ namespace Tourist_Project
             MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
-            Url.Text = selectedAccommodation.Image.Url;
+            //Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
             Title = "Update accommodation";
         }
         private void EnableEditing()
@@ -85,7 +120,7 @@ namespace Tourist_Project
             if(SelectedAccommodation != null)
             {
                 SelectedAccommodation.Name = Name.Text;
-                SelectedAccommodation.LocationId = GetId();
+                SelectedAccommodation.LocationId = GetLocationId();
                 SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
                 SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
                 SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
@@ -101,14 +136,14 @@ namespace Tourist_Project
             }
             else
             {
-                Accommodation newAccommodation = new Accommodation(Name.Text, GetId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
             }
             Close();
         }
 
-        private int GetId()
+        private int GetLocationId()
         {
             return locationRepository.GetId(City.Text, Country.Text);
         }
@@ -124,6 +159,5 @@ namespace Tourist_Project
         {
             Close();
         }
-
     }
 }

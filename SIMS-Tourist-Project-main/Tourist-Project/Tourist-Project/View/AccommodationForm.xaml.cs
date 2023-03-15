@@ -159,5 +159,15 @@ namespace Tourist_Project
         {
             Close();
         }
+
+        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cities.Clear();
+            foreach (var location in Locations)
+            {
+                if (location.Country.Equals(Country.Text))
+                    cities.Add(location.City);
+            }
+        }
     }
 }

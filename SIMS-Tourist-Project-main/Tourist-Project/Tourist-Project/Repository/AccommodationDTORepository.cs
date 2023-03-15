@@ -34,5 +34,15 @@ namespace Tourist_Project.Repository
 		{
 			accommodationRepository.Delete(accommodationDTO.AccommodationId);
 		}
+
+		public void Update(AccommodationDTO accommodationDTO)
+        {
+			accommodationRepository.Update(accommodationRepository.GetById(accommodationDTO.AccommodationId));
+        }
+
+		public void Save(AccommodationDTO accommodationDTO)
+        {
+			accommodationRepository.Save(accommodationRepository.GetById(accommodationDTO.AccommodationId));
+        }
 	}
 }

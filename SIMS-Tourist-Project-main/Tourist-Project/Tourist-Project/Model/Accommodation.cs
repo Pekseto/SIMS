@@ -27,6 +27,12 @@ namespace Tourist_Project.Model
                 }
             }
         }
+        int locationId;
+        public int LocationId
+        {
+            get => locationId;
+            set => locationId = value;
+        }
         Location location;
         public Location Location
         {
@@ -92,6 +98,12 @@ namespace Tourist_Project.Model
                 }
             }
         }
+        int imageId;
+        public int ImageId
+        {
+            get => imageId;
+            set => imageId = value;
+        }
         Image image;
         public Image Image
         {
@@ -115,15 +127,15 @@ namespace Tourist_Project.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public Accommodation() { }
-        public Accommodation(string name, Location location, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, Image image)
+        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId)
         {
             Name = name;
-            Location = location;
+            LocationId = locationId;
             this.Type = type;
             this.MaxGuestNum = maxGuestNum;
             this.MinStayingDays = minStayingDays;
             this.DaysBeforeCancel = daysBeforeCancel;
-            this.Image = image;
+            this.ImageId = imageId;
         }
         public string[] ToCSV()
         {
@@ -135,12 +147,12 @@ namespace Tourist_Project.Model
         {
             Id = Convert.ToInt32(values[0]);
             Name = values[1];
-            Location = new Location() { Id = Convert.ToInt32(values[2]) };
+            LocationId = Convert.ToInt32(values[2]);
             Type = Enum.Parse<AccommodationType>(values[3]);
             MaxGuestNum = Convert.ToInt32(values[4]);
             MinStayingDays = Convert.ToInt32(values[5]);
             DaysBeforeCancel = Convert.ToInt32(values[6]);
-            Image = new Image() { Id = Convert.ToInt32(values[7]) };
+            ImageId = Convert.ToInt32(values[7]);
             //user = new User() { Id = Convert.ToInt32(values[8]) };
         }
     }

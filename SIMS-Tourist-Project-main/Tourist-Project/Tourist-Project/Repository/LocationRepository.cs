@@ -34,5 +34,14 @@ namespace Tourist_Project.Repository
             }
             return -1;
         }
+        public Location GetLocation(int id)
+        {
+            foreach (Location location in locations)
+            {
+                if(location.Id == id)
+                    return location;
+            }
+            return null;
+        }
     }
 }

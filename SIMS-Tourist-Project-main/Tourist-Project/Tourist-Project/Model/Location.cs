@@ -25,11 +25,6 @@ namespace Tourist_Project.Model
             get => country;
             set => country = value;
         }
-        string fullName
-        {
-            get => fullName;
-            set => fullName = City + " " + Country;
-        }
         public Location()
         {
 

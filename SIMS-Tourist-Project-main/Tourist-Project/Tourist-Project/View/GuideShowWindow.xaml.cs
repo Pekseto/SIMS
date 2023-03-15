@@ -34,8 +34,7 @@ namespace Tourist_Project.View
             InitializeComponent();
             DataContext = this;
             tourRepository = new TourRepository();
-            Tours = new ObservableCollection<Tour>(tourRepository.GetAll().FindAll(tour => tour.StartTime == DateTime.Now)); //TODO : Clean code
-            //All tours during day
+            Tours = new ObservableCollection<Tour>(tourRepository.GetTodaysTours());
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)

@@ -25,6 +25,11 @@ namespace Tourist_Project.Repository
             return serializer.FromCSV(filePath);
         }
 
+        public List<Tour> GetTodaysTours()
+        {
+            return GetAll().FindAll(tour => tour.StartTime.Date == DateTime.Today.Date);
+        }
+
         public void Save(Tour tour)
         {
             tour.Id = NextId();

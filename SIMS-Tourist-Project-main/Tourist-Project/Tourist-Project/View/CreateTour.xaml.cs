@@ -51,7 +51,10 @@ namespace Tourist_Project.View
                 tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
 
                 tourRepository.Save(tour);
-                GuideShowWindow.Tours.Add(tour);
+                if (tour.StartTime.Date == DateTime.Today.Date)
+                {
+                    GuideShowWindow.Tours.Add(tour);
+                }
                 this.Close();
             }
             else

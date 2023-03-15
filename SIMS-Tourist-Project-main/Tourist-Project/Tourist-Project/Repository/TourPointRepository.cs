@@ -43,5 +43,10 @@ namespace Tourist_Project.Repository
             }
             return tourPoints.Max(c => c.Id) + 1;
         }
+
+        public List<TourPoint> GetAllForTour(int id)
+        {
+            return GetAll().FindAll(tourPoint => tourPoint.TourId == id);
+        }
     }
 }

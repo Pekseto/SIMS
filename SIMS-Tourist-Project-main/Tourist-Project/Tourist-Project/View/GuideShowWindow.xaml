@@ -26,10 +26,10 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button >
+            <Button Click="StartTourClick">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/view.png" Width="20" Height="25"/>
-                    <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Start tour" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>

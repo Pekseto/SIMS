@@ -34,13 +34,20 @@ namespace Tourist_Project.View
             InitializeComponent();
             DataContext = this;
             tourRepository = new TourRepository();
-            Tours = new ObservableCollection<Tour>(tourRepository.GetAll());
+            Tours = new ObservableCollection<Tour>(tourRepository.GetAll().FindAll(tour => tour.StartTime == DateTime.Now)); //TODO : Clean code
+            //All tours during day
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             var createTourWindow = new CreateTour();
             createTourWindow.Show();
+        }
+
+        private void StartTourClick(object sender, RoutedEventArgs e)
+        {
+            var tourLiveWindow = new TourLiveWindow(SelectedTour);
+            tourLiveWindow.ShowDialog();
         }
     }
 }

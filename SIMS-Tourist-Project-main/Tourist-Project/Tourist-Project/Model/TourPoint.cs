@@ -28,15 +28,23 @@ namespace Tourist_Project.Model
             set => tourId = value;
         }
 
+        private bool visited;
+        public bool Visited
+        {
+            get => visited;
+            set => visited = value;
+        }
+
         public TourPoint()
         {
-
+            this.visited = false;
         }
 
         public TourPoint(string name, int tourId)
         {
             this.name = name;
             this.tourId = tourId;
+            this.visited = false;
         }
 
         public string[] ToCSV()
@@ -47,7 +55,6 @@ namespace Tourist_Project.Model
                 name,
                 tourId.ToString(),
             };
-
             return csvValues;
         }
 

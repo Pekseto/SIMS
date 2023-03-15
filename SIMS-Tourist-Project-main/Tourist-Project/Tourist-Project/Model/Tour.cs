@@ -138,6 +138,13 @@ namespace Tourist_Project.Model
             }
         }
 
+        List<User> tourists;
+        public List<User> Tourists
+        {
+            get => tourists;
+            set => tourists = value;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -147,11 +154,13 @@ namespace Tourist_Project.Model
         public Tour()
         {
             this.tourPoints = new List<TourPoint>();
+            this.tourists = new List<User>();
         }
 
         public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId)
         {
             this.TourPoints = new List<TourPoint>();
+            this.tourists = new List<User>();
 
             this.Name = name;
             this.LocationId = locationId;

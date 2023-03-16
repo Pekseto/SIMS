@@ -9,12 +9,13 @@ namespace Tourist_Project.Repository
 	public class AccommodationDTORepository
 	{
 		private readonly AccommodationRepository accommodationRepository;
+		private List<AccommodationDTO> accommodationDTOs = new();
 		public AccommodationDTORepository()
 		{
 		}
 		public List<AccommodationDTO> createDTOs(ObservableCollection<Accommodation> accommodations, ObservableCollection<Location> locations, ObservableCollection<Image> images)
 		{
-			List<AccommodationDTO> accommodationDTOs = new List<AccommodationDTO>();
+			accommodationDTOs.Clear();
 			foreach (var accommodation in accommodations)
 			{
 				foreach (var location in locations)

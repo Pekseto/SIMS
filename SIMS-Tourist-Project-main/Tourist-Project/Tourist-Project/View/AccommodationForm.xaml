@@ -22,7 +22,7 @@
 
         <TextBox x:Name="Name" Grid.Column="1" Margin="10,70,10,410" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
         <ComboBox ItemsSource="{Binding countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="Country_DropDownClosed"  x:Name="Country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Margin="10,120,120,360"></ComboBox>
-        <ComboBox ItemsSource="{Binding cities, UpdateSourceTrigger=PropertyChanged}" x:Name="City" VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Grid.Column="1" Margin="140,120,10,360"></ComboBox>
+        <ComboBox ItemsSource="{Binding cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="City_DropDownClosed" x:Name="City" VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Grid.Column="1" Margin="140,120,10,360"></ComboBox>
         <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="Type" Grid.Column="1" Margin="10,170,10,310">
             <ComboBoxItem Content="Apartment"/>
             <ComboBoxItem Content="House"/>

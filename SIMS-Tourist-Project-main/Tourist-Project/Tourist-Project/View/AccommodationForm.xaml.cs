@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.DTO;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 using Image = Tourist_Project.Model.Image;
@@ -48,7 +49,7 @@ namespace Tourist_Project
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             foreach(var location in Locations)
             {
-                //cities.Add(location.City);
+                cities.Add(location.City);
                 if (!countries.Contains(location.Country))
                     countries.Add(location.Country);
             }
@@ -67,6 +68,7 @@ namespace Tourist_Project
             EnableEditing();
             SelectedAccommodation = selectedAccommodation;
             Name.Text = selectedAccommodation.Name;
+            //TO_DO
             Country.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).Country.ToString();
             City.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).City.ToString();
             Type.Text = selectedAccommodation.Type.ToString();
@@ -97,6 +99,7 @@ namespace Tourist_Project
             SelectedAccommodation = selectedAccommodation;
             SelectedAccommodation.Location = locationRepository.GetLocation(selectedAccommodation.LocationId);
             Name.Text = selectedAccommodation.Name;
+            //TO_DO
             Country.Text = selectedAccommodation.Location.Country;
             City.Text = selectedAccommodation.Location.City;
             Type.Text = selectedAccommodation.Type.ToString();
@@ -131,9 +134,9 @@ namespace Tourist_Project
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
                 {
-                    int index = OwnerShowWindow.accommodations.IndexOf(SelectedAccommodation);
+                    /*int index = OwnerShowWindow.accommodations.IndexOf(SelectedAccommodation);
                     OwnerShowWindow.accommodations.Remove(SelectedAccommodation);
-                    OwnerShowWindow.accommodations.Insert(index, updatedAccommodation);
+                    OwnerShowWindow.accommodations.Insert(index, updatedAccommodation);*/
                 }
             }
             else
@@ -141,6 +144,7 @@ namespace Tourist_Project
                 Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
+                OwnerShowWindow.accommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetLocation(savedAccommodation.LocationId), imageRepository.GetImage(savedAccommodation.ImageId)));
             }
             Close();
         }
@@ -168,6 +172,15 @@ namespace Tourist_Project
             {
                 if (location.Country.Equals(Country.Text))
                     cities.Add(location.City);
+            }
+        }
+
+        private void City_DropDownClosed(object sender, EventArgs e)
+        {
+            foreach (var location in Locations)
+            {
+                if (location.City.Equals(City.Text))
+                    Country.Text = location.Country;
             }
         }
     }

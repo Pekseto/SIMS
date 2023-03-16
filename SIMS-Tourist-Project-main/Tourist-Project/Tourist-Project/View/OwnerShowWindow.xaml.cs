@@ -88,6 +88,7 @@ namespace Tourist_Project
                 {
                     accommodationRepository.Delete(selectedAccommodationDTO.AccommodationId);
                     accommodations.Remove(selectedAccommodation);
+                    accommodationDTOs.Remove(selectedAccommodationDTO);
                 }
             }
         }

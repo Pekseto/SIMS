@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -159,8 +161,7 @@ namespace Tourist_Project
         {
             Close();
         }
-
-        private void Country_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Country_DropDownClosed(object sender, EventArgs e)
         {
             cities.Clear();
             foreach (var location in Locations)

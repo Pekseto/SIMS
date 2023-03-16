@@ -76,7 +76,8 @@ namespace Tourist_Project
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)
         {
-
+            var guestTwoShowWindow = new GuestTwoWindow();
+            guestTwoShowWindow.Show();
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {

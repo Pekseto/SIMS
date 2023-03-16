@@ -1,0 +1,57 @@
+﻿<Window x:Class="Tourist_Project.View.GuestTwoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tourist_Project.View"
+        mc:Ignorable="d"
+        Title="GuestTwoWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Location:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            <Label Grid.Row="1" Content="Tour duration:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            <Label Grid.Row="2" Content="Language:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+            <Label Grid.Row="3" Content="Number of people:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+
+            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Left" SelectionChanged="CountriesSelectionChanged"/>
+            <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Right"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration}" Height="35" Width="120"></TextBox>
+            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Grid.Column="1" Grid.Row="2" Height="35" Width="120" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GuestsNumber}" Height="35" Width="120" ></TextBox>
+            <Button Content="Search" Grid.Row="4" Grid.Column="1" Height="35" Width="100" Margin="46,26,46,26" Click="SearchClick"/>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="320"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Available tours:" VerticalAlignment="Bottom" Margin="10,0,260,0" FontSize="15"/>
+            <DataGrid Grid.Row="1" Margin="10"
+                  ItemsSource="{Binding Tours}"
+                  SelectedItem="{Binding SelectedTour}"
+                  AutoGenerateColumns="True" IsReadOnly="True">
+
+            </DataGrid>
+            <Button Content="Book tour" Grid.Row="2" Height="35" Width="100"/>
+            <Button Content="Show all" HorizontalAlignment="Left" Margin="319,26,0,0" VerticalAlignment="Top" Width="56" Click="ShowAllClick"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -23,6 +23,7 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class GuestTwoWindow : Window
     {
+
         private readonly TourRepository tourRepository;
         private readonly LocationRepository locationRepository;
         public ObservableCollection<Tour> Tours { get; set; }
@@ -35,10 +36,12 @@ namespace Tourist_Project.View
         public string SelectedLanguage { get; set; }
         public int Duration { get; set; }
         public int GuestsNumber { get; set; }
-        public GuestTwoWindow()
+        public User LoggedInUser { get; set; }
+        public GuestTwoWindow(User user)
         {
             InitializeComponent();
             DataContext = this;
+            LoggedInUser = user;
 
             tourRepository = new TourRepository();
             locationRepository = new LocationRepository();

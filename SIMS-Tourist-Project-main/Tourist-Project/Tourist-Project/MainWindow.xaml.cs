@@ -25,10 +25,12 @@ namespace Tourist_Project
     {
         public static ObservableCollection<GuestReview> guestReviews { get; set; }
         public static ObservableCollection<Reservation> reservations { get; set; }
-        public MainWindow()
+        public User LoggedInUser { get; set; }
+        public MainWindow(User user)
         {
             DataContext = this;
             InitializeComponent();
+            LoggedInUser= user;
             guestReviews = new ObservableCollection<GuestReview>();
             reservations = new ObservableCollection<Reservation>();
         }
@@ -76,8 +78,15 @@ namespace Tourist_Project
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)
         {
-            var guestTwoShowWindow = new GuestTwoWindow();
-            guestTwoShowWindow.Show();
+            if(LoggedInUser.Role == UserRole.guest)
+            {
+                var guestTwoWindow = new GuestTwoWindow(LoggedInUser);
+                guestTwoWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("Wrong user role");
+            }
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {

@@ -29,12 +29,12 @@
             <Label Grid.Row="2" Content="Language:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
             <Label Grid.Row="3" Content="Number of people:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
 
-            <ComboBox ItemsSource="{Binding countries}" SelectedItem="{Binding selectedCountry}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Left" SelectionChanged="CountriesComboBoxSelectionChanged"/>
-            <ComboBox ItemsSource="{Binding cities}" SelectedItem="{Binding selectedCity}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Right"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding duration}" Height="35" Width="120"></TextBox>
-            <ComboBox ItemsSource="{Binding languages}" SelectedItem="{Binding selectedLanguage}" Grid.Column="1" Grid.Row="2" Height="35" Width="120" HorizontalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding numOfPeople}" Height="35" Width="120" ></TextBox>
-            <Button Content="Search" Grid.Row="4" Height="35" Width="100" Grid.ColumnSpan="2" Margin="142,26,143,26" Click="SearchButtonClick"/>
+            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Left" SelectionChanged="CountriesSelectionChanged"/>
+            <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Right"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration}" Height="35" Width="120"></TextBox>
+            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Grid.Column="1" Grid.Row="2" Height="35" Width="120" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GuestsNumber}" Height="35" Width="120" ></TextBox>
+            <Button Content="Search" Grid.Row="4" Grid.Column="1" Height="35" Width="100" Margin="46,26,46,26" Click="SearchClick"/>
         </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
@@ -45,13 +45,13 @@
 
             <Label Content="Available tours:" VerticalAlignment="Bottom" Margin="10,0,260,0" FontSize="15"/>
             <DataGrid Grid.Row="1" Margin="10"
-                  ItemsSource="{Binding tours}"
-                  SelectedItem="{Binding selectedTour}"
+                  ItemsSource="{Binding Tours}"
+                  SelectedItem="{Binding SelectedTour}"
                   AutoGenerateColumns="True" IsReadOnly="True">
 
             </DataGrid>
             <Button Content="Book tour" Grid.Row="2" Height="35" Width="100"/>
-            <Button Content="Refresh" HorizontalAlignment="Left" Margin="319,26,0,0" VerticalAlignment="Top" Width="56" Click="RefreshButtonClick"/>
+            <Button Content="Show all" HorizontalAlignment="Left" Margin="319,26,0,0" VerticalAlignment="Top" Width="56" Click="ShowAllClick"/>
         </Grid>
     </Grid>
 </Window>

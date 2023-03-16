@@ -23,94 +23,95 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class GuestTwoWindow : Window
     {
-        private TourRepository tourRepository;
-        private LocationRepository locationRepository;
-        public ObservableCollection<Tour> tours { get; set; }
-        public Tour selectedTour { get; set; }
-        public ObservableCollection<string> countries { get; set; }
-        public string selectedCountry { get; set; }
-        public ObservableCollection<string> cities { get; set; }
-        public string selectedCity { get; set; }
-        public ObservableCollection<string> languages { get; set; }
-        public string selectedLanguage { get; set; }
-        public int duration { get; set; }
-        public int numOfPeople { get; set; }
+        private readonly TourRepository tourRepository;
+        private readonly LocationRepository locationRepository;
+        public ObservableCollection<Tour> Tours { get; set; }
+        public Tour SelectedTour { get; set; }
+        public ObservableCollection<string> Countries { get; set; }
+        public string SelectedCountry { get; set; }
+        public ObservableCollection<string> Cities { get; set; }
+        public string SelectedCity { get; set; }
+        public ObservableCollection<string> Languages { get; set; }
+        public string SelectedLanguage { get; set; }
+        public int Duration { get; set; }
+        public int GuestsNumber { get; set; }
         public GuestTwoWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
 
             tourRepository = new TourRepository();
             locationRepository = new LocationRepository();
 
-            tours = new ObservableCollection<Tour>(tourRepository.GetAll());
+            Tours = new ObservableCollection<Tour>(tourRepository.GetAll());
+            Countries = new ObservableCollection<string>();
+            Cities = new ObservableCollection<string>();
+            Languages = new ObservableCollection<string>();
 
-            countries = new ObservableCollection<string>();
-            cities = new ObservableCollection<string>();
-            foreach(Location location in locationRepository.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
+            foreach (Location location in locationRepository.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
             {
-                countries.Add(location.Country);
+                Countries.Add(location.Country);
             }
 
-            languages = new ObservableCollection<string>();
             foreach(Tour tour in tourRepository.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
             {
-                languages.Add(tour.Language);
+                Languages.Add(tour.Language);
             }
         }
 
-        private void RefreshButtonClick(object sender, RoutedEventArgs e)
+        private void ShowAllClick(object sender, RoutedEventArgs e)
         {
-            tours.Clear();
+            Tours.Clear();
             foreach(Tour tour in tourRepository.GetAll())
             {
-                tours.Add(tour);
+                Tours.Add(tour);
             }
         }
 
-        private void CountriesComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cities.Clear();
+            Cities.Clear();
             foreach(Location location in locationRepository.GetAll())
             {
-                if (location.Country == selectedCountry)
+                if (location.Country == SelectedCountry)
                 {
-                    cities.Add(location.City);
+                    Cities.Add(location.City);
                 }
             }
         }
 
-        private void SearchButtonClick(object sender, RoutedEventArgs e)
+        private void SearchClick(object sender, RoutedEventArgs e)
         {
-            tours.Clear();
+            Tours.Clear();
             foreach(Tour tour in tourRepository.GetAll())
             {
-                if(selectedCountry != null && GetLocation(tour).Country != selectedCountry)
+                //FILTRIRANJE
+                if(SelectedCountry != null && GetLocation(tour).Country != SelectedCountry)
                 {
                     continue;
                 }
 
-                if(selectedCity != null && GetLocation(tour).City != selectedCity)
+                if(SelectedCity != null && GetLocation(tour).City != SelectedCity)
                 {
                     continue;
                 }
 
-                if(duration != 0 && tour.Duration!= duration)
+                if(Duration != 0 && tour.Duration != Duration)
                 {
                     continue;
                 }
 
-                if(selectedLanguage != null && tour.Language!= selectedLanguage)
+                if(SelectedLanguage != null && tour.Language!= SelectedLanguage)
                 {
                     continue;
                 }
 
-                if(numOfPeople!= 0 && tour.MaxGuestsNumber != numOfPeople)
+                if(GuestsNumber!= 0 && tour.MaxGuestsNumber < GuestsNumber)
                 {
                     continue;
                 }
 
-                tours.Add(tour);
+                Tours.Add(tour);
             }
         }
 

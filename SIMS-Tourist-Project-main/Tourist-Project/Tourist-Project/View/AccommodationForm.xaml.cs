@@ -30,8 +30,10 @@ namespace Tourist_Project
         private readonly ImageRepository imageRepository;
         private readonly AccommodationRepository accommodationRepository;
         private readonly LocationRepository locationRepository;
+        private readonly AccommodationDTORepository accommodationDTORepository;
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation;
+        public AccommodationDTO SelectedAccommodationDTO;
         public static ObservableCollection<Location> Locations { get;  set; }
         public static ObservableCollection<string> countries { get; set; }
         public static ObservableCollection<string> cities { get; set; }
@@ -79,7 +81,7 @@ namespace Tourist_Project
             btnSave.Visibility = Visibility.Collapsed;
             Title = "View accommodation";
         }
-        public AccommodationForm(Accommodation selectedAccommodation, OwnerShowWindow ownerShowWindow)
+        public AccommodationForm(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDTO)
         {
             InitializeComponent();
             DataContext = this;
@@ -97,11 +99,11 @@ namespace Tourist_Project
                     countries.Add(location.Country);
             }
             SelectedAccommodation = selectedAccommodation;
+            SelectedAccommodationDTO = selectedAccommodationDTO;
             SelectedAccommodation.Location = locationRepository.GetLocation(selectedAccommodation.LocationId);
             Name.Text = selectedAccommodation.Name;
-            //TO_DO
-            Country.Text = selectedAccommodation.Location.Country;
-            City.Text = selectedAccommodation.Location.City;
+            Country.Text = SelectedAccommodation.Location.Country;
+            City.Text = SelectedAccommodation.Location.City;
             Type.Text = selectedAccommodation.Type.ToString();
             MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
@@ -134,7 +136,11 @@ namespace Tourist_Project
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
                 {
-                    /*int index = OwnerShowWindow.accommodations.IndexOf(SelectedAccommodation);
+                    var ownerShowWindow = new OwnerShowWindow();
+                    ownerShowWindow.Show();
+                    /*int index = OwnerShowWindow.accommodationDTOs.IndexOf(SelectedAccommodationDTO);
+                    OwnerShowWindow.accommodationDTOs[index] = SelectedAccommodationDTO;
+                    *//*int index = OwnerShowWindow.accommodations.IndexOf(SelectedAccommodation);
                     OwnerShowWindow.accommodations.Remove(SelectedAccommodation);
                     OwnerShowWindow.accommodations.Insert(index, updatedAccommodation);*/
                 }
@@ -148,7 +154,6 @@ namespace Tourist_Project
             }
             Close();
         }
-
         private int GetLocationId()
         {
             return locationRepository.GetId(City.Text, Country.Text);

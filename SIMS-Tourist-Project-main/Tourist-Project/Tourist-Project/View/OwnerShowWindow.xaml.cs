@@ -75,8 +75,9 @@ namespace Tourist_Project
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
         {
             selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
-            var updateWindow = new AccommodationForm(selectedAccommodation, this);
+            var updateWindow = new AccommodationForm(selectedAccommodation, selectedAccommodationDTO);
             updateWindow.Show();
+            Close();
         }
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {

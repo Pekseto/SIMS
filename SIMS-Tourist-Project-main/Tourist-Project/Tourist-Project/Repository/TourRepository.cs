@@ -22,7 +22,8 @@ namespace Tourist_Project.Repository
 
         public List<Tour> GetAll()
         {
-            return serializer.FromCSV(filePath);
+            tours = serializer.FromCSV(filePath);
+            return tours;
         }
 
         public void Save(Tour tour)

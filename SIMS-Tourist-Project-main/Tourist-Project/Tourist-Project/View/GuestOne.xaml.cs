@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.Repository;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
 
@@ -20,89 +21,129 @@ namespace Tourist_Project.View
     /// <summary>
     /// Interaction logic for GuestOne.xaml
     /// </summary>
-    public partial class GuestOne : Window, IObserver
+    public partial class GuestOne : Window
     {
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation selectedAccommodation { get; set; }
 
-        public int SelectedIndex { get; set; }
-     
+        public ObservableCollection<string> Countries { get; set; }
+        public ObservableCollection<string> Cities { get; set; }
+
+        public Location Location { get; set; }
+        public ObservableCollection<Location> Locations { get; set; }
+
+        private readonly AccommodationRepository accommodationRepository;
+
+        private readonly LocationRepository locationRepository;
+        public string SelectedCountry { get; set; }
+        public string SelectedCity { get; set; }
+
+        public Accommodation SelectedAccommodation { get; set; }
+
+        public AccommodationType AccomodationType { get; set; }
+        public string SearchedName { get; set; }
+        public string SearchedLocation { get; set; }
+
+        public int SearchedNumberOfGuests { get; set; }
+
+        public int SearchedDaysBeforeCancelation { get; set; }
+        public string SelectedType { get; set; }
+
+        public ObservableCollection<string> AccommodationTypes { get; set; }
+
         public GuestOne()
         {
             InitializeComponent();
             DataContext = this;
 
-        }
+            locationRepository = new LocationRepository();
+            accommodationRepository = new AccommodationRepository();
+            //accommodationRepository.Subscribe(this);//znaci da ce ovde prikazivati sve promene u listama - ovaj prozor je subskrajbovan na kontroler?
+            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            
+           
+            AccommodationTypes = new ObservableCollection<string>();
 
-        public void Update()
-        {
+            Countries = new ObservableCollection<string>();
 
-        }
+            Cities = new ObservableCollection<string>();
 
-        private void SearchByNameClick(object sender, RoutedEventArgs e)
-        {
-            var searchWindow = new SearchWindow();
-            searchWindow.Show();
-        }
-
-        
-
-        private void SearchByTypeClick(object sender, RoutedEventArgs e)
-        {
-            var searchWindow = new SearchWindow();
-            searchWindow.Show();
-        }
-
-        private void SearchByLocationClick(object sender, RoutedEventArgs e)
-        {
-            var searchWindow = new SearchWindow();
-            searchWindow.Show();
-        }
-
-        private void SearchByNumberOfGuestsClick(object sender, RoutedEventArgs e)
-        {
-            var searchWindow = new SearchWindow();
-            searchWindow.Show();
-        }
-
-        private void SearchByDaysForResClick(object sender, RoutedEventArgs e)
-        {
-            var searchWindow = new SearchWindow();
-            searchWindow.Show();
-        }
-
-
-        /*private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(ComboBoxItem.ContentProperty.Equals("Name"))
+            foreach (Location location in Locations)
             {
-                var searchWindow = new SearchWindow();
-                searchWindow.Show();
+                if (Countries.Contains(location.Country))
+                {
+                    continue;
+                }
+                else
+                {
+                    Countries.Add(location.Country);
+                }
             }
-            else if(ComboBoxItem.ContentProperty.Equals("Location"))
+
+            foreach (Location location in Locations)
             {
-                var searchWindow = new SearchWindow();
-                searchWindow.Show();
+                Cities.Add(location.City);
             }
-            else if(ComboBoxItem.ContentProperty.Equals("Type"))
+          
+
+            foreach(string type in Enum.GetNames(typeof(AccommodationType)))
+                {
+                    type.ToString();
+                    AccommodationTypes.Add(type);
+                }
+
+        }
+
+    
+        private void SelectedCountryChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            Cities.Clear();
+            foreach(Location location in Locations)
             {
-                var searchWindow = new SearchWindow();
-                searchWindow.Show();
+                if(location.Country == SelectedCountry)
+                {
+                    Cities.Add(location.City);
+                }
             }
-            else if(ComboBoxItem.ContentProperty.Equals("Number of Guests"))
+        }
+
+        private void SelectedCityChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            foreach (Location location in Locations)
             {
-                var searchWindow = new SearchWindow();
-                searchWindow.Show();
+                if (location.City == SelectedCity)
+                {
+                    SelectedCountry = location.Country;  
+                }
             }
-            else
+        }
+          
+        public ObservableCollection<Accommodation> SearchClick(object sender, RoutedEventArgs e)
+        {
+            Accommodations.Clear();
+            if(SearchedName == null)
             {
-                var searchWindow = new SearchWindow();
-                searchWindow.Show();
+                SearchedName = string.Empty;
             }
-        }*/
+            
+            if(SelectedCountry == null)
+            {
+                SelectedCountry = string.Empty;
+            }
+
+            if(SelectedCity == null)
+            {
+                SelectedCity = string.Empty;
+            }    
 
 
+
+            return Accommodations;
+        }
 
     }
 }

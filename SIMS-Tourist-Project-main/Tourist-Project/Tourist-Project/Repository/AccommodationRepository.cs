@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Model;
+using Tourist_Project.Observer;
 using Tourist_Project.Serializer;
+using System.Threading.Tasks;
 
 namespace Tourist_Project.Repository
 {
-	public class AccommodationRepository
+	public class AccommodationRepository : Subject
 	{
         private const string FilePath = "../../../Data/accommodations.csv";
         private readonly Serializer<Accommodation> serializer;
         private List<Accommodation> accommodations;
+        private readonly List<IObserver> _observers;
+        //private 
         public AccommodationRepository()
         {
             serializer = new Serializer<Accommodation>();
             accommodations = serializer.FromCSV(FilePath);
+            _observers = new List<IObserver>();
         }
         public List<Accommodation> GetAll()
         {
@@ -58,5 +63,24 @@ namespace Tourist_Project.Repository
             serializer.ToCSV(FilePath, accommodations);
             return accommodation;
         }
+
+        public void Subscribe(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Unsubscribe(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update();
+            }
+        }
+
     }
 }

@@ -6,47 +6,56 @@
         xmlns:local="clr-namespace:Tourist_Project.View"
         mc:Ignorable="d"
         Title="GuestOne" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="760"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
-        </Grid.RowDefinitions>
-        <ToolBar Height="31" Margin="4,2,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.034,0.056" Header="Search By" Grid.ColumnSpan="3">
-            <ComboBox VerticalAlignment="Top" Width="120" Height="22">
-                <ComboBoxItem PreviewMouseDown="SearchByNameClick" Content="Name"/>
-                <ComboBoxItem PreviewMouseDown="SearchByLocationClick" Content="Location"/>
-                <ComboBoxItem PreviewMouseDown="SearchByTypeClick" Content="Type"/>
-                <ComboBoxItem PreviewMouseDown="SearchByNumberOfGuestsClick" Content="Number of Guests"/>
-                <ComboBoxItem PreviewMouseDown="SearchByDaysForResClick" Content="Days For Reservation"/>
 
-            </ComboBox>
-        </ToolBar>
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
-                  IsReadOnly="True" SelectionMode="Single"
-                  AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Image" Width="150">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding imageUrl}"></Image>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding maxGuestNum}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="MinStayingDays" Binding="{Binding minStayingDays}" Width="auto"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding daysBeforeCancel}" Width="auto"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+    <Grid>
+        <DockPanel>
+            <ToolBar DockPanel.Dock="Top" Height="25">
+                <Label Content="Name" Height="26"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path =SearchedName}"  Width="64" VerticalAlignment="Top"/>
+                <Label Content="Type" Height="26"/>
+                <ComboBox ItemsSource ="{Binding AccommodationTypes}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Left" Width="68"/>
+
+                <Label Content="Country" Height="26"/>
+                <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" SelectionChanged="SelectedCountryChanged" Width="64" VerticalAlignment="Top"/>
+                <Label Content="City" Height="26"/>
+                <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" SelectionChanged="SelectedCityChanged" Width="64" VerticalAlignment="Top"/>
+                <Label Content="Geusts Number" Height="26"/>
+                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path=SearchedNumberOfGuests}" Width="54"/>
+                <Label Content="Days Before Cancel" Height="26" Width="110"/>
+                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path= SearchedDaysBeforeCancelation}" Width="58"/>
+                <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SearchClick"/>
+                
+            </ToolBar>
+
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481">
+                <DockPanel>
+                    <DataGrid ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                        IsReadOnly="True" SelectionMode="Single"
+                        AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="800">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Image" Width="150">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding imageUrl}"></Image>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
+                            <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding MaxGuestNum}" Width="auto"></DataGridTextColumn>
+                            <DataGridTextColumn Header="MinStayingDays" Binding="{Binding MinStayingDays}" Width="auto"></DataGridTextColumn>
+                            <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding DaysBeforeCancel}" Width="auto"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </StackPanel>
+        </DockPanel>
+
+
+
+
+
     </Grid>
+
+
 </Window>

@@ -139,7 +139,7 @@ namespace Tourist_Project.Model
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), Image.Id.ToString()};
+            string[] csvValues = { Id.ToString(), Name, LocationId.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), ImageId.ToString()};
             return csvValues;
         }
 

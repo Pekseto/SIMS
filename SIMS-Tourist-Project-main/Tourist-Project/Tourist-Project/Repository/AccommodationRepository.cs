@@ -40,10 +40,10 @@ namespace Tourist_Project.Repository
             return accommodations.Max(c => c.Id) + 1;
         }
 
-        public void Delete(Accommodation accommodation)
+        public void Delete(int id)
         {
             accommodations = serializer.FromCSV(FilePath);
-            Accommodation founded = accommodations.Find(c => c.Id == accommodation.Id);
+            Accommodation founded = accommodations.Find(c => c.Id == id);
             accommodations.Remove(founded);
             serializer.ToCSV(FilePath, accommodations);
         }
@@ -57,6 +57,10 @@ namespace Tourist_Project.Repository
             accommodations.Insert(index, accommodation);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, accommodations);
             return accommodation;
+        }
+        public Accommodation GetById(int id)
+        {
+            return accommodations.Find(c =>c.Id == id);
         }
     }
 }

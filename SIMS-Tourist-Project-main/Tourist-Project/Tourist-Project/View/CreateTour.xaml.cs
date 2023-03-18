@@ -44,15 +44,24 @@ namespace Tourist_Project.View
 
         public void CreateClick(object sender, RoutedEventArgs e)
         {
+            if (tour.TourPoints.Count() >= 2)
+            {
+                Image image = new Image(Url.Text);
+                imageRepository.Save(image);
+                tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
 
-            Image image = new Image(Url.Text);
-            imageRepository.Save(image);
-
-            //Proveriti prilikom dodavanja
-            tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
-            tourRepository.Save(tour);
-            GuideShowWindow.Tours.Add(tour);
-            this.Close();
+                tourRepository.Save(tour);
+                if (tour.StartTime.Date == DateTime.Today.Date)
+                {
+                    GuideShowWindow.TodayTours.Add(tour);
+                }
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("You must enter minimum two checkpoints!");
+            }
+            
         }
         public void CancelClick(object sender, RoutedEventArgs e)
         {
@@ -68,7 +77,6 @@ namespace Tourist_Project.View
             {
                 tour.TourPoints.Add(tourPoint);
                 Checkpoint.Clear();
-                
             }
         }
     }

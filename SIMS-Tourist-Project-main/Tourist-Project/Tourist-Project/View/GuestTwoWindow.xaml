@@ -5,53 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.View"
         mc:Ignorable="d"
-        Title="GuestTwoWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="GuestTwoWindow" Height="480" Width="890" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="30"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Location:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="1" Content="Tour duration:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="2" Content="Language:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-            <Label Grid.Row="3" Content="Number of people:" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="350"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Content="Location:" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" SelectionChanged="CountriesSelectionChanged" Width="75" Height="25" HorizontalAlignment="Left" Margin="65,0,0,0"/>
+        <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Width="75" Height="25" HorizontalAlignment="Left" Margin="145,0,0,0"/>
+        <Label Content="Tour duration:" Width="85" Margin="250,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Duration}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="335,0,0,0"/>
+        <Label Content="days" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="385,0,0,0"/>
+        <Label Content="Language:" Width="65" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="440,0,0,0"/>
+        <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="505,0,0,0"/>
+        <Label Content="Number of people:" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="595,0,0,0"/>
+        <TextBox Text="{Binding NumberOfPeople}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="705,0,0,0"/>
+        <Button Content="Search" Click="SearchClick" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"/>
 
-            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Left" SelectionChanged="CountriesSelectionChanged"/>
-            <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Grid.Column="1" Height="35" Width="80" HorizontalAlignment="Right"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration}" Height="35" Width="120"></TextBox>
-            <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Grid.Column="1" Grid.Row="2" Height="35" Width="120" HorizontalAlignment="Center"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding GuestsNumber}" Height="35" Width="120" ></TextBox>
-            <Button Content="Search" Grid.Row="4" Grid.Column="1" Height="35" Width="100" Margin="46,26,46,26" Click="SearchClick"/>
-        </Grid>
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="320"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <DataGrid Name="DataGrid" Grid.Row="1" Margin="10"
+                  ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="90"/>
+                <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="120"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="150"/>
+                <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="100"/>
+                <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaxGuestsNumber}" Width="110"/>
+                <DataGridTextColumn Header="Spots left" Binding="{Binding SpotsLeft}" Width="80"/>
+                <DataGridTextColumn Header="Start Date" Binding="{Binding StartTime}" Width="110"/>
+                <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"/>
+            </DataGrid.Columns>
 
-            <Label Content="Available tours:" VerticalAlignment="Bottom" Margin="10,0,260,0" FontSize="15"/>
-            <DataGrid Grid.Row="1" Margin="10"
-                  ItemsSource="{Binding Tours}"
-                  SelectedItem="{Binding SelectedTour}"
-                  AutoGenerateColumns="True" IsReadOnly="True">
+        </DataGrid>
 
-            </DataGrid>
-            <Button Content="Book tour" Grid.Row="2" Height="35" Width="100"/>
-            <Button Content="Show all" HorizontalAlignment="Left" Margin="319,26,0,0" VerticalAlignment="Top" Width="56" Click="ShowAllClick"/>
-        </Grid>
+        <Button Content="Show all" Click="ShowAllClick" Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0"/>
+        <Label Content="How many spots to reserve:" Grid.Row="2" Width="160" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,200,0"/>
+        <TextBox Text="{Binding GuestsNumber}" Grid.Row="2" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,135,0"/>
+        <Button Content="Reserve" Click="ReserveClick" Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,15,0"/>
+
     </Grid>
 </Window>

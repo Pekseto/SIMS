@@ -124,7 +124,6 @@ namespace Tourist_Project
                 SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
                 SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
                 SelectedAccommodation.DaysBeforeCancel = int.Parse(DaysBeforeCancel.Text);
-                SelectedAccommodation.ImageIdes = CreateImage();
                 SelectedAccommodation.ImageId = SelectedAccommodation.ImageIdes.First();
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
@@ -141,7 +140,7 @@ namespace Tourist_Project
             else
             {
 
-                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage().First(), FormIdesString(CreateImage()));
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), Images.Last().Id, FormIdesString(CreateImage()));
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
                 OwnerShowWindow.accommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetLocation(savedAccommodation.LocationId), imageRepository.GetImage(savedAccommodation.ImageId)));
@@ -177,9 +176,9 @@ namespace Tourist_Project
                 Image savedImage = imageRepository.Save(newImage);
                 ides.Add(savedImage.Id);
             }
+            SelectedAccommodation.ImageIdes = ides;
             return ides;
         }
-
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {
             Close();

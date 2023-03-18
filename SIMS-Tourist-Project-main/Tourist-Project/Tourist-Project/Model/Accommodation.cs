@@ -192,7 +192,8 @@ namespace Tourist_Project.Model
             MaxGuestNum = Convert.ToInt32(values[4]);
             MinStayingDays = Convert.ToInt32(values[5]);
             DaysBeforeCancel = Convert.ToInt32(values[6]);
-            ImageIdesCSV = values[7];
+            ImageId = Convert.ToInt32(values[7]);
+            ImageIdesCSV = values[8];
             ImageIdesFromCSV(ImageIdesCSV);
             //user = new User() { Id = Convert.ToInt32(values[8]) };
         }

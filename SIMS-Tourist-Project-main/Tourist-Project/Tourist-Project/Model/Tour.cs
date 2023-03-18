@@ -138,6 +138,20 @@ namespace Tourist_Project.Model
             }
         }
 
+        bool guided;
+        public bool Guided
+        {
+            get => guided;
+            set
+            {
+                if(value != guided)
+                {
+                    guided = value;
+                    OnPropertyChanged("Guided");
+                }
+            }
+        }
+
         List<User> tourists;
         public List<User> Tourists
         {
@@ -170,6 +184,7 @@ namespace Tourist_Project.Model
             this.StartTime = startTime;
             this.Duration = duration;
             this.imageId = imageId;
+            this.Guided = false;
         }
 
         public string[] ToCSV()
@@ -184,7 +199,8 @@ namespace Tourist_Project.Model
                 MaxGuestsNumber.ToString(),
                 StartTime.ToString(),
                 Duration.ToString(),
-                ImageId.ToString()
+                ImageId.ToString(),
+                Guided.ToString()
             };
 
             return csvValues;
@@ -201,6 +217,7 @@ namespace Tourist_Project.Model
             StartTime = DateTime.Parse(values[6]);
             Duration = int.Parse(values[7]);
             ImageId = int.Parse(values[8]);
+            Guided = bool.Parse(values[9]);
         }
     }
 }

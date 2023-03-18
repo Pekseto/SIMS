@@ -25,15 +25,27 @@
                     <TextBlock Text="List of tourists" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
+            <Button Click="CheckBoxClick">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/add.png" Width="20" Height="25"/>
+                    <TextBlock Text="Check chekcpoint" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button Click="EarlyEndClick">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/delete.png" Width="20" Height="25"/>
+                    <TextBlock Text="Early end" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
             <DataGrid ItemsSource="{Binding TourPoints, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedTourPoint, UpdateSourceTrigger=PropertyChanged}"
-                  SelectionMode="Single"
+                  SelectionMode="Single" IsReadOnly="True"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="270" IsReadOnly="True"/>
-                    <DataGridCheckBoxColumn Header="Visited" Width="*" IsReadOnly="False"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="270"/>
+                    <DataGridCheckBoxColumn Header="Visited" Binding="{Binding Visited}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 
@@ -46,6 +47,17 @@ namespace Tourist_Project.Repository
                 return 1;
             }
             return tours.Max(c => c.Id) + 1;
+        }
+
+        public Tour Update(Tour tour)
+        {
+            tours = serializer.FromCSV(filePath);
+            Tour current = tours.Find(t => t.Id == tour.Id);
+            int index = tours.IndexOf(current);
+            tours.Remove(current);
+            tours.Insert(index, tour);
+            serializer.ToCSV(filePath, tours);
+            return current;
         }
     }
 }

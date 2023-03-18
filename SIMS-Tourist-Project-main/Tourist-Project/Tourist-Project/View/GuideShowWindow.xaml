@@ -48,7 +48,7 @@
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid ItemsSource="{Binding TodayTours, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding Path=SelectedTour, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13">

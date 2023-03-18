@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Serializer;
@@ -19,20 +21,42 @@ namespace Tourist_Project.Model
         public string Name
         {
             get => name;
-            set => name = value;
+            set
+            {
+                if(name != value)
+                {
+                    name = value;
+                    OnPropertyChanged();
+                }
+            }
+            
         }
         private int tourId;
         public int TourId
         {
             get => tourId;
-            set => tourId = value;
+            set
+            {
+                if (tourId != value)
+                {
+                    tourId = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private bool visited;
         public bool Visited
         {
             get => visited;
-            set => visited = value;
+            set
+            {
+                if (visited != value)
+                {
+                    visited = value;
+                    OnPropertyChanged("Visited");
+                }
+            }
         }
 
         public TourPoint()
@@ -47,6 +71,12 @@ namespace Tourist_Project.Model
             this.visited = false;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public string[] ToCSV()
         {
             string[] csvValues =
@@ -54,6 +84,7 @@ namespace Tourist_Project.Model
                 id.ToString(),
                 name,
                 tourId.ToString(),
+                visited.ToString(),
             };
             return csvValues;
         }
@@ -63,6 +94,7 @@ namespace Tourist_Project.Model
             id = int.Parse(values[0]);
             name = values[1];
             tourId = int.Parse(values[2]);
+            visited = bool.Parse(values[3]);
         }
     }
 }

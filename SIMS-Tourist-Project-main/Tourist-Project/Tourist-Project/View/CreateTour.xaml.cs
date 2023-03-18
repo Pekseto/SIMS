@@ -53,7 +53,7 @@ namespace Tourist_Project.View
                 tourRepository.Save(tour);
                 if (tour.StartTime.Date == DateTime.Today.Date)
                 {
-                    GuideShowWindow.Tours.Add(tour);
+                    GuideShowWindow.TodayTours.Add(tour);
                 }
                 this.Close();
             }

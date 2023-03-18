@@ -25,16 +25,18 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class GuideShowWindow : Window
     {
-        public static ObservableCollection<Tour> Tours { get; set; }
+        public static ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; }
         private readonly TourRepository tourRepository;
+        public static bool Live { get; set; }
 
         public GuideShowWindow()
         {
             InitializeComponent();
             DataContext = this;
             tourRepository = new TourRepository();
-            Tours = new ObservableCollection<Tour>(tourRepository.GetTodaysTours());
+            TodayTours = new ObservableCollection<Tour>(tourRepository.GetTodaysTours());
+            Live = false;
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
@@ -45,8 +47,19 @@ namespace Tourist_Project.View
 
         private void StartTourClick(object sender, RoutedEventArgs e)
         {
-            var tourLiveWindow = new TourLiveWindow(SelectedTour);
-            tourLiveWindow.ShowDialog();
+            if (!SelectedTour.Guided && !Live)
+            {
+                Live = true;
+
+                var tourLiveWindow = new TourLiveWindow(SelectedTour);
+                tourLiveWindow.ShowDialog();
+
+                tourRepository.Update(SelectedTour);
+            }
+            else
+            {
+                MessageBox.Show("Tour is already guided");
+            }
         }
     }
 }

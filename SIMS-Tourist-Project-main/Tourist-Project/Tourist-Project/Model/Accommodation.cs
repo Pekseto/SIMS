@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
@@ -120,6 +121,33 @@ namespace Tourist_Project.Model
         //public int ownerId { get; set; }
         public User user { get; set; }
 
+        List<int> imageIdes = new();
+        public List<int> ImageIdes 
+        {
+            get => imageIdes;
+            set
+            {
+                if(value != imageIdes)
+                {
+                    imageIdes = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string imageIdesCSV;
+        public string ImageIdesCSV
+        {
+            get => imageIdesCSV;
+            set
+            {
+                if (value != imageIdesCSV)
+                {
+                    imageIdesCSV = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -127,7 +155,7 @@ namespace Tourist_Project.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public Accommodation() { }
-        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId)
+        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes)
         {
             Name = name;
             LocationId = locationId;
@@ -136,10 +164,22 @@ namespace Tourist_Project.Model
             this.MinStayingDays = minStayingDays;
             this.DaysBeforeCancel = daysBeforeCancel;
             this.ImageId = imageId;
+            this.ImageIdesCSV = imageIdes;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, LocationId.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), ImageId.ToString()};
+            ImageIdesToCSV();
+            string[] csvValues = { 
+                Id.ToString(), 
+                Name, 
+                LocationId.ToString(), 
+                Type.ToString(), 
+                MaxGuestNum.ToString(), 
+                MinStayingDays.ToString(), 
+                DaysBeforeCancel.ToString(), 
+                ImageId.ToString(),
+                ImageIdesCSV
+            };
             return csvValues;
         }
 
@@ -152,8 +192,31 @@ namespace Tourist_Project.Model
             MaxGuestNum = Convert.ToInt32(values[4]);
             MinStayingDays = Convert.ToInt32(values[5]);
             DaysBeforeCancel = Convert.ToInt32(values[6]);
-            ImageId = Convert.ToInt32(values[7]);
+            ImageIdesCSV = values[7];
+            ImageIdesFromCSV(ImageIdesCSV);
             //user = new User() { Id = Convert.ToInt32(values[8]) };
+        }
+
+        public void ImageIdesToCSV()
+        {
+            if(ImageIdes.Count > 0)
+            {
+                imageIdesCSV = string.Empty;
+                foreach (var imageId in ImageIdes)
+                {
+                    ImageIdesCSV += imageId + ",";
+                }
+                ImageIdesCSV = ImageIdesCSV.Remove(ImageIdesCSV.Length - 1);
+            }
+        }
+        public void ImageIdesFromCSV(string value)
+        {
+            var imageIdesCSV = value.Split(",");
+            foreach (var imageIde in imageIdesCSV)
+            {
+                if (imageIde != string.Empty)
+                    ImageIdes.Add(int.Parse(imageIde));
+            }
         }
     }
 }

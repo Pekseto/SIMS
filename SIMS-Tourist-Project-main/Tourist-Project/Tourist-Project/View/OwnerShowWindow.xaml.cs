@@ -34,10 +34,10 @@ namespace Tourist_Project
         public Accommodation selectedAccommodation { get; set; }
         public AccommodationDTO selectedAccommodationDTO { get; set; }
         //public User LoggedInUser { get; set; }
-        private readonly AccommodationRepository accommodationRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly ImageRepository imageRepository;
-        private readonly AccommodationDTORepository accommodationDTORepository;
+        private readonly AccommodationRepository accommodationRepository = new();
+        private readonly LocationRepository locationRepository = new();
+        private readonly ImageRepository imageRepository = new();
+        private readonly AccommodationDTORepository accommodationDTORepository = new();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,10 +51,6 @@ namespace Tourist_Project
             InitializeComponent();
             DataContext = this;
             //LoggedInUser = user;
-            accommodationRepository = new AccommodationRepository();
-            locationRepository = new LocationRepository();
-            imageRepository = new ImageRepository();
-            accommodationDTORepository = new AccommodationDTORepository();
             accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
             locations = new ObservableCollection<Location>(locationRepository.GetAll());
             images = new ObservableCollection<Image>(imageRepository.GetAll());

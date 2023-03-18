@@ -27,10 +27,10 @@ namespace Tourist_Project
     /// </summary>
     public partial class AccommodationForm : Window
     {
-        private readonly ImageRepository imageRepository;
-        private readonly AccommodationRepository accommodationRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly AccommodationDTORepository accommodationDTORepository;
+        private readonly ImageRepository imageRepository = new();
+        private readonly AccommodationRepository accommodationRepository = new();
+        private readonly LocationRepository locationRepository = new();
+        private readonly AccommodationDTORepository accommodationDTORepository = new();
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation;
         public AccommodationDTO SelectedAccommodationDTO;
@@ -42,9 +42,6 @@ namespace Tourist_Project
         {
             InitializeComponent();
             DataContext = this;
-            imageRepository = new ImageRepository();
-            accommodationRepository = new AccommodationRepository();
-            locationRepository = new LocationRepository();
             cities = new ObservableCollection<string>();
             countries = new ObservableCollection<string>();
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
@@ -62,9 +59,6 @@ namespace Tourist_Project
         {
             InitializeComponent();
             DataContext = this;
-            imageRepository = new ImageRepository();
-            accommodationRepository = new AccommodationRepository();
-            locationRepository = new LocationRepository();
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             EnableEditing();
@@ -85,9 +79,6 @@ namespace Tourist_Project
         {
             InitializeComponent();
             DataContext = this;
-            imageRepository = new ImageRepository();
-            accommodationRepository = new AccommodationRepository();
-            locationRepository = new LocationRepository();
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             cities = new ObservableCollection<string>();
@@ -132,7 +123,8 @@ namespace Tourist_Project
                 SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
                 SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
                 SelectedAccommodation.DaysBeforeCancel = int.Parse(DaysBeforeCancel.Text);
-                SelectedAccommodation.ImageId =  CreateImage();
+                SelectedAccommodation.ImageIdes = CreateImage();
+                SelectedAccommodation.ImageId = SelectedAccommodation.ImageIdes.First();
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
                 {
@@ -147,7 +139,8 @@ namespace Tourist_Project
             }
             else
             {
-                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
+
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage().First(), Url.Text);
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
                 OwnerShowWindow.accommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetLocation(savedAccommodation.LocationId), imageRepository.GetImage(savedAccommodation.ImageId)));
@@ -159,11 +152,17 @@ namespace Tourist_Project
             return locationRepository.GetId(City.Text, Country.Text);
         }
 
-        private int CreateImage()
+        private List<int> CreateImage()
         {
-            Image newImage = new Image(Url.Text);
-            Image savedImage = imageRepository.Save(newImage);
-            return savedImage.Id;
+            string Urls = Url.Text;
+            List<int> ides = new();
+            foreach (var url in Urls.Split(",")) 
+            {
+                Image newImage = new Image(url);
+                Image savedImage = imageRepository.Save(newImage);
+                ides.Add(savedImage.Id);
+            }
+            return ides;
         }
 
         private void CancelButtonClick(object sender, RoutedEventArgs e)

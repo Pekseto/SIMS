@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Model;
 
-namespace Tourist_Project
+namespace Tourist_Project.DTO
 {
     public class TourDTO : INotifyPropertyChanged
     {
@@ -19,16 +19,16 @@ namespace Tourist_Project
         public string Language { get; set; }
         public int MaxGuestsNumber { get; set; }
 
-        private int guestsLeft;
-        public int GuestsLeft
+        private int spotsLeft;
+        public int SpotsLeft
         {
-            get { return guestsLeft; }
+            get { return spotsLeft; }
             set
             {
-                if (value != guestsLeft)
+                if (value != spotsLeft)
                 {
-                    guestsLeft = value;
-                    OnPropertyChanged(nameof(GuestsLeft));
+                    spotsLeft = value;
+                    OnPropertyChanged(nameof(SpotsLeft));
                 }
             }
         }

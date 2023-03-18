@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.DTO;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 
@@ -57,7 +58,7 @@ namespace Tourist_Project.View
             {
                 var tourDTO = new TourDTO(tour)
                 {
-                    GuestsLeft = GetLeftoverCapacity(tour),
+                    SpotsLeft = GetLeftoverSpots(tour),
                     Location = GetLocation(tour)
                 };
                 Tours.Add(tourDTO);
@@ -131,13 +132,13 @@ namespace Tourist_Project.View
         {
             if(GuestsNumber > 0 && SelectedTour != null)
             {
-                int tourCapacityLeft = SelectedTour.GuestsLeft;           
+                int tourCapacityLeft = SelectedTour.SpotsLeft;           
 
                 if(tourCapacityLeft == 0)
                 {
                     MessageBox.Show("This tours capacity is full at the moment.\n" +
                                     "Here are some other tours on the same location!");
-                    DisplayOtherTours(SelectedTour);
+                    DisplaySimilarTours(SelectedTour);
                 }
                 else if(tourCapacityLeft < GuestsNumber)
                 {
@@ -147,7 +148,7 @@ namespace Tourist_Project.View
                 }
                 else
                 {
-                    SelectedTour.GuestsLeft -= GuestsNumber;
+                    SelectedTour.SpotsLeft -= GuestsNumber;
                     var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, GuestsNumber);
                     reservationRepository.Save(tourReservation);
                     MessageBox.Show("Reservation is successful");
@@ -161,7 +162,7 @@ namespace Tourist_Project.View
             }
         }
 
-        private void DisplayOtherTours(TourDTO selectedTour)
+        private void DisplaySimilarTours(TourDTO selectedTour)
         {
             int locationId = selectedTour.LocationId;
             int selectedTourId = selectedTour.Id;
@@ -177,7 +178,7 @@ namespace Tourist_Project.View
             DataGrid.ItemsSource = filteredList;
         }
 
-        private int GetLeftoverCapacity(Tour tour)
+        private int GetLeftoverSpots(Tour tour)
         {
             int retVal = tour.MaxGuestsNumber;
             foreach (TourReservation reservation in reservationRepository.GetAll())

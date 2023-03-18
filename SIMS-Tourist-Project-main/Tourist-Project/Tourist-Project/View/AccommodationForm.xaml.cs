@@ -83,6 +83,7 @@ namespace Tourist_Project
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             cities = new ObservableCollection<string>();
             countries = new ObservableCollection<string>();
+            locationRepository = new LocationRepository();
             foreach (var location in Locations)
             {
                 cities.Add(location.City);
@@ -140,12 +141,26 @@ namespace Tourist_Project
             else
             {
 
-                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage().First(), Url.Text);
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage().First(), FormIdesString(CreateImage()));
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
                 OwnerShowWindow.accommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetLocation(savedAccommodation.LocationId), imageRepository.GetImage(savedAccommodation.ImageId)));
             }
             Close();
+        }
+        private string FormIdesString(List<int> ides)
+        {
+            if (ides.Count > 0)
+            {
+                string Ides = string.Empty;
+                foreach (var imageId in ides)
+                {
+                    Ides += imageId + ",";
+                }
+                Ides = Ides.Remove(Ides.Length - 1);
+                return Ides;
+            }
+            return null;
         }
         private int GetLocationId()
         {

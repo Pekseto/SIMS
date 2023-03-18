@@ -1,6 +1,8 @@
-0|Apartement1|10|Apartment|10|3|3|0|0
-1|House1|0|House|5|3|2|0|0
-2|Cottage1|0|Cottage|3|2|1|0|0
-3|Apartment|19|Apartment|6|2|6|0|0
-4|Apartement5|17|Apartment|8|5|3|0|
-5|Cottage5|20|Cottage|10|5|3|18|
+0|Apartement1|10|Apartment|10|3|3|0|0,0
+1|House1|0|House|5|3|2|1|2,0
+2|Cottage1|3|Cottage|3|2|1|4|3,0
+3|Apartment|19|Apartment|6|2|6|5|4,0
+4|Apartement5|17|Apartment|8|5|3|6|5,14
+5|Cottage5|20|Cottage|10|5|3|8|18,5
+6|House1|9|House|10|3|2|10|19,20
+7|House3|2|House|10|3|2|22|24,25

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Repository;
+using System.Xml.Linq;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
@@ -17,12 +18,11 @@ namespace Tourist_Project.Model
             get { return id; }
             set { id = value; }
         }
-
         private int userId;
         public int UserId
         {
-            get { return userId; }
-            set { userId = value; }
+            get => userId;
+            set => userId = value;
         }
         private int tourId;
         public int TourId
@@ -37,7 +37,10 @@ namespace Tourist_Project.Model
             set { guestsNumber= value; }
         }
 
-        public TourReservation() { }
+        public TourReservation() 
+        { 
+        
+        }
 
         public TourReservation(int userId, int tourId, int guestsNumber)
         {
@@ -48,7 +51,13 @@ namespace Tourist_Project.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = { id.ToString(), userId.ToString(), tourId.ToString(), guestsNumber.ToString() };
+            string[] csvValues = 
+            { 
+                id.ToString(), 
+                userId.ToString(), 
+                tourId.ToString(),
+                guestsNumber.ToString(),
+            };
             return csvValues;
         }
 

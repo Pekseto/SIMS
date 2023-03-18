@@ -22,7 +22,7 @@ namespace Tourist_Project.Repository
 
         public List<TourReservation> GetAll()
         {
-            return serializer.FromCSV(FilePath).ToList();
+            return serializer.FromCSV(FilePath);
         }
 
         public void Save(TourReservation tourReservation)
@@ -45,3 +45,4 @@ namespace Tourist_Project.Repository
 
     }
 }
+

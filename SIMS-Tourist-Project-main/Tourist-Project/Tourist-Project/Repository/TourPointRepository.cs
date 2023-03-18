@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
@@ -42,6 +43,22 @@ namespace Tourist_Project.Repository
                 return 1;
             }
             return tourPoints.Max(c => c.Id) + 1;
+        }
+
+        public TourPoint Update(TourPoint tourPoint)
+        {
+            tourPoints = serializer.FromCSV(filePath);
+            TourPoint current = tourPoints.Find(t => t.Id == tourPoint.Id);
+            int index = tourPoints.IndexOf(current);
+            tourPoints.Remove(current);
+            tourPoints.Insert(index, tourPoint);
+            serializer.ToCSV(filePath, tourPoints);
+            return current;
+        }
+
+        public List<TourPoint> GetAllForTour(int id)
+        {
+            return GetAll().FindAll(tourPoint => tourPoint.TourId == id);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class GuestTwoWindow : Window
     {
-
         private readonly TourRepository tourRepository;
         private readonly LocationRepository locationRepository;
         private readonly TourReservationRepository reservationRepository;
@@ -77,14 +76,7 @@ namespace Tourist_Project.View
 
         private void ShowAllClick(object sender, RoutedEventArgs e)
         {
-            Tours.Clear();
-            foreach(Tour tour in tourRepository.GetAll())
-            {
-                var tourDTO = new TourDTO(tour);
-                tourDTO.GuestsLeft = GetLeftoverCapacity(tour);
-                tourDTO.Location = GetLocation(tour);
-                Tours.Add(tourDTO);
-            }
+            DataGrid.ItemsSource = Tours;
         }
 
         private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,42 +93,38 @@ namespace Tourist_Project.View
 
         private void SearchClick(object sender, RoutedEventArgs e)
         {
-            Tours.Clear();
-            foreach(Tour tour in tourRepository.GetAll())
+            var filteredList = new ObservableCollection<TourDTO>();
+            foreach(TourDTO tourDTO in Tours)
             {
                 //FILTRIRANJE
-                if(SelectedCountry != null && GetLocation(tour).Country != SelectedCountry)
+                if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
                 {
                     continue;
                 }
 
-                if(SelectedCity != null && GetLocation(tour).City != SelectedCity)
+                if(SelectedCity != null && tourDTO.Location.City != SelectedCity)
                 {
                     continue;
                 }
 
-                if(Duration != 0 && tour.Duration != Duration)
+                if(Duration != 0 && tourDTO.Duration != Duration)
                 {
                     continue;
                 }
 
-                if(SelectedLanguage != null && tour.Language!= SelectedLanguage)
+                if(SelectedLanguage != null && tourDTO.Language!= SelectedLanguage)
                 {
                     continue;
                 }
 
-                if(NumberOfPeople!= 0 && tour.MaxGuestsNumber < NumberOfPeople)
+                if(NumberOfPeople!= 0 && tourDTO.MaxGuestsNumber < NumberOfPeople)
                 {
                     continue;
                 }
 
-                var tourDTO = new TourDTO(tour)
-                {
-                    GuestsLeft = GetLeftoverCapacity(tour),
-                    Location = GetLocation(tour)
-                };
-                Tours.Add(tourDTO);
+                filteredList.Add(tourDTO);
             }
+            DataGrid.ItemsSource = filteredList;
         }
 
         private void ReserveClick(object sender, RoutedEventArgs e)
@@ -168,7 +156,8 @@ namespace Tourist_Project.View
             }
             else
             {
-                MessageBox.Show("Please enter a valid number and select a tour\nin order to make a reservation!");
+                MessageBox.Show("Please enter a valid number and select a tour\n" +
+                                "in order to make a reservation!");
             }
         }
 
@@ -177,19 +166,15 @@ namespace Tourist_Project.View
             int locationId = selectedTour.LocationId;
             int selectedTourId = selectedTour.Id;
 
-            Tours.Clear();
-            foreach(Tour tour in tourRepository.GetAll())
+            var filteredList = new ObservableCollection<TourDTO>();
+            foreach(TourDTO tour in Tours)
             {
                 if(tour.LocationId == locationId && tour.Id != selectedTourId)
                 {
-                    TourDTO tourDTO = new TourDTO(tour)
-                    {
-                        GuestsLeft = GetLeftoverCapacity(tour),
-                        Location = GetLocation(tour)
-                    };
-                    Tours.Add(tourDTO);
+                    filteredList.Add(tour);
                 }
             }
+            DataGrid.ItemsSource = filteredList;
         }
 
         private int GetLeftoverCapacity(Tour tour)
@@ -197,14 +182,14 @@ namespace Tourist_Project.View
             int retVal = tour.MaxGuestsNumber;
             foreach (TourReservation reservation in reservationRepository.GetAll())
             {
-                if(reservation.Id == tour.Id)
+                if(reservation.TourId == tour.Id)
                 {
                     retVal -= reservation.GuestsNumber;
                 }
             }
             return retVal;
         }
-        private Location? GetLocation(Tour tour)
+        private Location GetLocation(Tour tour)
         {
             return locationRepository.GetAll().Find(x => x.Id == tour.LocationId);
         }

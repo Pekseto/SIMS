@@ -44,10 +44,20 @@
             </Grid.RowDefinitions>
 
             <Label Content="Available tours:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0" Width="120" FontSize="15"/>
-            <DataGrid Grid.Row="1" Margin="10,10,10,20"
+            <DataGrid Name="DataGrid" Grid.Row="1" Margin="10,10,10,20"
                   ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="True" IsReadOnly="True">
+                  AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="50"/>
+                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="auto"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="70"/>
+                    <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="65"/>
+                    <DataGridTextColumn Header="Maximum guests" Binding="{Binding MaxGuestsNumber}" Width="105"/>
+                    <DataGridTextColumn Header="Guests left" Binding="{Binding GuestsLeft}" Width="65"/>
+                    <DataGridTextColumn Header="Start Date" Binding="{Binding StartTime}" Width="*"/>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" Width="*"/>
+                </DataGrid.Columns>
 
             </DataGrid>
             <Button Content="Reserve tour" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Height="30" Width="100" Click="ReserveClick" Margin="0,0,15,0"/>

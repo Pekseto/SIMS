@@ -36,7 +36,6 @@ namespace Tourist_Project.Model
             get { return guestsNumber; }
             set { guestsNumber= value; }
         }
-        private readonly TourReservationRepository repository;
 
         public TourReservation() { }
 

@@ -18,6 +18,7 @@ namespace Tourist_Project
         public string Description { get; set; }
         public string Language { get; set; }
         public int MaxGuestsNumber { get; set; }
+
         private int guestsLeft;
         public int GuestsLeft
         {
@@ -53,7 +54,7 @@ namespace Tourist_Project
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

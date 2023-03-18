@@ -24,7 +24,6 @@ namespace Tourist_Project.View
     public partial class TourLiveWindow : Window
     {
         public static ObservableCollection<TourPoint> TourPoints { get; set; }
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
         public TourPoint SelectedTourPoint { get; set; }
         private Tour selectedTour;
         private TourPointRepository tourPointRepository;
@@ -33,8 +32,9 @@ namespace Tourist_Project.View
         {
             InitializeComponent();
             DataContext = this;
-            tourPointRepository = new TourPointRepository();
+
             this.selectedTour = selectedTour;
+            tourPointRepository = new TourPointRepository();
             TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(this.selectedTour.Id));
             TourPoints[0].Visited = true;
             tourPointRepository.Update(TourPoints[0]);
@@ -50,25 +50,31 @@ namespace Tourist_Project.View
         public void CheckBoxClick(object sender, RoutedEventArgs e)
         {
             SelectedTourPoint.Visited = true;
-            tourPointRepository.Update(SelectedTourPoint);
-            TourPoints.Clear();
-            foreach(TourPoint point in tourPointRepository.GetAllForTour(selectedTour.Id))
-            {
-                TourPoints.Add(point);
-            }
-            //TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(selectedTour.Id));
-            //int index = TourPoints.IndexOf(SelectedTourPoint);
-            //TourPoints.Remove(SelectedTourPoint);
-            //TourPoints.Insert(index, SelectedTourPoint);
+            UpdateCollection();
+
             if (IsAllChecked(TourPoints))
             {
                 selectedTour.Guided = true;
                 GuideShowWindow.Live = false;
                 MessageBox.Show("Tour ended");
                 Close();
-
             }
-            //TourPoints.Clear();
+        }
+        
+        public void TouristListClick(object sender, RoutedEventArgs e)
+        {
+            var touristListWindow = new TouristListWindow(SelectedTourPoint);
+            touristListWindow.Show();
+        }
+
+        public void UpdateCollection()
+        {
+            tourPointRepository.Update(SelectedTourPoint);
+            TourPoints.Clear();
+            foreach (TourPoint point in tourPointRepository.GetAllForTour(selectedTour.Id))
+            {
+                TourPoints.Add(point);
+            }
         }
 
         public bool IsAllChecked(ObservableCollection<TourPoint> tourPoints)

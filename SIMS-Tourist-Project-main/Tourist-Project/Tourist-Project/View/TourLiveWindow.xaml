@@ -19,7 +19,7 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
-            <Button>
+            <Button Click="TouristListClick">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="List of tourists" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />

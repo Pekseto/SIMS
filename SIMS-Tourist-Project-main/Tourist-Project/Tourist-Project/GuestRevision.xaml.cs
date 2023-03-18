@@ -21,23 +21,27 @@ namespace Tourist_Project
     /// </summary>
     public partial class GuestRevision : Window
     {
-        public GuestReview guestReview { get; set; } 
+        public GuestReview ReviewingGuest { get; set; } 
         private readonly GuestReviewRepository guestReviewRepository;
         public int OwnerId { get; set; }
         public int GuestId { get; set; }
-        public GuestRevision(int ownerId, int guestId)
+        public GuestRevision(int ownerId, int guestId, GuestReview reviewingGuest)
         {
             InitializeComponent();
             DataContext = this;
             guestReviewRepository = new GuestReviewRepository();
             OwnerId = ownerId;
             GuestId = guestId;
+            ReviewingGuest = reviewingGuest;
         }
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            GuestReview newGuestReview = new GuestReview(OwnerId, GuestId, int.Parse(Cleanliness.Text), int.Parse(Rules.Text), Comment.Text);
-            GuestReview savedGuestReview = guestReviewRepository.Save(newGuestReview);
+            ReviewingGuest.cleanlinessGrade = int.Parse(Cleanliness.Text);
+            ReviewingGuest.ruleGrade = int.Parse(Rules.Text);
+            ReviewingGuest.comment = Comment.Text;
+            GuestReview savedGuestReview = guestReviewRepository.Update(ReviewingGuest);
+            Close();
         }
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Tourist_Project.Model;
+using Tourist_Project.Repository;
 using Tourist_Project.View;
 
 namespace Tourist_Project
@@ -26,6 +27,8 @@ namespace Tourist_Project
         public static ObservableCollection<GuestReview> guestReviews { get; set; }
         public static ObservableCollection<Reservation> reservations { get; set; }
         public User LoggedInUser { get; set; }
+        private readonly GuestReviewRepository guestReviewRepository;
+        private readonly ReservationRepository reservationRepository;
         public MainWindow(User user)
         {
             DataContext = this;
@@ -48,11 +51,11 @@ namespace Tourist_Project
                         {
                             if (!guestReview.IsReviewed() && daysSinceCheckOut < 5)
                             {
-                                MessageBoxResult result = MessageBox.Show("You have unreviewd guests. Do you want to grade them?", "Grade guest",
+                                MessageBoxResult result = MessageBox.Show("You have unreviewed guests. Do you want to grade them?", "Grade guest",
                                 MessageBoxButton.YesNo, MessageBoxImage.Question);
                                 if (result == MessageBoxResult.Yes)
                                 {
-                                    var guestRevisionWindow = new GuestRevision(guestReview.guestId, guestReview.ownerId);
+                                    var guestRevisionWindow = new GuestRevision(guestReview.guestId, guestReview.ownerId, guestReview);
                                     guestRevisionWindow.Show();
                                 }
                                 else
@@ -60,7 +63,12 @@ namespace Tourist_Project
                                     var ownerShowWindow = new OwnerShowWindow();
                                     ownerShowWindow.Show();
                                 }
-                            } 
+                            }
+                            else
+                            {
+                                var ownerShowWindow = new OwnerShowWindow();
+                                ownerShowWindow.Show();
+                            }
                         }
                     }
                 }

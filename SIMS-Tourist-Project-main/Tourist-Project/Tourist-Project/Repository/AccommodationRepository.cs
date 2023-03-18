@@ -45,10 +45,10 @@ namespace Tourist_Project.Repository
             return accommodations.Max(c => c.Id) + 1;
         }
 
-        public void Delete(Accommodation accommodation)
+        public void Delete(int id)
         {
             accommodations = serializer.FromCSV(FilePath);
-            Accommodation founded = accommodations.Find(c => c.Id == accommodation.Id);
+            Accommodation founded = accommodations.Find(c => c.Id == id);
             accommodations.Remove(founded);
             serializer.ToCSV(FilePath, accommodations);
         }
@@ -64,23 +64,24 @@ namespace Tourist_Project.Repository
             return accommodation;
         }
 
+        public Accommodation GetById(int id)
+        {
+            return accommodations.Find(c => c.Id == id);
+        }
+
         public void Subscribe(IObserver observer)
         {
-            _observers.Add(observer);
+            throw new NotImplementedException();
         }
 
         public void Unsubscribe(IObserver observer)
         {
-            _observers.Remove(observer);
+            throw new NotImplementedException();
         }
 
         public void NotifyObservers()
         {
-            foreach (var observer in _observers)
-            {
-                observer.Update();
-            }
+            throw new NotImplementedException();
         }
-
     }
 }

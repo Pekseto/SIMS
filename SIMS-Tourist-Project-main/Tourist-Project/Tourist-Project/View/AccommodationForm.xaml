@@ -21,40 +21,8 @@
         <Label Content="Image url" HorizontalAlignment="Center" FontSize="20" Margin="0,360,0,100"/>
 
         <TextBox x:Name="Name" Grid.Column="1" Margin="10,70,10,410" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
-        <ComboBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Name="Country" Grid.Column="1" Margin="10,120,120,360">
-            <ComboBoxItem Content="Serbia"/>
-            <ComboBoxItem Content="Hungary"/>
-            <ComboBoxItem Content="BH"/>
-            <ComboBoxItem Content="Slovakia"/>
-            <ComboBoxItem Content="Czechia"/>
-        </ComboBox>
-        <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="City" Grid.Column="1" Margin="140,120,10,360">
-            <ComboBoxItem Content="Belgrade"/>
-            <ComboBoxItem Content="Novi Sad"/>
-            <ComboBoxItem Content="Subotica"/>
-            <ComboBoxItem Content="Nis"/>
-            <ComboBoxItem Content="Backa Topola"/>
-            <ComboBoxItem Content="Debrecin"/>
-            <ComboBoxItem Content="Szeged"/>
-            <ComboBoxItem Content="Budapest"/>
-            <ComboBoxItem Content="Baja"/>
-            <ComboBoxItem Content="Ferencvaros"/>
-            <ComboBoxItem Content="Trebinje"/>
-            <ComboBoxItem Content="Banja Luka"/>
-            <ComboBoxItem Content="Zvornik"/>
-            <ComboBoxItem Content="Bijeljina"/>
-            <ComboBoxItem Content="Visegrad"/>
-            <ComboBoxItem Content="Prague"/>
-            <ComboBoxItem Content="Brno"/>
-            <ComboBoxItem Content="České Budějovice"/>
-            <ComboBoxItem Content="Ostrava"/>
-            <ComboBoxItem Content="Hradec"/>
-            <ComboBoxItem Content="Smokovec"/>
-            <ComboBoxItem Content="Bratislava"/>
-            <ComboBoxItem Content="Banska Bystrica"/>
-            <ComboBoxItem Content="Poprad"/>
-            <ComboBoxItem Content="Prievidza"/>
-        </ComboBox>
+        <ComboBox ItemsSource="{Binding countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="Country_DropDownClosed"  x:Name="Country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Margin="10,120,120,360"></ComboBox>
+        <ComboBox ItemsSource="{Binding cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="City_DropDownClosed" x:Name="City" VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Grid.Column="1" Margin="140,120,10,360"></ComboBox>
         <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="Type" Grid.Column="1" Margin="10,170,10,310">
             <ComboBoxItem Content="Apartment"/>
             <ComboBoxItem Content="House"/>
@@ -65,6 +33,6 @@
         <xctk:IntegerUpDown x:Name="DaysBeforeCancel" Grid.Column="1" Margin="10,320,10,160" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
         <TextBox x:Name="Url" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
         <Button x:Name="btnSave" Content="Confirm" Click="ConfirmButtonClick" Margin="75,458,115,22"/>
-                <Button Content="Cancel" Click="CancelButtonClick" Margin="100,458,100,22" Grid.Column="1"/>
+        <Button Content="Cancel" Click="CancelButtonClick" Margin="100,458,100,22" Grid.Column="1"/>
     </Grid>
 </Window>

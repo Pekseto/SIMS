@@ -58,5 +58,9 @@ namespace Tourist_Project.Repository
             serializer.ToCSV(FilePath, images);
             return image;
         }
+        public Image GetImage(int id)
+        {
+            return images.Find(c => c.Id == id);
+        }
     }
 }

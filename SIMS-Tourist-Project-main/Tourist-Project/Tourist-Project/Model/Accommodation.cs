@@ -6,21 +6,21 @@ using Tourist_Project.Serializer;
 namespace Tourist_Project.Model
 {
     public enum AccommodationType { Apartment, House, Cottage }
-	public class Accommodation : ISerializable
-	{
+    public class Accommodation : ISerializable
+    {
         int id;
-		public int Id 
+        public int Id
         {
-            get => id; 
+            get => id;
             set => id = value;
         }
         string name;
-		public string Name
+        public string Name
         {
-            get => name;    
+            get => name;
             set
             {
-                if(value != name)
+                if (value != name)
                 {
                     name = value;
                     OnPropertyChanged();
@@ -139,7 +139,7 @@ namespace Tourist_Project.Model
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Name, Location.Id.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), Image.Id.ToString()};
+            string[] csvValues = { Id.ToString(), Name, LocationId.ToString(), Type.ToString(), MaxGuestNum.ToString(), MinStayingDays.ToString(), DaysBeforeCancel.ToString(), ImageId.ToString() };
             return csvValues;
         }
 

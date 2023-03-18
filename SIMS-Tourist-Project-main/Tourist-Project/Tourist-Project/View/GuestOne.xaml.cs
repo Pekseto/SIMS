@@ -140,6 +140,20 @@ namespace Tourist_Project.View
                 SelectedCity = string.Empty;
             }    
 
+            if(SearchedNumberOfGuests == null)
+            {
+                SearchedNumberOfGuests = 1;
+            }
+
+            if(SearchedDaysBeforeCancelation == null)
+            {
+                foreach(Accommodation accommodation in Accommodations)
+                {
+                    SearchedDaysBeforeCancelation = accommodation.DaysBeforeCancel;
+                }
+            }
+
+
 
 
             return Accommodations;

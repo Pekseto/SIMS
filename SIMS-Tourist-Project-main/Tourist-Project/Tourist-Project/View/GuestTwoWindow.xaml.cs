@@ -23,11 +23,11 @@ namespace Tourist_Project.View
     /// </summary>
     public partial class GuestTwoWindow : Window
     {
-
         private readonly TourRepository tourRepository;
         private readonly LocationRepository locationRepository;
-        public ObservableCollection<Tour> Tours { get; set; }
-        public Tour SelectedTour { get; set; }
+        private readonly TourReservationRepository reservationRepository;
+        public ObservableCollection<TourDTO> Tours { get; set; }
+        public TourDTO SelectedTour { get; set; }
         public ObservableCollection<string> Countries { get; set; }
         public string SelectedCountry { get; set; }
         public ObservableCollection<string> Cities { get; set; }
@@ -35,8 +35,9 @@ namespace Tourist_Project.View
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
         public int Duration { get; set; }
-        public int GuestsNumber { get; set; }
+        public int NumberOfPeople { get; set; }
         public User LoggedInUser { get; set; }
+        public int GuestsNumber { get; set; }
         public GuestTwoWindow(User user)
         {
             InitializeComponent();
@@ -45,11 +46,22 @@ namespace Tourist_Project.View
 
             tourRepository = new TourRepository();
             locationRepository = new LocationRepository();
+            reservationRepository = new TourReservationRepository();
 
-            Tours = new ObservableCollection<Tour>(tourRepository.GetAll());
+            Tours = new ObservableCollection<TourDTO>();
             Countries = new ObservableCollection<string>();
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>();
+
+            foreach(Tour tour in tourRepository.GetAll())
+            {
+                var tourDTO = new TourDTO(tour)
+                {
+                    GuestsLeft = GetLeftoverCapacity(tour),
+                    Location = GetLocation(tour)
+                };
+                Tours.Add(tourDTO);
+            }
 
             foreach (Location location in locationRepository.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
             {
@@ -64,11 +76,7 @@ namespace Tourist_Project.View
 
         private void ShowAllClick(object sender, RoutedEventArgs e)
         {
-            Tours.Clear();
-            foreach(Tour tour in tourRepository.GetAll())
-            {
-                Tours.Add(tour);
-            }
+            DataGrid.ItemsSource = Tours;
         }
 
         private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,39 +93,102 @@ namespace Tourist_Project.View
 
         private void SearchClick(object sender, RoutedEventArgs e)
         {
-            Tours.Clear();
-            foreach(Tour tour in tourRepository.GetAll())
+            var filteredList = new ObservableCollection<TourDTO>();
+            foreach(TourDTO tourDTO in Tours)
             {
                 //FILTRIRANJE
-                if(SelectedCountry != null && GetLocation(tour).Country != SelectedCountry)
+                if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
                 {
                     continue;
                 }
 
-                if(SelectedCity != null && GetLocation(tour).City != SelectedCity)
+                if(SelectedCity != null && tourDTO.Location.City != SelectedCity)
                 {
                     continue;
                 }
 
-                if(Duration != 0 && tour.Duration != Duration)
+                if(Duration != 0 && tourDTO.Duration != Duration)
                 {
                     continue;
                 }
 
-                if(SelectedLanguage != null && tour.Language!= SelectedLanguage)
+                if(SelectedLanguage != null && tourDTO.Language!= SelectedLanguage)
                 {
                     continue;
                 }
 
-                if(GuestsNumber!= 0 && tour.MaxGuestsNumber < GuestsNumber)
+                if(NumberOfPeople!= 0 && tourDTO.MaxGuestsNumber < NumberOfPeople)
                 {
                     continue;
                 }
 
-                Tours.Add(tour);
+                filteredList.Add(tourDTO);
+            }
+            DataGrid.ItemsSource = filteredList;
+        }
+
+        private void ReserveClick(object sender, RoutedEventArgs e)
+        {
+            if(GuestsNumber > 0 && SelectedTour != null)
+            {
+                int tourCapacityLeft = SelectedTour.GuestsLeft;           
+
+                if(tourCapacityLeft == 0)
+                {
+                    MessageBox.Show("This tours capacity is full at the moment.\n" +
+                                    "Here are some other tours on the same location!");
+                    DisplayOtherTours(SelectedTour);
+                }
+                else if(tourCapacityLeft < GuestsNumber)
+                {
+                    MessageBox.Show("Unfortunately, we can't accept that many guests at the moment.\n" +
+                                    "You are welcome to lower the amount of people coming with you!\n" +
+                                    "Capacity left: " + tourCapacityLeft.ToString());
+                }
+                else
+                {
+                    SelectedTour.GuestsLeft -= GuestsNumber;
+                    var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, GuestsNumber);
+                    reservationRepository.Save(tourReservation);
+                    MessageBox.Show("Reservation is successful");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number and select a tour\n" +
+                                "in order to make a reservation!");
             }
         }
 
+        private void DisplayOtherTours(TourDTO selectedTour)
+        {
+            int locationId = selectedTour.LocationId;
+            int selectedTourId = selectedTour.Id;
+
+            var filteredList = new ObservableCollection<TourDTO>();
+            foreach(TourDTO tour in Tours)
+            {
+                if(tour.LocationId == locationId && tour.Id != selectedTourId)
+                {
+                    filteredList.Add(tour);
+                }
+            }
+            DataGrid.ItemsSource = filteredList;
+        }
+
+        private int GetLeftoverCapacity(Tour tour)
+        {
+            int retVal = tour.MaxGuestsNumber;
+            foreach (TourReservation reservation in reservationRepository.GetAll())
+            {
+                if(reservation.TourId == tour.Id)
+                {
+                    retVal -= reservation.GuestsNumber;
+                }
+            }
+            return retVal;
+        }
         private Location GetLocation(Tour tour)
         {
             return locationRepository.GetAll().Find(x => x.Id == tour.LocationId);

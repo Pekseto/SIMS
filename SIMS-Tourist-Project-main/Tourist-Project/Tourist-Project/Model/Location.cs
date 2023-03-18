@@ -53,7 +53,7 @@ namespace Tourist_Project.Model
         }
         public override string ToString()
         {
-            return City + Country;
+            return City + ", " + Country;
         }
     }
 }

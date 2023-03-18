@@ -34,8 +34,10 @@ namespace Tourist_Project
             DataContext = this;
             InitializeComponent();
             LoggedInUser= user;
-            guestReviews = new ObservableCollection<GuestReview>();
-            reservations = new ObservableCollection<Reservation>();
+            guestReviewRepository= new GuestReviewRepository();
+            reservationRepository= new ReservationRepository();
+            guestReviews = new ObservableCollection<GuestReview>(guestReviewRepository.GetAll());
+            reservations = new ObservableCollection<Reservation>(reservationRepository.GetAll());
         }
 
         private void OwnerButtonClick(object sender, RoutedEventArgs e)

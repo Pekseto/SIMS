@@ -136,8 +136,8 @@ namespace Tourist_Project
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
                 if(updatedAccommodation != null)
                 {
-                    var ownerShowWindow = new OwnerShowWindow();
-                    ownerShowWindow.Show();
+                    /*var ownerShowWindow = new OwnerShowWindow();
+                    ownerShowWindow.Show();*/
                     /*int index = OwnerShowWindow.accommodationDTOs.IndexOf(SelectedAccommodationDTO);
                     OwnerShowWindow.accommodationDTOs[index] = SelectedAccommodationDTO;
                     *//*int index = OwnerShowWindow.accommodations.IndexOf(SelectedAccommodation);

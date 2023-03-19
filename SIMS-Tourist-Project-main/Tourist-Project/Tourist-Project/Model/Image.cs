@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Printing;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
@@ -13,7 +10,7 @@ namespace Tourist_Project.Model
         public int Id
         {
 
-            get => id; 
+            get => id;
             set
             {
                 if (value != id)
@@ -36,7 +33,7 @@ namespace Tourist_Project.Model
                 }
             }
         }
-       
+
         public Image()
         {
         }

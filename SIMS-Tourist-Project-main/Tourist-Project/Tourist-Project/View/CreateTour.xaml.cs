@@ -1,19 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 using Image = Tourist_Project.Model.Image;
@@ -61,7 +48,7 @@ namespace Tourist_Project.View
             {
                 MessageBox.Show("You must enter minimum two checkpoints!");
             }
-            
+
         }
         public void CancelClick(object sender, RoutedEventArgs e)
         {

@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 
@@ -21,7 +9,7 @@ namespace Tourist_Project
     /// </summary>
     public partial class GuestRevision : Window
     {
-        public GuestReview ReviewingGuest { get; set; } 
+        public GuestReview ReviewingGuest { get; set; }
         private readonly GuestReviewRepository guestReviewRepository;
         public int OwnerId { get; set; }
         public int GuestId { get; set; }

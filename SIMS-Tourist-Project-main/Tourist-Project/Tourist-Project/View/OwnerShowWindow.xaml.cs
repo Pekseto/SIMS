@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Tourist_Project.DTO;
 using Tourist_Project.Model;
-using Tourist_Project.Observer;
 using Tourist_Project.Repository;
+using Tourist_Project.View;
 using Image = Tourist_Project.Model.Image;
 
 namespace Tourist_Project
@@ -65,7 +53,7 @@ namespace Tourist_Project
         private void ShowViewAccommodationForm(object sender, RoutedEventArgs e)
         {
             selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
-            var viewWindow = new AccommodationForm(selectedAccommodation);
+            var viewWindow = new AccommodationViewWindow(selectedAccommodation);
             viewWindow.Show();
         }
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)

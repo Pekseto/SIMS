@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
@@ -23,13 +18,13 @@ namespace Tourist_Project.Model
             get => name;
             set
             {
-                if(name != value)
+                if (name != value)
                 {
                     name = value;
                     OnPropertyChanged();
                 }
             }
-            
+
         }
         private int tourId;
         public int TourId

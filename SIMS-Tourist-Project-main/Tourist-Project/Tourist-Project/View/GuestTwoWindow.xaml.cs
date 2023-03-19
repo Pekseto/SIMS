@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -96,7 +93,7 @@ namespace Tourist_Project.View
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>();
 
-            foreach(Tour tour in tourRepository.GetAll())
+            foreach (Tour tour in tourRepository.GetAll())
             {
                 var tourDTO = new TourDTO(tour)
                 {
@@ -111,7 +108,7 @@ namespace Tourist_Project.View
                 Countries.Add(location.Country);
             }
 
-            foreach(Tour tour in tourRepository.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
+            foreach (Tour tour in tourRepository.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
             {
                 Languages.Add(tour.Language);
             }
@@ -125,7 +122,7 @@ namespace Tourist_Project.View
         private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Cities.Clear();
-            foreach(Location location in locationRepository.GetAll())
+            foreach (Location location in locationRepository.GetAll())
             {
                 if (location.Country == SelectedCountry)
                 {
@@ -137,30 +134,43 @@ namespace Tourist_Project.View
         private void SearchClick(object sender, RoutedEventArgs e)
         {
             var filteredList = new ObservableCollection<TourDTO>();
-            foreach(TourDTO tourDTO in Tours)
+            foreach (TourDTO tourDTO in Tours)
             {
+<<<<<<< HEAD
                 //FILTERING
                 if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
+=======
+                //FILTRIRANJE
+                if (SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
+>>>>>>> feat/accommodationView
                 {
                     continue;
                 }
 
-                if(SelectedCity != null && tourDTO.Location.City != SelectedCity)
+                if (SelectedCity != null && tourDTO.Location.City != SelectedCity)
                 {
                     continue;
                 }
 
+<<<<<<< HEAD
                 if(duration != 0 && tourDTO.Duration != duration)
+=======
+                if (Duration != 0 && tourDTO.Duration != Duration)
+>>>>>>> feat/accommodationView
                 {
                     continue;
                 }
 
-                if(SelectedLanguage != null && tourDTO.Language!= SelectedLanguage)
+                if (SelectedLanguage != null && tourDTO.Language != SelectedLanguage)
                 {
                     continue;
                 }
 
+<<<<<<< HEAD
                 if(numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
+=======
+                if (NumberOfPeople != 0 && tourDTO.MaxGuestsNumber < NumberOfPeople)
+>>>>>>> feat/accommodationView
                 {
                     continue;
                 }
@@ -172,17 +182,25 @@ namespace Tourist_Project.View
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             if(guestsNumber > 0 && SelectedTour != null)
+=======
+            if (GuestsNumber > 0 && SelectedTour != null)
+>>>>>>> feat/accommodationView
             {
-                int tourCapacityLeft = SelectedTour.SpotsLeft;           
+                int tourCapacityLeft = SelectedTour.SpotsLeft;
 
-                if(tourCapacityLeft == 0)
+                if (tourCapacityLeft == 0)
                 {
                     MessageBox.Show("This tours capacity is full at the moment.\n" +
                                     "Here are some other tours on the same location!");
                     DisplaySimilarTours(SelectedTour);
                 }
+<<<<<<< HEAD
                 else if(tourCapacityLeft < guestsNumber)
+=======
+                else if (tourCapacityLeft < GuestsNumber)
+>>>>>>> feat/accommodationView
                 {
                     MessageBox.Show("Unfortunately, we can't accept that many guests at the moment.\n" +
                                     "You are welcome to lower the amount of people coming with you!\n" +
@@ -210,9 +228,9 @@ namespace Tourist_Project.View
             int selectedTourId = selectedTour.Id;
 
             var filteredList = new ObservableCollection<TourDTO>();
-            foreach(TourDTO tour in Tours)
+            foreach (TourDTO tour in Tours)
             {
-                if(tour.LocationId == locationId && tour.Id != selectedTourId)
+                if (tour.LocationId == locationId && tour.Id != selectedTourId)
                 {
                     filteredList.Add(tour);
                 }
@@ -225,7 +243,7 @@ namespace Tourist_Project.View
             int retVal = tour.MaxGuestsNumber;
             foreach (TourReservation reservation in reservationRepository.GetAll())
             {
-                if(reservation.TourId == tour.Id)
+                if (reservation.TourId == tour.Id)
                 {
                     retVal -= reservation.GuestsNumber;
                 }

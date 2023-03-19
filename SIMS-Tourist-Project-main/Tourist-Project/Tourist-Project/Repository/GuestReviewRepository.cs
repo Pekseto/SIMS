@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository
 {
-	public class GuestReviewRepository
-	{
+    public class GuestReviewRepository
+    {
         private const string FilePath = "../../../Data/guestReviews.csv";
         private readonly Serializer<GuestReview> serializer;
         private List<GuestReview> guestReviews;

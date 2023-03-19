@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
@@ -51,7 +50,7 @@ namespace Tourist_Project.Repository
         public Reservation Update(Reservation reservation)
         {
             reservations = serializer.FromCSV(FilePath);
-            Reservation current =reservations.Find(c => c.Id == reservation.Id);
+            Reservation current = reservations.Find(c => c.Id == reservation.Id);
             int index = reservations.IndexOf(current);
             reservations.Remove(current);
             reservations.Insert(index, reservation);       // keep ascending order of ids in file 

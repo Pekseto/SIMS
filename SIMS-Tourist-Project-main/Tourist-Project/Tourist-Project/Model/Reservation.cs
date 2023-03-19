@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Globalization;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-	public class Reservation : ISerializable
-	{
-		public int Id { get; set; }
+    public class Reservation : ISerializable
+    {
+        public int Id { get; set; }
         public int guestId { get; set; }
-		public DateTime CheckIn { get; set; }
-		public DateTime CheckOut { get; set; }
-		public int guestsNum { get; set; }
-		public int stayingDays { get; set; }
-		public Accommodation accommodation { get; set; }
-		public Reservation() { }
+        public DateTime CheckIn { get; set; }
+        public DateTime CheckOut { get; set; }
+        public int guestsNum { get; set; }
+        public int stayingDays { get; set; }
+        public Accommodation accommodation { get; set; }
+        public Reservation() { }
         public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, Accommodation accommodation)
         {
             CheckIn = checkIn;

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tourist_Project.Repository;
-using System.Xml.Linq;
-using Tourist_Project.Serializer;
+﻿using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-    public class TourReservation: ISerializable
+    public class TourReservation : ISerializable
     {
         private int id;
         public int Id
@@ -34,12 +26,12 @@ namespace Tourist_Project.Model
         public int GuestsNumber
         {
             get { return guestsNumber; }
-            set { guestsNumber= value; }
+            set { guestsNumber = value; }
         }
 
-        public TourReservation() 
-        { 
-        
+        public TourReservation()
+        {
+
         }
 
         public TourReservation(int userId, int tourId, int guestsNumber)
@@ -51,10 +43,10 @@ namespace Tourist_Project.Model
 
         public string[] ToCSV()
         {
-            string[] csvValues = 
-            { 
-                id.ToString(), 
-                userId.ToString(), 
+            string[] csvValues =
+            {
+                id.ToString(),
+                userId.ToString(),
                 tourId.ToString(),
                 guestsNumber.ToString(),
             };
@@ -63,10 +55,10 @@ namespace Tourist_Project.Model
 
         public void FromCSV(string[] values)
         {
-            id= int.Parse(values[0]);
-            userId= int.Parse(values[1]);
-            tourId= int.Parse(values[2]);
-            guestsNumber= int.Parse(values[3]);
+            id = int.Parse(values[0]);
+            userId = int.Parse(values[1]);
+            tourId = int.Parse(values[2]);
+            guestsNumber = int.Parse(values[3]);
         }
     }
 }

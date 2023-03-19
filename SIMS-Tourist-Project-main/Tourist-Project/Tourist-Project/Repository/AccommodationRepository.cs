@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository
 {
-	public class AccommodationRepository
-	{
+    public class AccommodationRepository
+    {
         private const string FilePath = "../../../Data/accommodations.csv";
         private readonly Serializer<Accommodation> serializer;
         private List<Accommodation> accommodations;
@@ -60,7 +59,7 @@ namespace Tourist_Project.Repository
         }
         public Accommodation GetById(int id)
         {
-            return accommodations.Find(c =>c.Id == id);
+            return accommodations.Find(c => c.Id == id);
         }
     }
 }

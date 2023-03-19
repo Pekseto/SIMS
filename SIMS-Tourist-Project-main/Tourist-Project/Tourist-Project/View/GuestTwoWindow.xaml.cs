@@ -46,7 +46,7 @@ namespace Tourist_Project.View
                 Match match = numberRegex.Match(value);
                 if (match.Success)
                 {
-                    duration = Int32.Parse(value);
+                    duration = int.Parse(value);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace Tourist_Project.View
                 Match match = numberRegex.Match(value);
                 if (match.Success)
                 {
-                    numberOfPeople = Int32.Parse(value);
+                    numberOfPeople = int.Parse(value);
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace Tourist_Project.View
                 Match match = numberRegex.Match(value);
                 if (match.Success)
                 {
-                    guestsNumber = Int32.Parse(value);
+                    guestsNumber = int.Parse(value);
                 }
             }
         }
@@ -136,41 +136,24 @@ namespace Tourist_Project.View
             var filteredList = new ObservableCollection<TourDTO>();
             foreach (TourDTO tourDTO in Tours)
             {
-<<<<<<< HEAD
                 //FILTERING
                 if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
-=======
-                //FILTRIRANJE
-                if (SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
->>>>>>> feat/accommodationView
                 {
                     continue;
                 }
-
                 if (SelectedCity != null && tourDTO.Location.City != SelectedCity)
                 {
                     continue;
                 }
-
-<<<<<<< HEAD
                 if(duration != 0 && tourDTO.Duration != duration)
-=======
-                if (Duration != 0 && tourDTO.Duration != Duration)
->>>>>>> feat/accommodationView
                 {
                     continue;
                 }
-
                 if (SelectedLanguage != null && tourDTO.Language != SelectedLanguage)
                 {
                     continue;
                 }
-
-<<<<<<< HEAD
                 if(numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
-=======
-                if (NumberOfPeople != 0 && tourDTO.MaxGuestsNumber < NumberOfPeople)
->>>>>>> feat/accommodationView
                 {
                     continue;
                 }
@@ -182,11 +165,7 @@ namespace Tourist_Project.View
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
             if(guestsNumber > 0 && SelectedTour != null)
-=======
-            if (GuestsNumber > 0 && SelectedTour != null)
->>>>>>> feat/accommodationView
             {
                 int tourCapacityLeft = SelectedTour.SpotsLeft;
 
@@ -196,11 +175,7 @@ namespace Tourist_Project.View
                                     "Here are some other tours on the same location!");
                     DisplaySimilarTours(SelectedTour);
                 }
-<<<<<<< HEAD
                 else if(tourCapacityLeft < guestsNumber)
-=======
-                else if (tourCapacityLeft < GuestsNumber)
->>>>>>> feat/accommodationView
                 {
                     MessageBox.Show("Unfortunately, we can't accept that many guests at the moment.\n" +
                                     "You are welcome to lower the amount of people coming with you!\n" +

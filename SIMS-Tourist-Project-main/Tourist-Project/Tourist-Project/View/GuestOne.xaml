@@ -24,23 +24,19 @@
                 <Label Content="Days Before Cancel" Height="26" Width="110"/>
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path= SearchedDaysBeforeCancelation}" Width="58"/>
                 <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SearchClick"/>
+                <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowAllClick"/>
                 
             </ToolBar>
 
             <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481">
                 <DockPanel>
-                    <DataGrid ItemsSource="{Binding Accommodations, UpdateSourceTrigger=PropertyChanged}"
+                    <DataGrid ItemsSource="{Binding AccommodationDTOs, UpdateSourceTrigger=PropertyChanged}" Name="DataGrid"
                         SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True" SelectionMode="Single"
                         AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="800">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Image" Width="150">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding imageUrl}"></Image>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Location" Width="150" Binding="{Binding LocationFullName}"/>
+
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="auto"></DataGridTextColumn>
                             <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding MaxGuestNum}" Width="auto"></DataGridTextColumn>
                             <DataGridTextColumn Header="MinStayingDays" Binding="{Binding MinStayingDays}" Width="auto"></DataGridTextColumn>

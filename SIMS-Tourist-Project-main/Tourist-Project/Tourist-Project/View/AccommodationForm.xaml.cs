@@ -128,7 +128,7 @@ namespace Tourist_Project
             {
                 SelectedAccommodation.Name = Name.Text;
                 SelectedAccommodation.LocationId = GetLocationId();
-                SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
+                SelectedAccommodation.Type = Enum.Parse<Tourist_Project.Model.AccommodationType>(Type.Text);
                 SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
                 SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
                 SelectedAccommodation.DaysBeforeCancel = int.Parse(DaysBeforeCancel.Text);
@@ -147,7 +147,7 @@ namespace Tourist_Project
             }
             else
             {
-                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
+                Accommodation newAccommodation = new Accommodation(Name.Text, GetLocationId(), Enum.Parse<Tourist_Project.Model.AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(DaysBeforeCancel.Text), CreateImage());
                 Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
                 OwnerShowWindow.accommodations.Add(savedAccommodation);
                 OwnerShowWindow.accommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetLocation(savedAccommodation.LocationId), imageRepository.GetImage(savedAccommodation.ImageId)));

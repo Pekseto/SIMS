@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Tourist_Project.Repository;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
+using Tourist_Project.DTO;
 
 namespace Tourist_Project.View
 {
@@ -24,24 +25,32 @@ namespace Tourist_Project.View
     public partial class GuestOne : Window
     {
 
+        public ObservableCollection<AccommodationDTO> SearchResults { get; set; }
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation selectedAccommodation { get; set; }
+        public List<AccommodationDTO> AccommodationDTOs{ get; set; }
 
         public ObservableCollection<string> Countries { get; set; }
         public ObservableCollection<string> Cities { get; set; }
 
+        public ObservableCollection<Tourist_Project.Model.Image> Images { get; set; }
+
         public Location Location { get; set; }
         public ObservableCollection<Location> Locations { get; set; }
+
+        public ObservableCollection<string> FullLocations { get; set;}
 
         private readonly AccommodationRepository accommodationRepository;
 
         private readonly LocationRepository locationRepository;
+
+        private readonly ImageRepository imageRepository;
+
+        private readonly AccommodationDTORepository accommodationDTORepository;
         public string SelectedCountry { get; set; }
         public string SelectedCity { get; set; }
 
-        public Accommodation SelectedAccommodation { get; set; }
-
-        public AccommodationType AccomodationType { get; set; }
+        public Tourist_Project.Model.AccommodationType AccomodationType { get; set; }
         public string SearchedName { get; set; }
         public string SearchedLocation { get; set; }
 
@@ -52,24 +61,61 @@ namespace Tourist_Project.View
 
         public ObservableCollection<string> AccommodationTypes { get; set; }
 
-        public GuestOne()
+        public User LoggedInUser { get; set; }
+        public GuestOne(User user)
         {
             InitializeComponent();
             DataContext = this;
+            LoggedInUser = user;
 
             locationRepository = new LocationRepository();
             accommodationRepository = new AccommodationRepository();
-            //accommodationRepository.Subscribe(this);//znaci da ce ovde prikazivati sve promene u listama - ovaj prozor je subskrajbovan na kontroler?
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
-            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            imageRepository = new ImageRepository();
+            accommodationDTORepository = new AccommodationDTORepository();    
             
-           
-            AccommodationTypes = new ObservableCollection<string>();
+            AccommodationDTOs = new List<AccommodationDTO>();
+
 
             Countries = new ObservableCollection<string>();
-
             Cities = new ObservableCollection<string>();
+            AccommodationTypes = new ObservableCollection<string>();
+            SearchResults = new ObservableCollection<AccommodationDTO>(AccommodationDTOs);
+            FullLocations = new ObservableCollection<string>();
+            
 
+            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            Images = new ObservableCollection<Tourist_Project.Model.Image>(imageRepository.GetAll());
+
+            AccommodationDTOs = accommodationDTORepository.createDTOs(Accommodations, Locations, Images);
+
+
+            Countries = GetCountries();
+            Cities = GetCities();
+            AccommodationTypes = GetAccommodationTypes();          
+            FullLocations = GetFullLocationNames(); 
+        }
+
+        public ObservableCollection<string> GetAccommodationTypes()
+        {
+            foreach (string type in Enum.GetNames(typeof(Tourist_Project.Model.AccommodationType)))
+            {
+                type.ToString();
+                AccommodationTypes.Add(type);
+            }
+            return AccommodationTypes;
+        }
+
+        public ObservableCollection<string> GetFullLocationNames()
+        {
+            foreach(AccommodationDTO accommodationDTO in AccommodationDTOs)
+            {
+                FullLocations.Add(accommodationDTO.LocationFullName);
+            }
+            return FullLocations;
+        }
+        public ObservableCollection<string> GetCountries()
+        {
             foreach (Location location in Locations)
             {
                 if (Countries.Contains(location.Country))
@@ -81,22 +127,17 @@ namespace Tourist_Project.View
                     Countries.Add(location.Country);
                 }
             }
-
+            return Countries;
+        }
+    
+        public ObservableCollection<string> GetCities()
+        {
             foreach (Location location in Locations)
             {
                 Cities.Add(location.City);
             }
-          
-
-            foreach(string type in Enum.GetNames(typeof(AccommodationType)))
-                {
-                    type.ToString();
-                    AccommodationTypes.Add(type);
-                }
-
+            return Cities;
         }
-
-    
         private void SelectedCountryChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -121,42 +162,82 @@ namespace Tourist_Project.View
                 }
             }
         }
-          
-        public ObservableCollection<Accommodation> SearchClick(object sender, RoutedEventArgs e)
+
+
+        public void HandleEmptyStrings()
         {
-            Accommodations.Clear();
-            if(SearchedName == null)
+            if (SearchedName == null)
             {
                 SearchedName = string.Empty;
             }
-            
-            if(SelectedCountry == null)
+
+            if (SelectedCountry == null)
             {
                 SelectedCountry = string.Empty;
             }
 
-            if(SelectedCity == null)
+            if (SelectedCity == null)
             {
                 SelectedCity = string.Empty;
-            }    
+            }
 
-            if(SearchedNumberOfGuests == null)
+            if (SearchedNumberOfGuests == null)
             {
                 SearchedNumberOfGuests = 1;
             }
 
-            if(SearchedDaysBeforeCancelation == null)
+            if (SearchedDaysBeforeCancelation == null)
             {
-                foreach(Accommodation accommodation in Accommodations)
+                foreach (Accommodation accommodation in Accommodations)
                 {
                     SearchedDaysBeforeCancelation = accommodation.DaysBeforeCancel;
                 }
             }
+        }
+  
+
+        public void SearchClick(object sender, RoutedEventArgs e)
+        {
+            //AccommodationDTOs.Clear();
+            SearchResults.Clear();
+
+            HandleEmptyStrings();
+
+            foreach (AccommodationDTO accommodationDTO in AccommodationDTOs)
+            {
+                if (SearchedName != null && accommodationDTO.Name != SearchedName)
+                {
+                    continue;
+                }
+
+                if(SelectedCountry + SelectedCity != null && accommodationDTO.LocationFullName != SelectedCity + " " + SelectedCountry)
+                {
+                    continue;
+                }
+
+                if( SelectedType != null && accommodationDTO.AccommodationType.ToString() != SelectedType)
+                {
+                    continue;
+                }
+                if (SearchedDaysBeforeCancelation != null && accommodationDTO.DaysBeforeCancel < SearchedDaysBeforeCancelation)
+                {
+                    continue;
+                }
+                if (SearchedNumberOfGuests != null && accommodationDTO.MaxGuestNum < SearchedNumberOfGuests)
+                {
+                    continue;
+                }
+
+                SearchResults.Add(accommodationDTO);
+            }
+            DataGrid.ItemsSource = SearchResults;
+        }
+
+        public void ShowAllClick(object sender, RoutedEventArgs e)
+        {
+            DataGrid.ItemsSource = AccommodationDTOs;
 
 
-
-
-            return Accommodations;
         }
 
     }

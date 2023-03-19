@@ -11,7 +11,7 @@
         <DockPanel>
             <ToolBar DockPanel.Dock="Top" Height="25">
                 <Label Content="Name" Height="26"/>
-                <TextBox TextWrapping="Wrap" Text="{Binding Path =SearchedName}"  Width="64" VerticalAlignment="Top"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path =SearchedName}"  Width="65" VerticalAlignment="Top"/>
                 <Label Content="Type" Height="26"/>
                 <ComboBox ItemsSource ="{Binding AccommodationTypes}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Left" Width="68"/>
 
@@ -25,10 +25,11 @@
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path= SearchedDaysBeforeCancelation}" Width="58"/>
                 <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SearchClick"/>
                 <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowAllClick"/>
-                
+                <Button Content="Reserve Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ReserveClick"/>
+
             </ToolBar>
 
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481">
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481" Width="800">
                 <DockPanel>
                     <DataGrid ItemsSource="{Binding AccommodationDTOs, UpdateSourceTrigger=PropertyChanged}" Name="DataGrid"
                         SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"

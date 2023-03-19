@@ -30,6 +30,8 @@ namespace Tourist_Project.View
         public Accommodation selectedAccommodation { get; set; }
         public List<AccommodationDTO> AccommodationDTOs{ get; set; }
 
+        public AccommodationDTO selectedAccommodationDTO { get; set; }
+
         public ObservableCollection<string> Countries { get; set; }
         public ObservableCollection<string> Cities { get; set; }
 
@@ -236,9 +238,12 @@ namespace Tourist_Project.View
         public void ShowAllClick(object sender, RoutedEventArgs e)
         {
             DataGrid.ItemsSource = AccommodationDTOs;
-
-
         }
 
+        public void ReserveClick(object sender, RoutedEventArgs e)
+        {
+            var BookAccommodation = new BookAccommodationWindow();
+            BookAccommodation.Show();
+        }
     }
 }

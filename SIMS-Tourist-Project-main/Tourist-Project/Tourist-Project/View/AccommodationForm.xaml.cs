@@ -1,20 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Tourist_Project.DTO;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
@@ -34,10 +22,10 @@ namespace Tourist_Project
         public User LoggedInUser { get; set; }
         public Accommodation SelectedAccommodation;
         public AccommodationDTO SelectedAccommodationDTO;
-        public static ObservableCollection<Location> Locations { get;  set; }
+        public static ObservableCollection<Location> Locations { get; set; }
         public static ObservableCollection<string> countries { get; set; }
         public static ObservableCollection<string> cities { get; set; }
-        public static ObservableCollection<Image> Images { get;  set; }
+        public static ObservableCollection<Image> Images { get; set; }
         public AccommodationForm()
         {
             InitializeComponent();
@@ -46,7 +34,7 @@ namespace Tourist_Project
             countries = new ObservableCollection<string>();
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            foreach(var location in Locations)
+            foreach (var location in Locations)
             {
                 cities.Add(location.City);
                 if (!countries.Contains(location.Country))
@@ -64,7 +52,6 @@ namespace Tourist_Project
             EnableEditing();
             SelectedAccommodation = selectedAccommodation;
             Name.Text = selectedAccommodation.Name;
-            //TO_DO
             Country.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).Country.ToString();
             City.Text = locationRepository.GetLocation(SelectedAccommodation.LocationId).City.ToString();
             Type.Text = selectedAccommodation.Type.ToString();
@@ -116,7 +103,7 @@ namespace Tourist_Project
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if(SelectedAccommodation != null)
+            if (SelectedAccommodation != null)
             {
                 SelectedAccommodation.Name = Name.Text;
                 SelectedAccommodation.LocationId = GetLocationId();
@@ -126,7 +113,7 @@ namespace Tourist_Project
                 SelectedAccommodation.DaysBeforeCancel = int.Parse(DaysBeforeCancel.Text);
                 SelectedAccommodation.ImageId = SelectedAccommodation.ImageIdes.First();
                 Accommodation updatedAccommodation = accommodationRepository.Update(SelectedAccommodation);
-                if(updatedAccommodation != null)
+                if (updatedAccommodation != null)
                 {
                     /*var ownerShowWindow = new OwnerShowWindow();
                     ownerShowWindow.Show();*/
@@ -170,7 +157,7 @@ namespace Tourist_Project
         {
             string Urls = Url.Text;
             List<int> ides = new();
-            foreach (var url in Urls.Split(",")) 
+            foreach (var url in Urls.Split(","))
             {
                 Image newImage = new Image(url);
                 Image savedImage = imageRepository.Save(newImage);

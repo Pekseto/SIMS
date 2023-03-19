@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
 
@@ -27,7 +15,7 @@ namespace Tourist_Project.View
         public Accommodation selectedAccommodation { get; set; }
 
         public int SelectedIndex { get; set; }
-     
+
         public GuestOne()
         {
             InitializeComponent();
@@ -46,7 +34,7 @@ namespace Tourist_Project.View
             searchWindow.Show();
         }
 
-        
+
 
         private void SearchByTypeClick(object sender, RoutedEventArgs e)
         {

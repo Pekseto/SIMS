@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xaml.Schema;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
@@ -32,7 +28,7 @@ namespace Tourist_Project.Model
                 }
             }
         }
-        
+
         string name;
         public string Name
         {
@@ -144,7 +140,7 @@ namespace Tourist_Project.Model
             get => guided;
             set
             {
-                if(value != guided)
+                if (value != guided)
                 {
                     guided = value;
                     OnPropertyChanged("Guided");

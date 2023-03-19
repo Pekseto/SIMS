@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tourist_Project.Serializer;
+﻿using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {

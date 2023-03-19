@@ -3,15 +3,15 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model
 {
-	public class GuestReview : ISerializable
+    public class GuestReview : ISerializable
     {
-		public int Id { get; set; }
-		public int ownerId { get; set; }
-		public int guestId { get; set; }
-		public int cleanlinessGrade { get; set; }
-		public int ruleGrade { get; set; }
-		public string comment { get; set; }
-		public GuestReview() { }
+        public int Id { get; set; }
+        public int ownerId { get; set; }
+        public int guestId { get; set; }
+        public int cleanlinessGrade { get; set; }
+        public int ruleGrade { get; set; }
+        public string comment { get; set; }
+        public GuestReview() { }
         public GuestReview(int ownerId, int guestId, int cleanlinessGrade, int ruleGrade, string comment)
         {
             this.ownerId = ownerId;
@@ -22,7 +22,7 @@ namespace Tourist_Project.Model
         }
         public string[] ToCSV()
         {
-            string[] csvValues = {Id.ToString(), ownerId.ToString(), guestId.ToString(), cleanlinessGrade.ToString(), ruleGrade.ToString(), comment};
+            string[] csvValues = { Id.ToString(), ownerId.ToString(), guestId.ToString(), cleanlinessGrade.ToString(), ruleGrade.ToString(), comment };
             return csvValues;
         }
         public void FromCSV(string[] values)

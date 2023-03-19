@@ -7,7 +7,7 @@ namespace Tourist_Project.Model
     {
         owner, guide, guest
     }
-    public class User: ISerializable
+    public class User : ISerializable
     {
         private int id;
         public int Id
@@ -23,7 +23,7 @@ namespace Tourist_Project.Model
             set { username = value; }
         }
 
-		private string password;
+        private string password;
         public string Password
         {
             get { return password; }
@@ -41,13 +41,13 @@ namespace Tourist_Project.Model
         public User(int id, string username, string password, UserRole role)
         {
             this.id = id;
-            this.username= username;
+            this.username = username;
             this.password = password;
             this.role = role;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = {id.ToString(), username, password, role.ToString()};
+            string[] csvValues = { id.ToString(), username, password, role.ToString() };
             return csvValues;
         }
         public void FromCSV(string[] values)

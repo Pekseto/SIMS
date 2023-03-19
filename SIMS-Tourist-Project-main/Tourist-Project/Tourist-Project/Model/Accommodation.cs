@@ -7,21 +7,21 @@ using Tourist_Project.Serializer;
 namespace Tourist_Project.Model
 {
     public enum AccommodationType { Apartment, House, Cottage }
-	public class Accommodation : ISerializable
-	{
+    public class Accommodation : ISerializable
+    {
         int id;
-		public int Id 
+        public int Id
         {
-            get => id; 
+            get => id;
             set => id = value;
         }
         string name;
-		public string Name
+        public string Name
         {
-            get => name;    
+            get => name;
             set
             {
-                if(value != name)
+                if (value != name)
                 {
                     name = value;
                     OnPropertyChanged();
@@ -122,12 +122,12 @@ namespace Tourist_Project.Model
         public User user { get; set; }
 
         List<int> imageIdes = new();
-        public List<int> ImageIdes 
+        public List<int> ImageIdes
         {
             get => imageIdes;
             set
             {
-                if(value != imageIdes)
+                if (value != imageIdes)
                 {
                     imageIdes = value;
                     OnPropertyChanged();
@@ -169,14 +169,14 @@ namespace Tourist_Project.Model
         public string[] ToCSV()
         {
             ImageIdesToCSV();
-            string[] csvValues = { 
-                Id.ToString(), 
-                Name, 
-                LocationId.ToString(), 
-                Type.ToString(), 
-                MaxGuestNum.ToString(), 
-                MinStayingDays.ToString(), 
-                DaysBeforeCancel.ToString(), 
+            string[] csvValues = {
+                Id.ToString(),
+                Name,
+                LocationId.ToString(),
+                Type.ToString(),
+                MaxGuestNum.ToString(),
+                MinStayingDays.ToString(),
+                DaysBeforeCancel.ToString(),
                 ImageId.ToString(),
                 ImageIdesCSV
             };
@@ -200,7 +200,7 @@ namespace Tourist_Project.Model
 
         public void ImageIdesToCSV()
         {
-            if(ImageIdes.Count > 0)
+            if (ImageIdes.Count > 0)
             {
                 imageIdesCSV = string.Empty;
                 foreach (var imageId in ImageIdes)

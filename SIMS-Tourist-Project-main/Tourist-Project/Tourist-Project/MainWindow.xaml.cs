@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 using Tourist_Project.View;
@@ -33,9 +22,9 @@ namespace Tourist_Project
         {
             DataContext = this;
             InitializeComponent();
-            LoggedInUser= user;
-            guestReviewRepository= new GuestReviewRepository();
-            reservationRepository= new ReservationRepository();
+            LoggedInUser = user;
+            guestReviewRepository = new GuestReviewRepository();
+            reservationRepository = new ReservationRepository();
             guestReviews = new ObservableCollection<GuestReview>(guestReviewRepository.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationRepository.GetAll());
         }
@@ -49,7 +38,7 @@ namespace Tourist_Project
                     foreach (var reservation in reservations)
                     {
                         int daysSinceCheckOut = (int)(reservation.CheckOut - DateTime.Now).TotalDays;
-                        if (guestReview.guestId == reservation.guestId) 
+                        if (guestReview.guestId == reservation.guestId)
                         {
                             if (!guestReview.IsReviewed() && daysSinceCheckOut < 5)
                             {
@@ -88,7 +77,7 @@ namespace Tourist_Project
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)
         {
-            if(LoggedInUser.Role == UserRole.guest)
+            if (LoggedInUser.Role == UserRole.guest)
             {
                 var guestTwoWindow = new GuestTwoWindow(LoggedInUser);
                 guestTwoWindow.Show();

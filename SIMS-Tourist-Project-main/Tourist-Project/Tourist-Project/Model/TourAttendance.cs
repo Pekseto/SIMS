@@ -9,6 +9,8 @@ namespace Tourist_Project.Model
 {
     public class TourAttendance : ISerializable
     {
+        private int id;
+        public int Id { get; set; }
         private int userId;
         public int UserId { get; set; }
         private int tourId;
@@ -21,19 +23,21 @@ namespace Tourist_Project.Model
 
         public TourAttendance()
         {
-
+            TourPoint = new TourPoint();
         }
 
         public TourAttendance(int userId, int tourId)
         {
             this.userId = userId;
             this.TourId = tourId;
+            TourPoint = new TourPoint();
         }
 
         public string[] ToCSV()
         {
             string[] csvValues =
                         {
+                Id.ToString(),
                 UserId.ToString(),
                 TourId.ToString(),
                 CheckPointId.ToString(),
@@ -43,9 +47,10 @@ namespace Tourist_Project.Model
 
         public void FromCSV(string[] values)
         {
-            UserId = int.Parse(values[0]);
-            TourId = int.Parse(values[1]);
-            CheckPointId = int.Parse(values[2]);
+            Id = int.Parse(values[0]);
+            UserId = int.Parse(values[1]);
+            TourId = int.Parse(values[2]);
+            CheckPointId = int.Parse(values[3]);
         }
     }
 }

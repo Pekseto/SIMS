@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Tourist_Project.DTO;
 using Tourist_Project.Model;
@@ -27,6 +29,7 @@ namespace Tourist_Project.View
         private readonly TourRepository tourRepository;
         private readonly LocationRepository locationRepository;
         private readonly TourReservationRepository reservationRepository;
+        public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
         public ObservableCollection<string> Countries { get; set; }
@@ -35,10 +38,49 @@ namespace Tourist_Project.View
         public string SelectedCity { get; set; }
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
-        public int Duration { get; set; }
-        public int NumberOfPeople { get; set; }
-        public User LoggedInUser { get; set; }
-        public int GuestsNumber { get; set; }
+
+        private readonly Regex numberRegex = new Regex("^[0-9]+$");
+        private int duration;
+        public string Duration
+        {
+            get { return duration.ToString(); }
+            set
+            {
+                Match match = numberRegex.Match(value);
+                if (match.Success)
+                {
+                    duration = Int32.Parse(value);
+                }
+            }
+        }
+
+        private int numberOfPeople;
+        public string NumberOfPeople
+        {
+            get { return numberOfPeople.ToString(); }
+            set
+            {
+                Match match = numberRegex.Match(value);
+                if (match.Success)
+                {
+                    numberOfPeople = Int32.Parse(value);
+                }
+            }
+        }
+
+        private int guestsNumber;
+        public string GuestsNumber
+        {
+            get { return guestsNumber.ToString(); }
+            set
+            {
+                Match match = numberRegex.Match(value);
+                if (match.Success)
+                {
+                    guestsNumber = Int32.Parse(value);
+                }
+            }
+        }
         public GuestTwoWindow(User user)
         {
             InitializeComponent();
@@ -77,7 +119,7 @@ namespace Tourist_Project.View
 
         private void ShowAllClick(object sender, RoutedEventArgs e)
         {
-            DataGrid.ItemsSource = Tours;
+            toursDataGrid.ItemsSource = Tours;
         }
 
         private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -97,7 +139,7 @@ namespace Tourist_Project.View
             var filteredList = new ObservableCollection<TourDTO>();
             foreach(TourDTO tourDTO in Tours)
             {
-                //FILTRIRANJE
+                //FILTERING
                 if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
                 {
                     continue;
@@ -108,7 +150,7 @@ namespace Tourist_Project.View
                     continue;
                 }
 
-                if(Duration != 0 && tourDTO.Duration != Duration)
+                if(duration != 0 && tourDTO.Duration != duration)
                 {
                     continue;
                 }
@@ -118,19 +160,19 @@ namespace Tourist_Project.View
                     continue;
                 }
 
-                if(NumberOfPeople!= 0 && tourDTO.MaxGuestsNumber < NumberOfPeople)
+                if(numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
                 {
                     continue;
                 }
 
                 filteredList.Add(tourDTO);
             }
-            DataGrid.ItemsSource = filteredList;
+            toursDataGrid.ItemsSource = filteredList;
         }
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-            if(GuestsNumber > 0 && SelectedTour != null)
+            if(guestsNumber > 0 && SelectedTour != null)
             {
                 int tourCapacityLeft = SelectedTour.SpotsLeft;           
 
@@ -140,7 +182,7 @@ namespace Tourist_Project.View
                                     "Here are some other tours on the same location!");
                     DisplaySimilarTours(SelectedTour);
                 }
-                else if(tourCapacityLeft < GuestsNumber)
+                else if(tourCapacityLeft < guestsNumber)
                 {
                     MessageBox.Show("Unfortunately, we can't accept that many guests at the moment.\n" +
                                     "You are welcome to lower the amount of people coming with you!\n" +
@@ -148,8 +190,8 @@ namespace Tourist_Project.View
                 }
                 else
                 {
-                    SelectedTour.SpotsLeft -= GuestsNumber;
-                    var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, GuestsNumber);
+                    SelectedTour.SpotsLeft -= guestsNumber;
+                    var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber);
                     reservationRepository.Save(tourReservation);
                     MessageBox.Show("Reservation is successful");
                 }
@@ -175,7 +217,7 @@ namespace Tourist_Project.View
                     filteredList.Add(tour);
                 }
             }
-            DataGrid.ItemsSource = filteredList;
+            toursDataGrid.ItemsSource = filteredList;
         }
 
         private int GetLeftoverSpots(Tour tour)

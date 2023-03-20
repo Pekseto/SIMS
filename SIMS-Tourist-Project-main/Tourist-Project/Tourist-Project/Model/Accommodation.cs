@@ -86,15 +86,15 @@ namespace Tourist_Project.Model
                 }
             }
         }
-        int daysBeforeCancel;
-        public int DaysBeforeCancel
+        int cancellationThreshold;
+        public int CancellationThreshold
         {
-            get => daysBeforeCancel;
+            get => cancellationThreshold;
             set
             {
-                if (value != daysBeforeCancel)
+                if (value != cancellationThreshold)
                 {
-                    daysBeforeCancel = value;
+                    cancellationThreshold = value;
                     OnPropertyChanged();
                 }
             }
@@ -105,49 +105,34 @@ namespace Tourist_Project.Model
             get => imageId;
             set => imageId = value;
         }
-        Image image;
-        public Image Image
-        {
-            get => image;
-            set
-            {
-                if (value != image)
-                {
-                    image = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        //public int ownerId { get; set; }
         public User user { get; set; }
 
-        List<int> imageIdes = new();
-        public List<int> ImageIdes
+        List<int> imageIds = new();
+        public List<int> ImageIds
         {
-            get => imageIdes;
+            get => imageIds;
             set
             {
-                if (value != imageIdes)
+                if (value != imageIds)
                 {
-                    imageIdes = value;
+                    imageIds = value;
                     OnPropertyChanged();
                 }
             }
         }
-        string imageIdesCSV;
-        public string ImageIdesCSV
+        string imageIdsCSV;
+        public string ImageIdsCSV
         {
-            get => imageIdesCSV;
+            get => imageIdsCSV;
             set
             {
-                if (value != imageIdesCSV)
+                if (value != imageIdsCSV)
                 {
-                    imageIdesCSV = value;
+                    imageIdsCSV = value;
                     OnPropertyChanged();
                 }
             }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -162,9 +147,9 @@ namespace Tourist_Project.Model
             this.Type = type;
             this.MaxGuestNum = maxGuestNum;
             this.MinStayingDays = minStayingDays;
-            this.DaysBeforeCancel = daysBeforeCancel;
+            this.CancellationThreshold = daysBeforeCancel;
             this.ImageId = imageId;
-            this.ImageIdesCSV = imageIdes;
+            this.ImageIdsCSV = imageIdes;
         }
         public string[] ToCSV()
         {
@@ -176,9 +161,9 @@ namespace Tourist_Project.Model
                 Type.ToString(),
                 MaxGuestNum.ToString(),
                 MinStayingDays.ToString(),
-                DaysBeforeCancel.ToString(),
+                CancellationThreshold.ToString(),
                 ImageId.ToString(),
-                ImageIdesCSV
+                ImageIdsCSV
             };
             return csvValues;
         }
@@ -191,23 +176,22 @@ namespace Tourist_Project.Model
             Type = Enum.Parse<AccommodationType>(values[3]);
             MaxGuestNum = Convert.ToInt32(values[4]);
             MinStayingDays = Convert.ToInt32(values[5]);
-            DaysBeforeCancel = Convert.ToInt32(values[6]);
+            CancellationThreshold = Convert.ToInt32(values[6]);
             ImageId = Convert.ToInt32(values[7]);
-            ImageIdesCSV = values[8];
-            ImageIdesFromCSV(ImageIdesCSV);
-            //user = new User() { Id = Convert.ToInt32(values[8]) };
+            ImageIdsCSV = values[8];
+            ImageIdesFromCSV(ImageIdsCSV);
         }
 
         public void ImageIdesToCSV()
         {
-            if (ImageIdes.Count > 0)
+            if (ImageIds.Count > 0)
             {
-                imageIdesCSV = string.Empty;
-                foreach (var imageId in ImageIdes)
+                imageIdsCSV = string.Empty;
+                foreach (var imageId in ImageIds)
                 {
-                    ImageIdesCSV += imageId + ",";
+                    ImageIdsCSV += imageId + ",";
                 }
-                ImageIdesCSV = ImageIdesCSV.Remove(ImageIdesCSV.Length - 1);
+                ImageIdsCSV = ImageIdsCSV.Remove(ImageIdsCSV.Length - 1);
             }
         }
         public void ImageIdesFromCSV(string value)
@@ -216,7 +200,7 @@ namespace Tourist_Project.Model
             foreach (var imageIde in imageIdesCSV)
             {
                 if (imageIde != string.Empty)
-                    ImageIdes.Add(int.Parse(imageIde));
+                    ImageIds.Add(int.Parse(imageIde));
             }
         }
     }

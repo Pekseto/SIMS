@@ -13,7 +13,7 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label x:Name="Title" Grid.ColumnSpan="2" Margin="10, 30, 10, 400" Foreground="DarkGoldenrod" FontSize="30" HorizontalContentAlignment="Center" FontStyle="Italic"></Label>
+        <Label x:Name="title" Grid.ColumnSpan="2" Margin="10, 30, 10, 500" Foreground="DarkGoldenrod" FontSize="30" HorizontalContentAlignment="Center" FontStyle="Italic"></Label>
         <ItemsControl x:Name="ImagesControl" ItemsSource="{Binding Images}" Grid.ColumnSpan="2" Margin="10, 100">
             <ItemsControl.ItemTemplate >
                 <DataTemplate>
@@ -26,21 +26,21 @@
         <Label Content="Type" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,130,0,300"/>
         <Label Content="Max number of guests" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,180,0,250"/>
         <Label Content="Min staying days" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,230,0,200"/>
-        <Label Content="Days before cancel" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,280,0,150"/>
+        <Label Content="Cancellation threshold" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,280,0,150"/>
         <Label Content="Image url" Grid.Column="2" HorizontalAlignment="Center" FontSize="20" Margin="0,330,0,100"/>
 
-        <TextBox x:Name="Name" Grid.Column="3" Margin="10,40,10,640" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
-        <TextBox x:Name="Country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Margin="10,90,140,590"></TextBox>
-        <TextBox x:Name="City" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Margin="120,90,10,590"></TextBox>
-        <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="Type" Grid.Column="3" Margin="10,140,10,530">
+        <TextBox x:Name="name" Grid.Column="3" Margin="10,40,10,640" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <TextBox x:Name="country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Margin="10,90,140,590"></TextBox>
+        <TextBox x:Name="city" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="3" Margin="120,90,10,590"></TextBox>
+        <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="type" Grid.Column="3" Margin="10,140,10,530">
             <ComboBoxItem Content="Apartment"/>
             <ComboBoxItem Content="House"/>
             <ComboBoxItem Content="Cottage"/>
         </ComboBox>
-        <xctk:IntegerUpDown x:Name="MaxNumGuests" Grid.Column="3" Margin="10,190,10,490" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown x:Name="MinStayingDays"  Grid.Column="3" Margin="10,240,10,440" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown x:Name="DaysBeforeCancel" Grid.Column="3" Margin="10,290,10,390" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
-        <TextBox x:Name="Url" Grid.Column="3" Margin="10,340,10,540" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
-        <Button Content="Cancel" Click="CancelButtonClick" Margin="30,628,30,22" Grid.Column="3"/>
+        <xctk:IntegerUpDown x:Name="maxNumGuests" Grid.Column="3" Margin="10,190,10,490" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown x:Name="minStayingDays"  Grid.Column="3" Margin="10,240,10,440" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown x:Name="cancellationThreshold" Grid.Column="3" Margin="10,290,10,390" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
+        <TextBox x:Name="url" Grid.Column="3" Margin="10,340,10,540" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <Button Content="Cancel" Click="Cancel" Margin="30,628,30,22" Grid.Column="3"/>
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
+using Tourist_Project.View;
 
 namespace Tourist_Project
 {

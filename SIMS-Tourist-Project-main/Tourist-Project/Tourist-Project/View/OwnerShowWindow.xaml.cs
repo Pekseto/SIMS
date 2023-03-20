@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using Tourist_Project.DTO;
 using Tourist_Project.Model;
@@ -15,34 +13,25 @@ namespace Tourist_Project
     /// </summary>
     public partial class OwnerShowWindow : Window
     {
-        public static ObservableCollection<Accommodation> accommodations { get; set; }
-        public static ObservableCollection<Location> locations { get; set; }
-        public static ObservableCollection<Image> images { get; set; }
-        public static ObservableCollection<AccommodationDTO> accommodationDTOs { get; set; }
-        public Accommodation selectedAccommodation { get; set; }
-        public AccommodationDTO selectedAccommodationDTO { get; set; }
-        //public User LoggedInUser { get; set; }
+        public static ObservableCollection<Accommodation> Accommodations { get; set; } = new();
+        public static ObservableCollection<Location> Locations { get; set; } = new();
+        public static ObservableCollection<Image> Images { get; set; } = new();
+        public static ObservableCollection<AccommodationDTO> AccommodationDTOs { get; set; } = new();
+        public Accommodation SelectedAccommodation { get; set; }
+        public AccommodationDTO SelectedAccommodationDTO { get; set; }
         private readonly AccommodationRepository accommodationRepository = new();
         private readonly LocationRepository locationRepository = new();
         private readonly ImageRepository imageRepository = new();
         private readonly AccommodationDTORepository accommodationDTORepository = new();
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public OwnerShowWindow()
         {
             InitializeComponent();
             DataContext = this;
-            //LoggedInUser = user;
-            accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
-            locations = new ObservableCollection<Location>(locationRepository.GetAll());
-            images = new ObservableCollection<Image>(imageRepository.GetAll());
-            accommodationDTOs = new ObservableCollection<AccommodationDTO>(accommodationDTORepository.createDTOs(accommodations, locations, images));
+            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
+            Images = new ObservableCollection<Image>(imageRepository.GetAll());
+            AccommodationDTOs = new ObservableCollection<AccommodationDTO>(accommodationDTORepository.LoadAll(Accommodations, Locations, Images));
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -52,30 +41,51 @@ namespace Tourist_Project
         }
         private void ShowViewAccommodationForm(object sender, RoutedEventArgs e)
         {
-            selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
-            var viewWindow = new AccommodationViewWindow(selectedAccommodation);
-            viewWindow.Show();
+            if (SelectedAccommodationDTO != null)
+            {
+                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDTO.AccommodationId);
+                var viewWindow = new AccommodationViewWindow(SelectedAccommodation);
+                viewWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("You have to select accommodation!");
+            }
         }
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
         {
-            selectedAccommodation = accommodationRepository.GetById(selectedAccommodationDTO.AccommodationId);
-            var updateWindow = new AccommodationForm(selectedAccommodation, selectedAccommodationDTO);
-            updateWindow.Show();
-            Close();
+            if (SelectedAccommodationDTO != null)
+            {
+                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDTO.AccommodationId);
+                var updateWindow = new AccommodationForm(SelectedAccommodation, SelectedAccommodationDTO);
+                updateWindow.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("You have to select accommodation!");
+            }
         }
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            if (selectedAccommodationDTO != null)
+            if (SelectedAccommodationDTO != null)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure?", "Delete comment",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("Are you sure?", "Remove accommodation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    accommodationRepository.Delete(selectedAccommodationDTO.AccommodationId);
-                    accommodations.Remove(selectedAccommodation);
-                    accommodationDTOs.Remove(selectedAccommodationDTO);
+                    Remove();
                 }
             }
+            else
+            {
+                MessageBox.Show("You have to select accommodation!");
+            }
+        }
+        private void Remove()
+        {
+            accommodationRepository.Delete(SelectedAccommodationDTO.AccommodationId);
+            Accommodations.Remove(SelectedAccommodation);
+            AccommodationDTOs.Remove(SelectedAccommodationDTO);
         }
     }
 }

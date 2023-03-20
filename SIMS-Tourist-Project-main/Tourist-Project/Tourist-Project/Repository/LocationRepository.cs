@@ -25,7 +25,7 @@ namespace Tourist_Project.Repository
         {
             return locations.Find(x => x.City == city && x.Country == country).Id;
         }
-        public Location GetLocation(int id)
+        public Location GetById(int id)
         {
             return locations.Find(c => c.Id == id);
         }

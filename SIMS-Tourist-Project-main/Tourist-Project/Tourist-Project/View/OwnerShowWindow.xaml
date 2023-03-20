@@ -43,13 +43,13 @@
             <Button Click="DeleteButtonClick">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding accommodationDTOs, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=selectedAccommodationDTO, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid ItemsSource="{Binding AccommodationDTOs, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedAccommodationDTO, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="auto">
                 <DataGrid.Columns>
@@ -62,9 +62,9 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationFullName}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding MaxGuestNum}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="MinStayingDays" Binding="{Binding MinStayingDays}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding DaysBeforeCancel}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Max Guests Num" Binding="{Binding MaxGuestNum}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Min Staying Days" Binding="{Binding MinStayingDays}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Cancellation Threshold" Binding="{Binding CancellationThreshold}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

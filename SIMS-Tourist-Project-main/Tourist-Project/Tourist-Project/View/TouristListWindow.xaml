@@ -31,9 +31,8 @@
                  SelectedItem="{Binding SelectedTourAttendance, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="100"/>
-                    <DataGridTextColumn Header="Proba" Binding="{Binding UserId}" Width="100"/>
-                    <DataGridTextColumn Header="Checkpoint where they join" Binding="{Binding TourPoint.Name}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="200"/>
+                    <DataGridTextColumn Header="Checkpoint where they join" Binding="{Binding TourPoint.Name}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

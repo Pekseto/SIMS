@@ -58,7 +58,7 @@ namespace Tourist_Project.View
             }
             else
             {
-                MessageBox.Show("Tour is already guided");
+                MessageBox.Show("Tour is already guided or one is already active");
             }
         }
     }

@@ -159,6 +159,13 @@ namespace Tourist_Project.Model
             set => tourists = value;
         }
 
+        int userId;
+        public int UserId
+        {
+            get => userId;
+            set => userId = value;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -200,7 +207,8 @@ namespace Tourist_Project.Model
                 StartTime.ToString(),
                 Duration.ToString(),
                 ImageId.ToString(),
-                Guided.ToString()
+                Guided.ToString(),
+                //UserId.ToString(),
             };
 
             return csvValues;
@@ -218,6 +226,7 @@ namespace Tourist_Project.Model
             Duration = int.Parse(values[7]);
             ImageId = int.Parse(values[8]);
             Guided = bool.Parse(values[9]);
+           // UserId = int.Parse(values[10]);
         }
     }
 }

@@ -24,12 +24,14 @@ namespace Tourist_Project.Model
         public TourAttendance()
         {
             TourPoint = new TourPoint();
+            CheckPointId = -1;
         }
 
         public TourAttendance(int userId, int tourId)
         {
             this.userId = userId;
             this.TourId = tourId;
+            CheckPointId= -1;
             TourPoint = new TourPoint();
         }
 

@@ -90,6 +90,7 @@ namespace Tourist_Project
             SelectedAccommodation.MaxGuestNum = int.Parse(maxNumGuests.Text);
             SelectedAccommodation.MinStayingDays = int.Parse(minStayingDays.Text);
             SelectedAccommodation.CancellationThreshold = int.Parse(cancellationThreshold.Text);
+            SelectedAccommodation.ImageIds = CreateImage();
             SelectedAccommodation.ImageIdsCSV = url.Text;
             _ = accommodationRepository.Update(SelectedAccommodation);
         }
@@ -122,7 +123,6 @@ namespace Tourist_Project
                 Image savedImage = imageRepository.Save(newImage);
                 ides.Add(savedImage.Id);
             }
-            SelectedAccommodation.ImageIds = ides;
             return ides;
         }
         private static void InitializeCitiesAndCountries()

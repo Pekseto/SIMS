@@ -101,6 +101,8 @@ namespace Tourist_Project.View
                     }
                     AvailableDates.Remove(dt);
                 }
+
+                MessageBox.Show("Accommodation reserved");
             }
         }
 

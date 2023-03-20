@@ -27,7 +27,7 @@ namespace Tourist_Project.View
 
         public ObservableCollection<AccommodationDTO> SearchResults { get; set; }
         public ObservableCollection<Accommodation> Accommodations { get; set; }
-        public Accommodation selectedAccommodation { get; set; }
+        //public Accommodation SelectedAccommodation { get; set; }
         public List<AccommodationDTO> AccommodationDTOs{ get; set; }
 
         public AccommodationDTO SelectedAccommodationDTO { get; set; }
@@ -56,7 +56,7 @@ namespace Tourist_Project.View
         public string SearchedName { get; set; }
         public string SearchedLocation { get; set; }
 
-        public int SearchedNumberOfGuests { get; set; }
+        public int SearchedGuestsNumber { get; set; }
 
         public int SearchedDaysBeforeCancelation { get; set; }
         public string SelectedType { get; set; }
@@ -92,10 +92,10 @@ namespace Tourist_Project.View
             AccommodationDTOs = accommodationDTORepository.createDTOs(Accommodations, Locations, Images);
 
 
-            Countries = GetCountries();
-            Cities = GetCities();
-            AccommodationTypes = GetAccommodationTypes();          
-            FullLocations = GetFullLocationNames(); 
+            GetCountries();
+            GetCities();
+            GetAccommodationTypes();          
+            GetFullLocationNames(); 
         }
 
         public ObservableCollection<string> GetAccommodationTypes()
@@ -225,7 +225,7 @@ namespace Tourist_Project.View
                 {
                     continue;
                 }
-                if (SearchedNumberOfGuests != null && accommodationDTO.MaxGuestNum < SearchedNumberOfGuests)
+                if (SearchedGuestsNumber != null && accommodationDTO.MaxGuestNum < SearchedGuestsNumber)
                 {
                     continue;
                 }

@@ -13,7 +13,7 @@
         <Label Content="MinStayingDays" HorizontalAlignment="Left" Margin="135,111,0,0" VerticalAlignment="Top" Width="95"/>
         <Label Content="DaysBeforeCancelation" HorizontalAlignment="Left" Margin="271,111,0,0" VerticalAlignment="Top" Width="142"/>
         <TextBox HorizontalAlignment="Left" Margin="34,136,0,0" TextWrapping="Wrap" Text="{Binding MaxGuestNum}" VerticalAlignment="Top" Width="86" />
-        <TextBox HorizontalAlignment="Left" Margin="279,135,0,0" TextWrapping="Wrap" Text="{Binding DaysBeforCancelation}" VerticalAlignment="Top" Width="86"/>
+        <TextBox HorizontalAlignment="Left" Margin="279,135,0,0" TextWrapping="Wrap" Text="{Binding DaysBeforeCancelation}" VerticalAlignment="Top" Width="86"/>
         <TextBox HorizontalAlignment="Left" Margin="138,135,0,0" TextWrapping="Wrap" Text="{Binding MinStayingDays}" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="15,39,0,0" TextWrapping="Wrap" Text="{Binding CheckInInput}" VerticalAlignment="Top" Width="57"/>
         <TextBox HorizontalAlignment="Left" Margin="108,39,0,0" TextWrapping="Wrap" Text="{Binding CheckOutInput}" VerticalAlignment="Top" Width="57"/>

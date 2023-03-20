@@ -55,5 +55,10 @@ namespace Tourist_Project.Repository
         {
             return GetAll().FindAll(tourPoint => tourPoint.TourId == id);
         }
+
+        public TourPoint GetOne(int id)
+        {
+            return GetAll().Find(tourPoint => tourPoint.Id == id);
+        }
     }
 }

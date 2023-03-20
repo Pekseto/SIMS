@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
@@ -33,11 +37,11 @@ namespace Tourist_Project.View
         {
             if (tour.TourPoints.Count() >= 2)
             {
-                Image image = new Image(Url.Text);
+                Image image = new Image(url.Text);
                 imageRepository.Save(image);
-                tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), Description.Text, Language.Text, Convert.ToInt32(MaxGuestsNumber.Text), Convert.ToDateTime(StartTime.Text), Convert.ToInt32(Duration.Text), image.Id);
-
+                tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), description.Text, language.Text, Convert.ToInt32(maxGuestsNumber.Text), Convert.ToDateTime(startTime.Text), Convert.ToInt32(duration.Text), image.Id);
                 tourRepository.Save(tour);
+
                 if (tour.StartTime.Date == DateTime.Today.Date)
                 {
                     GuideShowWindow.TodayTours.Add(tour);
@@ -57,13 +61,24 @@ namespace Tourist_Project.View
 
         public void AddCheckpointClick(object sender, RoutedEventArgs e)
         {
-            TourPoint tourPoint = new TourPoint(Checkpoint.Text, tourRepository.NextId());
+            TourPoint tourPoint = new TourPoint(checkpoint.Text, tourRepository.NextId());
             tourPointRepository.Save(tourPoint);
 
-            if (!string.IsNullOrWhiteSpace(Checkpoint.Text))
+            if (!string.IsNullOrWhiteSpace(checkpoint.Text))
             {
                 tour.TourPoints.Add(tourPoint);
-                Checkpoint.Clear();
+                checkpoint.Clear();
+            }
+        }
+
+        public void AddImageClick(object sender, RoutedEventArgs e)
+        {
+            Image image = new Image(url.Text);
+            imageRepository.Save(image);
+
+            if (!string.IsNullOrWhiteSpace(url.Text))
+            {
+                url.Clear();
             }
         }
     }

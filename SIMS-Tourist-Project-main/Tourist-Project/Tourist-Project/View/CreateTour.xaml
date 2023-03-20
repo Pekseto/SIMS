@@ -46,14 +46,15 @@
             <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" Name="Country" Text="{Binding Path=Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ComboBoxItem Content="Serbia"/>
             </ComboBox>
-            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="Description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="Language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="MaxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="Checkpoint" Text="{Binding Path=Checkpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="maxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="checkpoint" Text="{Binding Path=Checkpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button Grid.Row="5" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddCheckpointClick" Margin="0 0 30 0"></Button>
-            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="StartTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="Duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="Url" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="startTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="url" Width="200" HorizontalAlignment="Left" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Grid.Row="8" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddImageClick" Margin="0 0 30 0"></Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>

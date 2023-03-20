@@ -7,12 +7,9 @@ namespace Tourist_Project.Repository
 {
     public class AccommodationDTORepository
     {
-        private readonly AccommodationRepository accommodationRepository;
         private List<AccommodationDTO> accommodationDTOs = new();
-        public AccommodationDTORepository()
-        {
-        }
-        public List<AccommodationDTO> createDTOs(ObservableCollection<Accommodation> accommodations, ObservableCollection<Location> locations, ObservableCollection<Image> images)
+        public AccommodationDTORepository(){ }
+        public List<AccommodationDTO> LoadAll(ObservableCollection<Accommodation> accommodations, ObservableCollection<Location> locations, ObservableCollection<Image> images)
         {
             accommodationDTOs.Clear();
             foreach (var accommodation in accommodations)
@@ -25,7 +22,6 @@ namespace Tourist_Project.Repository
                             accommodationDTOs.Add(new AccommodationDTO(accommodation, location, image));
                     }
                 }
-
             }
             return accommodationDTOs;
         }

@@ -8,7 +8,7 @@ namespace Tourist_Project.DTO
         public string LocationFullName { get; set; }
         public int MaxGuestNum { get; set; }
         public int MinStayingDays { get; set; }
-        public int DaysBeforeCancel { get; set; }
+        public int CancellationThreshold { get; set; }
         public string ImageUrl { get; set; }
         public int AccommodationId { get; set; }
         public AccommodationDTO()
@@ -20,7 +20,7 @@ namespace Tourist_Project.DTO
             LocationFullName = location.City + " " + location.Country;
             MaxGuestNum = accommodation.MaxGuestNum;
             MinStayingDays = accommodation.MinStayingDays;
-            DaysBeforeCancel = accommodation.DaysBeforeCancel;
+            CancellationThreshold = accommodation.CancellationThreshold;
             ImageUrl = image.Url;
             AccommodationId = accommodation.Id;
         }

@@ -18,39 +18,44 @@ namespace Tourist_Project.View
             InitializeComponent();
             DataContext = this;
             EnableEditing();
-            selectedAccommodation.Location = locationRepository.GetLocation(selectedAccommodation.LocationId);
+            InitializeFields(selectedAccommodation);
+        }
+
+        private void InitializeFields(Accommodation selectedAccommodation)
+        {
+            selectedAccommodation.Location = locationRepository.GetById(selectedAccommodation.LocationId);
             LoadImages(selectedAccommodation);
-            Name.Text = selectedAccommodation.Name;
-            Country.Text = selectedAccommodation.Location.Country;
-            City.Text = selectedAccommodation.Location.City;
-            Type.Text = selectedAccommodation.Type.ToString();
-            MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
-            MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
-            DaysBeforeCancel.Text = selectedAccommodation.DaysBeforeCancel.ToString();
-            Url.Text = imageRepository.GetImage(selectedAccommodation.ImageId).Url;
-            Title.Content = selectedAccommodation.Name;
+            name.Text = selectedAccommodation.Name;
+            country.Text = selectedAccommodation.Location.Country;
+            city.Text = selectedAccommodation.Location.City;
+            type.Text = selectedAccommodation.Type.ToString();
+            maxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
+            minStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
+            cancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
+            url.Text = imageRepository.Get(selectedAccommodation.ImageId).Url;
+            title.Content = selectedAccommodation.Name;
         }
 
         private void LoadImages(Accommodation selectedAccommodation)
         {
-            foreach (var imageId in selectedAccommodation.ImageIdes)
+            foreach (var imageId in selectedAccommodation.ImageIds)
             {
-                Images.Add(imageRepository.GetImage(imageId).Url);
+                Images.Add(imageRepository.Get(imageId).Url);
             }
         }
 
         private void EnableEditing()
         {
-            Name.IsEnabled = false;
-            Country.IsEnabled = false;
-            City.IsEnabled = false;
-            Type.IsEnabled = false;
-            MaxNumGuests.IsEnabled = false;
-            MinStayingDays.IsEnabled = false;
-            DaysBeforeCancel.IsEnabled = false;
-            Url.IsEnabled = false;
+            name.IsEnabled = false;
+            country.IsEnabled = false;
+            city.IsEnabled = false;
+            type.IsEnabled = false;
+            maxNumGuests.IsEnabled = false;
+            minStayingDays.IsEnabled = false;
+            cancellationThreshold.IsEnabled = false;
+            url.IsEnabled = false;
         }
-        public void CancelButtonClick(object sender, RoutedEventArgs e)
+        public void Cancel(object sender, RoutedEventArgs e)
         {
             Close();
         }

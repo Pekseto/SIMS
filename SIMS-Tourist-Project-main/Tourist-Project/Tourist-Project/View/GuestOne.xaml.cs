@@ -30,14 +30,14 @@ namespace Tourist_Project.View
         public Accommodation selectedAccommodation { get; set; }
         public List<AccommodationDTO> AccommodationDTOs{ get; set; }
 
-        public AccommodationDTO selectedAccommodationDTO { get; set; }
+        public AccommodationDTO SelectedAccommodationDTO { get; set; }
 
         public ObservableCollection<string> Countries { get; set; }
         public ObservableCollection<string> Cities { get; set; }
 
         public ObservableCollection<Tourist_Project.Model.Image> Images { get; set; }
 
-        public Location Location { get; set; }
+        //public Location Location { get; set; }
         public ObservableCollection<Location> Locations { get; set; }
 
         public ObservableCollection<string> FullLocations { get; set;}
@@ -166,7 +166,7 @@ namespace Tourist_Project.View
         }
 
 
-        public void HandleEmptyStrings()
+        /*public void HandleEmptyStrings()
         {
             if (SearchedName == null)
             {
@@ -195,7 +195,7 @@ namespace Tourist_Project.View
                     SearchedDaysBeforeCancelation = accommodation.DaysBeforeCancel;
                 }
             }
-        }
+        }*/
   
 
         public void SearchClick(object sender, RoutedEventArgs e)
@@ -203,7 +203,7 @@ namespace Tourist_Project.View
             //AccommodationDTOs.Clear();
             SearchResults.Clear();
 
-            HandleEmptyStrings();
+            //HandleEmptyStrings();
 
             foreach (AccommodationDTO accommodationDTO in AccommodationDTOs)
             {
@@ -242,7 +242,7 @@ namespace Tourist_Project.View
 
         public void ReserveClick(object sender, RoutedEventArgs e)
         {
-            var BookAccommodation = new BookAccommodationWindow();
+            var BookAccommodation = new BookAccommodationWindow(SelectedAccommodationDTO);
             BookAccommodation.Show();
         }
     }

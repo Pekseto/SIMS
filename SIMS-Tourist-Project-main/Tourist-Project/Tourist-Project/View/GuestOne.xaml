@@ -32,7 +32,7 @@
             <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481" Width="800">
                 <DockPanel>
                     <DataGrid ItemsSource="{Binding AccommodationDTOs, UpdateSourceTrigger=PropertyChanged}" Name="DataGrid"
-                        SelectedItem="{Binding Path=selectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedAccommodationDTO, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True" SelectionMode="Single"
                         AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="800">
                         <DataGrid.Columns>

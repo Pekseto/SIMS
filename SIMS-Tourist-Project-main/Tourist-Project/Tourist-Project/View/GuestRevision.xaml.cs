@@ -2,7 +2,7 @@
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 
-namespace Tourist_Project
+namespace Tourist_Project.View
 {
     /// <summary>
     /// Interaction logic for GuestRevision.xaml
@@ -10,7 +10,7 @@ namespace Tourist_Project
     public partial class GuestRevision : Window
     {
         public GuestReview ReviewingGuest { get; set; }
-        private readonly GuestReviewRepository guestReviewRepository;
+        private readonly GuestReviewRepository guestReviewRepository = new();
         public int OwnerId { get; set; }
         public int GuestId { get; set; }
         public GuestRevision(int ownerId, int guestId, GuestReview reviewingGuest)
@@ -23,15 +23,15 @@ namespace Tourist_Project
             ReviewingGuest = reviewingGuest;
         }
 
-        private void ConfirmButtonClick(object sender, RoutedEventArgs e)
+        private void Confirm(object sender, RoutedEventArgs e)
         {
-            ReviewingGuest.cleanlinessGrade = int.Parse(Cleanliness.Text);
-            ReviewingGuest.ruleGrade = int.Parse(Rules.Text);
-            ReviewingGuest.comment = Comment.Text;
-            GuestReview savedGuestReview = guestReviewRepository.Update(ReviewingGuest);
+            ReviewingGuest.cleanlinessGrade = int.Parse(cleanliness.Text);
+            ReviewingGuest.ruleGrade = int.Parse(rules.Text);
+            ReviewingGuest.comment = comment.Text;
+            _ = guestReviewRepository.Update(ReviewingGuest);
             Close();
         }
-        private void CancelButtonClick(object sender, RoutedEventArgs e)
+        private void Cancel(object sender, RoutedEventArgs e)
         {
             Close();
         }

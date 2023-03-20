@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,6 +22,9 @@ namespace Tourist_Project.View
         private TourPointRepository tourPointRepository;
         private ImageRepository imageRepository;
         private Tour tour;
+        public static ObservableCollection<string> Countries { get; set; } = new();
+        public static ObservableCollection<string> Cities { get; set; } = new();
+        public static ObservableCollection<Location> Locations { get; set; } = new();
 
         public CreateTour()
         {
@@ -30,7 +34,9 @@ namespace Tourist_Project.View
             locationRepository = new LocationRepository();
             tourPointRepository = new TourPointRepository();
             imageRepository = new ImageRepository();
+            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             tour = new Tour();
+            InitializeCitiesAndCountries();
         }
 
         public void CreateClick(object sender, RoutedEventArgs e)
@@ -39,7 +45,7 @@ namespace Tourist_Project.View
             {
                 Image image = new Image(url.Text);
                 imageRepository.Save(image);
-                tour = new Tour(Name.Text, locationRepository.GetId(City.Text, Country.Text), description.Text, language.Text, Convert.ToInt32(maxGuestsNumber.Text), Convert.ToDateTime(startTime.Text), Convert.ToInt32(duration.Text), image.Id);
+                tour = new Tour(Name.Text, locationRepository.GetId(city.Text, country.Text), description.Text, language.Text, Convert.ToInt32(maxGuestsNumber.Text), Convert.ToDateTime(startTime.Text), Convert.ToInt32(duration.Text), image.Id);
                 tourRepository.Save(tour);
 
                 if (tour.StartTime.Date == DateTime.Today.Date)
@@ -79,6 +85,32 @@ namespace Tourist_Project.View
             if (!string.IsNullOrWhiteSpace(url.Text))
             {
                 url.Clear();
+            }
+        }
+        private void CountryDropDownClosed(object sender, EventArgs e)
+        {
+            Cities.Clear();
+            foreach (var location in Locations)
+            {
+                if (location.Country.Equals(country.Text))
+                    Cities.Add(location.City);
+            }
+        }
+        private void CityDropDownClosed(object sender, EventArgs e)
+        {
+            foreach (var location in Locations)
+            {
+                if (location.City.Equals(city.Text))
+                    country.Text = location.Country;
+            }
+        }
+        private static void InitializeCitiesAndCountries()
+        {
+            foreach (var location in Locations)
+            {
+                Cities.Add(location.City);
+                if (!Countries.Contains(location.Country))
+                    Countries.Add(location.Country);
             }
         }
     }

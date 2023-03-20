@@ -39,13 +39,9 @@
             <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Duration:"/>
             <Label Grid.Row="8" Grid.Column="0" Height="30" Content="Image:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" Name="City" Text="{Binding Path=City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ComboBoxItem Content="Belgrade"/>
-                <ComboBoxItem Content="Novi Sad"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CityDropDownClosed" x:Name="city">
             </ComboBox>
-            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" Name="Country" Text="{Binding Path=Country, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <ComboBoxItem Content="Serbia"/>
-            </ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CountryDropDownClosed"  x:Name="country"></ComboBox>
             <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="maxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>

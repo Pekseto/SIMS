@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
@@ -12,12 +13,54 @@ namespace Tourist_Project.View
     {
         public ObservableCollection<TourAttendance> TourAttendances { get; set; }
         private TourAttendanceRepository tourAttendanceRepository;
+        private UserRepository userRepository;
+        public TourAttendance SelectedTourAttendance { get; set; }
+        private TourPoint selectedTourPoint;
+        private TourPointRepository tourPointRepository;
+
         public TouristListWindow(TourPoint selectedTourPoint)
         {
             InitializeComponent();
             DataContext = this;
+            this.selectedTourPoint = selectedTourPoint;
             tourAttendanceRepository = new TourAttendanceRepository();
-            TourAttendances = new ObservableCollection<TourAttendance>(tourAttendanceRepository.GetAll().FindAll(attendace => attendace.TourId == selectedTourPoint.TourId));
+            userRepository = new UserRepository();
+            tourPointRepository = new TourPointRepository();
+            TourAttendances = new ObservableCollection<TourAttendance>(GetAllTourists());
+
+            foreach(TourAttendance attendace in TourAttendances)
+            {
+                attendace.User = userRepository.GetOne(attendace.UserId);
+                attendace.TourPoint = tourPointRepository.GetOne(attendace.CheckPointId);
+
+            }
+        }
+
+        public void CallOutClick(object sender, RoutedEventArgs e)
+        {
+            SelectedTourAttendance.TourPoint = selectedTourPoint;
+            SelectedTourAttendance.CheckPointId = selectedTourPoint.Id;
+            UpdateCollection();
+        }
+
+        public void UpdateCollection()
+        {
+            tourAttendanceRepository.Update(SelectedTourAttendance);
+            TourAttendances.Clear();
+            foreach (TourAttendance attendance in GetAllTourists())
+            {
+                TourAttendances.Add(attendance);
+            }
+            foreach (TourAttendance attendace in TourAttendances)
+            {
+                attendace.User = userRepository.GetOne(attendace.UserId);
+                attendace.TourPoint = tourPointRepository.GetOne(attendace.CheckPointId);
+            }
+        }
+
+        public List<TourAttendance> GetAllTourists()
+        {
+            return tourAttendanceRepository.GetAll().FindAll(attendace => attendace.TourId == selectedTourPoint.TourId);
         }
     }
 }

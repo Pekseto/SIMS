@@ -19,7 +19,7 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
-            <Button>
+            <Button Click="CallOutClick">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Call out" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -27,11 +27,12 @@
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding Tourists, UpdateSourceTrigger=PropertyChanged}"
-                 SelectedItem="{Binding SelectedTourist, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid ItemsSource="{Binding TourAttendances, UpdateSourceTrigger=PropertyChanged}" 
+                 SelectedItem="{Binding SelectedTourAttendance, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
+                      IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="260"/>
-                    <DataGridCheckBoxColumn Header="Checkpoint where they join" Binding="{Binding TourPoint.Name}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="200"/>
+                    <DataGridTextColumn Header="Checkpoint where they join" Binding="{Binding TourPoint.Name}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -1,9 +1,9 @@
 1|strand|1|True
 2|centar|1|False
 3|kej|1|False
-4|centar|2|False
-5|hram|2|False
-6|kalemegdan|2|False
+4|centar|2|True
+5|hram|2|True
+6|kalemegdan|2|True
 7|kej|3|False
 8|petrovaradin|3|False
 9|voznja brodom|3|False
@@ -12,3 +12,6 @@
 12|kalemegdan|4|False
 13|kej|5|False
 14|kalemegdan|5|False
+15|kej|6|False
+16|tvrdjava|6|False
+17|katedrala|6|False

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Model;
 using Tourist_Project.Observer;
@@ -71,6 +70,21 @@ namespace Tourist_Project.Repository
 
         public void Subscribe(IObserver observer)
         {
+            throw new System.NotImplementedException();
+        }
+
+        public void Unsubscribe(IObserver observer)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void NotifyObservers()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /*public void Subscribe(IObserver observer)
+        {
             throw new NotImplementedException();
         }
 
@@ -82,6 +96,6 @@ namespace Tourist_Project.Repository
         public void NotifyObservers()
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tourist_Project.DTO
 {
+    public enum AccommodationType { Apartment, House, Cottage }
     public class AccommodationDTO
     {
         public string Name { get; set; }
@@ -11,6 +12,9 @@ namespace Tourist_Project.DTO
         public int CancellationThreshold { get; set; }
         public string ImageUrl { get; set; }
         public int AccommodationId { get; set; }
+
+
+        public AccommodationType AccommodationType { get; set; }    
         public AccommodationDTO()
         {
         }
@@ -23,6 +27,9 @@ namespace Tourist_Project.DTO
             CancellationThreshold = accommodation.CancellationThreshold;
             ImageUrl = image.Url;
             AccommodationId = accommodation.Id;
+            AccommodationType = (AccommodationType)accommodation.Type;
+            
+
         }
     }
 }

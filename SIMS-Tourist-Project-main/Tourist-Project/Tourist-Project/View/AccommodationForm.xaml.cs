@@ -75,7 +75,7 @@ namespace Tourist_Project
 
         private void CreateAccommodation()
         {
-            Accommodation newAccommodation = new(name.Text, GetLocationId(), Enum.Parse<AccommodationType>(type.Text), int.Parse(maxNumGuests.Text), int.Parse(minStayingDays.Text), int.Parse(cancellationThreshold.Text), Images.Last().Id, FormIdesString(CreateImage()));
+            Accommodation newAccommodation = new(name.Text, GetLocationId(), Enum.Parse<Tourist_Project.Model.AccommodationType>(type.Text), int.Parse(maxNumGuests.Text), int.Parse(minStayingDays.Text), int.Parse(cancellationThreshold.Text), Images.Last().Id, FormIdesString(CreateImage()));
             Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
 
             OwnerShowWindow.Accommodations.Add(savedAccommodation);
@@ -86,7 +86,7 @@ namespace Tourist_Project
         {
             SelectedAccommodation.Name = name.Text;
             SelectedAccommodation.LocationId = GetLocationId();
-            SelectedAccommodation.Type = Enum.Parse<AccommodationType>(type.Text);
+            SelectedAccommodation.Type = Enum.Parse<Tourist_Project.Model.AccommodationType>(type.Text);
             SelectedAccommodation.MaxGuestNum = int.Parse(maxNumGuests.Text);
             SelectedAccommodation.MinStayingDays = int.Parse(minStayingDays.Text);
             SelectedAccommodation.CancellationThreshold = int.Parse(cancellationThreshold.Text);

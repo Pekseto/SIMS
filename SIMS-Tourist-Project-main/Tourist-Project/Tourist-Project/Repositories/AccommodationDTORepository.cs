@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Model;
 

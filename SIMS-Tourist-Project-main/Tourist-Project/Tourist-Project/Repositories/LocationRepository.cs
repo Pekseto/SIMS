@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Model

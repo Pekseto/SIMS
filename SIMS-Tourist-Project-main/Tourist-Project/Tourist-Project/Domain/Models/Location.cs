@@ -1,7 +1,7 @@
 using System;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
 
     public class Location : ISerializable
@@ -13,14 +13,14 @@ namespace Tourist_Project.Model
             get => id;
             set => id = value;
         }
-        private String city;
-        public String City
+        private string city;
+        public string City
         {
             get => city;
             set => city = value;
         }
-        private String country;
-        public String Country
+        private string country;
+        public string Country
         {
             get => country;
             set => country = value;

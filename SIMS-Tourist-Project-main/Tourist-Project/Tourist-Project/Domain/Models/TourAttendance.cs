@@ -1,6 +1,7 @@
-﻿using Tourist_Project.Serializer;
+﻿using Tourist_Project.Model;
+using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class TourAttendance : ISerializable
     {
@@ -25,8 +26,8 @@ namespace Tourist_Project.Model
         public TourAttendance(int userId, int tourId)
         {
             this.userId = userId;
-            this.TourId = tourId;
-            CheckPointId= -1;
+            TourId = tourId;
+            CheckPointId = -1;
             TourPoint = new TourPoint();
         }
 

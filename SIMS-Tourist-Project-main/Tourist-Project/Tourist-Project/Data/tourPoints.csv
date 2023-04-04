@@ -1,4 +1,4 @@
-1|strand|1|True
+1|strand|1|False
 2|centar|1|False
 3|kej|1|False
 4|centar|2|True
@@ -15,3 +15,9 @@
 15|kej|6|False
 16|tvrdjava|6|False
 17|katedrala|6|False
+18|kej|7|False
+19|strand|7|False
+20|centar|8|True
+21|jezero|8|False
+22|jezero|9|True
+23|centar|9|False

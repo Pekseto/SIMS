@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class Image : ISerializable
     {
@@ -39,7 +39,7 @@ namespace Tourist_Project.Model
         }
         public Image(string url)
         {
-            this.Url = url;
+            Url = url;
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
+using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
+using Tourist_Project.View;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -35,7 +37,7 @@ namespace Tourist_Project.View
                             MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    var guestRevisionWindow = new GuestRevision(UnreviewedGuest.guestId, UnreviewedGuest.ownerId, UnreviewedGuest);
+                    var guestRevisionWindow = new GuestRevision(UnreviewedGuest.GuestId, UnreviewedGuest.OwnerId, UnreviewedGuest);
                     guestRevisionWindow.Show();
                 }
                 else
@@ -58,7 +60,7 @@ namespace Tourist_Project.View
                 foreach (var reservation in Reservations)
                 {
                     TimeSpan daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if (!guestReview.IsReviewed() && daysSinceCheckOut.Days < 5 && guestReview.guestId == reservation.GuestId)
+                    if (!guestReview.IsReviewed() && daysSinceCheckOut.Days < 5 && guestReview.GuestId == reservation.GuestId)
                     {
                         UnreviewedGuest = guestReview;
                         return true;

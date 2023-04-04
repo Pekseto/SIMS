@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 

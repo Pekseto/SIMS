@@ -2,135 +2,120 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Tourist_Project.Model;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public enum AccommodationType { Apartment, House, Cottage }
     public class Accommodation : ISerializable
     {
-        int id;
+        private int id;
         public int Id
         {
             get => id;
             set => id = value;
         }
-        string name;
+        private string name;
         public string Name
         {
             get => name;
             set
             {
-                if (value != name)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
+                if (value == name) return;
+                name = value;
+                OnPropertyChanged();
             }
         }
-        int locationId;
+        private int locationId;
         public int LocationId
         {
             get => locationId;
             set => locationId = value;
         }
-        Location location;
+        private Location location;
         public Location Location
         {
             get => location;
             set
             {
-                if (value != location)
-                {
-                    location = value;
-                    OnPropertyChanged();
-                }
+                if (value == location) return;
+                location = value;
+                OnPropertyChanged();
             }
         }
-        AccommodationType type;
+        private AccommodationType type;
         public AccommodationType Type
         {
             get => type;
             set
             {
-                if (value != type)
-                {
-                    type = value;
-                    OnPropertyChanged();
-                }
+                if (value == type) return;
+                type = value;
+                OnPropertyChanged();
             }
         }
-        int maxGuestNum;
+        private int maxGuestNum;
         public int MaxGuestNum
         {
             get => maxGuestNum;
             set
             {
-                if (value != maxGuestNum)
-                {
-                    maxGuestNum = value;
-                    OnPropertyChanged();
-                }
+                if (value == maxGuestNum) return;
+                maxGuestNum = value;
+                OnPropertyChanged();
             }
         }
-        int minStayingDays;
+        private int minStayingDays;
         public int MinStayingDays
         {
             get => minStayingDays;
             set
             {
-                if (value != minStayingDays)
-                {
-                    minStayingDays = value;
-                    OnPropertyChanged();
-                }
+                if (value == minStayingDays) return;
+                minStayingDays = value;
+                OnPropertyChanged();
             }
         }
-        int cancellationThreshold;
+        private int cancellationThreshold;
         public int CancellationThreshold
         {
             get => cancellationThreshold;
             set
             {
-                if (value != cancellationThreshold)
-                {
-                    cancellationThreshold = value;
-                    OnPropertyChanged();
-                }
+                if (value == cancellationThreshold) return;
+                cancellationThreshold = value;
+                OnPropertyChanged();
             }
         }
-        int imageId;
+        private int imageId;
         public int ImageId
         {
             get => imageId;
             set => imageId = value;
         }
-        public User user { get; set; }
+        public User User { get; set; }
 
-        List<int> imageIds = new();
+        private List<int> imageIds = new();
         public List<int> ImageIds
         {
             get => imageIds;
             set
             {
-                if (value != imageIds)
-                {
-                    imageIds = value;
-                    OnPropertyChanged();
-                }
+                if (value == imageIds) return;
+                imageIds = value;
+                OnPropertyChanged();
             }
         }
-        string imageIdsCSV;
+        private string imageIdsCSV;
         public string ImageIdsCSV
         {
             get => imageIdsCSV;
             set
             {
-                if (value != imageIdsCSV)
-                {
-                    imageIdsCSV = value;
-                    OnPropertyChanged();
-                }
+                if (value == imageIdsCSV) return;
+                imageIdsCSV = value;
+                OnPropertyChanged();
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -144,16 +129,16 @@ namespace Tourist_Project.Model
         {
             Name = name;
             LocationId = locationId;
-            this.Type = type;
-            this.MaxGuestNum = maxGuestNum;
-            this.MinStayingDays = minStayingDays;
-            this.CancellationThreshold = daysBeforeCancel;
-            this.ImageId = imageId;
-            this.ImageIdsCSV = imageIdes;
+            Type = type;
+            MaxGuestNum = maxGuestNum;
+            MinStayingDays = minStayingDays;
+            CancellationThreshold = daysBeforeCancel;
+            ImageId = imageId;
+            ImageIdsCSV = imageIdes;
         }
         public string[] ToCSV()
         {
-            ImageIdesToCSV();
+            ImageIdesToCsv();
             string[] csvValues = {
                 Id.ToString(),
                 Name,
@@ -179,25 +164,23 @@ namespace Tourist_Project.Model
             CancellationThreshold = Convert.ToInt32(values[6]);
             ImageId = Convert.ToInt32(values[7]);
             ImageIdsCSV = values[8];
-            ImageIdesFromCSV(ImageIdsCSV);
+            ImageIdesFromCsv(ImageIdsCSV);
         }
 
-        public void ImageIdesToCSV()
+        public void ImageIdesToCsv()
         {
-            if (ImageIds.Count > 0)
+            if (ImageIds.Count <= 0) return;
+            imageIdsCSV = string.Empty;
+            foreach (var imageIde in ImageIds)
             {
-                imageIdsCSV = string.Empty;
-                foreach (var imageId in ImageIds)
-                {
-                    ImageIdsCSV += imageId + ",";
-                }
-                ImageIdsCSV = ImageIdsCSV.Remove(ImageIdsCSV.Length - 1);
+                ImageIdsCSV += imageIde + ",";
             }
+            ImageIdsCSV = ImageIdsCSV.Remove(ImageIdsCSV.Length - 1);
         }
-        public void ImageIdesFromCSV(string value)
+        public void ImageIdesFromCsv(string value)
         {
-            var imageIdesCSV = value.Split(",");
-            foreach (var imageIde in imageIdesCSV)
+            var imageIdesCsv = value.Split(",");
+            foreach (var imageIde in imageIdesCsv)
             {
                 if (imageIde != string.Empty)
                     ImageIds.Add(int.Parse(imageIde));

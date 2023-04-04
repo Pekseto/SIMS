@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
     public class AccommodationRepository
     {
@@ -42,7 +42,7 @@ namespace Tourist_Project.Repository
         public void Delete(int id)
         {
             accommodations = serializer.FromCSV(FilePath);
-            Accommodation founded = accommodations.Find(c => c.Id == id);
+            var founded = accommodations.Find(c => c.Id == id);
             accommodations.Remove(founded);
             serializer.ToCSV(FilePath, accommodations);
         }
@@ -50,8 +50,8 @@ namespace Tourist_Project.Repository
         public Accommodation Update(Accommodation accommodation)
         {
             accommodations = serializer.FromCSV(FilePath);
-            Accommodation current = accommodations.Find(c => c.Id == accommodation.Id);
-            int index = accommodations.IndexOf(current);
+            var current = accommodations.Find(c => c.Id == accommodation.Id);
+            var index = accommodations.IndexOf(current);
             accommodations.Remove(current);
             accommodations.Insert(index, accommodation);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, accommodations);

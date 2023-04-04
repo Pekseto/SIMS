@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.View
 {
@@ -87,7 +88,7 @@ namespace Tourist_Project.View
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {
-            var guideShowWindow = new GuideShowWindow();
+            var guideShowWindow = new TodayToursView();
             guideShowWindow.Show();
         }
     }

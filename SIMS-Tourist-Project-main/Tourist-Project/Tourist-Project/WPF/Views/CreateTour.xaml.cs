@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repository;
+using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.View
@@ -50,7 +51,7 @@ namespace Tourist_Project.View
 
                 if (tour.StartTime.Date == DateTime.Today.Date)
                 {
-                    GuideShowWindow.TodayTours.Add(tour);
+                    TodayToursView.TodayTours.Add(tour);
                 }
                 this.Close();
             }

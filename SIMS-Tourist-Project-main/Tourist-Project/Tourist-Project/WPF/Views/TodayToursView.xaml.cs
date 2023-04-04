@@ -1,21 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Repository;
+using Tourist_Project.Repositories;
 
 namespace Tourist_Project.View
 {
     /// <summary>
     /// Interaction logic for GuideShowWindow.xaml
     /// </summary>
-    public partial class GuideShowWindow : Window
+    public partial class TodayToursView : Window
     {
         public static ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; }
         private readonly TourRepository tourRepository;
         public static bool Live { get; set; }
 
-        public GuideShowWindow()
+        public TodayToursView()
         {
             InitializeComponent();
             DataContext = this;

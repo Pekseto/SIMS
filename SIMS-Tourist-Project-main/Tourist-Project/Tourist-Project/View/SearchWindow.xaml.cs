@@ -1,14 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
-using Tourist_Project.Observer;
 
 namespace Tourist_Project.View
 {
     /// <summary>
     /// Interaction logic for SearchWindow.xaml
     /// </summary>
-    public partial class SearchWindow : Window, IObserver
+    public partial class SearchWindow
     {
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -20,13 +20,6 @@ namespace Tourist_Project.View
 
             this.DataContext = this;
         }
-
-
-        public void Update()
-        {
-        }
-
-
 
     }
 

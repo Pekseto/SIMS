@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using Tourist_Project.Model;
-using Tourist_Project.Repository;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.Repositories;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for AccommodationViewWindow.xaml
@@ -25,35 +25,35 @@ namespace Tourist_Project.View
         {
             selectedAccommodation.Location = locationRepository.GetById(selectedAccommodation.LocationId);
             LoadImages(selectedAccommodation);
-            name.Text = selectedAccommodation.Name;
-            country.Text = selectedAccommodation.Location.Country;
-            city.Text = selectedAccommodation.Location.City;
+            Name.Text = selectedAccommodation.Name;
+            Country.Text = selectedAccommodation.Location.Country;
+            City.Text = selectedAccommodation.Location.City;
             type.Text = selectedAccommodation.Type.ToString();
-            maxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
-            minStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
-            cancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
-            url.Text = imageRepository.Get(selectedAccommodation.ImageId).Url;
-            title.Content = selectedAccommodation.Name;
+            MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
+            MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
+            CancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
+            Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;
+            Title.Content = selectedAccommodation.Name;
         }
 
         private void LoadImages(Accommodation selectedAccommodation)
         {
             foreach (var imageId in selectedAccommodation.ImageIds)
             {
-                Images.Add(imageRepository.Get(imageId).Url);
+                Images.Add(imageRepository.GetById(imageId).Url);
             }
         }
 
         private void EnableEditing()
         {
-            name.IsEnabled = false;
-            country.IsEnabled = false;
-            city.IsEnabled = false;
+            Name.IsEnabled = false;
+            Country.IsEnabled = false;
+            City.IsEnabled = false;
             type.IsEnabled = false;
-            maxNumGuests.IsEnabled = false;
-            minStayingDays.IsEnabled = false;
-            cancellationThreshold.IsEnabled = false;
-            url.IsEnabled = false;
+            MaxNumGuests.IsEnabled = false;
+            MinStayingDays.IsEnabled = false;
+            CancellationThreshold.IsEnabled = false;
+            Url.IsEnabled = false;
         }
         public void Cancel(object sender, RoutedEventArgs e)
         {

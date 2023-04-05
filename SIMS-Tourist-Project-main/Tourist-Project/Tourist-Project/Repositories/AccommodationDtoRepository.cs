@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
-using Tourist_Project.Model;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
-    public class AccommodationDTORepository
+    public class AccommodationDtoRepository
     {
-        private List<AccommodationDTO> accommodationDTOs = new();
-        public AccommodationDTORepository(){ }
+        private readonly List<AccommodationDTO> accommodationDtos = new();
         public List<AccommodationDTO> LoadAll(ObservableCollection<Accommodation> accommodations, ObservableCollection<Location> locations, ObservableCollection<Image> images)
         {
-            accommodationDTOs.Clear();
+            accommodationDtos.Clear();
             foreach (var accommodation in accommodations)
             {
                 foreach (var location in locations)
@@ -19,11 +18,11 @@ namespace Tourist_Project.Repository
                     foreach (var image in images)
                     {
                         if (accommodation.LocationId == location.Id && accommodation.ImageId == image.Id)
-                            accommodationDTOs.Add(new AccommodationDTO(accommodation, location, image));
+                            accommodationDtos.Add(new AccommodationDTO(accommodation, location, image));
                     }
                 }
             }
-            return accommodationDTOs;
+            return accommodationDtos;
         }
     }
 }

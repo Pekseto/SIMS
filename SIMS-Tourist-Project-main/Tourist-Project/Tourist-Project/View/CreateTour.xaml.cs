@@ -6,9 +6,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
+using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
-using Image = Tourist_Project.Model.Image;
+using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.View
 {

@@ -1,4 +1,5 @@
-﻿using Tourist_Project.Model;
+﻿using Tourist_Project.Domain.Models;
+using Tourist_Project.Model;
 
 namespace Tourist_Project.DTO
 {

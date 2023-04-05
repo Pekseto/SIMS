@@ -9,18 +9,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Repository;
 using Tourist_Project.Model;
-using Tourist_Project.Observer;
 using Tourist_Project.DTO;
 using System.Collections.Generic;
 using System;
+
 
 namespace Tourist_Project.View
 {
     /// <summary>
     /// Interaction logic for GuestOne.xaml
     /// </summary>
-    /// 
-    public enum AccommodationType { House, Cottage, Apartment }
     public partial class GuestOne : Window
     {
 
@@ -104,6 +102,7 @@ namespace Tourist_Project.View
         }
 
         public ObservableCollection<string> GetAccommodationTypes()
+        private void SearchByNameClick(object sender, RoutedEventArgs e)
         {
             foreach (string type in Enum.GetNames(typeof(Tourist_Project.Model.AccommodationType)))
             {

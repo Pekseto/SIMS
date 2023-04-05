@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tourist_Project.OwnerShowWindow"
+﻿<Window x:Class="Tourist_Project.WPF.Views.OwnerShowWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,35 +21,35 @@
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
             <Button Click="ShowCreateAccommodationForm">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/add.png" Width="20" Height="25"/>
+                    <Image Source="../../Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Create" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ShowViewAccommodationForm">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/view.png" Width="20" Height="25"/>
+                    <Image Source="../../Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="View" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="ShowUpdateAccommodationForm">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/edit.png" Width="20" Height="25"/>
+                    <Image Source="../../Images/edit.png" Width="20" Height="25"/>
                     <TextBlock Text="Update" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Click="DeleteButtonClick">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/delete.png" Width="20" Height="25"/>
+                    <Image Source="../../Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding AccommodationDTOs, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding Path=SelectedAccommodationDTO, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid ItemsSource="{Binding AccommodationDtos, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Path=SelectedAccommodationDto, UpdateSourceTrigger=PropertyChanged}"
                   IsReadOnly="True" SelectionMode="Single"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="auto">
                 <DataGrid.Columns>

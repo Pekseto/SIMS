@@ -1,7 +1,7 @@
 ﻿using System;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class Reservation : ISerializable
     {
@@ -17,9 +17,9 @@ namespace Tourist_Project.Model
         {
             CheckIn = checkIn;
             CheckOut = checkOut;
-            this.GuestsNum = guestsNum;
-            this.StayingDays = stayingDays;
-            this.Accommodation = accommodation;
+            GuestsNum = guestsNum;
+            StayingDays = stayingDays;
+            Accommodation = accommodation;
         }
         public string[] ToCSV()
         {

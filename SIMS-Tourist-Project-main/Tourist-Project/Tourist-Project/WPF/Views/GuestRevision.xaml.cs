@@ -1,8 +1,8 @@
 ﻿using System.Windows;
-using Tourist_Project.Model;
-using Tourist_Project.Repository;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.Repositories;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for GuestRevision.xaml
@@ -17,7 +17,6 @@ namespace Tourist_Project.View
         {
             InitializeComponent();
             DataContext = this;
-            guestReviewRepository = new GuestReviewRepository();
             OwnerId = ownerId;
             GuestId = guestId;
             ReviewingGuest = reviewingGuest;
@@ -25,9 +24,9 @@ namespace Tourist_Project.View
 
         private void Confirm(object sender, RoutedEventArgs e)
         {
-            ReviewingGuest.cleanlinessGrade = int.Parse(cleanliness.Text);
-            ReviewingGuest.ruleGrade = int.Parse(rules.Text);
-            ReviewingGuest.comment = comment.Text;
+            ReviewingGuest.CleanlinessGrade = int.Parse(Cleanliness.Text);
+            ReviewingGuest.RuleGrade = int.Parse(Rules.Text);
+            ReviewingGuest.Comment = Comment.Text;
             _ = guestReviewRepository.Update(ReviewingGuest);
             Close();
         }

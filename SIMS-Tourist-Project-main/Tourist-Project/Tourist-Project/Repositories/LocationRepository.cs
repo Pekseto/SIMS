@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
     public class LocationRepository
     {
         private const string filePath = "../../../Data/locations.csv";
         private readonly Serializer<Location> serializer;
-        private List<Location> locations;
+        private readonly List<Location> locations;
 
         public LocationRepository()
         {

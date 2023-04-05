@@ -1,12 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
-using Tourist_Project.Model;
-using Tourist_Project.Repository;
-using Tourist_Project.View;
-using Image = Tourist_Project.Model.Image;
+using Tourist_Project.Repositories;
+using Image = Tourist_Project.Domain.Models.Image;
 
-namespace Tourist_Project
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for OwnerShowWindow.xaml
@@ -16,13 +15,13 @@ namespace Tourist_Project
         public static ObservableCollection<Accommodation> Accommodations { get; set; } = new();
         public static ObservableCollection<Location> Locations { get; set; } = new();
         public static ObservableCollection<Image> Images { get; set; } = new();
-        public static ObservableCollection<AccommodationDTO> AccommodationDTOs { get; set; } = new();
+        public static ObservableCollection<AccommodationDTO> AccommodationDtos { get; set; } = new();
         public Accommodation SelectedAccommodation { get; set; }
-        public AccommodationDTO SelectedAccommodationDTO { get; set; }
+        public AccommodationDTO SelectedAccommodationDto { get; set; }
         private readonly AccommodationRepository accommodationRepository = new();
         private readonly LocationRepository locationRepository = new();
         private readonly ImageRepository imageRepository = new();
-        private readonly AccommodationDTORepository accommodationDTORepository = new();
+        private readonly AccommodationDtoRepository accommodationDtoRepository = new();
 
         public OwnerShowWindow()
         {
@@ -31,7 +30,7 @@ namespace Tourist_Project
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            AccommodationDTOs = new ObservableCollection<AccommodationDTO>(accommodationDTORepository.LoadAll(Accommodations, Locations, Images));
+            AccommodationDtos = new ObservableCollection<AccommodationDTO>(accommodationDtoRepository.LoadAll(Accommodations, Locations, Images));
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -41,9 +40,9 @@ namespace Tourist_Project
         }
         private void ShowViewAccommodationForm(object sender, RoutedEventArgs e)
         {
-            if (SelectedAccommodationDTO != null)
+            if (SelectedAccommodationDto != null)
             {
-                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDTO.AccommodationId);
+                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDto.AccommodationId);
                 var viewWindow = new AccommodationViewWindow(SelectedAccommodation);
                 viewWindow.Show();
             }
@@ -54,10 +53,10 @@ namespace Tourist_Project
         }
         private void ShowUpdateAccommodationForm(object sender, RoutedEventArgs e)
         {
-            if (SelectedAccommodationDTO != null)
+            if (SelectedAccommodationDto != null)
             {
-                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDTO.AccommodationId);
-                var updateWindow = new AccommodationForm(SelectedAccommodation, SelectedAccommodationDTO);
+                SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDto.AccommodationId);
+                var updateWindow = new AccommodationForm(SelectedAccommodation, SelectedAccommodationDto);
                 updateWindow.Show();
                 Close();
             }
@@ -68,7 +67,7 @@ namespace Tourist_Project
         }
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            if (SelectedAccommodationDTO != null)
+            if (SelectedAccommodationDto != null)
             {
                 MessageBoxResult result = MessageBox.Show("Are you sure?", "Remove accommodation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
@@ -83,9 +82,9 @@ namespace Tourist_Project
         }
         private void Remove()
         {
-            accommodationRepository.Delete(SelectedAccommodationDTO.AccommodationId);
+            accommodationRepository.Delete(SelectedAccommodationDto.AccommodationId);
             Accommodations.Remove(SelectedAccommodation);
-            AccommodationDTOs.Remove(SelectedAccommodationDTO);
+            AccommodationDtos.Remove(SelectedAccommodationDto);
         }
     }
 }

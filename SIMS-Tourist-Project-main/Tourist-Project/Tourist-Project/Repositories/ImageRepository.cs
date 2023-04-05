@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
     public class ImageRepository
     {
@@ -50,14 +50,14 @@ namespace Tourist_Project.Repository
         public Image Update(Image image)
         {
             images = serializer.FromCSV(FilePath);
-            Image current = images.Find(c => c.Id == image.Id);
-            int index = images.IndexOf(current);
+            var current = images.Find(c => c.Id == image.Id);
+            var index = images.IndexOf(current);
             images.Remove(current);
             images.Insert(index, image);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, images);
             return image;
         }
-        public Image Get(int id)
+        public Image GetById(int id)
         {
             return images.Find(c => c.Id == id);
         }

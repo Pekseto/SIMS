@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
-using Tourist_Project.Model;
-using Tourist_Project.Repository;
-using Image = Tourist_Project.Model.Image;
+using Tourist_Project.Repositories;
+using Image = Tourist_Project.Domain.Models.Image;
 
-namespace Tourist_Project
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for AddAccommodation.xaml
@@ -19,7 +19,7 @@ namespace Tourist_Project
         private readonly AccommodationRepository accommodationRepository = new();
         private readonly LocationRepository locationRepository = new();
         public Accommodation SelectedAccommodation;
-        public AccommodationDTO SelectedAccommodationDTO;
+        public AccommodationDTO SelectedAccommodationDto;
         public static ObservableCollection<Location> Locations { get; set; } = new();
         public static ObservableCollection<string> Countries { get; set; } = new();
         public static ObservableCollection<string> Cities { get; set; } = new();
@@ -35,29 +35,29 @@ namespace Tourist_Project
         }
 
 
-        public AccommodationForm(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDTO)
+        public AccommodationForm(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDto)
         {
             InitializeComponent();
             DataContext = this;
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            Load(selectedAccommodation, selectedAccommodationDTO);
+            Load(selectedAccommodation, selectedAccommodationDto);
             Title = "Update accommodation";
         }
 
-        private void Load(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDTO)
+        private void Load(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDto)
         {
             SelectedAccommodation = selectedAccommodation;
-            SelectedAccommodationDTO = selectedAccommodationDTO;
+            SelectedAccommodationDto = selectedAccommodationDto;
             SelectedAccommodation.Location = locationRepository.GetById(selectedAccommodation.LocationId);
-            name.Text = selectedAccommodation.Name;
-            country.Text = SelectedAccommodation.Location.Country;
-            city.Text = SelectedAccommodation.Location.City;
-            type.Text = selectedAccommodation.Type.ToString();
-            maxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
-            minStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
-            cancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
-            url.Text = imageRepository.Get(selectedAccommodation.ImageId).Url;
+            Name.Text = selectedAccommodation.Name;
+            Country.Text = SelectedAccommodation.Location.Country;
+            City.Text = SelectedAccommodation.Location.City;
+            Type.Text = selectedAccommodation.Type.ToString();
+            MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
+            MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
+            CancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
+            Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;
         }
 
         private void Confirm(object sender, RoutedEventArgs e)
@@ -75,52 +75,45 @@ namespace Tourist_Project
 
         private void CreateAccommodation()
         {
-            Accommodation newAccommodation = new(name.Text, GetLocationId(), Enum.Parse<Tourist_Project.Model.AccommodationType>(type.Text), int.Parse(maxNumGuests.Text), int.Parse(minStayingDays.Text), int.Parse(cancellationThreshold.Text), Images.Last().Id, FormIdesString(CreateImage()));
-            Accommodation savedAccommodation = accommodationRepository.Save(newAccommodation);
+            Accommodation newAccommodation = new(Name.Text, GetLocationId(), Enum.Parse<AccommodationType>(Type.Text), int.Parse(MaxNumGuests.Text), int.Parse(MinStayingDays.Text), int.Parse(CancellationThreshold.Text), Images.Last().Id, FormIdesString(CreateImage()));
+            var savedAccommodation = accommodationRepository.Save(newAccommodation);
 
             OwnerShowWindow.Accommodations.Add(savedAccommodation);
-            OwnerShowWindow.AccommodationDTOs.Add(new(savedAccommodation, locationRepository.GetById(savedAccommodation.LocationId), imageRepository.Get(savedAccommodation.ImageId)));
+            OwnerShowWindow.AccommodationDtos.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetById(savedAccommodation.LocationId), imageRepository.GetById(savedAccommodation.ImageId)));
         }
 
         private void UpdateSelectedAccommodation()
         {
-            SelectedAccommodation.Name = name.Text;
+            SelectedAccommodation.Name = Name.Text;
             SelectedAccommodation.LocationId = GetLocationId();
-            SelectedAccommodation.Type = Enum.Parse<Tourist_Project.Model.AccommodationType>(type.Text);
-            SelectedAccommodation.MaxGuestNum = int.Parse(maxNumGuests.Text);
-            SelectedAccommodation.MinStayingDays = int.Parse(minStayingDays.Text);
-            SelectedAccommodation.CancellationThreshold = int.Parse(cancellationThreshold.Text);
+            SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
+            SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
+            SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
+            SelectedAccommodation.CancellationThreshold = int.Parse(CancellationThreshold.Text);
             SelectedAccommodation.ImageIds = CreateImage();
-            SelectedAccommodation.ImageIdsCSV = url.Text;
+            SelectedAccommodation.ImageIdsCSV = Url.Text;
             _ = accommodationRepository.Update(SelectedAccommodation);
         }
 
-        private static string? FormIdesString(List<int> ides)
+        private static string? FormIdesString(List<int> ids)
         {
-            if (ides.Count > 0)
-            {
-                string Ides = string.Empty;
-                foreach (var imageId in ides)
-                {
-                    Ides += imageId + ",";
-                }
-                Ides = Ides.Remove(Ides.Length - 1);
-                return Ides;
-            }
-            return null;
+            if (ids.Count <= 0) return null;
+            var ides = ids.Aggregate(string.Empty, (current, imageId) => current + (imageId + ","));
+            ides = ides.Remove(ides.Length - 1);
+            return ides;
         }
         private int GetLocationId()
         {
-            return locationRepository.GetId(city.Text, country.Text);
+            return locationRepository.GetId(City.Text, Country.Text);
         }
 
         private List<int> CreateImage()
         {
             List<int> ides = new();
-            foreach (var url in url.Text.Split(",")) 
+            foreach (var url in Url.Text.Split(",")) 
             {
                 Image newImage = new(url);
-                Image savedImage = imageRepository.Save(newImage);
+                var savedImage = imageRepository.Save(newImage);
                 ides.Add(savedImage.Id);
             }
             return ides;
@@ -139,7 +132,7 @@ namespace Tourist_Project
             Cities.Clear();
             foreach (var location in Locations)
             {
-                if (location.Country.Equals(country.Text))
+                if (location.Country.Equals(Country.Text))
                     Cities.Add(location.City);
             }
         }
@@ -147,8 +140,8 @@ namespace Tourist_Project
         {
             foreach (var location in Locations)
             {
-                if (location.City.Equals(city.Text))
-                    country.Text = location.Country;
+                if (location.City.Equals(City.Text))
+                    Country.Text = location.Country;
             }
         }
         private void Cancel(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
 using Tourist_Project.Repository;
 using Tourist_Project.WPF.Views;

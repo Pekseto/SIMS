@@ -1,5 +1,4 @@
-﻿using Tourist_Project.Model;
-using Tourist_Project.Serializer;
+﻿using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {

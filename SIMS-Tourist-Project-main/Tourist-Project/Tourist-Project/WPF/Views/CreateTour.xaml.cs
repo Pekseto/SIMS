@@ -11,7 +11,7 @@ using Tourist_Project.Repository;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for CreateTour.xaml

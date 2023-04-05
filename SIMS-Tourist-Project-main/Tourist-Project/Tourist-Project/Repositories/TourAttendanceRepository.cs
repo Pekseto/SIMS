@@ -54,5 +54,10 @@ namespace Tourist_Project.Repository
             serializer.ToCSV(filePath, tourAttendances);
             return current;
         }
+
+        public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint)
+        {
+            return GetAll().FindAll(attendace => attendace.TourId == selectedTourPoint.TourId);
+        }
     }
 }

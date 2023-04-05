@@ -3,10 +3,9 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
-using Tourist_Project.WPF.Views;
 using Image = Tourist_Project.Domain.Models.Image;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for OwnerShowWindow.xaml
@@ -16,13 +15,13 @@ namespace Tourist_Project.View
         public static ObservableCollection<Accommodation> Accommodations { get; set; } = new();
         public static ObservableCollection<Location> Locations { get; set; } = new();
         public static ObservableCollection<Image> Images { get; set; } = new();
-        public static ObservableCollection<AccommodationDTO> AccommodationDTOs { get; set; } = new();
+        public static ObservableCollection<AccommodationDTO> AccommodationDtos { get; set; } = new();
         public Accommodation SelectedAccommodation { get; set; }
         public AccommodationDTO SelectedAccommodationDto { get; set; }
         private readonly AccommodationRepository accommodationRepository = new();
         private readonly LocationRepository locationRepository = new();
         private readonly ImageRepository imageRepository = new();
-        private readonly AccommodationDtoRepository accommodationDTORepository = new();
+        private readonly AccommodationDtoRepository accommodationDtoRepository = new();
 
         public OwnerShowWindow()
         {
@@ -31,7 +30,7 @@ namespace Tourist_Project.View
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            AccommodationDTOs = new ObservableCollection<AccommodationDTO>(accommodationDTORepository.LoadAll(Accommodations, Locations, Images));
+            AccommodationDtos = new ObservableCollection<AccommodationDTO>(accommodationDtoRepository.LoadAll(Accommodations, Locations, Images));
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)
@@ -85,7 +84,7 @@ namespace Tourist_Project.View
         {
             accommodationRepository.Delete(SelectedAccommodationDto.AccommodationId);
             Accommodations.Remove(SelectedAccommodation);
-            AccommodationDTOs.Remove(SelectedAccommodationDto);
+            AccommodationDtos.Remove(SelectedAccommodationDto);
         }
     }
 }

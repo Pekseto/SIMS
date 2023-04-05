@@ -80,7 +80,7 @@ namespace Tourist_Project.WPF.Views
             var savedAccommodation = accommodationRepository.Save(newAccommodation);
 
             OwnerShowWindow.Accommodations.Add(savedAccommodation);
-            OwnerShowWindow.AccommodationDTOs.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetById(savedAccommodation.LocationId), imageRepository.GetById(savedAccommodation.ImageId)));
+            OwnerShowWindow.AccommodationDtos.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetById(savedAccommodation.LocationId), imageRepository.GetById(savedAccommodation.ImageId)));
         }
 
         private void UpdateSelectedAccommodation()

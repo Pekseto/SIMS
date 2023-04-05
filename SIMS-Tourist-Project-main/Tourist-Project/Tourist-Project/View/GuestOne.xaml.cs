@@ -2,14 +2,13 @@
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
-using Tourist_Project.Observer;
 
 namespace Tourist_Project.View
 {
     /// <summary>
     /// Interaction logic for GuestOne.xaml
     /// </summary>
-    public partial class GuestOne : Window, IObserver
+    public partial class GuestOne : Window
     {
 
         public ObservableCollection<Accommodation> Accommodations { get; set; }
@@ -21,11 +20,6 @@ namespace Tourist_Project.View
         {
             InitializeComponent();
             DataContext = this;
-
-        }
-
-        public void Update()
-        {
 
         }
 

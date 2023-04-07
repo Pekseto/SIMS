@@ -8,8 +8,9 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<GuestReview> GetAll();
         public GuestReview Save(GuestReview guestReview);
         public int NextId();
-        public void Delete(GuestReview guestReview);
+        public void Delete(int id);
         public GuestReview Update(GuestReview guestReview);
+        public GuestReview GetById(int id);
     }
 
 }

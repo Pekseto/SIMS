@@ -40,10 +40,10 @@ namespace Tourist_Project.Repositories
             return images.Max(c => c.Id) + 1;
         }
 
-        public void Delete(Image image)
+        public void Delete(int id)
         {
             images = serializer.FromCSV(FilePath);
-            Image founded = images.Find(c => c.Id == image.Id);
+            Image founded = images.Find(c => c.Id == id);
             images.Remove(founded);
             serializer.ToCSV(FilePath, images);
         }

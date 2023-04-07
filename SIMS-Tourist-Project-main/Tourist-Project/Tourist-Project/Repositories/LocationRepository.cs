@@ -30,5 +30,20 @@ namespace Tourist_Project.Repositories
         {
             return locations.Find(c => c.Id == id);
         }
+
+        public Location Save(Location location)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Location Update(Location location)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
 using Tourist_Project.View;
 
 namespace Tourist_Project.WPF.Views
@@ -18,7 +18,7 @@ namespace Tourist_Project.WPF.Views
         public static ObservableCollection<Reservation> Reservations { get; set; } = new();
         public User LoggedInUser { get; set; }
         private readonly GuestReviewRepository guestReviewRepository = new();
-        private readonly ReservationRepository reservationRepository = new();
+        private readonly ReservationService reservationService = new();
         public static GuestReview? UnreviewedGuest { get; set; }
         public MainWindow(User user)
         {
@@ -26,7 +26,7 @@ namespace Tourist_Project.WPF.Views
             InitializeComponent();
             LoggedInUser = user;
             GuestReviews = new ObservableCollection<GuestReview>(guestReviewRepository.GetAll());
-            Reservations = new ObservableCollection<Reservation>(reservationRepository.GetAll());
+            Reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
         }
 
         private void OwnerButtonClick(object sender, RoutedEventArgs e)
@@ -59,12 +59,11 @@ namespace Tourist_Project.WPF.Views
             {
                 foreach (var reservation in Reservations)
                 {
-                    TimeSpan daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if (!guestReview.IsReviewed() && daysSinceCheckOut.Days < 5 && guestReview.GuestId == reservation.GuestId)
-                    {
-                        UnreviewedGuest = guestReview;
-                        return true;
-                    }
+                    var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
+                    if (guestReview.IsReviewed() || daysSinceCheckOut.Days >= 5 ||
+                        guestReview.GuestId != reservation.GuestId) continue;
+                    UnreviewedGuest = guestReview;
+                    return true;
                 }
             }
             return false;

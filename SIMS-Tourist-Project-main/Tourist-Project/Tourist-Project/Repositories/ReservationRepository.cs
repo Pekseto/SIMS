@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
-    public class ReservationRepository
+    public class ReservationRepository : IReservationRepository
     {
         private const string FilePath = "../../../Data/reservations.csv";
         private readonly Serializer<Reservation> serializer;
@@ -40,10 +40,10 @@ namespace Tourist_Project.Repository
             return reservations.Max(c => c.Id) + 1;
         }
 
-        public void Delete(Reservation reservation)
+        public void Delete(int id)
         {
             reservations = serializer.FromCSV(FilePath);
-            Reservation founded = reservations.Find(c => c.Id == reservation.Id);
+            var founded = reservations.Find(c => c.Id == id);
             reservations.Remove(founded);
             serializer.ToCSV(FilePath, reservations);
         }
@@ -51,12 +51,17 @@ namespace Tourist_Project.Repository
         public Reservation Update(Reservation reservation)
         {
             reservations = serializer.FromCSV(FilePath);
-            Reservation current = reservations.Find(c => c.Id == reservation.Id);
-            int index = reservations.IndexOf(current);
+            var current = reservations.Find(c => c.Id == reservation.Id);
+            var index = reservations.IndexOf(current);
             reservations.Remove(current);
             reservations.Insert(index, reservation);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, reservations);
             return reservation;
+        }
+
+        public Reservation GetById(int id)
+        {
+            return reservations.Find(c => c.Id == id);
         }
     }
 }

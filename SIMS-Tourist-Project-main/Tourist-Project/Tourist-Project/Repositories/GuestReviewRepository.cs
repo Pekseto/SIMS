@@ -40,10 +40,10 @@ namespace Tourist_Project.Repositories
             return guestReviews.Max(c => c.Id) + 1;
         }
 
-        public void Delete(GuestReview guestReview)
+        public void Delete(int id)
         {
             guestReviews = serializer.FromCSV(FilePath);
-            var founded = guestReviews.Find(c => c.Id == guestReview.Id);
+            var founded = guestReviews.Find(c => c.Id == id);
             guestReviews.Remove(founded);
             serializer.ToCSV(FilePath, guestReviews);
         }
@@ -57,6 +57,11 @@ namespace Tourist_Project.Repositories
             guestReviews.Insert(index, guestReview);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, guestReviews);
             return guestReview;
+        }
+
+        public GuestReview GetById(int id)
+        {
+            return guestReviews.Find(c => c.Id == id);
         }
     }
 }

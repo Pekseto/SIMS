@@ -11,10 +11,11 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(IAccommodationRepository), new AccommodationRepository()},
             {typeof(IGuestReviewRepository), new GuestReviewRepository()},
             {typeof(ILocationRepository), new LocationRepository()},
-            {typeof(IImageRepository), new ImageRepository()}
+            {typeof(IImageRepository), new ImageRepository()},
+            {typeof(IReservationRepository), new ReservationRepository()}
         };
 
-        public static T CreateInstance<T>()
+        public T CreateInstance<T>()
         {
             Type type = typeof(T);
 

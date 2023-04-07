@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+<<<<<<< HEAD:SIMS-Tourist-Project-main/Tourist-Project/Tourist-Project/WPF/Views/MainWindow.xaml.cs
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Model;
 using Tourist_Project.Repositories;
 using Tourist_Project.View;
+=======
+using Tourist_Project.Domain.Models;
+using Tourist_Project.Model;
+using Tourist_Project.Repository;
+using Tourist_Project.WPF.Views;
+>>>>>>> origin/FileOrganizationGuide:SIMS-Tourist-Project-main/Tourist-Project/Tourist-Project/View/MainWindow.xaml.cs
 
 namespace Tourist_Project.WPF.Views
 {
@@ -88,7 +95,7 @@ namespace Tourist_Project.WPF.Views
         }
         private void GuideButtonClick(object sender, RoutedEventArgs e)
         {
-            var guideShowWindow = new GuideShowWindow();
+            var guideShowWindow = new TodayToursView();
             guideShowWindow.Show();
         }
     }

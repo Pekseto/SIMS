@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class TourPoint : ISerializable
     {
@@ -56,14 +56,14 @@ namespace Tourist_Project.Model
 
         public TourPoint()
         {
-            this.visited = false;
+            visited = false;
         }
 
         public TourPoint(string name, int tourId)
         {
             this.name = name;
             this.tourId = tourId;
-            this.visited = false;
+            visited = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

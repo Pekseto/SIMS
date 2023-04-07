@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tourist_Project.View.CreateTour"
+﻿<Window x:Class="Tourist_Project.WPF.Views.CreateTourView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -38,18 +38,18 @@
             <Label Grid.Row="6" Grid.Column="0" Height="30" Content="The start of tour:"/>
             <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Duration:"/>
             <Label Grid.Row="8" Grid.Column="0" Height="30" Content="Image:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CityDropDownClosed" x:Name="city">
             </ComboBox>
             <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CountryDropDownClosed"  x:Name="country"></ComboBox>
-            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="description" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="language" Text="{Binding Path=Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="maxGuestsNumber" Text="{Binding Path=MaxGuestsNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="checkpoint" Text="{Binding Path=Checkpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="description" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="language" Text="{Binding Path=Language, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="maxGuestsNumber" Text="{Binding MaxGuestsNumber, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="checkpoint" Text="{Binding Checkpoint, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button Grid.Row="5" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddCheckpointClick" Margin="0 0 30 0"></Button>
-            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="startTime" Text="{Binding Path=StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="duration" Text="{Binding Path=Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="url" Width="200" HorizontalAlignment="Left" Text="{Binding Path=Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="startTime" Text="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="duration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="url" Width="200" HorizontalAlignment="Left" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <Button Grid.Row="8" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddImageClick" Margin="0 0 30 0"></Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
@@ -57,8 +57,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CreateClick"></Button>
-            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CancelClick"></Button>
+            <Button Grid.Column="0" Content="Create" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CreateCommand}"></Button>
+            <Button Grid.Column="1" Content="Cancle" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CancelCommand}"></Button>
         </Grid>
         
     </Grid>

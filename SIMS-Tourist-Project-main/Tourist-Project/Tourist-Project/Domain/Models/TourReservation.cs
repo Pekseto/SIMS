@@ -1,6 +1,6 @@
 ﻿using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class TourReservation : ISerializable
     {

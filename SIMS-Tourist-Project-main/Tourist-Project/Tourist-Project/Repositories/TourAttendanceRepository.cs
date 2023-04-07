@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Tourist_Project.Model;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository
@@ -53,6 +53,11 @@ namespace Tourist_Project.Repository
             tourAttendances.Insert(index, tourAttendance);
             serializer.ToCSV(filePath, tourAttendances);
             return current;
+        }
+
+        public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint)
+        {
+            return GetAll().FindAll(attendace => attendace.TourId == selectedTourPoint.TourId);
         }
     }
 }

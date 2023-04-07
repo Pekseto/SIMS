@@ -14,10 +14,10 @@ namespace Tourist_Project.Domain.Models
         }
         private string city;
         public string City
-        {      
-            get=> city;
-            set=> city = value;
-        }      
+        {
+            get => city;
+            set => city = value;
+        }
         private string country;
         public string Country
         {

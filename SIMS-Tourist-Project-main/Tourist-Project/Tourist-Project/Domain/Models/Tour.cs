@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Model
+namespace Tourist_Project.Domain.Models
 {
     public class Tour : ISerializable
     {
@@ -170,24 +170,24 @@ namespace Tourist_Project.Model
 
         public Tour()
         {
-            this.tourPoints = new List<TourPoint>();
-            this.tourists = new List<User>();
+            tourPoints = new List<TourPoint>();
+            tourists = new List<User>();
         }
 
         public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId)
         {
-            this.TourPoints = new List<TourPoint>();
-            this.tourists = new List<User>();
+            TourPoints = new List<TourPoint>();
+            tourists = new List<User>();
 
-            this.Name = name;
-            this.LocationId = locationId;
-            this.Description = description;
-            this.Language = language;
-            this.MaxGuestsNumber = maxGuestsNumber;
-            this.StartTime = startTime;
-            this.Duration = duration;
+            Name = name;
+            LocationId = locationId;
+            Description = description;
+            Language = language;
+            MaxGuestsNumber = maxGuestsNumber;
+            StartTime = startTime;
+            Duration = duration;
             this.imageId = imageId;
-            this.Guided = false;
+            Guided = false;
         }
 
         public string[] ToCSV()
@@ -222,7 +222,7 @@ namespace Tourist_Project.Model
             Duration = int.Parse(values[7]);
             ImageId = int.Parse(values[8]);
             Guided = bool.Parse(values[9]);
-           // UserId = int.Parse(values[10]);
+            // UserId = int.Parse(values[10]);
         }
     }
 }

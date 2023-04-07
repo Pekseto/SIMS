@@ -10,6 +10,7 @@ using Tourist_Project.Application;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repository;
 using Tourist_Project.View;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -75,7 +76,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OpenToruistList()
         {
-            var touristListWindow = new TouristListWindow(SelectedTourPoint);
+            var touristListWindow = new TouristListView(SelectedTourPoint);
             touristListWindow.Show();
         }
     }

@@ -8,7 +8,6 @@ using System.Windows.Input;
 using Tourist_Project.Application;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
-using Tourist_Project.Repository;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -16,7 +15,7 @@ namespace Tourist_Project.WPF.ViewModels
     {
         public static ObservableCollection<TourAttendance> TourAttendances { get; set; }
         public TourAttendance SelectedTourAttendance { get; set; }
-        private TourPoint selectedTourPoint;
+        public TourPoint SelectedTourPoint { get; set; }
 
         private UserService userService = new();
         private TourPointService tourPointService = new();
@@ -25,7 +24,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CallOutCommand { get; set; }
         public TouristListViewModel(TourPoint selectedTourPoint) 
         { 
-            this.selectedTourPoint = selectedTourPoint;
+            this.SelectedTourPoint = selectedTourPoint;
             CallOutCommand = new RelayCommand(CallOut, CanCallOut);
             LoadTourAttendaces();
         }
@@ -36,26 +35,24 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 return false;
             }
-
             return true;
         }
 
         private void CallOut()
         {
-            SelectedTourAttendance.TourPoint = selectedTourPoint;
-            SelectedTourAttendance.CheckPointId = selectedTourPoint.Id;
-            tourAttendanceService.UpdateCollection();
+            SelectedTourAttendance.TourPoint = SelectedTourPoint;
+            SelectedTourAttendance.CheckPointId = SelectedTourPoint.Id;
+            tourAttendanceService.UpdateCollection(SelectedTourAttendance, SelectedTourPoint);
         }
 
         public void LoadTourAttendaces()
         {
-            TourAttendances = new ObservableCollection<TourAttendance>(tourAttendanceService.GetAllTourists(selectedTourPoint));
+            TourAttendances = new(tourAttendanceService.GetAllTourists(SelectedTourPoint));
 
             foreach (TourAttendance attendace in TourAttendances)
             {
                 attendace.User = userService.GetOne(attendace.UserId);
                 attendace.TourPoint = tourPointService.GetOne(attendace.CheckPointId);
-
             }
         }
     }

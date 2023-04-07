@@ -11,21 +11,31 @@ namespace Tourist_Project.Application
 {
     public class TourService
     {
-        private readonly TourRepository tourRepository = new();
+        private readonly TourRepository repository = new();
         
         public TourService() 
         {
             
         }
 
-        public List<Tour> GetTodaysTours()
+        public List<Tour> GetAll()
         {
-            return tourRepository.GetTodaysTours();
+            return repository.GetAll();
+        }
+
+        public void Save(Tour tour)
+        {
+            repository.Save(tour);
         }
 
         public void Update(Tour tour)
         {
-            tourRepository.Update(tour);
+            repository.Update(tour);
+        }
+
+        public List<Tour> GetTodaysTours()
+        {
+            return repository.GetTodaysTours();
         }
     }
 }

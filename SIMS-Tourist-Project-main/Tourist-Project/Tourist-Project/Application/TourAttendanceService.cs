@@ -13,10 +13,11 @@ namespace Tourist_Project.Application
     public class TourAttendanceService
     {
         private readonly TourAttendanceRepository repository = new();
+        private UserService userService = new();
+        private TourPointService tourPointService = new();
 
         public TourAttendanceService() 
         {
-            
         }
 
         public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint)
@@ -24,19 +25,19 @@ namespace Tourist_Project.Application
             return repository.GetAllTourists(selectedTourPoint);
         }
 
-        public void UpdateCollection()
+        public void UpdateCollection(TourAttendance selectedTourAttendance, TourPoint selectedTourPoint)
         {
             var tourAttendances = TouristListViewModel.TourAttendances;
-            repository.Update(SelectedTourAttendance);
+            repository.Update(selectedTourAttendance);
             tourAttendances.Clear();
-            foreach (TourAttendance attendance in GetAllTourists())
+            foreach (TourAttendance attendance in GetAllTourists(selectedTourPoint))
             {
                 tourAttendances.Add(attendance);
             }
             foreach (TourAttendance attendace in tourAttendances)
             {
-                attendace.User = userRepository.GetOne(attendace.UserId);
-                attendace.TourPoint = tourPointRepository.GetOne(attendace.CheckPointId);
+                attendace.User = userService.GetOne(attendace.UserId);
+                attendace.TourPoint = tourPointService.GetOne(attendace.CheckPointId);
             }
         }
     }

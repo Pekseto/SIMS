@@ -35,7 +35,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private void CreateTour()
         {
-            var createTourWindow = new CreateTour();
+            var createTourWindow = new CreateTourView();
             createTourWindow.Show();
         }
 

@@ -14,14 +14,19 @@ namespace Tourist_Project.Application
 {
     public class TourPointService
     {
-        private readonly TourPointRepository tourPointRepository = new();
+        private readonly TourPointRepository repository = new();
         public event EventHandler RequestClose;
+
+        public TourPoint GetOne(int id)
+        {
+            return repository.GetOne(id);
+        }
 
         public void UpdateCollection(TourPoint selectedTourPoint, Tour selectedTour)
         {
-            tourPointRepository.Update(selectedTourPoint);
+            repository.Update(selectedTourPoint);
             TourLiveViewModel.TourPoints.Clear();
-            foreach (TourPoint point in tourPointRepository.GetAllForTour(selectedTour.Id))
+            foreach (TourPoint point in repository.GetAllForTour(selectedTour.Id))
             {
                 TourLiveViewModel.TourPoints.Add(point);
             }

@@ -223,7 +223,6 @@ namespace Tourist_Project.View
             
         }
 
-
         public void ResetParameters()
         {
             SearchedGuestsNumber = 0;
@@ -234,22 +233,22 @@ namespace Tourist_Project.View
             SearchedName = string.Empty;
         }
 
-        public void SearchClick(object sender, RoutedEventArgs e)
+        public void Search_Click(object sender, RoutedEventArgs e)
         {
             SearchLogic();
             DataGrid.ItemsSource = SearchResults;
         }
 
-        public void ShowAllClick(object sender, RoutedEventArgs e)
+        public void ShowAll_Click(object sender, RoutedEventArgs e)
         {
             ResetParameters();
             DataGrid.ItemsSource = AccommodationDTOs;
         }
 
-        public void ReserveClick(object sender, RoutedEventArgs e)
+        public void Reserve_Click(object sender, RoutedEventArgs e)
         {
-           // var BookAccommodation = new BookAccommodationWindow(SelectedAccommodationDTO);
-            //BookAccommodation.Show();
+            var ReservationWindow = new ReservationWindow(SelectedAccommodationDTO);
+            ReservationWindow.Show();
         }
     }
 }

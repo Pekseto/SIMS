@@ -7,15 +7,15 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 
-namespace Tourist_Project.Application
+namespace Tourist_Project.Applications.UseCases
 {
     public class TourService
     {
         private readonly TourRepository repository = new();
-        
-        public TourService() 
+
+        public TourService()
         {
-            
+
         }
 
         public List<Tour> GetAll()

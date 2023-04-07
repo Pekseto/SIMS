@@ -6,7 +6,7 @@ using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Tourist_Project.Application;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repository;
 using Tourist_Project.View;

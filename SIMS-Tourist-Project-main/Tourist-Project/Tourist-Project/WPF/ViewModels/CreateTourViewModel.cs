@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 using Tourist_Project.Application;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;

@@ -8,7 +8,7 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repository;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.Application
+namespace Tourist_Project.Applications.UseCases
 {
     public class TourAttendanceService
     {
@@ -16,7 +16,7 @@ namespace Tourist_Project.Application
         private UserService userService = new();
         private TourPointService tourPointService = new();
 
-        public TourAttendanceService() 
+        public TourAttendanceService()
         {
         }
 

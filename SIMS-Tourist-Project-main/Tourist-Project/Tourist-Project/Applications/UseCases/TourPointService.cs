@@ -10,7 +10,7 @@ using Tourist_Project.Repository;
 using Tourist_Project.View;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.Application
+namespace Tourist_Project.Applications.UseCases
 {
     public class TourPointService
     {
@@ -34,7 +34,8 @@ namespace Tourist_Project.Application
 
         public void EndTour()
         {
-            if (IsAllChecked()) {
+            if (IsAllChecked())
+            {
                 RequestClose?.Invoke(this, EventArgs.Empty);
             }
         }

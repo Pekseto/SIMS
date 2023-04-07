@@ -1,43 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Domain.RepositoryInterfaces;
+using Tourist_Project.Repositories;
+using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.Applications.UseCases
+namespace Tourist_Project.Application
 {
-    public class LocationService : IService<Location>
+    public class LocationService
     {
-        private static readonly Injector injector = new();
+        private readonly LocationRepository repository = new();
 
-        private readonly ILocationRepository locationRepository =
-            injector.CreateInstance<ILocationRepository>();
-        public LocationService()
+        public LocationService() 
         {
-        }
-
-        public Location Create(Location location)
-        {
-            return locationRepository.Save(location);
         }
 
         public List<Location> GetAll()
         {
-            return locationRepository.GetAll();
+            return repository.GetAll();
         }
 
-        public Location Get(int id)
+        public void InitializeCitiesAndCountries()
         {
-            return locationRepository.GetById(id);
-        }
-
-        public Location Update(Location location)
-        {
-            return locationRepository.Update(location);
-        }
-
-        public void Delete(int id)
-        {
-            locationRepository.Delete(id);
+            foreach (var location in GetAll())
+            {
+                CreateTourViewModel.Cities.Add(location.City);
+                if (!CreateTourViewModel.Countries.Contains(location.Country))
+                    CreateTourViewModel.Countries.Add(location.Country);
+            }
         }
     }
-
 }

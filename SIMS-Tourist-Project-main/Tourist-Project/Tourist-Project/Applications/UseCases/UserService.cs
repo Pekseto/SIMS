@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repository;
 
-namespace Tourist_Project.Application
+namespace Tourist_Project.Applications.UseCases
 {
     public class UserService
     {

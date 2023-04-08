@@ -2,14 +2,7 @@
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
-<<<<<<< HEAD:SIMS-Tourist-Project-main/Tourist-Project/Tourist-Project/WPF/Views/OwnerShowWindow.xaml.cs
 using Tourist_Project.Repositories;
-=======
-using Tourist_Project.Model;
-using Tourist_Project.Repository;
-using Tourist_Project.View;
->>>>>>> origin/FileOrganizationGuide:SIMS-Tourist-Project-main/Tourist-Project/Tourist-Project/View/OwnerShowWindow.xaml.cs
-using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.WPF.Views
 {

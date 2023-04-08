@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.View"
-        xmlns:model="clr-namespace:Tourist_Project.Model"
         mc:Ignorable="d"
         Title="CreateTour" Height="600" Width="600">
     <Grid>
@@ -39,18 +38,18 @@
             <Label Grid.Row="7" Grid.Column="0" Height="30" Content="Duration:"/>
             <Label Grid.Row="8" Grid.Column="0" Height="30" Content="Image:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Height="30" Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CityDropDownClosed" x:Name="city">
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Left" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}"  x:Name="city">
             </ComboBox>
-            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CountryDropDownClosed"  x:Name="country"></ComboBox>
+            <ComboBox Grid.Row="1" Grid.Column="1" Height="30" Width="120" HorizontalAlignment="Right" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}"   x:Name="country"></ComboBox>
             <TextBox Grid.Row="2" Grid.Column="1" Height="30" Name="description" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Height="30" Name="language" Text="{Binding Path=Language, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="4" Grid.Column="1" Height="30" Name="maxGuestsNumber" Text="{Binding MaxGuestsNumber, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="200" HorizontalAlignment="Left" Name="checkpoint" Text="{Binding Checkpoint, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Button Grid.Row="5" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddCheckpointClick" Margin="0 0 30 0"></Button>
+            <Button Grid.Row="5" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+"  Margin="0 0 30 0"></Button>
             <TextBox Grid.Row="6" Grid.Column="1" Height="30" Name="startTime" Text="{Binding StartTime, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="7" Grid.Column="1" Height="30" Name="duration" Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBox Grid.Row="8" Grid.Column="1" Height="30" Name="url" Width="200" HorizontalAlignment="Left" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Button Grid.Row="8" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+" Click="AddImageClick" Margin="0 0 30 0"></Button>
+            <Button Grid.Row="8" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Right" Content="+"  Margin="0 0 30 0"></Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>

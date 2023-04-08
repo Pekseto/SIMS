@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
-using Tourist_Project.Application;
+using Tourist_Project.Applications;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
@@ -33,7 +33,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand AddCheckpointCommand { get; set; }
         public event EventHandler RequestClose;
 
-
+        /*
         public CreateTourViewModel()
         {
 
@@ -57,7 +57,7 @@ namespace Tourist_Project.WPF.ViewModels
                 RequestClose?.Invoke(this, EventArgs.Empty);
             }
         }
-
+        /*
         private bool CanCreate()
         {
             if(tour.TourPoints.Count() >= 2)
@@ -133,5 +133,6 @@ namespace Tourist_Project.WPF.ViewModels
                 checkpoint.Clear();
             }
         }
+        */
     }
 }

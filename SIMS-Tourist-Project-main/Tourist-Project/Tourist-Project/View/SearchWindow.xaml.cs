@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Model;
 
 namespace Tourist_Project.View
 {

@@ -6,6 +6,7 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -26,11 +27,11 @@ namespace Tourist_Project.WPF.Views
         public AccommodationForm()
         {
             InitializeComponent();
-            DataContext = this;
+            DataContext = new CreateAccommodationViewModel(this);/*
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             InitializeCitiesAndCountries();
-            Title = "Create new accommodation";
+*/            Title = "Create new accommodation";
         }
 
 

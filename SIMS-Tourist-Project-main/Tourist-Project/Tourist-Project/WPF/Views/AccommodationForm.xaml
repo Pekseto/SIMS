@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cmd="clr-namespace:Tourist_Project.WPF.ViewModels"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Accommodation Form" Height="550" Width="500" WindowStartupLocation="CenterScreen">
@@ -19,19 +20,25 @@
         <Label Content="Cancellation Threshold" HorizontalAlignment="Center" FontSize="20" Margin="0,310,0,150"/>
         <Label Content="Image url" HorizontalAlignment="Center" FontSize="20" Margin="0,360,0,100"/>
 
-        <TextBox x:Name="Name" Grid.Column="1" Margin="10,70,10,410" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
-        <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CountryDropDownClosed"  x:Name="Country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Margin="10,120,120,360"></ComboBox>
-        <ComboBox ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" DropDownClosed="CityDropDownClosed" x:Name="City" VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Grid.Column="1" Margin="140,120,10,360"></ComboBox>
-        <ComboBox VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="Type" Grid.Column="1" Margin="10,170,10,310">
+        <TextBox x:Name="Name" Grid.Column="1" Margin="10,70,10,410" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding AccommodationToCreate.Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedItem="{Binding LocationToCreate.Country}"
+                  DropDownClosed="CountryDropDownClosed"  x:Name="Country" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Margin="10,120,120,360"></ComboBox>
+        <ComboBox ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedItem="{Binding LocationToCreate.City}"
+                  DropDownClosed="CityDropDownClosed" x:Name="City" VerticalContentAlignment="Center" IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Grid.Column="1" Margin="140,120,10,360"></ComboBox>
+        <ComboBox VerticalContentAlignment="Center" 
+                  SelectedItem="{Binding AccommodationToCreate.Type}"
+                  IsTextSearchEnabled="True" HorizontalContentAlignment="Center" Name="Type" Grid.Column="1" Margin="10,170,10,310">
             <ComboBoxItem Content="Apartment"/>
             <ComboBoxItem Content="House"/>
             <ComboBoxItem Content="Cottage"/>
         </ComboBox>
-        <xctk:IntegerUpDown x:Name="MaxNumGuests" Grid.Column="1" Margin="10,220,10,260" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown x:Name="MinStayingDays"  Grid.Column="1" Margin="10,270,10,210" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown x:Name="CancellationThreshold" Grid.Column="1" Margin="10,320,10,160" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Watermark="1" DefaultValue="1"></xctk:IntegerUpDown>
-        <TextBox x:Name="Url" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
-        <Button Content="Confirm" Click="Confirm" Margin="75,458,115,22"/>
-        <Button Content="Cancel" Click="Cancel" Margin="100,458,100,22" Grid.Column="1"/>
+        <xctk:IntegerUpDown x:Name="MaxNumGuests" Value="{Binding AccommodationToCreate.MaxGuestNum}"  Grid.Column="1" Margin="10,220,10,260" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Minimum="1"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown x:Name="MinStayingDays" Value="{Binding AccommodationToCreate.MinStayingDays}" Grid.Column="1" Margin="10,270,10,210" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Minimum="1"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown x:Name="CancellationThreshold" Value="{Binding AccommodationToCreate.CancellationThreshold}" Grid.Column="1" Margin="10,320,10,160" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Watermark="1" DefaultValue="1" Minimum="1"></xctk:IntegerUpDown>
+        <TextBox x:Name="Url" Text="{Binding AccommodationToCreate.ImageIdsCSV}" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <Button Content="Confirm" Command="{Binding ConfirmCommand}" Margin="75,458,115,22"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="100,458,100,22" Grid.Column="1"/>
     </Grid>
 </Window>

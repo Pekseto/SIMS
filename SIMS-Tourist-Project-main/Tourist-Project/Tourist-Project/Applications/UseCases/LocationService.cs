@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
-using Tourist_Project.Repositories;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.Applications.UseCases
@@ -40,6 +39,11 @@ namespace Tourist_Project.Applications.UseCases
         public void Delete(int id)
         {
             locationRepository.Delete(id);
+        }
+
+        public int GetId(string city, string country)
+        {
+            return locationRepository.GetId(city, country);
         }
 
         public void InitializeCitiesAndCountries()

@@ -16,14 +16,17 @@ namespace Tourist_Project.WPF.ViewModels
     public class TodayToursViewModel
     {
         public static ObservableCollection<Tour> TodayTours { get; set; }
-        public Tour SelectedTour { get; set; }
-        private TourService tourService;
-        public static bool Live { get; set; } = false;
+        public Tour SelectedTour { get; set; } 
+        private TourService tourService = new();
+        public static bool Live { get; set; } 
         public ICommand CreateCommand { get; set; }
         public ICommand StartTourCommand { get; set; }
         public TodayToursViewModel()
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
+
+            SelectedTour = new();
+            Live = false;
 
             CreateCommand = new RelayCommand(CreateTour, CanCreateTour);
             StartTourCommand = new RelayCommand(StartTour, CanStartTour);
@@ -41,21 +44,37 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanStartTour()
         {
-            if (!Live && !SelectedTour.Guided)
-            { 
-                Live = true;
-                return true;
+            if (Live) {
+                if (SelectedTour.Status == Status.Begin)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                MessageBox.Show("Tour is already guided or one is already active");
-                return false;
+                if (SelectedTour.Status == Status.End || SelectedTour is null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
         private void StartTour()
         {
+            Live = true;
+            SelectedTour.Status = Status.Begin;
+            tourService.Update(SelectedTour);
+
             var tourLiveWindow = new TourLiveView(SelectedTour);
             tourLiveWindow.ShowDialog();
+            tourLiveWindow.Close();
 
             tourService.Update(SelectedTour);
         }

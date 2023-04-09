@@ -3,6 +3,10 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
+<<<<<<< HEAD
+=======
+using Image = Tourist_Project.Domain.Models.Image;
+>>>>>>> fix/FileOrganizationGuide
 
 namespace Tourist_Project.WPF.Views
 {

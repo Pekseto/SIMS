@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
 
-namespace Tourist_Project.Repository
+namespace Tourist_Project.Repositories
 {
-    public class TourAttendanceRepository
+    public class TourAttendanceRepository : ITourAttendanceRepository
     {
         private const string filePath = "../../../Data/tourAttendance.csv";
         private readonly Serializer<TourAttendance> serializer;

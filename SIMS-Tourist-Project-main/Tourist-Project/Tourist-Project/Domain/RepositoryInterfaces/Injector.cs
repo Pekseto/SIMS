@@ -12,7 +12,10 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(IGuestReviewRepository), new GuestReviewRepository()},
             {typeof(ILocationRepository), new LocationRepository()},
             {typeof(IImageRepository), new ImageRepository()},
-            {typeof(IReservationRepository), new ReservationRepository()}
+            {typeof(IReservationRepository), new ReservationRepository()},
+            {typeof(ITourRepository), new TourRepository()},
+            {typeof(ITourPointRepository), new TourPointRepository()},
+            {typeof(ITourAttendanceRepository), new TourAttendanceRepository()}
         };
 
         public T CreateInstance<T>()

@@ -2,9 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using Tourist_Project.Application;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Repository;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
@@ -26,7 +25,5 @@ namespace Tourist_Project.WPF.Views
             var service = new TourPointService();
             service.RequestClose += (s, ev) => this.Close();
         }
-
-
     }
 }

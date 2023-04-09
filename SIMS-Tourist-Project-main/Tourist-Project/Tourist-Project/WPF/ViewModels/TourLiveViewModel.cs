@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Repository;
+using Tourist_Project.Repositories;
 using Tourist_Project.View;
 using Tourist_Project.WPF.Views;
 
@@ -47,7 +47,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private void EarlyEnd()
         {
-            selectedTour.Guided = true;
+            selectedTour.Status = Status.End;
             TodayToursViewModel.Live = false;
         }
 

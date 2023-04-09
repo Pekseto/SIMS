@@ -18,19 +18,19 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
-            <Button Click="TouristListClick">
+            <Button >
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="List of tourists" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Click="CheckBoxClick">
+            <Button>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Check chekcpoint" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Click="EarlyEndClick">
+            <Button Command="{Binding EarlyEndCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Text="Early end" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />

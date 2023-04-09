@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository
 {
-    public class TourReservationRepository
+    public class TourReservationRepository : ITourReservationRepository
     {
         private const string FilePath = "../../../Data/tourReservations.csv";
         private readonly Serializer<TourReservation> serializer;
@@ -24,13 +25,13 @@ namespace Tourist_Project.Repository
 
         public void Save(TourReservation tourReservation)
         {
-            tourReservation.Id = GenerateId();
+            tourReservation.Id = NextId();
             reservations = GetAll();
             reservations.Add(tourReservation);
             serializer.ToCSV(FilePath, reservations);
         }
 
-        public int GenerateId()
+        public int NextId()
         {
             reservations = GetAll();
             if (reservations.Count < 1)

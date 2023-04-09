@@ -23,6 +23,11 @@ namespace Tourist_Project.Application
             return repository.GetAll();
         }
 
+        public int GetId(string city, string country)
+        {
+            return repository.GetId(city, country);
+        }
+
         public void InitializeCitiesAndCountries()
         {
             foreach (var location in GetAll())
@@ -31,6 +36,29 @@ namespace Tourist_Project.Application
                 if (!CreateTourViewModel.Countries.Contains(location.Country))
                     CreateTourViewModel.Countries.Add(location.Country);
             }
+        }
+
+        public List<string> GetAllCities()
+        {
+            List<string> cities = new();
+            foreach (var location in GetAll())
+            {
+                cities.Add(location.City);
+            }
+            return cities;
+        }
+
+        public List<string> GetAllCountries()
+        {
+            List<string> countries = new();
+            foreach (var location in GetAll())
+            {
+                if (!countries.Contains(location.Country))
+                {
+                    countries.Add(location.Country);
+                }
+            }
+            return countries;
         }
     }
 }

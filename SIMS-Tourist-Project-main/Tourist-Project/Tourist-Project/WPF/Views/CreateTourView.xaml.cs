@@ -11,6 +11,7 @@ using Tourist_Project.Repository;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Applications.UseCases;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -22,7 +23,7 @@ namespace Tourist_Project.WPF.Views
         public CreateTourView()
         {
             InitializeComponent();
-            DataContext = new CreateTourViewModel();
+            DataContext = new CreateTourViewModel(this);
         }
     }
 }

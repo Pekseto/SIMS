@@ -6,167 +6,32 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
+    public enum Status { NotBegin, Begin, End }
     public class Tour : ISerializable
     {
-        int id;
-        public int Id
-        {
-            get => id;
-            set => id = value;
-        }
-
-        int locationId;
-        public int LocationId
-        {
-            get => locationId;
-            set
-            {
-                if (value != locationId)
-                {
-                    locationId = value;
-                    OnPropertyChanged("LocationId");
-                }
-            }
-        }
-
-        string name;
-        public string Name
-        {
-            get => name;
-            set
-            {
-                if (value != name)
-                {
-                    name = value;
-                    OnPropertyChanged("Name");
-                }
-            }
-        }
-
-        string description;
-        public string Description
-        {
-            get => description;
-            set
-            {
-                if (value != description)
-                {
-                    description = value;
-                    OnPropertyChanged("Description");
-                }
-            }
-        }
-
-        string language;
-        public string Language
-        {
-            get => language;
-            set
-            {
-                if (value != language)
-                {
-                    language = value;
-                    OnPropertyChanged("Language");
-                }
-            }
-        }
-
-        int maxGuestsNumber;
-        public int MaxGuestsNumber
-        {
-            get => maxGuestsNumber;
-            set
-            {
-                if (value != maxGuestsNumber)
-                {
-                    maxGuestsNumber = value;
-                    OnPropertyChanged("MaxGuestsNumber");
-                }
-            }
-        }
-
+        public int Id { get; set; }
+        public int LocationId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Language { get; set; }
+        public int MaxGuestsNumber { get; set; }
         List<TourPoint> tourPoints;
         public List<TourPoint> TourPoints
         {
             get => tourPoints;
             set => tourPoints = value;
         }
-
-        DateTime startTime;
-        public DateTime StartTime
-        {
-            get => startTime;
-            set
-            {
-                if (value != startTime)
-                {
-                    startTime = value;
-                    OnPropertyChanged("StartTime");
-                }
-            }
-        }
-
-        int duration;
-        public int Duration
-        {
-            get => duration;
-            set
-            {
-                if (value != duration)
-                {
-                    duration = value;
-                    OnPropertyChanged("Duration");
-                }
-            }
-        }
-
-        int imageId;
-        public int ImageId
-        {
-            get => imageId;
-            set
-            {
-                if (value != imageId)
-                {
-                    imageId = value;
-                    OnPropertyChanged("ImageId");
-                }
-            }
-        }
-
-        bool guided;
-        public bool Guided
-        {
-            get => guided;
-            set
-            {
-                if (value != guided)
-                {
-                    guided = value;
-                    OnPropertyChanged("Guided");
-                }
-            }
-        }
-
+        public DateTime StartTime { get; set; }
+        public int Duration { get; set; }
+        public int ImageId { get; set; }
+        public Status Status { get; set; }
         List<User> tourists;
         public List<User> Tourists
         {
             get => tourists;
             set => tourists = value;
         }
-
-        int userId;
-        public int UserId
-        {
-            get => userId;
-            set => userId = value;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public int UserId { get; set; }
 
         public Tour()
         {
@@ -186,10 +51,11 @@ namespace Tourist_Project.Domain.Models
             MaxGuestsNumber = maxGuestsNumber;
             StartTime = startTime;
             Duration = duration;
-            this.imageId = imageId;
-            Guided = false;
+            this.ImageId = imageId;
+            Status = Status.NotBegin;
         }
 
+        #region Serilization
         public string[] ToCSV()
         {
             string[] csvValues =
@@ -203,7 +69,7 @@ namespace Tourist_Project.Domain.Models
                 StartTime.ToString(),
                 Duration.ToString(),
                 ImageId.ToString(),
-                Guided.ToString(),
+                Status.ToString(),
                 //UserId.ToString(),
             };
 
@@ -221,8 +87,9 @@ namespace Tourist_Project.Domain.Models
             StartTime = DateTime.Parse(values[6]);
             Duration = int.Parse(values[7]);
             ImageId = int.Parse(values[8]);
-            Guided = bool.Parse(values[9]);
+            Status = Enum.Parse<Status>(values[9]);
             // UserId = int.Parse(values[10]);
         }
+        #endregion
     }
 }

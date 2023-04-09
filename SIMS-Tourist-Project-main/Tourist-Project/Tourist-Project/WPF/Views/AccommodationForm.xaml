@@ -37,7 +37,7 @@
         <xctk:IntegerUpDown x:Name="MaxNumGuests" Value="{Binding AccommodationToCreate.MaxGuestNum}"  Grid.Column="1" Margin="10,220,10,260" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Minimum="1"></xctk:IntegerUpDown>
         <xctk:IntegerUpDown x:Name="MinStayingDays" Value="{Binding AccommodationToCreate.MinStayingDays}" Grid.Column="1" Margin="10,270,10,210" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Minimum="1"></xctk:IntegerUpDown>
         <xctk:IntegerUpDown x:Name="CancellationThreshold" Value="{Binding AccommodationToCreate.CancellationThreshold}" Grid.Column="1" Margin="10,320,10,160" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Watermark="1" DefaultValue="1" Minimum="1"></xctk:IntegerUpDown>
-        <TextBox x:Name="Url" Text="{Binding AccommodationToCreate.ImageIdsCSV}" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
+        <TextBox x:Name="Url" Text="{Binding ImageToCreate.Url}" Grid.Column="1" Margin="10,370,10,110" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></TextBox>
         <Button Content="Confirm" Command="{Binding ConfirmCommand}" Margin="75,458,115,22"/>
         <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="100,458,100,22" Grid.Column="1"/>
     </Grid>

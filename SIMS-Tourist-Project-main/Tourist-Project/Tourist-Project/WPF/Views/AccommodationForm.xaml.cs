@@ -31,7 +31,7 @@ namespace Tourist_Project.WPF.Views
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
             InitializeCitiesAndCountries();
-*/            Title = "Create new accommodation";
+*/          Title = "Create new accommodation";
         }
 
 
@@ -110,12 +110,14 @@ namespace Tourist_Project.WPF.Views
         private List<int> CreateImage()
         {
             List<int> ides = new();
-            foreach (var url in Url.Text.Split(",")) 
+            if (!Url.Text.Contains(",")) return ides;
+            foreach (var url in Url.Text.Split(","))
             {
                 Image newImage = new(url);
                 var savedImage = imageRepository.Save(newImage);
                 ides.Add(savedImage.Id);
             }
+
             return ides;
         }
         private static void InitializeCitiesAndCountries()

@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -85,9 +87,10 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void Create()
         {
-
+            AccommodationToCreate.ImageIdsCSV = FormIdesString(CreateImage());
             AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
             accommodationService.Create(AccommodationToCreate);
+            Window.Close();
         }
 
         public static bool CanCreate()
@@ -102,6 +105,34 @@ namespace Tourist_Project.WPF.ViewModels
         public static bool CanCancel()
         {
             return true;
+        }
+        private List<int> CreateImage()
+        {
+            List<int> ides = new();
+            if (!ImageToCreate.Url.Contains(","))
+            {
+                Image newImage = new(ImageToCreate.Url);
+                var savedImage = imageService.Create(newImage);
+                ides.Add(savedImage.Id);
+            }
+            else
+            {
+                foreach (var url in ImageToCreate.Url.Split(","))
+                {
+                    Image newImage = new(url);
+                    var savedImage = imageService.Create(newImage);
+                    ides.Add(savedImage.Id);
+                }
+            }
+
+            return ides;
+        }
+        private static string? FormIdesString(List<int> ids)
+        {
+            if (ids.Count <= 0) return null;
+            var ides = ids.Aggregate(string.Empty, (current, imageId) => current + (imageId + ","));
+            ides = ides.Remove(ides.Length - 1);
+            return ides;
         }
 
     }

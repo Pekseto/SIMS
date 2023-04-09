@@ -6,7 +6,7 @@
         xmlns:cmd="clr-namespace:Tourist_Project.WPF.ViewModels"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Accommodation Form" Height="550" Width="500" WindowStartupLocation="CenterScreen">
+        Title="Create Accommodation" Height="550" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

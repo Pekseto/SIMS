@@ -49,7 +49,6 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly LocationService locationService = new();
         private readonly AccommodationService accommodationService = new();
         public static ObservableCollection<Location> Locations { get; set; } = new();
-        public static ObservableCollection<Image> Images { get; set; } = new();
         public static ObservableCollection<string> Countries { get; set; } = new();
         public static ObservableCollection<string> Cities { get; set; } = new();
         public static ICommand ConfirmCommand { get; set; }
@@ -59,7 +58,6 @@ namespace Tourist_Project.WPF.ViewModels
         public CreateAccommodationViewModel(Window window)
         {
             Locations = new ObservableCollection<Location>(locationService.GetAll());
-            Images = new ObservableCollection<Image>(imageService.GetAll());
             LocationToCreate = new Location();
             AccommodationToCreate = new Accommodation();
             ImageToCreate = new Image();

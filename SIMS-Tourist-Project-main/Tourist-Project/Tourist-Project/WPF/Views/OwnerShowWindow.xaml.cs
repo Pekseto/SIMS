@@ -55,7 +55,7 @@ namespace Tourist_Project.WPF.Views
             if (SelectedAccommodationDto != null)
             {
                 SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDto.AccommodationId);
-                var updateWindow = new AccommodationForm(SelectedAccommodation, SelectedAccommodationDto);
+                var updateWindow = new UpdateAccommodation(SelectedAccommodation);
                 updateWindow.Show();
                 Close();
             }

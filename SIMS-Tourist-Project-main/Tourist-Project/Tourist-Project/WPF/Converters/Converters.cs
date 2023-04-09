@@ -34,7 +34,25 @@ namespace Tourist_Project.WPF.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var enumType = AccommodationType.Apartment;
+                switch (parameter)
+                {
+                    case "Apartment": enumType = AccommodationType.Apartment;
+                        break;
+                    case "House": enumType = AccommodationType.House;
+                        break;
+                    case "Cottage": enumType = AccommodationType.Cottage;
+                        break;
+                    default: return null;
+                }
+                return enumType;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

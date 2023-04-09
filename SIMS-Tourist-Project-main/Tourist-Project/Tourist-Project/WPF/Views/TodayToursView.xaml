@@ -20,28 +20,28 @@
         <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
             <Button Command="{Binding CreateCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/add.png" Width="20" Height="25"/>
+                    <Image Source="/Images/add.png" Width="20" Height="25"/>
                     <TextBlock Text="Create" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Command="{Binding StartTourCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/view.png" Width="20" Height="25"/>
+                    <Image Source="/Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="Start tour" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button >
+            <Button Command="{Binding FutureTourCommand}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/view.png" Width="20" Height="25"/>
-                    <TextBlock Text="All tours" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <Image Source="/Images/view.png" Width="20" Height="25"/>
+                    <TextBlock Text="Future tours" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Separator/>
             <Button >
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/delete.png" Width="20" Height="25"/>
+                    <Image Source="/Images/delete.png" Width="20" Height="25"/>
                     <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media.Animation;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
@@ -10,6 +11,8 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IAccommodationRepository accommodationRepository = injector.CreateInstance<IAccommodationRepository>();
+
+        
         public AccommodationService()
         {
         }
@@ -37,5 +40,6 @@ namespace Tourist_Project.Applications.UseCases
         {
             accommodationRepository.Delete(id);
         }
+
     }
 }

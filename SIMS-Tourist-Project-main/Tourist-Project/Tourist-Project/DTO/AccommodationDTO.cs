@@ -1,4 +1,6 @@
-﻿using Tourist_Project.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.DTO
 {
@@ -11,7 +13,8 @@ namespace Tourist_Project.DTO
         public int CancellationThreshold { get; set; }
         public string ImageUrl { get; set; }
         public int AccommodationId { get; set; }
-        public AccommodationType AccommodationType { get; set; }    
+        public AccommodationType AccommodationType { get; set; }  
+        
         public AccommodationDTO()
         {
         }
@@ -25,8 +28,6 @@ namespace Tourist_Project.DTO
             ImageUrl = image.Url;
             AccommodationId = accommodation.Id;
             AccommodationType = accommodation.Type;
-            
-
         }
     }
 }

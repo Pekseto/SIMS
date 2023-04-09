@@ -14,6 +14,7 @@ using System;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
+using Tourist_Project.WPF.ViewModel;
 
 namespace Tourist_Project.View
 {
@@ -64,11 +65,11 @@ namespace Tourist_Project.View
         public ObservableCollection<string> AccommodationTypes { get; set; }
 
         public User LoggedInUser { get; set; }
-        public GuestOne(User user)
+        public GuestOne(/*User user*/)
         {
             InitializeComponent();
-            DataContext = this;
-            LoggedInUser = user;
+            this.DataContext = new GuestOne();
+            //LoggedInUser = user;
 
             locationRepository = new LocationRepository();
             accommodationRepository = new AccommodationRepository();

@@ -50,6 +50,17 @@ namespace Tourist_Project.Applications.UseCases
                 if (!CreateTourViewModel.Countries.Contains(location.Country))
                     CreateTourViewModel.Countries.Add(location.Country);
             }
+
+            foreach(var location in GetAll())
+            {
+                GuestOneViewModel.Cities.Add(location.City);
+                if (!GuestOneViewModel.Countries.Contains(location.Country))
+                {
+                    GuestOneViewModel.Countries.Add(location.Country);
+                }
+            }
         }
+
+        
     }
 }

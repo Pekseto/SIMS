@@ -5,14 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
-using Tourist_Project.Repository;
+using Tourist_Project.Repositories;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.Applications.UseCases
 {
     public class TourAttendanceService
     {
-        private readonly TourAttendanceRepository repository = new();
+        private static readonly Injector injector = new();
+
+        private readonly ITourAttendanceRepository repository = injector.CreateInstance<ITourAttendanceRepository>();
+
         private UserService userService = new();
         private TourPointService tourPointService = new();
 

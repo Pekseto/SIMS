@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Security.Policy;
@@ -15,34 +16,99 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class CreateTourViewModel
+    public class CreateTourViewModel : INotifyPropertyChanged
     {
-        public static ObservableCollection<string> Countries { get; set; } = new();
-        public static ObservableCollection<string> Cities { get; set; } = new();
-        public static ObservableCollection<Location> Locations { get; set; } = new();
+        #region ObservableCollection
+        public static ObservableCollection<string> Countries { get; set; }
+        public static ObservableCollection<string> Cities { get; set; }
+        #endregion
 
+        #region Service
         private LocationService locationService = new();
         private TourService tourService = new();
+        private TourPointService tourPointService = new();
+        private ImageService imageService = new();
+        #endregion
+        private int numberOfPoints = 0;
+        private Window window;
 
+        #region Command
         public ICommand CreateCommand { get; set; }
         public ICommand CancelCommand { get; set; }
         public ICommand AddImageCommand { get; set; }
         public ICommand AddCheckpointCommand { get; set; }
-        public event EventHandler RequestClose;
+        #endregion
+        
+        #region ObjectForAdd
+        private Tour tourForAdd;
+        public Tour TourForAdd
 
-        /*
-        public CreateTourViewModel()
         {
+            get { return tourForAdd; }
+            set
+            {
+                tourForAdd = value;
+                OnPropertyChanged("TourForAdd");
+            }
+        }
+        private Image imageForAdd;
+        public Image ImageForAdd
+        {
+            get { return imageForAdd; }
+            set
+            {
+                imageForAdd = value;
+                OnPropertyChanged("ImageForAdd");
+            }
+        }
+        private TourPoint pointForAdd;
+        public TourPoint PointForAdd
+        {
+            get { return pointForAdd; }
+            set
+            {
+                pointForAdd = value;
+                OnPropertyChanged("PointForAdd");
+            }
+        }
+        private Location location;
+        public Location Location
+        {
+            get { return location; }
+            set
+            {
+                location = value;
+                OnPropertyChanged("PointForAdd");
+            }
+        }
+
+        #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public CreateTourViewModel(Window window)
+        {
+            this.window = window;
+            Cities = new ObservableCollection<string>(locationService.GetAllCities());
+            Countries = new ObservableCollection<string>(locationService.GetAllCountries());
+
+            ImageForAdd = new();
+            PointForAdd = new();
+            TourForAdd = new();
+            Location = new();
 
             CreateCommand = new RelayCommand(Create, CanCreate);
             CancelCommand = new RelayCommand(Cancel, CanCancel);
             AddImageCommand = new RelayCommand(AddImage, CanAddImage);
             AddCheckpointCommand = new RelayCommand(AddCheckpoint, CanAddCheckpoint);
-
-            locationService.InitializeCitiesAndCountries();
         }
 
         private bool CanCancel()
@@ -52,51 +118,49 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void Cancel()
         {
-            if (CanCancel())
-            {
-                RequestClose?.Invoke(this, EventArgs.Empty);
-            }
+            window.Close();
         }
-        /*
+        
         private bool CanCreate()
         {
-            if(tour.TourPoints.Count() >= 2)
+            
+            if(numberOfPoints >= 2)
             {
                 return true;
             }
             else
             {
-                MessageBox.Show("You must enter minimum two checkpoints!");
                 return false;
             }
         }
 
         private void Create()
         {
-            tour = new Tour(Name.Text, locationService.GetId(city.Text, country.Text), description.Text, language.Text, Convert.ToInt32(maxGuestsNumber.Text), Convert.ToDateTime(startTime.Text), Convert.ToInt32(duration.Text), image.Id);
-            tourService.Save(tour);
+            TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
+            tourService.Save(TourForAdd);
 
-            if (tour.StartTime.Date == DateTime.Today.Date)
+            if (TourForAdd.StartTime.Date == DateTime.Today.Date)
             {
-                TodayToursViewModel.TodayTours.Add(tour);
+                TodayToursViewModel.TodayTours.Add(TourForAdd);
             }
-            this.Close();
+
+            window.Close();
         }
 
-        private void CountryDropDownClosed(object sender, EventArgs e, string countryText)
+        private void CountryDropDownClosed(object sender, EventArgs e)
         {
             Cities.Clear();
             foreach (var location in locationService.GetAll())
             {
-                if (location.Country.Equals(countryText))
+                if (location.Country.Equals(Location.Country))
                     Cities.Add(location.City);
             }
         }
-        private void CityDropDownClosed(object sender, EventArgs e, string cityText)
+        private void CityDropDownClosed(object sender, EventArgs e)
         {
             foreach (var location in locationService.GetAll())
             {
-                if (location.City.Equals(cityText))
+                if (location.City.Equals(Location.City))
                     Countries.Add(location.Country);
             }
         }
@@ -108,13 +172,8 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void AddImage()
         {
-            Image image = new Image(url.Text);
-            imageService.Save(image);
-
-            if (!string.IsNullOrWhiteSpace(url.Text))
-            {
-                url.Clear();
-            }
+            imageService.Save(ImageForAdd);
+            ImageForAdd = new Image();
         }
 
         private bool CanAddCheckpoint()
@@ -124,15 +183,11 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void AddCheckpoint()
         {
-            TourPoint tourPoint = new TourPoint(checkpoint.Text, tourRepository.NextId());
-            tourPointRepository.Save(tourPoint);
-
-            if (!string.IsNullOrWhiteSpace(checkpoint.Text))
-            {
-                tour.TourPoints.Add(tourPoint);
-                checkpoint.Clear();
-            }
+            PointForAdd.TourId = tourService.NexttId();
+            tourPointService.Save(PointForAdd);
+            PointForAdd = new TourPoint();
+            numberOfPoints++;
         }
-        */
+        
     }
 }

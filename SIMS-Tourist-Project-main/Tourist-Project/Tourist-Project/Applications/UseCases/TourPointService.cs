@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repository;
 using Tourist_Project.View;
 using Tourist_Project.WPF.ViewModels;
@@ -14,12 +15,19 @@ namespace Tourist_Project.Applications.UseCases
 {
     public class TourPointService
     {
-        private readonly TourPointRepository repository = new();
+        private static readonly Injector injector = new();
+
+        private readonly ITourPointRepository repository = injector.CreateInstance<ITourPointRepository>();
         public event EventHandler RequestClose;
 
         public TourPoint GetOne(int id)
         {
             return repository.GetOne(id);
+        }
+
+        public void Save(TourPoint tourPoint)
+        {
+            repository.Save(tourPoint);
         }
 
         public void UpdateCollection(TourPoint selectedTourPoint, Tour selectedTour)

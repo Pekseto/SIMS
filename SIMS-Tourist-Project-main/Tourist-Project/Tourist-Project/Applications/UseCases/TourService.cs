@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 
@@ -11,7 +12,10 @@ namespace Tourist_Project.Applications.UseCases
 {
     public class TourService
     {
-        private readonly TourRepository repository = new();
+
+        private static readonly Injector injector = new();
+
+        private readonly ITourRepository repository = injector.CreateInstance<ITourRepository>();
 
         public TourService()
         {
@@ -36,6 +40,11 @@ namespace Tourist_Project.Applications.UseCases
         public List<Tour> GetTodaysTours()
         {
             return repository.GetTodaysTours();
+        }
+
+        public int NexttId()
+        {
+            return repository.NextId();
         }
     }
 }

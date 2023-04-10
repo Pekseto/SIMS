@@ -38,6 +38,11 @@ namespace Tourist_Project.Applications.UseCases
         {
             imageRepository.Delete(id);
         }
+
+        public void Save(Image image)
+        {
+            imageRepository.Save(image);
+        }
     }
 
 }

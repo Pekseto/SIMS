@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,23 +12,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
-using Tourist_Project.Repository;
 using Tourist_Project.Repositories;
+using Tourist_Project.Repository;
 
-namespace Tourist_Project.View
+namespace Tourist_Project.WPF.Views
 {
     /// <summary>
     /// Interaction logic for GuestTwoWindow.xaml
     /// </summary>
     public partial class GuestTwoWindow : Window
     {
-        private readonly TourRepository tourRepository;
-        private readonly LocationRepository locationRepository;
-        private readonly TourReservationRepository reservationRepository;
+        private readonly TourService tourService;
+        private readonly LocationService locationService;
+        private readonly TourReservationService reservationService;
         public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
@@ -85,16 +87,16 @@ namespace Tourist_Project.View
             DataContext = this;
             LoggedInUser = user;
 
-            tourRepository = new TourRepository();
-            locationRepository = new LocationRepository();
-            reservationRepository = new TourReservationRepository();
+            tourService = new TourService();
+            locationService = new LocationService();
+            reservationService = new TourReservationService();
 
             Tours = new ObservableCollection<TourDTO>();
             Countries = new ObservableCollection<string>();
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>();
 
-            foreach (Tour tour in tourRepository.GetAll())
+            foreach (Tour tour in tourService.GetAll())
             {
                 var tourDTO = new TourDTO(tour)
                 {
@@ -104,12 +106,12 @@ namespace Tourist_Project.View
                 Tours.Add(tourDTO);
             }
 
-            foreach (Location location in locationRepository.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
+            foreach (Location location in locationService.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
             {
                 Countries.Add(location.Country);
             }
 
-            foreach (Tour tour in tourRepository.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
+            foreach (Tour tour in tourService.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
             {
                 Languages.Add(tour.Language);
             }
@@ -123,7 +125,7 @@ namespace Tourist_Project.View
         private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Cities.Clear();
-            foreach (Location location in locationRepository.GetAll())
+            foreach (Location location in locationService.GetAll())
             {
                 if (location.Country == SelectedCountry)
                 {
@@ -138,7 +140,7 @@ namespace Tourist_Project.View
             foreach (TourDTO tourDTO in Tours)
             {
                 //FILTERING
-                if(SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
+                if (SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
                 {
                     continue;
                 }
@@ -146,7 +148,7 @@ namespace Tourist_Project.View
                 {
                     continue;
                 }
-                if(duration != 0 && tourDTO.Duration != duration)
+                if (duration != 0 && tourDTO.Duration != duration)
                 {
                     continue;
                 }
@@ -154,7 +156,7 @@ namespace Tourist_Project.View
                 {
                     continue;
                 }
-                if(numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
+                if (numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
                 {
                     continue;
                 }
@@ -166,7 +168,7 @@ namespace Tourist_Project.View
 
         private void ReserveClick(object sender, RoutedEventArgs e)
         {
-            if(guestsNumber > 0 && SelectedTour != null)
+            if (guestsNumber > 0 && SelectedTour != null)
             {
                 int tourCapacityLeft = SelectedTour.SpotsLeft;
 
@@ -176,7 +178,7 @@ namespace Tourist_Project.View
                                     "Here are some other tours on the same location!");
                     DisplaySimilarTours(SelectedTour);
                 }
-                else if(tourCapacityLeft < guestsNumber)
+                else if (tourCapacityLeft < guestsNumber)
                 {
                     MessageBox.Show("Unfortunately, we can't accept that many guests at the moment.\n" +
                                     "You are welcome to lower the amount of people coming with you!\n" +
@@ -186,7 +188,7 @@ namespace Tourist_Project.View
                 {
                     SelectedTour.SpotsLeft -= guestsNumber;
                     var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber);
-                    reservationRepository.Save(tourReservation);
+                    reservationService.Save(tourReservation);
                     MessageBox.Show("Reservation is successful");
                 }
 
@@ -217,7 +219,7 @@ namespace Tourist_Project.View
         private int GetLeftoverSpots(Tour tour)
         {
             int retVal = tour.MaxGuestsNumber;
-            foreach (TourReservation reservation in reservationRepository.GetAll())
+            foreach (TourReservation reservation in reservationService.GetAll())
             {
                 if (reservation.TourId == tour.Id)
                 {
@@ -228,7 +230,7 @@ namespace Tourist_Project.View
         }
         private Location GetLocation(Tour tour)
         {
-            return locationRepository.GetAll().Find(x => x.Id == tour.LocationId);
+            return locationService.GetAll().Find(x => x.Id == tour.LocationId);
         }
     }
 }

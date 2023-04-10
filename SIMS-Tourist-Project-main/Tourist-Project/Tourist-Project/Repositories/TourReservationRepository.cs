@@ -41,6 +41,29 @@ namespace Tourist_Project.Repository
             return reservations.Max(r => r.Id) + 1;
         }
 
+        public void Delete(int id)
+        {
+            reservations = GetAll();
+            TourReservation reservation = reservations.Find(r => r.Id == id);
+            reservations.Remove(reservation);
+            serializer.ToCSV(FilePath, reservations);
+        }
+
+        public void Update(TourReservation reservation)
+        {
+            reservations = GetAll();
+            var old = reservations.Find(r => r.Id == reservation.Id);
+            int index = reservations.IndexOf(old);
+            reservations.Remove(old);
+            reservations.Insert(index, reservation);
+            serializer.ToCSV(FilePath, reservations);
+        }
+
+        public TourReservation GetById(int id)
+        {
+            reservations = GetAll();
+            return reservations.Find(r => r.Id == id);
+        }
     }
 }
 

@@ -12,5 +12,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<TourReservation> GetAll();
         public void Save(TourReservation reservation);
         public int NextId();
+        public void Delete(int id);
+        public void Update(TourReservation reservation);
+        public TourReservation GetById(int id);
     }
 }

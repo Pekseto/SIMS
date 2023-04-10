@@ -6,9 +6,13 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
+<<<<<<< HEAD
 using Tourist_Project.Repository;
 using Image = Tourist_Project.Domain.Models.Image;
 //>>>>>>> fix/FileOrganizationGuide
+=======
+using Tourist_Project.WPF.ViewModels;
+>>>>>>> feat/ViewModels
 
 namespace Tourist_Project.WPF.Views
 {
@@ -29,11 +33,7 @@ namespace Tourist_Project.WPF.Views
         public AccommodationForm()
         {
             InitializeComponent();
-            DataContext = this;
-            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
-            Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            InitializeCitiesAndCountries();
-            Title = "Create new accommodation";
+            DataContext = new CreateAccommodationViewModel(this);
         }
 
 
@@ -62,7 +62,7 @@ namespace Tourist_Project.WPF.Views
             Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;
         }
 
-        private void Confirm(object sender, RoutedEventArgs e)
+        /*private void Confirm(object sender, RoutedEventArgs e)
         {
             if(SelectedAccommodation != null)
             {
@@ -83,20 +83,20 @@ namespace Tourist_Project.WPF.Views
             OwnerShowWindow.Accommodations.Add(savedAccommodation);
             OwnerShowWindow.AccommodationDtos.Add(new AccommodationDTO(savedAccommodation, locationRepository.GetById(savedAccommodation.LocationId), imageRepository.GetById(savedAccommodation.ImageId)));
         }
-
+        */
         private void UpdateSelectedAccommodation()
         {
             SelectedAccommodation.Name = Name.Text;
-            SelectedAccommodation.LocationId = GetLocationId();
+            //SelectedAccommodation.LocationId = GetLocationId();
             SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
             SelectedAccommodation.MaxGuestNum = int.Parse(MaxNumGuests.Text);
             SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
             SelectedAccommodation.CancellationThreshold = int.Parse(CancellationThreshold.Text);
-            SelectedAccommodation.ImageIds = CreateImage();
+            //SelectedAccommodation.ImageIds = CreateImage();
             SelectedAccommodation.ImageIdsCSV = Url.Text;
             _ = accommodationRepository.Update(SelectedAccommodation);
         }
-
+        /*
         private static string? FormIdesString(List<int> ids)
         {
             if (ids.Count <= 0) return null;
@@ -112,12 +112,14 @@ namespace Tourist_Project.WPF.Views
         private List<int> CreateImage()
         {
             List<int> ides = new();
-            foreach (var url in Url.Text.Split(",")) 
+            if (!Url.Text.Contains(",")) return ides;
+            foreach (var url in Url.Text.Split(","))
             {
                 Image newImage = new(url);
                 var savedImage = imageRepository.Save(newImage);
                 ides.Add(savedImage.Id);
             }
+
             return ides;
         }
         private static void InitializeCitiesAndCountries()
@@ -128,7 +130,7 @@ namespace Tourist_Project.WPF.Views
                 if (!Countries.Contains(location.Country))
                     Countries.Add(location.Country);
             }
-        }
+        }*/
         private void CountryDropDownClosed(object sender, EventArgs e)
         {
             Cities.Clear();
@@ -145,10 +147,10 @@ namespace Tourist_Project.WPF.Views
                 if (location.City.Equals(City.Text))
                     Country.Text = location.Country;
             }
-        }
+        }/*
         private void Cancel(object sender, RoutedEventArgs e)
         {
             Close();
-        }
+        }*/
     }
 }

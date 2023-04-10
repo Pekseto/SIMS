@@ -43,13 +43,13 @@ namespace Tourist_Project.WPF.Views
                 }
                 else
                 {
-                    var ownerShowWindow = new OwnerShowWindow();
+                    var ownerShowWindow = new OwnerMainWindow();
                     ownerShowWindow.Show();
                 }
             }
             else
             {
-                var ownerShowWindow = new OwnerShowWindow();
+                var ownerShowWindow = new OwnerMainWindow();
                 ownerShowWindow.Show();
             }
         }

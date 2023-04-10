@@ -14,7 +14,7 @@ using System;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
-using Tourist_Project.WPF.ViewModel;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.View
 {

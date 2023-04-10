@@ -44,7 +44,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public int GetId(string city, string country)
         {
-            return repository.GetId(city, country);
+            return locationRepository.GetId(city, country);
         }
 
         public void InitializeCitiesAndCountries()

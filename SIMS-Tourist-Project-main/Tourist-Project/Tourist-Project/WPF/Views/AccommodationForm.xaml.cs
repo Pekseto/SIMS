@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
-<<<<<<< HEAD
-using Tourist_Project.Repository;
-using Image = Tourist_Project.Domain.Models.Image;
-//>>>>>>> fix/FileOrganizationGuide
-=======
 using Tourist_Project.WPF.ViewModels;
->>>>>>> feat/ViewModels
+using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.WPF.Views
 {

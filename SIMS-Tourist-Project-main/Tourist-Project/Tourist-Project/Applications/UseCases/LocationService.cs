@@ -79,7 +79,5 @@ namespace Tourist_Project.Applications.UseCases
             }
             return countries;
         }
-
-        
     }
 }

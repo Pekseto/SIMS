@@ -32,7 +32,7 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button Command="{Binding FutureTourCommand}">
+            <Button Command="{Binding FutureToursCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/view.png" Width="20" Height="25"/>
                     <TextBlock Text="Future tours" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />

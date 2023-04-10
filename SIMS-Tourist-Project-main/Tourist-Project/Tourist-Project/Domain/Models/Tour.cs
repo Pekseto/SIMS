@@ -6,7 +6,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public enum Status { NotBegin, Begin, End }
+    public enum Status { NotBegin, Begin, End, Cancel }
     public class Tour : ISerializable
     {
         public int Id { get; set; }
@@ -15,35 +15,18 @@ namespace Tourist_Project.Domain.Models
         public string Description { get; set; }
         public string Language { get; set; }
         public int MaxGuestsNumber { get; set; }
-        List<TourPoint> tourPoints;
-        public List<TourPoint> TourPoints
-        {
-            get => tourPoints;
-            set => tourPoints = value;
-        }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
         public int ImageId { get; set; }
         public Status Status { get; set; }
-        List<User> tourists;
-        public List<User> Tourists
-        {
-            get => tourists;
-            set => tourists = value;
-        }
         public int UserId { get; set; }
 
         public Tour()
         {
-            tourPoints = new List<TourPoint>();
-            tourists = new List<User>();
         }
 
         public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId)
         {
-            TourPoints = new List<TourPoint>();
-            tourists = new List<User>();
-
             Name = name;
             LocationId = locationId;
             Description = description;

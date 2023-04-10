@@ -14,7 +14,7 @@ namespace Tourist_Project.WPF.Views
         public TodayToursView()
         {
             InitializeComponent();
-            DataContext = new TodayToursViewModel();
+            DataContext = new TodayToursViewModel(this);
         }
     }
 }

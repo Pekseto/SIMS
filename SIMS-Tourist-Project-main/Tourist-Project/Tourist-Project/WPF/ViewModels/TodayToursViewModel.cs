@@ -18,18 +18,35 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; } 
         private TourService tourService = new();
+        private Window window;
         public static bool Live { get; set; } 
         public ICommand CreateCommand { get; set; }
         public ICommand StartTourCommand { get; set; }
-        public TodayToursViewModel()
+        public ICommand FutureToursCommand { get; set; }
+        public TodayToursViewModel(Window window)
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
 
             SelectedTour = new();
+            this.window = window;
             Live = false;
 
             CreateCommand = new RelayCommand(CreateTour, CanCreateTour);
             StartTourCommand = new RelayCommand(StartTour, CanStartTour);
+            FutureToursCommand = new RelayCommand(FutureTours, CanFutureTours);
+            this.window = window;
+        }
+
+        private bool CanFutureTours()
+        {
+            return true;
+        }
+
+        private void FutureTours()
+        {
+            var futureWindow = new FutureToursView();
+            futureWindow.Show();
+            window.Close();
         }
 
         private bool CanCreateTour()

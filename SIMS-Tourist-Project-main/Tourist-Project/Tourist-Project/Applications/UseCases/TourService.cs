@@ -46,5 +46,10 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.NextId();
         }
+
+        public List<Tour> GetFutureTours()
+        {
+            return GetAll().FindAll(t => (t.StartTime - DateTime.Now).TotalDays > 1 && t.Status != Status.Cancel);
+        }
     }
 }

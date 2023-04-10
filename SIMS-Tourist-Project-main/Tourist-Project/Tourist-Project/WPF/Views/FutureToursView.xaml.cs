@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -22,6 +23,7 @@ namespace Tourist_Project.WPF.Views
         public FutureToursView()
         {
             InitializeComponent();
+            DataContext = new FutureToursViewModel(this);
         }
     }
 }

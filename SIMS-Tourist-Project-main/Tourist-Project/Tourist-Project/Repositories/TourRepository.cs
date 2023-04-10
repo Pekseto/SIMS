@@ -27,7 +27,7 @@ namespace Tourist_Project.Repositories
 
         public List<Tour> GetTodaysTours()
         {
-            return GetAll().FindAll(tour => tour.StartTime.Date == DateTime.Today.Date);
+            return GetAll().FindAll(tour => tour.StartTime.Date == DateTime.Today.Date && tour.Status != Status.Cancel);
         }
 
         public void Save(Tour tour)

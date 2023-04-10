@@ -118,6 +118,16 @@ namespace Tourist_Project.Domain.Models
                 OnPropertyChanged();
             }
         }
+        public string ImageUrl 
+        {
+            get => imageIdsCSV;
+            set
+            {
+                if (value == imageIdsCSV) return;
+                imageIdsCSV = value;
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -6,6 +6,18 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="Accommodations" Height="740" Width="1150" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate x:Key="AccommodationDataTemplate">
+            <StackPanel Width="490" Height="auto">
+                <Image Width="400" Height="100" HorizontalAlignment="Left" Source="{Binding ImageUrl}"></Image>
+                <Label Content="{Binding Name}" FontSize="18" Height="45" Margin="160, -160, 10,0 "></Label>
+                <Label Content="{Binding Location.Country}" FontSize="16" Height="45" Margin="160, -80, 10,10 "></Label>
+                <Label Content="{Binding Location.City}" FontSize="16" Height="45" Margin="260, -80, 10,10 "></Label>
+                <Label Content="{Binding Type}" FontSize="16" Height="30" Margin="160, -30, 10,0 "></Label>
+                <Separator></Separator>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="270"></ColumnDefinition>
@@ -28,6 +40,16 @@
                     <Button Height="38" Margin="10,449,20,10" Content="Show Renovations(Shift+S)"></Button>
                     <Button Height="38" Margin="10,613,20,10" Content="Demo(Q)"></Button>
                 </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="193*"/>
+                <RowDefinition Height="532*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Margin="24,8,4,324" Grid.RowSpan="2" Header="My accommodations(M)">
+                <ListBox ItemsSource="{Binding accommodations}"
+                         ItemTemplate="{StaticResource AccommodationDataTemplate}"/>
             </GroupBox>
         </Grid>
     </Grid>

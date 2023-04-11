@@ -5,8 +5,6 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.View;
-using Tourist_Project.WPF.Views;
-//>>>>>>> fix/FileOrganizationGuide
 
 namespace Tourist_Project.WPF.Views
 {

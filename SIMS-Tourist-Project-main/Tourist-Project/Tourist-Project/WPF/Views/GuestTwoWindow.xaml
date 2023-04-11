@@ -14,7 +14,11 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Label Content="Location:" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
-        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" SelectionChanged="CountriesSelectionChanged" Width="75" Height="25" HorizontalAlignment="Left" Margin="65,0,0,0"/>
+        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"
+                  
+                  Width="75" Height="25" HorizontalAlignment="Left" Margin="65,0,0,0">
+            
+        </ComboBox>
         <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Width="75" Height="25" HorizontalAlignment="Left" Margin="145,0,0,0"/>
         <Label Content="Tour duration:" Width="85" Margin="250,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBox Text="{Binding Duration}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="335,0,0,0"/>
@@ -23,9 +27,13 @@
         <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="505,0,0,0"/>
         <Label Content="Number of people:" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="595,0,0,0"/>
         <TextBox Text="{Binding NumberOfPeople}" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="705,0,0,0"/>
-        <Button Content="Search" Click="SearchClick" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0"/>
+        <Button Content="Search"
+                Command="{Binding SearchCommand}"
+                Width="70" Height="25"
+                HorizontalAlignment="Right" VerticalAlignment="Center"
+                Margin="0,0,15,0"/>
 
-        <DataGrid Name="toursDataGrid" Grid.Row="1" Margin="10"
+        <DataGrid x:Name="toursDataGrid" Grid.Row="1" Margin="10"
                   ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -42,10 +50,11 @@
 
         </DataGrid>
 
-        <Button Content="Show all" Click="ShowAllClick" Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0"/>
+        <Button Content="Show all" Command="{Binding ShowAllCommand}" 
+                Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0"/>
         <Label Content="How many spots to reserve:" Grid.Row="2" Width="160" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,200,0"/>
         <TextBox Text="{Binding GuestsNumber}" Grid.Row="2" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,135,0"/>
-        <Button Content="Reserve" Click="ReserveClick" Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,15,0"/>
+        <Button Content="Reserve" Command="{Binding ReserveCommand}"  Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,15,0"/>
 
 
     </Grid>

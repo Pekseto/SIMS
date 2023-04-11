@@ -29,6 +29,14 @@ namespace Tourist_Project.Domain.Models
             set { guestsNumber = value; }
         }
 
+        private bool voucher;
+
+        public bool Voucher
+        {
+            get { return voucher; }
+            set { voucher = value; }
+        }
+
         public TourReservation()
         {
 
@@ -39,6 +47,8 @@ namespace Tourist_Project.Domain.Models
             UserId = userId;
             TourId = tourId;
             GuestsNumber = guestsNumber;
+            //ZEKO VIDI OVO ZA VAUCER
+            this.voucher = false;
         }
 
         public string[] ToCSV()
@@ -49,6 +59,7 @@ namespace Tourist_Project.Domain.Models
                 userId.ToString(),
                 tourId.ToString(),
                 guestsNumber.ToString(),
+                voucher.ToString(),
             };
             return csvValues;
         }
@@ -59,6 +70,7 @@ namespace Tourist_Project.Domain.Models
             userId = int.Parse(values[1]);
             tourId = int.Parse(values[2]);
             guestsNumber = int.Parse(values[3]);
+            voucher = bool.Parse(values[4]);
         }
     }
 }

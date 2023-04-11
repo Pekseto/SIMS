@@ -37,17 +37,33 @@ namespace Tourist_Project.Domain.Models
             set { role = value; }
         }
 
+        private string fullName;
+        public string FullName
+        {
+            get { return fullName; }
+            set { fullName = value; }
+        }
+
+        private DateTime birthDate;
+        public DateTime BirtDate
+        {
+            get { return birthDate; }
+            set { birthDate = value; }
+        }
+
         public User() { }
-        public User(int id, string username, string password, UserRole role)
+        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate)
         {
             this.id = id;
             this.username = username;
             this.password = password;
             this.role = role;
+            this.fullName = fullName;
+            this.birthDate = birthDate;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { id.ToString(), username, password, role.ToString() };
+            string[] csvValues = { id.ToString(), username, password, role.ToString(), fullName, birthDate.ToString() };
             return csvValues;
         }
         public void FromCSV(string[] values)
@@ -56,6 +72,8 @@ namespace Tourist_Project.Domain.Models
             username = values[1];
             password = values[2];
             role = Enum.Parse<UserRole>(values[3]);
+            fullName = values[4];
+            birthDate = DateTime.Parse(values[5]);
         }
     }
 }

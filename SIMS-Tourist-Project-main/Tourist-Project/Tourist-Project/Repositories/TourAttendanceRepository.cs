@@ -56,9 +56,9 @@ namespace Tourist_Project.Repositories
             return current;
         }
 
-        public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint)
+        public List<TourAttendance> GetAllByTourId(int tourId)
         {
-            return GetAll().FindAll(attendace => attendace.TourId == selectedTourPoint.TourId);
+            return GetAll().FindAll(reservation => reservation.TourId == tourId);
         }
     }
 }

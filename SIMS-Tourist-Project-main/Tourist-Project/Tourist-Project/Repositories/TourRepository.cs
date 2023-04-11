@@ -30,6 +30,16 @@ namespace Tourist_Project.Repositories
             return GetAll().FindAll(tour => tour.StartTime.Date == DateTime.Today.Date && tour.Status != Status.Cancel);
         }
 
+        public List<Tour> GetFutureTours()
+        {
+            return GetAll().FindAll(t => (t.StartTime - DateTime.Now).TotalDays > 1 && t.Status != Status.Cancel);
+        }
+
+        public List<Tour> GetPastTours()
+        {
+            return GetAll().FindAll(tour => tour.Status == Status.End);
+        }
+
         public void Save(Tour tour)
         {
             tour.Id = NextId();

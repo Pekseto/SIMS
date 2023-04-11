@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 
@@ -15,6 +16,7 @@ namespace Tourist_Project.WPF.ViewModels
     public class HistoryOfToursViewModel
     {
         public static ObservableCollection<Tour> Tours { get; set; }
+        private TourService tourService = new();
         public Tour SelectedTour { get; set; }
         private Window window;
 
@@ -24,7 +26,9 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ReviewsViewCommand { get; set; }
         public HistoryOfToursViewModel(Window window) 
         {
+            this.window = window;
             SelectedTour = null;
+            Tours = new ObservableCollection<Tour>(tourService.GetPastTours());
 
             HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
             FutureViewCommand = new RelayCommand(FutureView, CanFutureView);
@@ -58,7 +62,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanStatisticsView()
         {
-            if(SelectedTour is null)
+            if(SelectedTour == null)
             {
                 return false;
             }
@@ -70,7 +74,8 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void StatisticsView()
         {
-            
+            var statisticsWindow = new StatisticsOfTourView(SelectedTour);
+            statisticsWindow.Show();
         }
 
         private bool CanReviewView()

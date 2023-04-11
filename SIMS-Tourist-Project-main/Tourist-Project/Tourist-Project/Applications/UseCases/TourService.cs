@@ -36,20 +36,25 @@ namespace Tourist_Project.Applications.UseCases
         {
             repository.Update(tour);
         }
+        public int NexttId()
+        {
+            return repository.NextId();
+        }
 
         public List<Tour> GetTodaysTours()
         {
             return repository.GetTodaysTours();
         }
 
-        public int NexttId()
-        {
-            return repository.NextId();
-        }
 
         public List<Tour> GetFutureTours()
         {
-            return GetAll().FindAll(t => (t.StartTime - DateTime.Now).TotalDays > 1 && t.Status != Status.Cancel);
+            return repository.GetFutureTours();
+        }
+
+        public List<Tour> GetPastTours()
+        {
+            return repository.GetPastTours();
         }
     }
 }

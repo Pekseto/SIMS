@@ -30,11 +30,11 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Name of tour" FontSize="35"></Label>
+                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="{Binding Tour.Name}" FontSize="35"></Label>
                     <Label Grid.Row="1" Grid.Column="0" Content="Name of guide" FontSize="30"></Label>
-                    <Label Grid.Row="1" Grid.Column="1" Content="Language" FontSize="30"></Label>
-                    <Label Grid.Row="2" Grid.Column="0" Content="Location" FontSize="30"></Label>
-                    <Label Grid.Row="2" Grid.Column="1" Content="Max number of guests" FontSize="30"></Label>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Tour.Language}" FontSize="30"></Label>
+                    <Label Grid.Row="2" Grid.Column="0" Content="{Binding Location}" FontSize="30"></Label>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding Tour.MaxGuestsNumber}" FontSize="30"></Label>
                 </Grid>
             </Border>
         </Grid>
@@ -49,31 +49,31 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="TitleForAgeGrid" Grid.ColumnSpan="2" Grid.Row="0">
+            <Grid x:Name="TitleForAgeGrid" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center">
                 <Label x:Name="AgeTitle" Content="Age structure" FontSize="20"></Label>
             </Grid>
             <Grid x:Name="AgePie" Grid.Column="0" Grid.Row="1">
                 
             </Grid>
             <Grid x:Name="AgeInfo" Grid.Column="1" Grid.Row="1">
-                <Label x:Name="Under18" Content="Tourists under 18" FontSize="15" Margin="0,0,0,235"></Label>
-                <Label x:Name="DataUnder18" Content="NumberIn%" FontSize="15" Margin="0,39,0,192"></Label>
-                <Label x:Name="Between18And50" Content="Tourists between 18 and 50" FontSize="15" Margin="0,87,0,153"></Label>
-                <Label x:Name="DataBetween18And50" Content="NumberIn%" FontSize="15" Margin="0,121,0,116"></Label>
-                <Label x:Name="Above50" Content="Tourists older than 50" FontSize="15" Margin="0,163,0,66"></Label>
-                <Label x:Name="DataAbove50" Content="NumberIn%" FontSize="15" Margin="0,208,0,0"></Label>
+                <Label x:Name="Under18" Content="Tourists under 18" FontSize="15" Margin="0,0,0,205"></Label>
+                <Label x:Name="DataUnder18" Content="{Binding TouristsNumberYounger}" FontSize="15" Margin="0,24,0,172"></Label>
+                <Label x:Name="Between18And50" Content="Tourists between 18 and 50" FontSize="15" Margin="0,77,0,133"></Label>
+                <Label x:Name="DataBetween18And50" Content="{Binding TouristsNumberBetween}" FontSize="15" Margin="0,101,0,96"></Label>
+                <Label x:Name="Above50" Content="Tourists older than 50" FontSize="15" Margin="0,153,0,46"></Label>
+                <Label x:Name="DataAbove50" Content="{Binding TouristsNumberOlder}" FontSize="15" Margin="0,183,0,0"></Label>
             </Grid>
             <Grid x:Name="TitleForVoucherGrid" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0">
-                <Label x:Name="VoucherTitle" Content="Using voucher structure" FontSize="20"></Label>
+                <Label x:Name="VoucherTitle" Content="Using voucher structure" FontSize="20" HorizontalAlignment="Center"></Label>
             </Grid>
             <Grid x:Name="VoucherPie" Grid.Column="2" Grid.Row="1">
                 
             </Grid>
             <Grid x:Name="VoucherInfo" Grid.Column="3" Grid.Row="1">
-                <Label x:Name="WithVoucher" Content="Tourists with voucher" FontSize="15" Margin="0,0,0,235"></Label>
-                <Label x:Name="DataWithVoucher" Content="NumberIn%" FontSize="15" Margin="0,39,0,192"></Label>
-                <Label x:Name="WithoutVoucher" Content="Tourists without voucher" FontSize="15" Margin="0,87,0,153"></Label>
-                <Label x:Name="DataWithOutVoucher" Content="NumberIn%" FontSize="15" Margin="0,121,0,116"></Label>
+                <Label x:Name="WithVoucher" Content="Tourists with voucher(%)" FontSize="15" Margin="0,0,0,215"></Label>
+                <Label x:Name="DataWithVoucher" Content="{Binding WithVoucher}" FontSize="15" Margin="0,24,0,172"></Label>
+                <Label x:Name="WithoutVoucher" Content="Tourists without voucher(%)" FontSize="15" Margin="0,87,0,133"></Label>
+                <Label x:Name="DataWithOutVoucher" Content="{Binding WithoutVoucher}" FontSize="15" Margin="0,106,0,96"></Label>
             </Grid>
         </Grid>
         <Grid x:Name="ButtonGrid" Grid.Row="2">
@@ -82,8 +82,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="266"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="PDFStatisticsButton" Grid.Column="1" Content="PDF report" Width="200" Height="40" HorizontalAlignment="Center"></Button>
-            <Button x:Name="BackButton" Grid.Column="2" Content="Back" Width="200" Height="40" HorizontalAlignment="Center"></Button>
+            <Button x:Name="PdfStatisticsButton" Grid.Column="1" Content="PDF report" Width="200" Height="40" HorizontalAlignment="Center"></Button>
+            <Button x:Name="BackButton" Command="{Binding BackCommand}" Grid.Column="2" Content="Back" Width="200" Height="40" HorizontalAlignment="Center"></Button>
         </Grid>
     </Grid>
 </Window>

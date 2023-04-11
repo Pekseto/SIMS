@@ -26,9 +26,9 @@
                     <Label Margin="10 270 10 0" Content="Guide" HorizontalAlignment="Center" FontSize="15"></Label>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Button Width="200" Height="40" Margin="50,10,50,382" Content="Home page" Command="{Binding HomePageCommand}"/>
-                <Button Width="200" Height="40" Margin="50,70,50,314" Content="Future tours"/>
-                <Button Width="200" Height="40" Margin="50,130,50,249" Content="Statistics"/>
+                <Button Width="200" Height="40" Margin="50,10,50,382" Content="Home page" Command="{Binding HomeViewCommand}"/>
+                <Button Width="200" Height="40" Margin="50,70,50,314" Content="Future tours" Command="{Binding FutureViewCommand}"/>
+                <Button Width="200" Height="40" Margin="50,130,50,249" Content="Statistics" Command="{Binding StatisticsViewCommand}"/>
                 <Button Width="200" Height="40" Margin="50,200,50,187" Content="Reviews"/>
                 <Button Width="200" Height="40" Margin="50,349,50,0" Content="Requests"/>
                 </Grid>

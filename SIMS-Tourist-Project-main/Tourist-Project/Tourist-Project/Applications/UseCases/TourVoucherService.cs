@@ -26,7 +26,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public void VouchersDistribution(int id)
         {
-            foreach(var reservation in reservationService.GetAllForTour(id))
+            foreach(var reservation in reservationService.GetAllByTourId(id))
             {
                 TourVoucher tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId);
                 Create(tourVoucher);

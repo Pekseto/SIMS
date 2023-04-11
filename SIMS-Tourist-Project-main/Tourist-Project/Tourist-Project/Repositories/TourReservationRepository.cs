@@ -41,6 +41,20 @@ namespace Tourist_Project.Repositories
             return reservations.Max(r => r.Id) + 1;
         }
 
+        public List<TourReservation> GetAllByTourId(int tourId)
+        {
+            return GetAll().FindAll(reservation => reservation.TourId == tourId);
+        }
+
+        public int NumberWithVoucher(int tourId)
+        {
+            return GetAllByTourId(tourId).FindAll(reservation => reservation.Voucher).Count;
+        }
+
+        public int NumberWithoutVoucher(int tourId)
+        {
+            return GetAllByTourId(tourId).FindAll(reservation => !reservation.Voucher).Count;
+        }
     }
 }
 

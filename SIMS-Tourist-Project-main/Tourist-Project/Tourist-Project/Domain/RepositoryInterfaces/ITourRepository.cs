@@ -11,6 +11,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
     {
         public List<Tour> GetAll();
         public List<Tour> GetTodaysTours();
+        public List<Tour> GetFutureTours();
+        public List<Tour> GetPastTours();
         public void Save(Tour tour);
         public int NextId();
         public Tour Update(Tour tour);

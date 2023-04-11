@@ -47,7 +47,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void LoadTourAttendaces()
         {
-            TourAttendances = new(tourAttendanceService.GetAllTourists(SelectedTourPoint));
+            TourAttendances = new(tourAttendanceService.GetAllByTourId(SelectedTourPoint.TourId));
 
             foreach (TourAttendance attendace in TourAttendances)
             {

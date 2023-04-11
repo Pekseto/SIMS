@@ -16,16 +16,11 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly ITourAttendanceRepository repository = injector.CreateInstance<ITourAttendanceRepository>();
 
-        private UserService userService = new();
-        private TourPointService tourPointService = new();
+        private readonly UserService userService = new();
+        private readonly TourPointService tourPointService = new();
 
         public TourAttendanceService()
         {
-        }
-
-        public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint)
-        {
-            return repository.GetAllTourists(selectedTourPoint);
         }
 
         public void UpdateCollection(TourAttendance selectedTourAttendance, TourPoint selectedTourPoint)
@@ -33,15 +28,19 @@ namespace Tourist_Project.Applications.UseCases
             var tourAttendances = TouristListViewModel.TourAttendances;
             repository.Update(selectedTourAttendance);
             tourAttendances.Clear();
-            foreach (TourAttendance attendance in GetAllTourists(selectedTourPoint))
+            foreach (var attendance in GetAllByTourId(selectedTourPoint.TourId))
             {
                 tourAttendances.Add(attendance);
             }
-            foreach (TourAttendance attendace in tourAttendances)
+            foreach (var attendace in tourAttendances)
             {
                 attendace.User = userService.GetOne(attendace.UserId);
                 attendace.TourPoint = tourPointService.GetOne(attendace.CheckPointId);
             }
+        }
+        public List<TourAttendance> GetAllByTourId(int tourId)
+        {
+            return repository.GetAllByTourId(tourId);
         }
     }
 }

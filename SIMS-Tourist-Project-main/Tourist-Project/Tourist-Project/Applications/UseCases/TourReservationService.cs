@@ -13,16 +13,53 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly ITourReservationRepository repository = injector.CreateInstance<ITourReservationRepository>();
+        private readonly UserService userService = new();
 
         public TourReservationService()
         {
 
         }
 
-        public List<TourReservation> GetAllForTour(int id)
+        public List<TourReservation> GetAllByTourId(int tourId)
         {
-            return repository.GetAll().FindAll(a => a.TourId == id);
+            return repository.GetAllByTourId(tourId);
+        }
+        public List<User> GetUsersOnTour(int tourId)
+        {
+            return repository.GetAllByTourId(tourId).Select(user => userService.GetOne(user.Id)).ToList();
         }
 
+        public int[] CountingTourists(int tourId)
+        {
+            var counterYounger = 0;
+            var counterBetween = 0;
+            var counterOlder = 0;
+            foreach (var user in GetUsersOnTour(tourId))
+            {
+                switch (DateTime.Now.Subtract(user.BirtDate).TotalDays / 365.25)
+                {
+                    case < 18:
+                        counterYounger++;
+                        break;
+                    case > 50:
+                        counterOlder++;
+                        break;
+                    default:
+                        counterBetween++;
+                        break;
+                }
+            }
+            return new int[] { counterYounger, counterBetween, counterOlder };
+        }
+
+        public double WithVoucherPercent(int tourId)
+        {
+            return (double)repository.NumberWithVoucher(tourId)/(double)GetUsersOnTour(tourId).Count * 100;
+        }
+
+        public double WithOutVoucherPercent(int tourId)
+        {
+            return (double)repository.NumberWithoutVoucher(tourId) / (double)GetUsersOnTour(tourId).Count * 100;
+        }
     }
 }

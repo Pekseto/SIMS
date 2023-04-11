@@ -11,7 +11,6 @@ namespace Tourist_Project.Repositories
     {
 
         private const string filePath = "../../../Data/notifications.csv";
-        private const string guestRate = "GuestRate";
         private readonly Serializer<Notification> serializer;
         public List<Notification> notifications;
         public NotificationRepository()
@@ -35,9 +34,9 @@ namespace Tourist_Project.Repositories
             return notifications.Max(c => c.Id) + 1;
         }
 
-        public List<Notification> GetGuestRates()
+        public List<Notification> GetAllByType(string type)
         {
-            return notifications.Where(notification => notification.Type.Equals(guestRate)).ToList();
+            return notifications.Where(notification => notification.Type.Equals(type)).ToList();
         }
 
         public Notification GetById(int id)

@@ -27,9 +27,9 @@ namespace Tourist_Project.Applications.UseCases
             return notificationRepository.GetAll();
         }
 
-        public List<Notification> GetAllByType()
+        public List<Notification> GetAllByType(string type)
         {
-            return notificationRepository.GetGuestRates();
+            return notificationRepository.GetAllByType(type);
         }
 
         public Notification Get(int id)

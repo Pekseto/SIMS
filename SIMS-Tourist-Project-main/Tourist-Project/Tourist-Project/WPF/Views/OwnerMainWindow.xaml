@@ -17,6 +17,13 @@
                 <Separator></Separator>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="GuestRatingDataTemplate">
+            <StackPanel>
+                <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
+                <Button Height="28" Width="auto" Content="Rate(R)"></Button>
+                <Separator/>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -51,8 +58,9 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,540,0">
-                    <ListBox ItemsSource="{Binding GuestsRatings, UpdateSourceTrigger=PropertyChanged}"
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,532,0">
+                    <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
+                             ItemTemplate="{StaticResource GuestRatingDataTemplate}"
                              SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
                 </GroupBox>
             </Grid>

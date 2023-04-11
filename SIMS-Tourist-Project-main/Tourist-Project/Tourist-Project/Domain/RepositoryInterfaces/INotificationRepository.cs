@@ -7,7 +7,7 @@ namespace MyNamespace
     {
         public List<Notification> GetAll();
         public int NextId();
-        public List<Notification> GetAllByType(string type);
+        public List<Notification> GetGuestRates();
         public Notification GetById(int id);
         public Notification Save(Notification notification);
         public Notification Update(Notification notification);

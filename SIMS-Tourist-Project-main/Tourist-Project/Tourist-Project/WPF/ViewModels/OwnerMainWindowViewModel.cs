@@ -9,10 +9,13 @@ namespace Tourist_Project.WPF.ViewModels
     public class OwnerMainWindowViewModel
     {
         public static ObservableCollection<Accommodation> accommodations { get; set; }
+        public static ObservableCollection<Notification> GuestsRatings { get; set; }
         private static AccommodationService accommodationService = new();
         private readonly LocationService locationService = new();
         private readonly ImageService imageService = new();
+        private static NotificationService notificationService = new();
         public static Accommodation SelectedAccommodation { get; set; }
+        public static Notification SelectedRating { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public OwnerMainWindowViewModel()
@@ -20,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
+            GuestsRatings = new ObservableCollection<Notification>(notificationService.GetAllByType());
             foreach (var accommodation in accommodations)
             {
                 accommodation.Location = locationService.Get(accommodation.LocationId);

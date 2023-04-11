@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="Accommodations" Height="740" Width="1150" WindowStartupLocation="CenterScreen">
+        Title="Accommodations" Height="740" Width="1250" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate x:Key="AccommodationDataTemplate">
             <StackPanel Width="490" Height="auto">
@@ -21,7 +21,6 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="270"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid>
@@ -44,10 +43,20 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="193*"/>
+                <RowDefinition Height="163*"/>
                 <RowDefinition Height="532*"/>
             </Grid.RowDefinitions>
-            <GroupBox Margin="24,8,4,324" Grid.RowSpan="2" Header="My accommodations(M)">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,540,0">
+                    <ListBox ItemsSource="{Binding GuestsRatings, UpdateSourceTrigger=PropertyChanged}"
+                             SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+                </GroupBox>
+            </Grid>
+            <GroupBox Header="My accommodations(M)" Margin="20,28,0,0" Grid.Row="1">
                 <ListBox ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
                          ItemTemplate="{StaticResource AccommodationDataTemplate}"
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>

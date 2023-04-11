@@ -23,10 +23,12 @@ namespace Tourist_Project.WPF.ViewModels
         public static Notification SelectedRating { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
+        public ICommand RateCommand { get; set; }
         public OwnerMainWindowViewModel()
         {
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
+            RateCommand = new RelayCommand(Rate, CanRate);
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
@@ -58,6 +60,16 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         public static bool CanUpdate()
+        {
+            return true;
+        }
+        public static void Rate()
+        {
+            var rateWindow = new RateGuestWindow(SelectedRating);
+            rateWindow.ShowDialog();
+        }
+
+        public static bool CanRate()
         {
             return true;
         }

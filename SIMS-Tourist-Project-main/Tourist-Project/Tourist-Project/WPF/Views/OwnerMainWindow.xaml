@@ -20,7 +20,6 @@
         <DataTemplate x:Key="GuestRatingDataTemplate">
             <StackPanel>
                 <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
-                <Button Height="28" Width="auto" Content="Rate(R)"></Button>
                 <Separator/>
             </StackPanel>
         </DataTemplate>
@@ -68,7 +67,10 @@
                 <ListBox ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
                          ItemTemplate="{StaticResource AccommodationDataTemplate}"
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
+
             </GroupBox>
+            
+                <Button Height="28" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}"></Button>
         </Grid>
     </Grid>
 </Window>

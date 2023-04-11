@@ -20,12 +20,16 @@
                 <RowDefinition Height="300"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30"></Image>
-                <Label Margin="10 240 10 25" Content="Luka Todorovic" HorizontalAlignment="Center" FontSize="20"></Label>
+            <Grid x:Name="ProfileGrid" Grid.Row="0">
+                <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30" >
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding ProfileViewCommand, Mode=OneTime}" />
+                    </Image.InputBindings>
+                </Image>
+                <Label Margin="10 240 10 25" Content="Luka Todorovic" HorizontalAlignment="Center" FontSize="20" ></Label>
                 <Label Margin="10 270 10 0" Content="Guide" HorizontalAlignment="Center" FontSize="15"></Label>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid x:Name="ButtonsGrid" Grid.Row="1">
                 <Button Width="200" Height="40" Margin="50,44,50,305" Content="Home page" Command="{Binding HomePageCommand}"/>
                 <Button Width="200" Height="40" Margin="50,119,50,220" Content="Cancel tour" Command="{Binding CancelTourCommand}"/>
                 <Button Width="200" Height="40" Margin="50,349,50,0" Content="Requests"/>

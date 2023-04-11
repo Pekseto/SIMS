@@ -27,6 +27,7 @@ namespace Tourist_Project.WPF.ViewModels
         private TourVoucherService voucherService = new();
         public ICommand CancelTourCommand { get; set; }
         public ICommand HomePageCommand { get; set; }
+        public ICommand ProfileViewCommand { get; set; }
         public FutureToursViewModel(Window window)
         {
             this.window = window;
@@ -35,8 +36,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             HomePageCommand = new RelayCommand(HomePage, CanHomePage);
             CancelTourCommand = new RelayCommand(CancelTour, CanCancelTour);
-
-            
+            ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
         }
 
         private bool CanHomePage()
@@ -75,6 +75,17 @@ namespace Tourist_Project.WPF.ViewModels
             tourService.Update(SelectedTour);
 
             voucherService.VouchersDistribution(SelectedTour.Id);
+        }
+
+        private bool CanProfileView()
+        {
+            return true;
+        }
+        private void ProfileView()
+        {
+            var profileView = new GuideProfileView();
+            profileView.Show();
+            window.Close();
         }
     }
 }

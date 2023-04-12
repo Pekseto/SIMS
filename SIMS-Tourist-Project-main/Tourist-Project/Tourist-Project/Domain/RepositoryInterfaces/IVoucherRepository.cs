@@ -7,13 +7,13 @@ using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.Domain.RepositoryInterfaces
 {
-    public interface ITourReservationRepository
+    public interface IVoucherRepository
     {
-        public List<TourReservation> GetAll();
-        public void Save(TourReservation reservation);
+        public List<Voucher> GetAll();
+        public void Save(Voucher voucher);
         public int NextId();
         public void Delete(int id);
-        public void Update(TourReservation reservation);
-        public TourReservation GetById(int id);
+        public void Update(Voucher voucher);
+        public Voucher GetById(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tourist_Project.Repositories;
+using Tourist_Project.Repository;
 
 namespace Tourist_Project.Domain.RepositoryInterfaces
 {
@@ -15,7 +16,9 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(IReservationRepository), new ReservationRepository()},
             {typeof(ITourRepository), new TourRepository()},
             {typeof(ITourPointRepository), new TourPointRepository()},
-            {typeof(ITourAttendanceRepository), new TourAttendanceRepository()}
+            {typeof(ITourAttendanceRepository), new TourAttendanceRepository()},
+            {typeof(ITourReservationRepository), new TourReservationRepository()},
+            {typeof(IVoucherRepository), new VoucherRepository()}
         };
 
         public T CreateInstance<T>()

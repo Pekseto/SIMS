@@ -13,6 +13,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Save(TourAttendance tourAttendance);
         public int NextId();
         public TourAttendance Update(TourAttendance tourAttendance);
-        public List<TourAttendance> GetAllTourists(TourPoint selectedTourPoint);
+        public List<TourAttendance> GetAllByTourId(int tourId);
+
     }
 }

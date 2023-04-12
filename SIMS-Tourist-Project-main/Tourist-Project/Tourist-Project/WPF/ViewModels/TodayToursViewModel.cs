@@ -19,10 +19,12 @@ namespace Tourist_Project.WPF.ViewModels
         public Tour SelectedTour { get; set; } 
         private TourService tourService = new();
         private Window window;
+        private User user;
         public static bool Live { get; set; } 
         public ICommand CreateCommand { get; set; }
         public ICommand StartTourCommand { get; set; }
         public ICommand FutureToursCommand { get; set; }
+        public ICommand HistoryCommand { get; set; }
         public TodayToursViewModel(Window window)
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
@@ -30,11 +32,25 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTour = new();
             this.window = window;
             Live = false;
+            this.user = user;
 
             CreateCommand = new RelayCommand(CreateTour, CanCreateTour);
             StartTourCommand = new RelayCommand(StartTour, CanStartTour);
             FutureToursCommand = new RelayCommand(FutureTours, CanFutureTours);
+            HistoryCommand = new RelayCommand(History, CanHistory);
             this.window = window;
+        }
+
+        private bool CanHistory()
+        {
+            return true;
+        }
+
+        private void History()
+        {
+            var historyWindow = new HistoryOfToursView();
+            historyWindow.Show();
+            window.Close();
         }
 
         private bool CanFutureTours()

@@ -15,5 +15,9 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public void Update(TourReservation reservation);
         public TourReservation GetById(int id);
+        public List<TourReservation> GetAllByTourId(int tourId);
+        public int NumberWithVoucher(int tourId);
+        public int NumberWithoutVoucher(int tourId);
+
     }
 }

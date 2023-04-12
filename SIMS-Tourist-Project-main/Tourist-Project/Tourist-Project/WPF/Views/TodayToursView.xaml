@@ -39,10 +39,10 @@
                 </StackPanel>
             </Button>
             <Separator/>
-            <Button >
+            <Button Command="{Binding HistoryCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/delete.png" Width="20" Height="25"/>
-                    <TextBlock Name="DeleteTxtBlock" Text="Delete" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Name="DeleteTxtBlock" Text="History of tours" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </ToolBar>

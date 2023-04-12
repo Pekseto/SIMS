@@ -20,7 +20,7 @@ namespace Tourist_Project.WPF.Views
     {
         public static ObservableCollection<GuestReview> GuestReviews { get; set; } = new();
         public static ObservableCollection<Reservation> Reservations { get; set; } = new();
-        public User LoggedInUser { get; set; }
+        public static User LoggedInUser { get; set; }
         private readonly GuestReviewRepository guestReviewRepository = new();
         private readonly ReservationService reservationService = new();
         public static GuestReview? UnreviewedGuest { get; set; }

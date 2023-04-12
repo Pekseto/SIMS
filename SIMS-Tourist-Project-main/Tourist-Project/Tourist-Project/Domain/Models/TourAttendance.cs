@@ -1,19 +1,20 @@
-﻿using Tourist_Project.Serializer;
+﻿using System;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
+    public enum Presence
+    {
+        No, Pending, Yes
+    }
     public class TourAttendance : ISerializable
     {
-        private int id;
         public int Id { get; set; }
-        private int userId;
         public int UserId { get; set; }
-        private int tourId;
         public int TourId { get; set; }
-        private int checkpointId;
         public int CheckPointId { get; set; }
+        public Presence Presence { get; set; }
         public User User { get; set; }
-        public Tour Tour { get; set; }
         public TourPoint TourPoint { get; set; }
 
         public TourAttendance()
@@ -24,7 +25,7 @@ namespace Tourist_Project.Domain.Models
 
         public TourAttendance(int userId, int tourId)
         {
-            this.userId = userId;
+            this.UserId = userId;
             TourId = tourId;
             CheckPointId = -1;
             TourPoint = new TourPoint();
@@ -38,6 +39,7 @@ namespace Tourist_Project.Domain.Models
                 UserId.ToString(),
                 TourId.ToString(),
                 CheckPointId.ToString(),
+                Presence.ToString(),
             };
             return csvValues;
         }
@@ -48,6 +50,7 @@ namespace Tourist_Project.Domain.Models
             UserId = int.Parse(values[1]);
             TourId = int.Parse(values[2]);
             CheckPointId = int.Parse(values[3]);
+            Presence = Enum.Parse<Presence>(values[4]);
         }
     }
 }

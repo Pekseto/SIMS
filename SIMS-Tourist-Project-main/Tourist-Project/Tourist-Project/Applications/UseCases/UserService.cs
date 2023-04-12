@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repository;
+using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 
 namespace Tourist_Project.Applications.UseCases
 {
     public class UserService
     {
-        private readonly UserRepository userRepository = new();
+        private static readonly Injector injector = new();
+
+        private readonly IUserRepository repository = injector.CreateInstance<IUserRepository>();
 
         public UserService()
         {
@@ -19,7 +23,9 @@ namespace Tourist_Project.Applications.UseCases
 
         public User GetOne(int id)
         {
-            return userRepository.GetOne(id);
+            return repository.GetOne(id);
         }
+
+        
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private const string FilePath = "../../../Data/users.csv";
         private readonly Serializer<User> serializer;

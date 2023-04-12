@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
@@ -118,6 +119,16 @@ namespace Tourist_Project.Domain.Models
                 OnPropertyChanged();
             }
         }
+        public string ImageUrl 
+        {
+            get => imageIdsCSV;
+            set
+            {
+                if (value == imageIdsCSV) return;
+                imageIdsCSV = value;
+                OnPropertyChanged();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -170,6 +181,7 @@ namespace Tourist_Project.Domain.Models
         public void ImageIdesToCsv()
         {
             if (ImageIds.Count <= 0) return;
+            ImageId = ImageIds.First();
             imageIdsCSV = string.Empty;
             foreach (var imageIde in ImageIds)
             {

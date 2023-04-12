@@ -24,5 +24,28 @@ namespace Tourist_Project.Applications.UseCases
             return repository.GetAll().FindAll(a => a.TourId == id);
         }
 
+
+
+
+        public List<TourReservation> GetAll()
+        {
+            return repository.GetAll();
+        }
+        public void Save(TourReservation reservation)
+        {
+            repository.Save(reservation);
+        }
+        public void Delete(int id)
+        {
+            repository.Delete(id);
+        }
+        public void Update(TourReservation reservation)
+        {
+            repository.Update(reservation);
+        }
+        public TourReservation GetById(int id)
+        {
+            return repository.GetById(id);
+        }
     }
 }

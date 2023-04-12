@@ -6,6 +6,10 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.View;
 using Tourist_Project.WPF.Views;
+<<<<<<< HEAD
+=======
+//>>>>>>> fix/FileOrganizationGuide
+>>>>>>> 8b7e5a120f9e90be68e35ad18d0342295753c330
 
 namespace Tourist_Project.WPF.Views
 {
@@ -42,13 +46,13 @@ namespace Tourist_Project.WPF.Views
                 }
                 else
                 {
-                    var ownerShowWindow = new OwnerShowWindow();
+                    var ownerShowWindow = new OwnerMainWindow();
                     ownerShowWindow.Show();
                 }
             }
             else
             {
-                var ownerShowWindow = new OwnerShowWindow();
+                var ownerShowWindow = new OwnerMainWindow();
                 ownerShowWindow.Show();
             }
         }
@@ -71,7 +75,7 @@ namespace Tourist_Project.WPF.Views
 
         private void Guest1ButtonClick(object sender, RoutedEventArgs e)
         {
-            var guestOne = new GuestOne(LoggedInUser);
+            var guestOne = new GuestOne(/*LoggedInUser*/);
             guestOne.Show();
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)

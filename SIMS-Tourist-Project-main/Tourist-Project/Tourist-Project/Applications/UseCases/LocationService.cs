@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
-using Tourist_Project.Repositories;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.Applications.UseCases

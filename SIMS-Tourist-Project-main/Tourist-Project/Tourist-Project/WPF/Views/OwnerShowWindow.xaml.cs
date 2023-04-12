@@ -4,6 +4,10 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
+<<<<<<< HEAD
+=======
+//>>>>>>> fix/FileOrganizationGuide
+>>>>>>> 8b7e5a120f9e90be68e35ad18d0342295753c330
 
 namespace Tourist_Project.WPF.Views
 {
@@ -56,7 +60,7 @@ namespace Tourist_Project.WPF.Views
             if (SelectedAccommodationDto != null)
             {
                 SelectedAccommodation = accommodationRepository.GetById(SelectedAccommodationDto.AccommodationId);
-                var updateWindow = new AccommodationForm(SelectedAccommodation, SelectedAccommodationDto);
+                var updateWindow = new UpdateAccommodation(SelectedAccommodation);
                 updateWindow.Show();
                 Close();
             }

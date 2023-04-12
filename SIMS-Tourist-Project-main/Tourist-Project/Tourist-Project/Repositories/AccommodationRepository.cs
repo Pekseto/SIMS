@@ -3,6 +3,7 @@ using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
+using System;
 
 namespace Tourist_Project.Repositories
 {
@@ -62,5 +63,7 @@ namespace Tourist_Project.Repositories
         {
             return accommodations.Find(c => c.Id == id);
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.Domain.RepositoryInterfaces

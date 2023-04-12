@@ -6,10 +6,6 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.View;
 using Tourist_Project.WPF.Views;
-<<<<<<< HEAD
-=======
-//>>>>>>> fix/FileOrganizationGuide
->>>>>>> 8b7e5a120f9e90be68e35ad18d0342295753c330
 
 namespace Tourist_Project.WPF.Views
 {

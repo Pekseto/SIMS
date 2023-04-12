@@ -4,11 +4,8 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
-<<<<<<< HEAD
 using Tourist_Project.Repository;
-=======
 using Tourist_Project.WPF.ViewModels;
->>>>>>> 8b7e5a120f9e90be68e35ad18d0342295753c330
 using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.WPF.Views

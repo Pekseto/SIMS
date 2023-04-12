@@ -35,6 +35,7 @@ namespace Tourist_Project.WPF.ViewModels
         #endregion
         private int numberOfPoints = 0;
         private Window window;
+        private User user;
 
         #region Command
         public ICommand CreateCommand { get; set; }
@@ -137,6 +138,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void Create()
         {
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
+            TourForAdd.UserId = MainWindow.LoggedInUser.Id;
             tourService.Save(TourForAdd);
 
             if (TourForAdd.StartTime.Date == DateTime.Today.Date)

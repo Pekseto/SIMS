@@ -1,21 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class GuideProfileViewModel
+    public class GuideProfileViewModel : INotifyPropertyChanged
     {
         private Window window;
         public Tour Tour { get; set; }
-        public string SelectedYear { get; set; }
+        private string selectedYear;
+        public string SelectedYear
+        {
+            get { return selectedYear; }
+            set
+            {
+                selectedYear = value;
+                OnPropertyChanged("SelectedYear");
+                BestTourInfo();
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private readonly TourService tourService = new ();
 
         public ObservableCollection<string> Years { get; set; } = new();
 
@@ -29,9 +48,7 @@ namespace Tourist_Project.WPF.ViewModels
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
 
             InitializeYears();
-            SelectedYear = "Overall";
-
-            
+            SelectedYear = "2022";
         }
 
         private bool CanHomeView()
@@ -67,6 +84,19 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 Years.Add(year.ToString());
             }
+        }
+
+        private void BestTourInfo()
+        {
+            if (!SelectedYear.Equals("Overall"))
+            {
+                Tour = tourService.GetMostVisited(Int32.Parse(SelectedYear));
+            }
+            else
+            {
+                Tour = tourService.GetOverallBest();
+            }
+            OnPropertyChanged("Tour");
         }
     }
 }

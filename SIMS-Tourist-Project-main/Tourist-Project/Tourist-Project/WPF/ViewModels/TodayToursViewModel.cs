@@ -19,6 +19,7 @@ namespace Tourist_Project.WPF.ViewModels
         public Tour SelectedTour { get; set; } 
         private TourService tourService = new();
         private Window window;
+        private User user;
         public static bool Live { get; set; } 
         public ICommand CreateCommand { get; set; }
         public ICommand StartTourCommand { get; set; }
@@ -31,6 +32,7 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTour = new();
             this.window = window;
             Live = false;
+            this.user = user;
 
             CreateCommand = new RelayCommand(CreateTour, CanCreateTour);
             StartTourCommand = new RelayCommand(StartTour, CanStartTour);

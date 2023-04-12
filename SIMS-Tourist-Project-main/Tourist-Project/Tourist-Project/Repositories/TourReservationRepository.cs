@@ -55,6 +55,7 @@ namespace Tourist_Project.Repositories
         {
             return GetAllByTourId(tourId).FindAll(reservation => !reservation.Voucher).Count;
         }
+
     }
 }
 

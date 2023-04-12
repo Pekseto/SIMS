@@ -26,7 +26,7 @@ namespace Tourist_Project.Applications.UseCases
         }
         public List<User> GetUsersOnTour(int tourId)
         {
-            return repository.GetAllByTourId(tourId).Select(user => userService.GetOne(user.Id)).ToList();
+            return repository.GetAllByTourId(tourId).Select(reservation => userService.GetOne(reservation.UserId)).ToList();
         }
 
         public int[] CountingTourists(int tourId)
@@ -61,5 +61,17 @@ namespace Tourist_Project.Applications.UseCases
         {
             return (double)repository.NumberWithoutVoucher(tourId) / (double)GetUsersOnTour(tourId).Count * 100;
         }
+
+        public int CountTourists(int tourId)
+        {
+            var counter = 0;
+            foreach (var reservation in GetAllByTourId(tourId))
+            {
+                counter += reservation.GuestsNumber;
+            }
+
+            return counter;
+        }
+
     }
 }

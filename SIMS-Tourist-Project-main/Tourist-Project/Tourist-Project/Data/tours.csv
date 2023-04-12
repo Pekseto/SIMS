@@ -1,11 +1,18 @@
-1|Obilazak NS|1|Setnja gradom|en-us|10|4/5/2023 12:30:00 PM|4|14|End
-2|Obilazak BG|0|Setnja gradom|en-us|10|3/20/2023 1:00:00 PM|3|15|NotBegin
-3|Uz Dunav|1|Setnja uz obalu reke|en-us|7|3/15/2023 9:00:00 PM|2|16|NotBegin
-4|Beogradjani|0|Setnja kroz Beograd|en-us|20|3/20/2023 12:00:00 PM|4|17|NotBegin
-5|Setnjica|0|prosetati|en-us|10|3/15/2023 12:00:00 PM|3|18|NotBegin
-6|Obilazak Novog Sada|0|Setnja gradom|en-us|15|3/20/2023 1:00:00 PM|4|27|NotBegin
-7|setnja|2|sadRadi|madjarski|10|4/8/2023 12:00:00 AM|3|0|NotBegin
-8|Testiranje|0|Tura za testiranje|srpski|10|4/9/2023 12:00:00 AM|3|0|End
-9|Testiranje 2|3|Tura za testiranje|srpski|10|4/9/2023 1:00:00 AM|3|0|NotBegin
-10|Testiranje buducnosti|1|test za buduce ture|srpski|10|4/15/2023 12:00:00 AM|3|0|Cancel
-11|Testiranje 4|3|testiranje rada|engleski|20|4/14/2023 12:00:00 AM|2|0|Cancel
+1|Obilazak NS|1|Setnja gradom|en-us|10|4/5/2023 12:30:00 PM|4|14|End|2
+2|Obilazak BG|0|Setnja gradom|en-us|10|3/20/2023 1:00:00 PM|3|15|NotBegin|2
+3|Uz Dunav|1|Setnja uz obalu reke|en-us|7|3/15/2023 9:00:00 PM|2|16|NotBegin|2
+4|Beogradjani|0|Setnja kroz Beograd|en-us|20|3/20/2023 12:00:00 PM|4|17|NotBegin|2
+5|Setnjica|0|prosetati|en-us|10|3/15/2023 12:00:00 PM|3|18|NotBegin|2
+6|Obilazak Novog Sada|0|Setnja gradom|en-us|15|3/20/2023 1:00:00 PM|4|27|NotBegin|2
+7|setnja|2|sadRadi|madjarski|10|4/8/2023 12:00:00 AM|3|0|NotBegin|2
+8|Testiranje|3|Tura za testiranje|srpski|10|4/9/2023 12:00:00 AM|3|0|End|2
+9|Testiranje 2|3|Tura za testiranje|srpski|10|4/9/2023 1:00:00 AM|3|0|NotBegin|2
+10|Testiranje buducnosti|1|test za buduce ture|srpski|10|4/15/2023 12:00:00 AM|3|0|Cancel|2
+11|Testiranje 4|3|testiranje rada|engleski|20|4/14/2023 12:00:00 AM|2|0|Cancel|2
+12|Obilazak NS|1|Setnja gradom|en-us|10|4/6/2023 12:30:00 PM|4|14|End|2
+13|Obilazak NS|1|Setnja gradom|en-us|10|4/12/2023 12:00:00 AM|3|0|NotBegin|2
+14|Testiranje|3|Tura za testiranje|srpski|10|4/9/2022 12:00:00 AM|3|14|End|2
+15|Testiranje|3|Tura za testiranje|srpski|10|4/9/2022 12:00:00 AM|3|14|End|2
+16|Testiranje|3|Tura za testiranje|srpski|10|4/9/2022 12:00:00 AM|3|14|End|2
+17|Testiranje|3|Tura za testiranje|srpski|10|4/9/2022 12:00:00 AM|3|14|End|2
+18|Testiranje|3|Tura za testiranje|srpski|10|4/9/2022 12:00:00 AM|3|14|End|2

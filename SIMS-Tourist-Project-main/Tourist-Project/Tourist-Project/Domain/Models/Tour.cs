@@ -25,7 +25,7 @@ namespace Tourist_Project.Domain.Models
         {
         }
 
-        public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId)
+        public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId, int userId)
         {
             Name = name;
             LocationId = locationId;
@@ -36,6 +36,7 @@ namespace Tourist_Project.Domain.Models
             Duration = duration;
             this.ImageId = imageId;
             Status = Status.NotBegin;
+            UserId = userId;
         }
 
         #region Serilization
@@ -53,7 +54,7 @@ namespace Tourist_Project.Domain.Models
                 Duration.ToString(),
                 ImageId.ToString(),
                 Status.ToString(),
-                //UserId.ToString(),
+                UserId.ToString(),
             };
 
             return csvValues;
@@ -71,7 +72,7 @@ namespace Tourist_Project.Domain.Models
             Duration = int.Parse(values[7]);
             ImageId = int.Parse(values[8]);
             Status = Enum.Parse<Status>(values[9]);
-            // UserId = int.Parse(values[10]);
+            UserId = int.Parse(values[10]);
         }
         #endregion
     }

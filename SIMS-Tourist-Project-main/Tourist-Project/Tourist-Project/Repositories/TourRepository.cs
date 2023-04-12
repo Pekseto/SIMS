@@ -4,6 +4,7 @@ using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.Repositories
 {
@@ -23,6 +24,11 @@ namespace Tourist_Project.Repositories
         {
             tours = serializer.FromCSV(filePath);
             return tours;
+        }
+
+        public Tour GetOne(int id)
+        {
+            return GetAll().Find(tour => tour.Id == id);
         }
 
         public List<Tour> GetTodaysTours()
@@ -67,6 +73,21 @@ namespace Tourist_Project.Repositories
             tours.Insert(index, tour);
             serializer.ToCSV(filePath, tours);
             return current;
+        }
+
+        public List<Tour> GetAllByYear(int year)
+        {
+            return GetAll().FindAll(tour => tour.StartTime.Year == year && tour.UserId == MainWindow.LoggedInUser.Id && tour.Status == Status.End);
+        }
+
+        public List<Tour> GetYearAppointments(string name, int year)
+        {
+            return GetAllByYear(year).FindAll(tour => tour.Name == name);
+        }
+
+        public List<Tour> GetAllTourAppointments(string name)
+        {
+            return GetAll().FindAll(tour => tour.Name == name && tour.UserId == MainWindow.LoggedInUser.Id && tour.Status == Status.End);
         }
     }
 }

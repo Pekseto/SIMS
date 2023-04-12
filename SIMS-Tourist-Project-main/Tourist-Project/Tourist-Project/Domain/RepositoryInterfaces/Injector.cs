@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyNamespace;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 
@@ -10,7 +11,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         private static Dictionary<Type, object> implementations = new()
         {
             {typeof(IAccommodationRepository), new AccommodationRepository()},
-            {typeof(IGuestReviewRepository), new GuestReviewRepository()},
+            {typeof(IGuestRateRepository), new GuestRateRepository()},
             {typeof(ILocationRepository), new LocationRepository()},
             {typeof(IImageRepository), new ImageRepository()},
             {typeof(IReservationRepository), new ReservationRepository()},
@@ -21,6 +22,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(ITourReservationRepository), new TourReservationRepository()},
             {typeof(IVoucherRepository), new VoucherRepository()},
             {typeof(IUserRepository), new UserRepository()},
+            {typeof(ITourAttendanceRepository), new TourAttendanceRepository()},
+            {typeof(INotificationRepository), new NotificationRepository()}
         };
 
         public T CreateInstance<T>()

@@ -3,7 +3,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class GuestReview : ISerializable
+    public class GuestRating : ISerializable
     {
         public int Id { get; set; }
         public int OwnerId { get; set; }
@@ -11,8 +11,8 @@ namespace Tourist_Project.Domain.Models
         public int CleanlinessGrade { get; set; }
         public int RuleGrade { get; set; }
         public string Comment { get; set; }
-        public GuestReview() { }
-        public GuestReview(int ownerId, int guestId, int cleanlinessGrade, int ruleGrade, string comment)
+        public GuestRating() { }
+        public GuestRating(int ownerId, int guestId, int cleanlinessGrade, int ruleGrade, string comment)
         {
             OwnerId = ownerId;
             GuestId = guestId;
@@ -36,7 +36,7 @@ namespace Tourist_Project.Domain.Models
         }
         public bool IsReviewed()
         {
-            return CleanlinessGrade != 0 && RuleGrade != 0;
+            return CleanlinessGrade != 0 && RuleGrade != 0 && Comment.Equals("");
         }
     }
 }

@@ -6,28 +6,28 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Repositories
 {
-    public class GuestReviewRepository : IGuestReviewRepository
+    public class GuestRateRepository : IGuestRateRepository
     {
-        private const string FilePath = "../../../Data/guestReviews.csv";
-        private readonly Serializer<GuestReview> serializer;
-        private List<GuestReview> guestReviews;
-        public GuestReviewRepository()
+        private const string FilePath = "../../../Data/guestRatings.csv";
+        private readonly Serializer<GuestRating> serializer;
+        private List<GuestRating> guestReviews;
+        public GuestRateRepository()
         {
-            serializer = new Serializer<GuestReview>();
+            serializer = new Serializer<GuestRating>();
             guestReviews = serializer.FromCSV(FilePath);
         }
-        public List<GuestReview> GetAll()
+        public List<GuestRating> GetAll()
         {
             return serializer.FromCSV(FilePath);
         }
 
-        public GuestReview Save(GuestReview guestReview)
+        public GuestRating Save(GuestRating guestRating)
         {
-            guestReview.Id = NextId();
+            guestRating.Id = NextId();
             guestReviews = serializer.FromCSV(FilePath);
-            guestReviews.Add(guestReview);
+            guestReviews.Add(guestRating);
             serializer.ToCSV(FilePath, guestReviews);
-            return guestReview;
+            return guestRating;
         }
 
         public int NextId()
@@ -48,18 +48,18 @@ namespace Tourist_Project.Repositories
             serializer.ToCSV(FilePath, guestReviews);
         }
 
-        public GuestReview Update(GuestReview guestReview)
+        public GuestRating Update(GuestRating guestRating)
         {
             guestReviews = serializer.FromCSV(FilePath);
-            var current = guestReviews.Find(c => c.Id == guestReview.Id);
+            var current = guestReviews.Find(c => c.Id == guestRating.Id);
             var index = guestReviews.IndexOf(current);
             guestReviews.Remove(current);
-            guestReviews.Insert(index, guestReview);       // keep ascending order of ids in file 
+            guestReviews.Insert(index, guestRating);       // keep ascending order of ids in file 
             serializer.ToCSV(FilePath, guestReviews);
-            return guestReview;
+            return guestRating;
         }
 
-        public GuestReview GetById(int id)
+        public GuestRating GetById(int id)
         {
             return guestReviews.Find(c => c.Id == id);
         }

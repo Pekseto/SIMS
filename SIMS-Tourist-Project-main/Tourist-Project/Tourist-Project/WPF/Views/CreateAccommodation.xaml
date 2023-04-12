@@ -7,7 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:converters="clr-namespace:Tourist_Project.WPF.Converters"
         mc:Ignorable="d"
-        Title="CreateAccommodation" Height="620" Width="370">
+        Title="CreateAccommodation" Height="620" Width="370" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <converters:RadioToEnumConverter x:Key="RadioToEnumConverter" />
     </Window.Resources>

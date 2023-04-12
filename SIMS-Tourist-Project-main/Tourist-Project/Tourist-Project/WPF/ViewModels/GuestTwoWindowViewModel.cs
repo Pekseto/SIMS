@@ -23,7 +23,21 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
         public ObservableCollection<string> Countries { get; set; }
-        public string SelectedCountry { get; set; }
+
+        private string selectedCountry;
+        public string SelectedCountry
+        {
+            get => selectedCountry;
+            set
+            {
+                if(value != selectedCountry)
+                {
+                    selectedCountry = value;
+                    LoadCitiesComboBox(value);
+                }
+            }
+        }
+
         public ObservableCollection<string> Cities { get; set; }
         public string SelectedCity { get; set; }
         public ObservableCollection<string> Languages { get; set; }
@@ -187,7 +201,7 @@ namespace Tourist_Project.WPF.ViewModels
             toursDataGrid.ItemsSource = filteredList;
         }
 
-        private void CountriesSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LoadCitiesComboBox(string country)
         {
             Cities.Clear();
             foreach (Location location in locationService.GetAll())

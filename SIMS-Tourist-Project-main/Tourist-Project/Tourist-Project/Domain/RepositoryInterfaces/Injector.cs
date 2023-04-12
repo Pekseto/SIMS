@@ -17,7 +17,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(ITourRepository), new TourRepository()},
             {typeof(ITourPointRepository), new TourPointRepository()},
             {typeof(ITourAttendanceRepository), new TourAttendanceRepository()},
-            {typeof(ITourReservationRepository), new TourReservationRepository()}
+            {typeof(ITourReservationRepository), new TourReservationRepository()},
+            {typeof(IVoucherRepository), new VoucherRepository()}
         };
 
         public T CreateInstance<T>()

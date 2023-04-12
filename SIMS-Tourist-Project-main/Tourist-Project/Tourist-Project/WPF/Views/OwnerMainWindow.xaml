@@ -58,9 +58,12 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
                 <GroupBox Header="Guest Ratings(F1)" Margin="20,0,532,0">
-                    <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
-                             ItemTemplate="{StaticResource GuestRatingDataTemplate}"
-                             SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+                    <StackPanel>
+                        <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
+                                 ItemTemplate="{StaticResource GuestRatingDataTemplate}"
+                                 SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+                        <Button Height="28" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}"/>
+                    </StackPanel>
                 </GroupBox>
             </Grid>
             <GroupBox Header="My accommodations(M)" Margin="20,28,0,0" Grid.Row="1">
@@ -70,7 +73,6 @@
 
             </GroupBox>
             
-                <Button Height="28" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}"></Button>
         </Grid>
     </Grid>
 </Window>

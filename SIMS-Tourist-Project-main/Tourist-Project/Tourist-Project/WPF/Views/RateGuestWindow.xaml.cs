@@ -12,7 +12,7 @@ namespace Tourist_Project.WPF.Views
         public RateGuestWindow(Notification notification)
         {
             InitializeComponent();
-            DataContext = new RateGuestViewModel(notification);
+            DataContext = new RateGuestViewModel(notification, this);
         }
     }
 }

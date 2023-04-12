@@ -36,7 +36,7 @@ namespace Tourist_Project.Domain.Models
         }
         public bool IsReviewed()
         {
-            return CleanlinessGrade != 0 && RuleGrade != 0;
+            return CleanlinessGrade != 0 && RuleGrade != 0 && Comment.Equals("");
         }
     }
 }

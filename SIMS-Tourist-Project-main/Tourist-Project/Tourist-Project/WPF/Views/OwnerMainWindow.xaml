@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="Accommodations" Height="740" Width="1250" WindowStartupLocation="CenterScreen">
+        Title="Accommodations" Height="740" Width="1250" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate x:Key="AccommodationDataTemplate">
             <StackPanel Width="490" Height="auto">
@@ -18,6 +18,12 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="GuestRatingDataTemplate">
+            <StackPanel>
+                <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
+                <Separator/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ReviewsDataTemplate">
             <StackPanel>
                 <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
                 <Separator/>
@@ -57,12 +63,22 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,532,0">
-                    <StackPanel>
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,522,-20">
+                    <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"
-                                 SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
-                        <Button Height="28" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}"/>
+                                 SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="119"></ListBox>
+                        <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Reviews(F2)" Margin="209,0,340,-20">
+                    <StackPanel>
+                        <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
+                                 ItemTemplate="{StaticResource ReviewsDataTemplate}"
+                                 SelectedItem="{Binding SelectedReview, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="119"></ListBox>
+                        <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>
@@ -72,7 +88,6 @@
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 
             </GroupBox>
-            
         </Grid>
     </Grid>
 </Window>

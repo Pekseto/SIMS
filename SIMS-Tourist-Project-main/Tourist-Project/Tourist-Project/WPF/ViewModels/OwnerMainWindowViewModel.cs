@@ -12,15 +12,19 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Accommodation> accommodations { get; set; }
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
+        public static ObservableCollection<Notification> ReviewNotifications { get; set; }
         public static ObservableCollection<GuestRating> GuestRatings { get; set; }
+        public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         private static AccommodationService accommodationService = new();
         private readonly LocationService locationService = new();
         private readonly ImageService imageService = new();
         private static NotificationService notificationService = new();
         private static ReservationService reservationService = new();
         private static GuestRateService guestRateService = new();
+        private static AccommodationRatingService accommodationRatingService = new();
         public static Accommodation SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
+        public static Notification SelectedReview { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
@@ -32,8 +36,11 @@ namespace Tourist_Project.WPF.ViewModels
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
+            AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
+            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
             HasUnratedGuests();
+            HasReviews();
             foreach (var accommodation in accommodations)
             {
                 accommodation.Location = locationService.Get(accommodation.LocationId);
@@ -90,6 +97,18 @@ namespace Tourist_Project.WPF.ViewModels
                             notificationService.Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
                     }
                 }
+            }
+        }
+
+        public static void HasReviews()
+        {
+            if (AccommodationRatings.Count == 0) return;
+            foreach (var accommodationRating in AccommodationRatings)
+            {
+                if(accommodationRating.Notified) continue;
+                notificationService.Create(new Notification("Reviews", accommodationRating.UserId, accommodationRating.ReservationId));
+                accommodationRating.Notified = true;
+                accommodationRatingService.Update(accommodationRating);
             }
         }
     }

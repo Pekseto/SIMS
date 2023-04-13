@@ -93,20 +93,18 @@ namespace Tourist_Project.Domain.Models
 
         public String OwnerComment { get; set; }
 
-        private int _ownerCommentId;
-        public int OwnerCommentId
+        private bool notified;
+        public bool Notified
         {
-            get => _ownerCommentId;
-            set => _ownerCommentId = value;
+            get => notified;
+            set => notified = value;
             
         }
-
-
-        private int _ownerRatingId;
-        public int OwnerRatingId
+        private int reservationId;
+        public int ReservationId
         {
-            get => _ownerRatingId;
-            set => _ownerRatingId = value;
+            get => reservationId;
+            set => reservationId = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -121,7 +119,7 @@ namespace Tourist_Project.Domain.Models
 
         }
 
-        public AccommodationRating(int id, int accommodationId, int userId, int rating,int commentId, String comment, int imageId, String imageUrl, String ownerComment, int ownerCommentId, int ownerRatingId, int ownerRating)
+        public AccommodationRating(int id, int accommodationId, int userId, int rating,int commentId, String comment, int imageId, String imageUrl, String ownerComment, bool notified, int reservationId, int ownerRating)
         {
             Id = id;
             AccommodationId = accommodationId;
@@ -132,8 +130,8 @@ namespace Tourist_Project.Domain.Models
             ImageId = imageId;
             ImageUrl = imageUrl;
             OwnerComment = ownerComment;
-            OwnerCommentId = ownerCommentId;
-            OwnerRatingId = ownerRatingId;
+            Notified = notified;
+            ReservationId = reservationId;
             OwnerRating = ownerRating;
         }
 
@@ -149,9 +147,9 @@ namespace Tourist_Project.Domain.Models
                 Comment,
                 ImageId.ToString(),
                 ImageUrl,
-                OwnerCommentId.ToString(),
+                Notified.ToString(),
                 OwnerComment, 
-                OwnerRatingId.ToString(),
+                ReservationId.ToString(),
                 OwnerRating.ToString(),
             };
             return csvValues;
@@ -167,9 +165,9 @@ namespace Tourist_Project.Domain.Models
             Comment = values[5];
             ImageId = Convert.ToInt32(values[6]);
             ImageUrl = values[7];
-            OwnerCommentId = Convert.ToInt32(values[8]);
+            Notified = Convert.ToBoolean(values[8]);
             OwnerComment = values[9];
-            OwnerRatingId = Convert.ToInt32(values[10]);
+            ReservationId = Convert.ToInt32(values[10]);
             OwnerRating = Convert.ToInt32(values[11]);
         }
     }

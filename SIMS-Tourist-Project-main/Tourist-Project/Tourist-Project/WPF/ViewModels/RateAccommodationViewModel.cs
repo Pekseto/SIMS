@@ -22,6 +22,8 @@ namespace Tourist_Project.WPF.ViewModels
         public String Comment { get; set; }
         public String ImageUrl { get; set; }
 
+        public String OwnerComment { get; set; }
+
         public bool IsChecked { get; set; }
         
         //treba da sacuvam AccommodationRating

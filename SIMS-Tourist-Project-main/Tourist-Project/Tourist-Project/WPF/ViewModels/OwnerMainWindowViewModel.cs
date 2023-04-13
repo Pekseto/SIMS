@@ -28,11 +28,13 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
+        public ICommand ShowReviewsCommand { get; set; }
         public OwnerMainWindowViewModel()
         {
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             RateCommand = new RelayCommand(Rate, CanRate);
+            ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
@@ -75,11 +77,22 @@ namespace Tourist_Project.WPF.ViewModels
             var rateWindow = new RateGuestWindow(SelectedRating);
             rateWindow.ShowDialog();
         }
-
         public static bool CanRate()
         {
             return true;
         }
+
+        public static void ShowReview()
+        {
+            var showReviewsWindow = new OwnerReviewsView();
+            showReviewsWindow.ShowDialog();
+        }
+
+        public static bool CanShow()
+        {
+            return GuestRatingNotifications.Count == 0;
+        }
+
         public static void HasUnratedGuests()
         {
             foreach (var guestRate in GuestRatings)

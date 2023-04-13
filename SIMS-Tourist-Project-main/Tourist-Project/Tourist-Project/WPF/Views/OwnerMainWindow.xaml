@@ -78,7 +78,7 @@
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
                                  SelectedItem="{Binding SelectedReview, UpdateSourceTrigger=PropertyChanged}"
                                  Height="119"></ListBox>
-                        <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom"/>
+                        <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

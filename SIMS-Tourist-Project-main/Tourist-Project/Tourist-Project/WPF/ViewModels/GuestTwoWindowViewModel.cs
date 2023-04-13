@@ -96,6 +96,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ReserveCommand { get; set; }
         public ICommand VouchersCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
+        public ICommand HistoryCommand { get; set; }
 
         public GuestTwoWindowViewModel(User user, DataGrid toursDataGrid)
         {
@@ -107,6 +108,7 @@ namespace Tourist_Project.WPF.ViewModels
             ReserveCommand = new RelayCommand(OnReserveClick);
             VouchersCommand = new RelayCommand(OnVouchersClick);
             MyToursCommand = new RelayCommand(OnMyToursClick);
+            HistoryCommand = new RelayCommand(OnHistoryClick);
 
             tourService = new TourService();
             locationService = new LocationService();
@@ -150,6 +152,12 @@ namespace Tourist_Project.WPF.ViewModels
                     voucherService.Delete(voucher.Id);
                 }
             }
+        }
+
+        private void OnHistoryClick()
+        {
+            var HistoryWindow = new TourHistoryView(LoggedInUser);
+            HistoryWindow.Show();
         }
 
         private void OnMyToursClick()

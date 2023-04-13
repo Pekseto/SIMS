@@ -16,16 +16,21 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourReservationService reservationService;
         private readonly TourService tourService;
         private readonly LocationService locationService;
+        private readonly TourAttendanceService attendanceService;
         public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> FutureTours { get; set; }
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
         public TourDTO SelectedTodayTour { get; set; }
+        public ICommand JoinCommand { get; set; }
 
         public MyToursViewModel(User user) 
         {
             tourService = new TourService();
             reservationService = new TourReservationService();
             locationService = new LocationService();
+            attendanceService = new TourAttendanceService();
+
+            JoinCommand = new RelayCommand(OnJoinClick);
 
             LoggedInUser = user;
             FutureTours = new ObservableCollection<TourDTO>();
@@ -53,6 +58,11 @@ namespace Tourist_Project.WPF.ViewModels
                 }
 
             }
+        }
+
+        private void OnJoinClick()
+        {
+            
         }
     }
 }

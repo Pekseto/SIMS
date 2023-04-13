@@ -70,7 +70,7 @@ namespace Tourist_Project.WPF.Views
 
         private void Guest1ButtonClick(object sender, RoutedEventArgs e)
         {
-            var guestOne = new GuestOne(/*LoggedInUser*/);
+            var guestOne = new GuestOne(LoggedInUser);
             guestOne.Show();
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)

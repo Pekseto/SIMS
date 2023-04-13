@@ -14,11 +14,11 @@ namespace Tourist_Project.Domain.Models
         public int UserId { get; set; }
         public string Name { get; set; }
         public string WayAcquired { get; set; }
-        public DateOnly LastValidDate { get; set; }
+        public DateTime LastValidDate { get; set; }
 
         public Voucher() { }
 
-        public Voucher(int id, int userId, string name, string wayAcquired, DateOnly lastValidDate)
+        public Voucher(int id, int userId, string name, string wayAcquired, DateTime lastValidDate)
         {
             Id = id;
             UserId = userId;
@@ -31,15 +31,20 @@ namespace Tourist_Project.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             UserId = Convert.ToInt32(values[1]);
-            Name = values[1];
-            WayAcquired = values[2];
-            LastValidDate = DateOnly.Parse(values[3]);
+            Name = values[2];
+            WayAcquired = values[3];
+            LastValidDate = DateTime.Parse(values[4]);
         }
 
         public string[] ToCSV()
         {
             string[] csvValues = { Id.ToString(), UserId.ToString(), Name, WayAcquired, LastValidDate.ToString() };
             return csvValues;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

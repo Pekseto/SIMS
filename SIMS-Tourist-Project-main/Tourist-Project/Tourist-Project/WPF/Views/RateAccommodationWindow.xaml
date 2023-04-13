@@ -16,10 +16,14 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Content="Cleanliness" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
         <Label Grid.Row="1" Grid.Column="0" Content="Image Url" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <Label Grid.Row="2" Grid.Column="0" Content="Additional Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Accommodation Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Owner Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="Owner Rating" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
         <RadioButton Grid.Column="1" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="124,0,0,0"/>
         <RadioButton Grid.Column="1" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="169,0,0,0"/>
         <RadioButton Grid.Column="1" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="214,0,0,0"/>
@@ -27,7 +31,13 @@
         <RadioButton Grid.Column="1" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="304,0,0,0"/>
         <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=ImageUrl}"></TextBox>
         <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=Comment}"></TextBox>
-        <Button Content="Confirm" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding Confirm_Command}"></Button>
-        
+        <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=OwnerComment}"></TextBox>
+        <Button Content="Confirm" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding Confirm_Command}"></Button>
+        <RadioButton Grid.Column="1" Grid.Row ="4" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="124,0,0,0"/>
+        <RadioButton Grid.Column="1" Grid.Row ="4" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="169,0,0,0"/>
+        <RadioButton Grid.Column="1" Grid.Row ="4" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="214,0,0,0"/>
+        <RadioButton Grid.Column="1" Grid.Row ="4" Content="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="259,0,0,0"/>
+        <RadioButton Grid.Column="1" Grid.Row ="4" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="304,0,0,0"/>
+
     </Grid>
 </Window>

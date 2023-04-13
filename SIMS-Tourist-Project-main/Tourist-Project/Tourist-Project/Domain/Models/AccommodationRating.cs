@@ -49,6 +49,20 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
+        private int _ownerRating;
+        public int OwnerRating
+        {
+            get => _ownerRating;
+            set
+            {
+                if(value == _ownerRating)
+                {
+                    return;
+                }
+                _rating=value;
+                OnPropertyChanged();
+            }
+        }
         public String Comment { get; set; }
 
         private int _commentId;
@@ -77,6 +91,24 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
+        public String OwnerComment { get; set; }
+
+        private int _ownerCommentId;
+        public int OwnerCommentId
+        {
+            get => _ownerCommentId;
+            set => _ownerCommentId = value;
+            
+        }
+
+
+        private int _ownerRatingId;
+        public int OwnerRatingId
+        {
+            get => _ownerRatingId;
+            set => _ownerRatingId = value;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -89,7 +121,7 @@ namespace Tourist_Project.Domain.Models
 
         }
 
-        public AccommodationRating(int id, int accommodationId, int userId, int rating,int commentId, String comment, int imageId, String imageUrl)
+        public AccommodationRating(int id, int accommodationId, int userId, int rating,int commentId, String comment, int imageId, String imageUrl, String ownerComment, int ownerCommentId, int ownerRatingId, int ownerRating)
         {
             Id = id;
             AccommodationId = accommodationId;
@@ -99,6 +131,10 @@ namespace Tourist_Project.Domain.Models
             Comment = comment;
             ImageId = imageId;
             ImageUrl = imageUrl;
+            OwnerComment = ownerComment;
+            OwnerCommentId = ownerCommentId;
+            OwnerRatingId = ownerRatingId;
+            OwnerRating = ownerRating;
         }
 
         public string[] ToCSV()
@@ -112,7 +148,11 @@ namespace Tourist_Project.Domain.Models
                 CommentId.ToString(),
                 Comment,
                 ImageId.ToString(),
-                ImageUrl
+                ImageUrl,
+                OwnerCommentId.ToString(),
+                OwnerComment, 
+                OwnerRatingId.ToString(),
+                OwnerRating.ToString(),
             };
             return csvValues;
         }
@@ -127,6 +167,10 @@ namespace Tourist_Project.Domain.Models
             Comment = values[5];
             ImageId = Convert.ToInt32(values[6]);
             ImageUrl = values[7];
+            OwnerCommentId = Convert.ToInt32(values[8]);
+            OwnerComment = values[9];
+            OwnerRatingId = Convert.ToInt32(values[10]);
+            OwnerRating = Convert.ToInt32(values[11]);
         }
     }
 }

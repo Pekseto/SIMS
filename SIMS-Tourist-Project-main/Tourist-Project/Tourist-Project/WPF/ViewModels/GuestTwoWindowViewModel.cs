@@ -11,6 +11,7 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using System.Windows.Input;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -19,6 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourService tourService;
         private readonly LocationService locationService;
         private readonly TourReservationService reservationService;
+        private readonly VoucherService voucherService;
         public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
@@ -42,6 +44,8 @@ namespace Tourist_Project.WPF.ViewModels
         public string SelectedCity { get; set; }
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
+        public ObservableCollection<Voucher> Vouchers { get; set; }
+        public Voucher SelectedVoucher { get; set; }
 
         private readonly Regex numberRegex = new Regex("^[0-9]+$");
         private int duration;
@@ -90,6 +94,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand ShowAllCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
+        public ICommand VouchersCommand { get; set; }
 
         public GuestTwoWindowViewModel(User user, DataGrid toursDataGrid)
         {
@@ -99,15 +104,18 @@ namespace Tourist_Project.WPF.ViewModels
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
             ReserveCommand = new RelayCommand(OnReserveClick);
+            VouchersCommand = new RelayCommand(OnVouchersClick);
 
             tourService = new TourService();
             locationService = new LocationService();
             reservationService = new TourReservationService();
+            voucherService = new VoucherService();
 
             Tours = new ObservableCollection<TourDTO>();
             Countries = new ObservableCollection<string>();
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>();
+            Vouchers = new ObservableCollection<Voucher>();
 
             foreach (Tour tour in tourService.GetAll())
             {
@@ -128,6 +136,24 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 Languages.Add(tour.Language);
             }
+
+            foreach(Voucher voucher in voucherService.GetAll())
+            {
+                if(voucher.UserId == LoggedInUser.Id && voucher.LastValidDate >= DateTime.Today)
+                {
+                    Vouchers.Add(voucher);
+                }
+                else if(voucher.LastValidDate < DateTime.Today)
+                {
+                    voucherService.Delete(voucher.Id);
+                }
+            }
+        }
+
+        private void OnVouchersClick()
+        {
+            var VouchersWindow = new VouchersView(LoggedInUser);
+            VouchersWindow.Show();
         }
 
         private void OnReserveClick()
@@ -154,6 +180,12 @@ namespace Tourist_Project.WPF.ViewModels
                     var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber);
                     reservationService.Save(tourReservation);
                     MessageBox.Show("Reservation is successful");
+
+                    if(SelectedVoucher != null)
+                    {
+                        voucherService.Delete(SelectedVoucher.Id);
+                        Vouchers.Remove(SelectedVoucher);
+                    }
                 }
 
             }

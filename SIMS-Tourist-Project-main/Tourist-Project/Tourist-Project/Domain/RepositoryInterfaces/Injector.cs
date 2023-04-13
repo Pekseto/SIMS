@@ -22,7 +22,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(ITourReservationRepository), new TourReservationRepository()},
             {typeof(IVoucherRepository), new VoucherRepository()},
             {typeof(IUserRepository), new UserRepository()},
-            {typeof(INotificationRepository), new NotificationRepository()},
+            {typeof(INotificationRepository), new NotificationRepository()}
+            {typeof(ITourAttendanceRepository), new TourAttendanceRepository()},
             {typeof(IAccommodationRatingRepository), new AccommodationRatingRepository()}
         };
 

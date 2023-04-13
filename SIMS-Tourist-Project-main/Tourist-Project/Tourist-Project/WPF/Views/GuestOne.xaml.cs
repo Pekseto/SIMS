@@ -65,39 +65,13 @@ namespace Tourist_Project.View
         public ObservableCollection<string> AccommodationTypes { get; set; }
 
         public User LoggedInUser { get; set; }
-        public GuestOne(/*User user*/)
+        public GuestOne(User user)
         {
             InitializeComponent();
-            this.DataContext = new GuestOne();
+            this.DataContext = new GuestOneViewModel(this);
             //LoggedInUser = user;
 
-            locationRepository = new LocationRepository();
-            accommodationRepository = new AccommodationRepository();
-            imageRepository = new ImageRepository();
-            accommodationDTORepository = new AccommodationDtoRepository();
-
-            AccommodationDTOs = new List<AccommodationDTO>();
-
-
-            Countries = new ObservableCollection<string>();
-            Cities = new ObservableCollection<string>();
-            AccommodationTypes = new ObservableCollection<string>();
-            SearchResults = new ObservableCollection<AccommodationDTO>(AccommodationDTOs);
-            FullLocations = new ObservableCollection<string>();
-
-
-            Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
-            Locations = new ObservableCollection<Location>(locationRepository.GetAll());
-            Images = new ObservableCollection<Image>(imageRepository.GetAll());
-
-            AccommodationDTOs = accommodationDTORepository.LoadAll(Accommodations, Locations, Images);
-
-
-            GetCountries();
-            GetCities();
-            GetAccommodationTypes();
-            GetFullLocationNames();
-            HandleAny();
+            
         }
 
         public void HandleAny()

@@ -10,6 +10,7 @@ using Tourist_Project.Domain.Models;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.View;
 
 namespace Tourist_Project.WPF.ViewModels;
 
@@ -54,6 +55,7 @@ public class GuestOneViewModel
     private Window _window;
 
     public ICommand RateAccommodation_Command { get; set; }
+    public ICommand CreateReservation_Command { get; set; }
 
     public GuestOneViewModel(Window window)
     {
@@ -68,6 +70,7 @@ public class GuestOneViewModel
         //LocationsToString();
         //Odraditi toString za lokacije
         RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRate);
+        CreateReservation_Command = new RelayCommand(CreateReservation,CanCreateReservation);
     }
 
 
@@ -169,6 +172,12 @@ public class GuestOneViewModel
         return false;
     }
 
+    public bool CanCreateReservation()
+    {
+        if (SelectedAccommodation != null)
+            return true;
+        return false;
+    }
 
     private void RateAccommodation()
     {
@@ -176,7 +185,11 @@ public class GuestOneViewModel
         rateAccommodationWindow.Show();
     }
 
-
+    private void CreateReservation()
+    {
+        var createReservation = new ReservationWindow(SelectedAccommodation);
+        createReservation.Show();
+    }
 
 
 

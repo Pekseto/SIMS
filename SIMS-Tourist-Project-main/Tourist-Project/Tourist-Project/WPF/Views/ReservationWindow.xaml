@@ -27,13 +27,13 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Height="60" Content="Name:"/>
-            <Label Grid.Row="1" Grid.Column="0" Height="60" Content="Location"/>
-            <Label Grid.Row="2" Grid.Column="0" Height="60" Content="Type"/>
+            <Label Grid.Row="1" Grid.Column="0" Height="60" Content="Type"/>
+            <Label Grid.Row="2" Grid.Column="0" Height="60" Content="StayingDays"/>
             <Label Grid.Row="3" Grid.Column="0" Height="60" Content="From"/>
             <Label Grid.Row="4" Grid.Column="0" Height="60" Content="To"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= AccommodationName, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Location, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= StaingDays, UpdateSourceTrigger=PropertyChanged}"/>
             <DatePicker Grid.Row="3" Grid.Column="1" Height="30" Width="150"/>
             <DatePicker Grid.Row="4" Grid.Column="1" Height="30" Width="150"/>
             <Button Content="Confirm" Grid.Row="5" Grid.Column="1" Click="Confirm_Click" Width="70" HorizontalAlignment="Center"/>

@@ -42,13 +42,13 @@ namespace Tourist_Project.Domain.Models
 
         }
 
-        public TourReservation(int userId, int tourId, int guestsNumber)
+        public TourReservation(int userId, int tourId, int guestsNumber, bool voucher)
         {
             UserId = userId;
             TourId = tourId;
             GuestsNumber = guestsNumber;
             //ZEKO VIDI OVO ZA VAUCER
-            this.voucher = false;
+            Voucher = voucher;
         }
 
         public string[] ToCSV()

@@ -17,10 +17,14 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class GuestTwoWindowViewModel
     {
+        #region Services
         private readonly TourService tourService;
         private readonly LocationService locationService;
         private readonly TourReservationService reservationService;
         private readonly VoucherService voucherService;
+        private readonly TourAttendanceService attendanceService;
+        #endregion
+        #region Fields
         public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
@@ -97,6 +101,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand VouchersCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand HistoryCommand { get; set; }
+        #endregion
 
         public GuestTwoWindowViewModel(User user, DataGrid toursDataGrid)
         {
@@ -114,6 +119,9 @@ namespace Tourist_Project.WPF.ViewModels
             locationService = new LocationService();
             reservationService = new TourReservationService();
             voucherService = new VoucherService();
+            attendanceService = new TourAttendanceService();
+
+            ShowNotifications();
 
             Tours = new ObservableCollection<TourDTO>();
             Countries = new ObservableCollection<string>();
@@ -125,8 +133,8 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 var tourDTO = new TourDTO(tour)
                 {
-                    SpotsLeft = GetLeftoverSpots(tour),
-                    Location = GetLocation(tour)
+                    SpotsLeft = tourService.GetLeftoverSpots(tour),
+                    Location = locationService.GetLocation(tour)
                 };
                 Tours.Add(tourDTO);
             }
@@ -150,6 +158,26 @@ namespace Tourist_Project.WPF.ViewModels
                 else if(voucher.LastValidDate < DateTime.Today)
                 {
                     voucherService.Delete(voucher.Id);
+                }
+            }
+        }
+
+        private void ShowNotifications()
+        {
+            foreach(TourAttendance tourAttendance in attendanceService.GetAll())
+            {
+                if(tourAttendance.UserId == LoggedInUser.Id && tourAttendance.Presence == Presence.Pending)
+                {
+                    if (MessageBox.Show("The guide has called you out for " + tourService.GetAll().Find(t => t.Id == tourAttendance.TourId) + "\nPlease confirm your presence!".ToString(),"Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        tourAttendance.Presence = Presence.Yes;
+                        attendanceService.Update(tourAttendance);
+                    }
+                    else
+                    {
+                        tourAttendance.Presence = Presence.No;
+                        attendanceService.Update(tourAttendance);
+                    }
                 }
             }
         }
@@ -193,7 +221,7 @@ namespace Tourist_Project.WPF.ViewModels
                 else
                 {
                     SelectedTour.SpotsLeft -= guestsNumber;
-                    var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber);
+                    var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber, SelectedVoucher != null ? true : false);
                     reservationService.Save(tourReservation);
                     MessageBox.Show("Reservation is successful");
 
@@ -202,6 +230,9 @@ namespace Tourist_Project.WPF.ViewModels
                         voucherService.Delete(SelectedVoucher.Id);
                         Vouchers.Remove(SelectedVoucher);
                     }
+
+                    var tourAttendance = new TourAttendance(LoggedInUser.Id, SelectedTour.Id);
+                    attendanceService.Save(tourAttendance);
                 }
 
             }
@@ -275,23 +306,6 @@ namespace Tourist_Project.WPF.ViewModels
                 }
             }
             toursDataGrid.ItemsSource = filteredList;
-        }
-
-        private int GetLeftoverSpots(Tour tour)
-        {
-            int retVal = tour.MaxGuestsNumber;
-            foreach (TourReservation reservation in reservationService.GetAll())
-            {
-                if (reservation.TourId == tour.Id)
-                {
-                    retVal -= reservation.GuestsNumber;
-                }
-            }
-            return retVal;
-        }
-        private Location GetLocation(Tour tour)
-        {
-            return locationService.GetAll().Find(x => x.Id == tour.LocationId);
         }
     }
 }

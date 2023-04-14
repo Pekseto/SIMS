@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -22,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
         public TourDTO SelectedTodayTour { get; set; }
         public ICommand JoinCommand { get; set; }
+        public ICommand WatchLiveCommand { get; set; }
 
         public MyToursViewModel(User user) 
         {
@@ -31,6 +33,7 @@ namespace Tourist_Project.WPF.ViewModels
             attendanceService = new TourAttendanceService();
 
             JoinCommand = new RelayCommand(OnJoinClick);
+            WatchLiveCommand = new RelayCommand(OnWatchLiveClick);
 
             LoggedInUser = user;
             FutureTours = new ObservableCollection<TourDTO>();
@@ -60,9 +63,24 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
+        private void OnWatchLiveClick()
+        {
+            if(SelectedTodayTour.Status == Status.Begin && attendanceService.GetAllByTourId(SelectedTodayTour.Id).Find(x => x.UserId == LoggedInUser.Id).Presence == Presence.Yes)
+            {
+                var TourLiveGuestWindow = new TourLiveGuestView(LoggedInUser, SelectedTodayTour.Id);
+                TourLiveGuestWindow.Show();
+            }
+        }
+
         private void OnJoinClick()
         {
-            
+            if(SelectedTodayTour.Status == Status.Begin)
+            {
+                TourAttendance tourAttendance = attendanceService.GetAllByTourId(SelectedTodayTour.Id).Find(x => x.UserId == LoggedInUser.Id);
+                tourAttendance.Presence = Presence.Joined;
+                attendanceService.UpdateOnUserJoined(tourAttendance);
+            }
+           
         }
     }
 }

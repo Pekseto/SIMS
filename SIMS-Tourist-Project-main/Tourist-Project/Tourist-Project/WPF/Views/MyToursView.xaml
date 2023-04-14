@@ -38,7 +38,7 @@
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Watch live" HorizontalAlignment="Left" Margin="1182,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="74"/>
+        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Left" Margin="1182,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="74"/>
         <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Left" Margin="1052,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="82"/>
     </Grid>
 </Window>

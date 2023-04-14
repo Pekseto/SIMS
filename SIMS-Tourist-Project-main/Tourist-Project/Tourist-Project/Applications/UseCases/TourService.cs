@@ -137,5 +137,18 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.GetAllTourAppointments(tourName);
         }
+
+        public int GetLeftoverSpots(Tour tour)
+        {
+            int retVal = tour.MaxGuestsNumber;
+            foreach (TourReservation reservation in tourReservationService.GetAll())
+            {
+                if (reservation.TourId == tour.Id)
+                {
+                    retVal -= reservation.GuestsNumber;
+                }
+            }
+            return retVal;
+        }
     }
 }

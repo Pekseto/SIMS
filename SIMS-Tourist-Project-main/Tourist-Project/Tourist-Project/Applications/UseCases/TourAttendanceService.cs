@@ -42,5 +42,25 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.GetAllByTourId(tourId);
         }
+
+        public List<TourAttendance> GetAll()
+        {
+            return repository.GetAll();
+        }
+
+        public void UpdateOnUserJoined(TourAttendance tourAttendance)
+        {
+            repository.Update(tourAttendance);
+        }
+
+        public void Save(TourAttendance tourAttendance)
+        {
+            repository.Save(tourAttendance);
+        }
+
+        public void Update(TourAttendance tourAttendance)
+        {
+            repository.Update(tourAttendance);
+        }
     }
 }

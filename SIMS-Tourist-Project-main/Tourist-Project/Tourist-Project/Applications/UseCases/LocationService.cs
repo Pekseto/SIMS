@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.WPF.ViewModels;
@@ -77,6 +78,11 @@ namespace Tourist_Project.Applications.UseCases
                 }
             }
             return countries;
+        }
+
+        public Location GetLocation(Tour tour)
+        {
+            return GetAll().Find(x => x.Id == tour.LocationId);
         }
     }
 }

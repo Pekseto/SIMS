@@ -39,8 +39,9 @@
             <GroupBox Header="Actions">
                 <Grid>
                     <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"></Image>
-                    <Label Content="Best User" FontSize="15" Height="29" Margin="143,10,24,622"/>
-                    <Label Content="Rating: 9.9" FontSize="15" Height="29" Margin="143,57,22,525"/>
+                    <Label Content="{Binding user.FullName, UpdateSourceTrigger=PropertyChanged}" FontSize="30" Height="29" Margin="143,10,0,662"/>
+                    <Label Content="Rating: 9.9" FontSize="15" Height="59" Margin="129,2,22,500"/>
+                    <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="55,81,0,538" Height="50"/>
                     <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)"></Button>
                     <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0"></Label>
                     <Button Height="38" Margin="10,144,20,229" Content="Create(C)" Command="{Binding CreateCommand}"></Button>

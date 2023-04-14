@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
@@ -22,19 +23,24 @@ namespace Tourist_Project.WPF.ViewModels
         private static ReservationService reservationService = new();
         private static GuestRateService guestRateService = new();
         private static AccommodationRatingService accommodationRatingService = new();
+        private static UserService userService = new();
         public static Accommodation SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
         public static Notification SelectedReview { get; set; }
+        public static User user { get; set; }
+        public OwnerMainWindow OwnerMainWindow { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
         public ICommand ShowReviewsCommand { get; set; }
-        public OwnerMainWindowViewModel()
+        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
         {
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             RateCommand = new RelayCommand(Rate, CanRate);
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
+            user = userService.GetOne(MainWindow.LoggedInUser.Id);
+            OwnerMainWindow = ownerMainWindow;
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
@@ -43,6 +49,7 @@ namespace Tourist_Project.WPF.ViewModels
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
             HasUnratedGuests();
             HasReviews();
+            isSuper();
             foreach (var accommodation in accommodations)
             {
                 accommodation.Location = locationService.Get(accommodation.LocationId);
@@ -123,6 +130,17 @@ namespace Tourist_Project.WPF.ViewModels
                 accommodationRating.Notified = true;
                 accommodationRatingService.Update(accommodationRating);
             }
+        }
+
+        public static void isSuper()
+        {
+            if(!user.IsSuper && AccommodationRatings.Count >= 10)
+                user.IsSuper = true;
+        }
+
+        public void showSuper()
+        {
+            OwnerMainWindow.Super.Visibility = user.IsSuper ? Visibility.Visible : Visibility.Hidden;
         }
     }
 

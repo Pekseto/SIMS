@@ -10,10 +10,11 @@
         <DataTemplate x:Key="ReviewDataTemplate">
             <StackPanel>
                 <Label FontSize="20" Content="Cleanness:"></Label>
-                <Label FontSize="20" Margin="210, -35, 0, 0" Content="{Binding Rating}"></Label>
+                <Label FontSize="20" Margin="210, -35, 0, 0" Content="{Binding Cleanness}"></Label>
                 <Label FontSize="20" Content="Owner:"></Label>
                 <Label FontSize="20" Margin="210, -35, 0, 0" Content="{Binding OwnerRating}"></Label>
                 <Label FontSize="20" Content="Accommodation:"></Label>
+                <Label FontSize="20" Content="{Binding AccommodationGrade}" Margin="210, -35, 0, 0"></Label>
                 <Label FontSize="20" Content="Additional comment:"></Label>
                 <TextBox IsEnabled="False" Width="200" Height="50" Margin="-49, 0, 230, 0" Text="{Binding Comment}"></TextBox>
                 <Image Width="240" Margin="250, -200, 0, 00" Source="{Binding ImageUrl}"></Image>

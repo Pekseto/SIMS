@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using Tourist_Project.Domain.Models;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
@@ -33,65 +30,48 @@ namespace Tourist_Project.Domain.Models
         }
 
 
-        private int _rating;
-        public int Rating
+        private int cleanness;
+        public int Cleanness
         {
-            get => _rating;
-
-            set
-            {
-                if (value == _rating)
-                {
-                    return;
-                }
-                _rating = value;
-                OnPropertyChanged();
-            }
+            get => cleanness;
+            set => cleanness = value;
         }
 
-        private int _ownerRating;
+        private int accommodationGrade;
+
+        public int AccommodationGrade
+        {
+            get => accommodationGrade;
+            set => accommodationGrade = value;
+        }
+
+        private int ownerRating;
         public int OwnerRating
         {
-            get => _ownerRating;
-            set
-            {
-                if(value == _ownerRating)
-                {
-                    return;
-                }
-                _rating=value;
-                OnPropertyChanged();
-            }
-        }
-        public String Comment { get; set; }
-
-        private int _commentId;
-        public int CommentId
-        {
-            get => _commentId;
-            set
-            {
-                if (_commentId == value) return;
-                _commentId = value;
-                OnPropertyChanged();
-            }
+            get => ownerRating;
+            set => ownerRating = value;
         }
 
-        public String ImageUrl { get; set; }
+        private string comment;
+        public string Comment 
+        { 
+            get => comment;
+            set => comment = value;
+        }
 
-        private int _imageId;
+        private string imageUrl;
+        public string ImageUrl 
+        { 
+            get => imageUrl; 
+            set => imageUrl = value;
+        }
+
+        private int imageId;
         public int ImageId
         {
-            get => _imageId;
-            set
-            {
-                if(value == _imageId) return;
-                _imageId = value;
-                OnPropertyChanged();
-            }
+            get => imageId;
+            set => imageId = value;
         }
-
-        public String OwnerComment { get; set; }
 
         private bool notified;
         public bool Notified
@@ -107,32 +87,24 @@ namespace Tourist_Project.Domain.Models
             set => reservationId = value;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public AccommodationRating()
         {
 
         }
 
-        public AccommodationRating(int id, int accommodationId, int userId, int rating,int commentId, String comment, int imageId, String imageUrl, String ownerComment, bool notified, int reservationId, int ownerRating)
+        public AccommodationRating(int id, int accommodationId, int userId, int cleanness, string comment, int imageId, string imageUrl, bool notified, int reservationId, int ownerRating, int accommodationGrade)
         {
             Id = id;
             AccommodationId = accommodationId;
             UserId = userId;
-            Rating = rating;
-            CommentId = commentId;
+            Cleanness = cleanness;
             Comment = comment;
             ImageId = imageId;
             ImageUrl = imageUrl;
-            OwnerComment = ownerComment;
             Notified = notified;
             ReservationId = reservationId;
             OwnerRating = ownerRating;
+            AccommodationGrade = accommodationGrade;
         }
 
         public string[] ToCSV()
@@ -142,15 +114,14 @@ namespace Tourist_Project.Domain.Models
                 Id.ToString(),
                 AccommodationId.ToString(),
                 UserId.ToString(),
-                Rating.ToString(),
-                CommentId.ToString(),
+                ReservationId.ToString(),
+                Cleanness.ToString(),
+                OwnerRating.ToString(),
+                AccommodationGrade.ToString(),
                 Comment,
                 ImageId.ToString(),
                 ImageUrl,
-                Notified.ToString(),
-                OwnerComment, 
-                ReservationId.ToString(),
-                OwnerRating.ToString(),
+                Notified.ToString()
             };
             return csvValues;
         }
@@ -160,15 +131,14 @@ namespace Tourist_Project.Domain.Models
             Id = Convert.ToInt32(values[0]);
             AccommodationId = Convert.ToInt32(values[1]);
             UserId = Convert.ToInt32(values[2]);
-            Rating = Convert.ToInt32(values[3]);
-            CommentId = Convert.ToInt32(values[4]);
-            Comment = values[5];
-            ImageId = Convert.ToInt32(values[6]);
-            ImageUrl = values[7];
-            Notified = Convert.ToBoolean(values[8]);
-            OwnerComment = values[9];
-            ReservationId = Convert.ToInt32(values[10]);
-            OwnerRating = Convert.ToInt32(values[11]);
+            ReservationId = Convert.ToInt32(values[3]);
+            Cleanness = Convert.ToInt32(values[4]);
+            OwnerRating = Convert.ToInt32(values[5]);
+            AccommodationGrade = Convert.ToInt32(values[6]);
+            Comment = values[7];
+            ImageId = Convert.ToInt32(values[8]);
+            ImageUrl = values[9];
+            Notified = Convert.ToBoolean(values[10]);
         }
     }
 }

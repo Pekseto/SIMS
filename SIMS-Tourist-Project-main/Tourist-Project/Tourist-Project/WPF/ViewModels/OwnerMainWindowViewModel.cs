@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
@@ -29,6 +30,7 @@ namespace Tourist_Project.WPF.ViewModels
         public static Notification SelectedReview { get; set; }
         public static User user { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
+        public double Rating { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
@@ -49,6 +51,7 @@ namespace Tourist_Project.WPF.ViewModels
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
             HasUnratedGuests();
             HasReviews();
+            getRating();
             isSuper();
             foreach (var accommodation in accommodations)
             {
@@ -132,15 +135,23 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        public static void isSuper()
+        public void isSuper()
         {
-            if(!user.IsSuper && AccommodationRatings.Count >= 10)
+            if(user.IsSuper && AccommodationRatings.Count < 10 && Rating < 4.5)
+                user.IsSuper = false;
+            else
                 user.IsSuper = true;
+            userService.Update(user);
         }
 
         public void showSuper()
         {
             OwnerMainWindow.Super.Visibility = user.IsSuper ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public void getRating()
+        {
+            Rating = (double)AccommodationRatings.Sum(accommodationRating => accommodationRating.AccommodationGrade + accommodationRating.Cleanness + accommodationRating.OwnerRating)/(AccommodationRatings.Count*3);
         }
     }
 

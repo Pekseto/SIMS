@@ -28,6 +28,17 @@ namespace Tourist_Project.Repository
         {
             return users.Find(user => user.Id == id);
         }
+
+        public User Update(User user)
+        {
+            users = serializer.FromCSV(FilePath);
+            var current = users.Find(c => c.Id == user.Id);
+            var index = users.IndexOf(current);
+            users.Remove(current);
+            users.Insert(index, user);       // keep ascending order of ids in file 
+            serializer.ToCSV(FilePath, users);
+            return user;
+        }
     }
 }
 

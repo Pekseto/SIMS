@@ -51,8 +51,16 @@ namespace Tourist_Project.Domain.Models
             set { birthDate = value; }
         }
 
+        private bool isSuper;
+
+        public bool IsSuper
+        {
+            get { return isSuper; }
+            set { isSuper = value; }
+        }
+
         public User() { }
-        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate)
+        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate, bool isSuper)
         {
             this.id = id;
             this.username = username;
@@ -60,10 +68,11 @@ namespace Tourist_Project.Domain.Models
             this.role = role;
             this.fullName = fullName;
             this.birthDate = birthDate;
+            this.isSuper = isSuper;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { id.ToString(), username, password, role.ToString(), fullName, birthDate.ToString() };
+            string[] csvValues = { id.ToString(), username, password, role.ToString(), fullName, birthDate.ToString(), isSuper.ToString() };
             return csvValues;
         }
         public void FromCSV(string[] values)
@@ -74,6 +83,7 @@ namespace Tourist_Project.Domain.Models
             role = Enum.Parse<UserRole>(values[3]);
             fullName = values[4];
             birthDate = DateTime.Parse(values[5]);
+            isSuper = bool.Parse(values[6]);
         }
     }
 }

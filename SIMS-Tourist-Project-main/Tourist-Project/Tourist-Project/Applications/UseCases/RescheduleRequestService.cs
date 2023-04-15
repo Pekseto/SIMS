@@ -33,6 +33,12 @@ namespace Tourist_Project.Applications.UseCases
         {
             return rescheduleRequestRepository.GetById(id);
         }
+
+        public List<RescheduleRequest> GetByStatus(RequestStatus status)
+        {
+            return rescheduleRequestRepository.GetByStatus(status);
+        }
+
         public RescheduleRequest Update(RescheduleRequest rescheduleRequest)
         {
             return rescheduleRequestRepository.Update(rescheduleRequest);

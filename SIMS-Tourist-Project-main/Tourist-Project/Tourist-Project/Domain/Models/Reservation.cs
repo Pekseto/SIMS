@@ -12,20 +12,20 @@ namespace Tourist_Project.Domain.Models
         public DateTime CheckOut { get; set; }
         public int GuestsNum { get; set; }
         public int StayingDays { get; set; }
-        public Accommodation Accommodation { get; set; } 
+        public int AccommodationId { get; set; } 
 
         
         public List<Date> AvailableDates { get; set; }
 
         public Reservation() { }
-        public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, Accommodation accommodation)
+        public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, int accommodationId)
         {
             CheckIn = checkIn;
             CheckOut = checkOut;
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
             
-            Accommodation = accommodation;
+            AccommodationId = accommodationId;
             AvailableDates = new List<Date>();
         }
         public string[] ToCSV()
@@ -35,10 +35,9 @@ namespace Tourist_Project.Domain.Models
                 GuestId.ToString(), 
                 CheckIn.ToString(), 
                 CheckOut.ToString(), 
-                CheckOut.ToString(), 
                 GuestsNum.ToString(), 
                 StayingDays.ToString(), 
-                Accommodation.Id.ToString() 
+                AccommodationId.ToString() 
             };
             return csvValues;
         }
@@ -50,7 +49,7 @@ namespace Tourist_Project.Domain.Models
             CheckOut = DateTime.Parse(values[3]);
             GuestsNum = Convert.ToInt32(values[4]);
             StayingDays = Convert.ToInt32(values[5]);
-            Accommodation = new Accommodation() { Id = Convert.ToInt32(values[6]) };
+            AccommodationId = Convert.ToInt32(values[6]);
         }
     }
 }

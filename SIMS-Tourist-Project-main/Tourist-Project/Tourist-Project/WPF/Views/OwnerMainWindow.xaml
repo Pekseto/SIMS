@@ -29,10 +29,19 @@
                 <Separator/>
             </StackPanel>
         </DataTemplate>
-        <Style x:Key="DarkMode" TargetType="Label">
-            <Setter Property="Background" Value="Black"></Setter>
-            <Setter Property="Foreground" Value="white"></Setter>
-        </Style>
+        <DataTemplate x:Key="ReservationDataTemplate">
+            <StackPanel>
+                <Label Content="{Binding ReservationId}" Margin="0,0,0,0"></Label>
+                <Label Content="                      CheckIn            CheckOut"></Label>
+                <Label Content="Old dates:"></Label>
+                <Label Content="{Binding OldBeginningDate}" Margin="70,-26"></Label>
+                <Label Content="{Binding OldEndDate}" Margin="153,-26,0,0"></Label>
+                <Label Content="New dates:"></Label>
+                <Label Content="{Binding NewBeginningDate}" Margin="70, -26"></Label>
+                <Label Content="{Binding NewEndDate}" Margin="153, -26, 0, 0"></Label>
+                <Separator></Separator>
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -65,11 +74,11 @@
                 <RowDefinition Height="532*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="11*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,522,-20">
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,480,-20">
                     <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"
@@ -78,7 +87,7 @@
                         <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Reviews(F2)" Margin="209,0,340,-20">
+                <GroupBox Header="Reviews(F2)" Margin="209,0,288,-20">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
@@ -88,11 +97,20 @@
                     </StackPanel>
                 </GroupBox>
             </Grid>
-            <GroupBox Header="My accommodations(M)" Margin="20,28,0,0" Grid.Row="1">
+            <GroupBox Header="My accommodations(M)" Margin="20,20" Grid.Row="1">
                 <ListBox ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
                          ItemTemplate="{StaticResource AccommodationDataTemplate}"
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 
+            </GroupBox>
+            <GroupBox Header="Reschedule requests(F5)" Grid.Column="1" Grid.Row="1" Margin="10,20">
+                <StackPanel>
+                    <ListBox ItemsSource="{Binding RescheduleRequests, UpdateSourceTrigger=PropertyChanged}"
+                             ItemTemplate="{StaticResource ReservationDataTemplate}"
+                             SelectedItem="{Binding SelectedRescheduleRequest, UpdateSourceTrigger=PropertyChanged}" Height="395"></ListBox>
+                    <Button Height="38" Content="Confirm(Alt+C)" VerticalAlignment="Bottom" Command="{Binding ConfirmRescheduleCommand}"></Button>
+                    <Button Height="38" Content="Cancel(Alt+X)" VerticalAlignment="Bottom" Command="{Binding CancelRescheduleCommand}"></Button>
+                </StackPanel>
             </GroupBox>
         </Grid>
     </Grid>

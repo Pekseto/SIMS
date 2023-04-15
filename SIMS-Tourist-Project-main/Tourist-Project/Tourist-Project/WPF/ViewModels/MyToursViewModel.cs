@@ -46,7 +46,7 @@ namespace Tourist_Project.WPF.ViewModels
                     Tour tour = tourService.GetAll().Find(x => x.Id == t.TourId);
                     var tourDTO = new TourDTO(tour)
                     {
-                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                        Location = locationService.GetLocation(tour)
                     };
                     FutureTours.Add(tourDTO);
                 }
@@ -55,7 +55,7 @@ namespace Tourist_Project.WPF.ViewModels
                     Tour tour = tourService.GetAll().Find(x => x.Id == t.TourId);
                     var tourDTO = new TourDTO(tour)
                     {
-                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                        Location = locationService.GetLocation(tour)
                     };
                     TodaysTours.Add(tourDTO);
                 }
@@ -74,7 +74,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnJoinClick()
         {
-            if(SelectedTodayTour.Status == Status.Begin)
+            if(SelectedTodayTour.Status == Status.Begin )//DODATI DA NE MOZE DA JOINUJE AKO JE VEC PRISUTAN NA TURI ILI AKO JE PENDING
             {
                 TourAttendance tourAttendance = attendanceService.GetAllByTourId(SelectedTodayTour.Id).Find(x => x.UserId == LoggedInUser.Id);
                 tourAttendance.Presence = Presence.Joined;

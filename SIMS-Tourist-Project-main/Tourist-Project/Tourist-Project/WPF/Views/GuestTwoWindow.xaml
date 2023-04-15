@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="GuestTwoWindow" Height="480" Width="890" WindowStartupLocation="CenterScreen">
+        Title="GuestTwoWindow" Height="500" Width="890" WindowStartupLocation="CenterScreen">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -55,11 +55,14 @@
         <Label Content="How many spots to reserve:" Grid.Row="2" Width="160" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,200,0"/>
         <TextBox Text="{Binding GuestsNumber}" Grid.Row="2" Width="70" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,135,0"/>
         <Button Content="Reserve" Command="{Binding ReserveCommand}"  Grid.Row="2" Width="70" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,15,0"/>
-        <Button Content="Vouchers" Command="{Binding VouchersCommand}" HorizontalAlignment="Left" Margin="123,3,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Content="Vouchers" Command="{Binding VouchersCommand}"
+                Width="70" Height="25" HorizontalAlignment="Left" Margin="109,1,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <Label Content="Optionally, select one of your vouchers:" Grid.Row="2" Width="216" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="470,29,0,0"/>
         <ComboBox ItemsSource="{Binding Vouchers}" SelectedItem="{Binding SelectedVoucher}" Grid.Row="2" Height="20" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="685,32,0,0"/>
-        <Button Content="My tours" Command="{Binding MyToursCommand}" HorizontalAlignment="Left" Margin="195,3,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <Button Content="History" Command="{Binding HistoryCommand}" HorizontalAlignment="Left" Margin="195,33,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Content="My tours" Command="{Binding MyToursCommand}"
+                Width="70" Height="25" HorizontalAlignment="Left" Margin="213,1,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Content="History" Command="{Binding HistoryCommand}"
+                Width="70" Height="25" HorizontalAlignment="Left" Margin="320,1,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
 
     </Grid>

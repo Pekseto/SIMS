@@ -16,5 +16,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public RescheduleRequest Update(RescheduleRequest rescheduleRequest);
         public RescheduleRequest GetById(int id);
+        public List<RescheduleRequest> GetByStatus(RequestStatus status);
     }
 }

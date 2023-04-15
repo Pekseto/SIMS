@@ -56,7 +56,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             foreach (Reservation reservation in Reservations)
             {
-                if (reservation.Accommodation.Id == SelectedAccommodation.Id)
+                if (reservation.AccommodationId == SelectedAccommodation.Id)
                 {
                     return reservation; //rezervacija na smestaju sa tim Id-em
                 }

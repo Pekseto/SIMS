@@ -15,6 +15,8 @@ using Tourist_Project.View;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 using System.Collections.ObjectModel;
+using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.View
 {
@@ -38,17 +40,19 @@ namespace Tourist_Project.View
 
         public List<AccommodationDTO> AccommodationDTOs { get; set; }
 
+        public Accommodation SelectedAccommodation { get; set; }
+
         private AccommodationDtoRepository _accommodationDTORepository { get; }
-        public ReservationWindow(AccommodationDTO SelectedAccommodationDTO)
+        public ReservationWindow(Accommodation SelectedAccommodation)
         {
             InitializeComponent();
-            this.DataContext = this;
+            this.DataContext = new CreateReservationViewModel(this, SelectedAccommodation);
 
-            AccommodationName = SelectedAccommodationDTO.Name;
-            Location = SelectedAccommodationDTO.LocationFullName;
-            Type = SelectedAccommodationDTO.AccommodationType.ToString();
+            //AccommodationName = SelectedAccommodationDTO.Name;
+            //Location = SelectedAccommodationDTO.LocationFullName;
+            //Type = SelectedAccommodationDTO.AccommodationType.ToString();
             //AvailableDates = SelectedAccommodationDTO.AvailableDates;
-            AccommodationId = SelectedAccommodationDTO.AccommodationId;
+            //AccommodationId = SelectedAccommodationDTO.AccommodationId;
            // AccommodationDTOs = AccommodationDtoRepository.
 
         }

@@ -25,7 +25,7 @@
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path= SearchedCancelationThreshold}" Width="58"/>
                 <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SearchClick"/>
                 <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowAllClick"/>
-                <Button Content="Reserve Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ReserveClick"/>
+                <Button Content="Reserve Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding CreateReservation_Command}"/>
                 <Button Content="Rate Accommodatoin" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding RateAccommodation_Command}"></Button>
 
             </ToolBar>

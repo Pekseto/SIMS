@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
@@ -12,28 +14,45 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Accommodation> accommodations { get; set; }
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
+        public static ObservableCollection<Notification> ReviewNotifications { get; set; }
         public static ObservableCollection<GuestRating> GuestRatings { get; set; }
+        public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         private static AccommodationService accommodationService = new();
         private readonly LocationService locationService = new();
         private readonly ImageService imageService = new();
         private static NotificationService notificationService = new();
         private static ReservationService reservationService = new();
         private static GuestRateService guestRateService = new();
+        private static AccommodationRatingService accommodationRatingService = new();
+        private static UserService userService = new();
         public static Accommodation SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
+        public static Notification SelectedReview { get; set; }
+        public static User user { get; set; }
+        public OwnerMainWindow OwnerMainWindow { get; set; }
+        public double Rating { get; set; }
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
-        public OwnerMainWindowViewModel()
+        public ICommand ShowReviewsCommand { get; set; }
+        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
         {
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             RateCommand = new RelayCommand(Rate, CanRate);
+            ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
+            user = userService.GetOne(MainWindow.LoggedInUser.Id);
+            OwnerMainWindow = ownerMainWindow;
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
+            AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
+            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
             HasUnratedGuests();
+            HasReviews();
+            getRating();
+            isSuper();
             foreach (var accommodation in accommodations)
             {
                 accommodation.Location = locationService.Get(accommodation.LocationId);
@@ -68,11 +87,22 @@ namespace Tourist_Project.WPF.ViewModels
             var rateWindow = new RateGuestWindow(SelectedRating);
             rateWindow.ShowDialog();
         }
-
         public static bool CanRate()
         {
             return true;
         }
+
+        public static void ShowReview()
+        {
+            var showReviewsWindow = new OwnerReviewsView();
+            showReviewsWindow.ShowDialog();
+        }
+
+        public static bool CanShow()
+        {
+            return GuestRatingNotifications.Count == 0;
+        }
+
         public static void HasUnratedGuests()
         {
             foreach (var guestRate in GuestRatings)
@@ -91,6 +121,37 @@ namespace Tourist_Project.WPF.ViewModels
                     }
                 }
             }
+        }
+
+        public static void HasReviews()
+        {
+            if (AccommodationRatings.Count == 0) return;
+            foreach (var accommodationRating in AccommodationRatings)
+            {
+                if(accommodationRating.Notified) continue;
+                notificationService.Create(new Notification("Reviews", accommodationRating.UserId, accommodationRating.ReservationId));
+                accommodationRating.Notified = true;
+                accommodationRatingService.Update(accommodationRating);
+            }
+        }
+
+        public void isSuper()
+        {
+            if(user.IsSuper && AccommodationRatings.Count < 10 && Rating < 4.5)
+                user.IsSuper = false;
+            else
+                user.IsSuper = true;
+            userService.Update(user);
+        }
+
+        public void showSuper()
+        {
+            OwnerMainWindow.Super.Visibility = user.IsSuper ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public void getRating()
+        {
+            Rating = (double)AccommodationRatings.Sum(accommodationRating => accommodationRating.AccommodationGrade + accommodationRating.Cleanness + accommodationRating.OwnerRating)/(AccommodationRatings.Count*3);
         }
     }
 

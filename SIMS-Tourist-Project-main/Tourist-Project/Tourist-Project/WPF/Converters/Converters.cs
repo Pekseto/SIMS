@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Converters
 {
@@ -16,14 +18,18 @@ namespace Tourist_Project.WPF.Converters
                 var enumType = AccommodationType.Apartment;
                 switch (parameter)
                 {
-                    case "Apartment": enumType = AccommodationType.Apartment;
+                    case "Apartment":
+                        enumType = AccommodationType.Apartment;
                         break;
-                    case "House": enumType = AccommodationType.House;
+                    case "House":
+                        enumType = AccommodationType.House;
                         break;
-                    case "Cottage": enumType = AccommodationType.Cottage;
+                    case "Cottage":
+                        enumType = AccommodationType.Cottage;
                         break;
                     default: return null;
                 }
+
                 return enumValue.Equals(enumType);
             }
             catch (Exception ex)
@@ -39,14 +45,18 @@ namespace Tourist_Project.WPF.Converters
                 var enumType = AccommodationType.Apartment;
                 switch (parameter)
                 {
-                    case "Apartment": enumType = AccommodationType.Apartment;
+                    case "Apartment":
+                        enumType = AccommodationType.Apartment;
                         break;
-                    case "House": enumType = AccommodationType.House;
+                    case "House":
+                        enumType = AccommodationType.House;
                         break;
-                    case "Cottage": enumType = AccommodationType.Cottage;
+                    case "Cottage":
+                        enumType = AccommodationType.Cottage;
                         break;
                     default: return null;
                 }
+
                 return enumType;
             }
             catch (Exception ex)
@@ -55,4 +65,5 @@ namespace Tourist_Project.WPF.Converters
             }
         }
     }
+
 }

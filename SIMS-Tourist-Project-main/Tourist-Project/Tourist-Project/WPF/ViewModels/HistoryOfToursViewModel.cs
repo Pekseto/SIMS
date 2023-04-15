@@ -23,7 +23,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand HomeViewCommand { get; set; }
         public ICommand FutureViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }
-        public ICommand ReviewsViewCommand { get; set; }
+        public ICommand ReviewViewCommand { get; set; }
         public HistoryOfToursViewModel(Window window) 
         {
             this.window = window;
@@ -33,7 +33,7 @@ namespace Tourist_Project.WPF.ViewModels
             HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
             FutureViewCommand = new RelayCommand(FutureView, CanFutureView);
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
-            ReviewsViewCommand = new RelayCommand(ReviewsView, CanReviewView);
+            ReviewViewCommand = new RelayCommand(ReviewView, CanReviewView);
         }
 
         private bool CanHomeView()
@@ -90,9 +90,10 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        private void ReviewsView()
+        private void ReviewView()
         {
-
+            var reviewWindow = new TourReviewsGuideView(SelectedTour);
+            reviewWindow.Show();
         }
     }
 }

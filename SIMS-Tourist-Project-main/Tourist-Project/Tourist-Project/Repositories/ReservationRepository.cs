@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
@@ -62,6 +63,19 @@ namespace Tourist_Project.Repositories
         public Reservation GetById(int id)
         {
             return reservations.Find(c => c.Id == id);
+        }
+
+        public Reservation GenerateAvailableDates(Reservation reservation)
+        {
+            Date date = new Date(DateTime.Now, true);
+            reservation.AvailableDates.Add(date);
+           for(int i = 1; i < 10; i++)
+            {
+                Date addedDate = new Date(DateTime.FromOADate(i), true);
+                reservation.AvailableDates.Add(addedDate); 
+            }
+
+            return reservation;
         }
     }
 }

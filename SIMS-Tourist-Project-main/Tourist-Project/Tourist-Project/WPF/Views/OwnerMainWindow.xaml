@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="Accommodations" Height="740" Width="1250" WindowStartupLocation="CenterScreen">
+        Title="Accommodations" Height="740" Width="1250" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate x:Key="AccommodationDataTemplate">
             <StackPanel Width="490" Height="auto">
@@ -23,6 +23,16 @@
                 <Separator/>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="ReviewsDataTemplate">
+            <StackPanel>
+                <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
+                <Separator/>
+            </StackPanel>
+        </DataTemplate>
+        <Style x:Key="DarkMode" TargetType="Label">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="white"></Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -33,8 +43,10 @@
             <GroupBox Header="Actions">
                 <Grid>
                     <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"></Image>
-                    <Label Content="Best User" FontSize="15" Height="29" Margin="143,10,24,622"/>
-                    <Label Content="Rating: 9.9" FontSize="15" Height="29" Margin="143,57,22,525"/>
+                    <Label Content="{Binding user.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50"/>
+                    <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500"/>
+                    <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500"/>
+                    <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="115,81,0,538" Height="50" HorizontalAlignment="Center"/>
                     <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)"></Button>
                     <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0"></Label>
                     <Button Height="38" Margin="10,144,20,229" Content="Create(C)" Command="{Binding CreateCommand}"></Button>
@@ -57,12 +69,22 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,532,0">
-                    <StackPanel>
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,522,-20">
+                    <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"
-                                 SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"></ListBox>
-                        <Button Height="28" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}"/>
+                                 SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="119"></ListBox>
+                        <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Reviews(F2)" Margin="209,0,340,-20">
+                    <StackPanel>
+                        <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
+                                 ItemTemplate="{StaticResource ReviewsDataTemplate}"
+                                 SelectedItem="{Binding SelectedReview, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="119"></ListBox>
+                        <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>
@@ -72,7 +94,6 @@
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 
             </GroupBox>
-            
         </Grid>
     </Grid>
 </Window>

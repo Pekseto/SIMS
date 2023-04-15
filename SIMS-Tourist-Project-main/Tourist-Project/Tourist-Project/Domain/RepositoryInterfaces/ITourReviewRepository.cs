@@ -10,7 +10,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
 {
     public interface ITourReviewRepository
     {
-        public TourReview Save(TourReview tourReview);
+        public void Save(TourReview tourReview);
         public TourReview Update(TourReview tourReview);
         public int NextId();
         public TourReview GetOne(int id);

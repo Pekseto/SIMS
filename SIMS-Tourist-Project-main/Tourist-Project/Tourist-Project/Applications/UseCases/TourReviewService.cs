@@ -16,11 +16,7 @@ namespace Tourist_Project.Applications.UseCases
         private readonly ITourReviewRepository repository = injector.CreateInstance<ITourReviewRepository>();
         public TourReviewService()
         {
-        }
 
-        public TourReview Create(TourReview tourReview)
-        {
-            return repository.Save(tourReview);
         }
 
         public TourReview Update(TourReview tourReview)
@@ -36,6 +32,11 @@ namespace Tourist_Project.Applications.UseCases
         public List<TourReview> GetAllByTourId(int tourId)
         {
             return repository.GetAllByTourId(tourId);
+        }
+
+        public void Save(TourReview tourReview)
+        {
+            repository.Save(tourReview);
         }
     }
 }

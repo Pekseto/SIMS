@@ -20,13 +20,12 @@ namespace Tourist_Project.Repositories
             tourReviews = serializer.FromCSV(filePath);
         }
 
-        public TourReview Save(TourReview tourReview)
+        public void Save(TourReview tourReview)
         {
             tourReview.Id = NextId();
             tourReviews = serializer.FromCSV(filePath);
             tourReviews.Add(tourReview);
             serializer.ToCSV(filePath, tourReviews);
-            return tourReview;
         }
 
         public int NextId()

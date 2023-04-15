@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -19,7 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
         public User LoggedInUser { get; set; }
-        public ICommand PreviewRateCommand { get; set; }
+        public ICommand ReviewCommand { get; set; }
 
         public TourHistoryViewModel(User user)
         {
@@ -29,7 +30,7 @@ namespace Tourist_Project.WPF.ViewModels
             locationService = new LocationService();
             reservationService = new TourReservationService();
 
-            PreviewRateCommand = new RelayCommand(OnPreviewRateClick);
+            ReviewCommand = new RelayCommand(OnReviewClick, CanReview);
 
             Tours = new ObservableCollection<TourDTO>();
             foreach(TourReservation t in  reservationService.GetAll())
@@ -46,9 +47,19 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        private void OnPreviewRateClick()
+        private bool CanReview()
         {
-            throw new NotImplementedException();
+            if(SelectedTour != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void OnReviewClick()
+        {
+            var reviewWindow = new TourReviewView(LoggedInUser, SelectedTour.Id);
+            reviewWindow.Show();
         }
     }
 }

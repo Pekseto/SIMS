@@ -11,17 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for PreviewRateView.xaml
+    /// Interaction logic for TourReviewView.xaml
     /// </summary>
-    public partial class PreviewRateView : Window
+    public partial class TourReviewView : Window
     {
-        public PreviewRateView()
+        public TourReviewView(User user, int tourId)
         {
             InitializeComponent();
+            DataContext = new TourReviewViewModel(user, tourId);
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Tourist_Project.WPF.ViewModels
         {
             SelectedTourAttendance.TourPoint = SelectedTourPoint;
             SelectedTourAttendance.CheckPointId = SelectedTourPoint.Id;
+            if(SelectedTourAttendance.Presence == Presence.Joined)
+            {
+                SelectedTourAttendance.Presence = Presence.Pending;
+            }
             tourAttendanceService.UpdateCollection(SelectedTourAttendance, SelectedTourPoint);
         }
 

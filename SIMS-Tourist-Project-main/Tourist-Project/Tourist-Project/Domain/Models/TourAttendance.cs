@@ -5,7 +5,7 @@ namespace Tourist_Project.Domain.Models
 {
     public enum Presence
     {
-        No, Pending, Yes
+        No, Joined, Pending, Yes
     }
     public class TourAttendance : ISerializable
     {
@@ -27,6 +27,7 @@ namespace Tourist_Project.Domain.Models
         {
             this.UserId = userId;
             TourId = tourId;
+            Presence = Presence.No;
             CheckPointId = -1;
             TourPoint = new TourPoint();
         }

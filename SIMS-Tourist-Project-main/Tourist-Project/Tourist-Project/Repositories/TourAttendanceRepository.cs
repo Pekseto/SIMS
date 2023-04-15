@@ -45,15 +45,21 @@ namespace Tourist_Project.Repositories
             return tourAttendances.Max(c => c.Id) + 1;
         }
 
-        public TourAttendance Update(TourAttendance tourAttendance)
+        public void Update(TourAttendance tourAttendance)
         {
             tourAttendances = serializer.FromCSV(filePath);
-            TourAttendance current = tourAttendances.Find(t => t.Id == tourAttendance.Id);
-            int index = tourAttendances.IndexOf(current);
-            tourAttendances.Remove(current);
-            tourAttendances.Insert(index, tourAttendance);
+
+            foreach(TourAttendance oldAttendance in tourAttendances)
+            {
+                if(oldAttendance.Id == tourAttendance.Id)
+                {
+                    oldAttendance.Presence = tourAttendance.Presence;
+                    oldAttendance.CheckPointId = tourAttendance.CheckPointId;
+                    oldAttendance.TourPoint = tourAttendance.TourPoint;
+                }
+            }
+
             serializer.ToCSV(filePath, tourAttendances);
-            return current;
         }
 
         public List<TourAttendance> GetAllByTourId(int tourId)

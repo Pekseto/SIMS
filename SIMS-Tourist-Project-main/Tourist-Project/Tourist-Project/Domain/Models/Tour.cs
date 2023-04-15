@@ -75,5 +75,10 @@ namespace Tourist_Project.Domain.Models
             UserId = int.Parse(values[10]);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

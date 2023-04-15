@@ -30,6 +30,7 @@ namespace Tourist_Project.DTO
         }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
+        public Status Status { get; set; }
 
         public TourDTO()
         {
@@ -47,6 +48,7 @@ namespace Tourist_Project.DTO
             MaxGuestsNumber = tour.MaxGuestsNumber;
             StartTime = tour.StartTime;
             Duration = tour.Duration;
+            Status = tour.Status;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

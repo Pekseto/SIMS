@@ -12,7 +12,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<TourAttendance> GetAll();
         public void Save(TourAttendance tourAttendance);
         public int NextId();
-        public TourAttendance Update(TourAttendance tourAttendance);
+        public void Update(TourAttendance tourAttendance);
         public List<TourAttendance> GetAllByTourId(int tourId);
 
     }

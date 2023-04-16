@@ -5,18 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="TourReviewView" Height="450" Width="800">
+        Title="TourReviewView" Height="600" Width="1080">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="450"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="1" Content="Rate(1-5, 1=bad abd 5=good)" HorizontalAlignment="Left"
+        <Label Content="Tour review" HorizontalAlignment="Left" Margin="10,0,0,0"
+               VerticalAlignment="Center" FontSize="28"/>
+        <Label Grid.Column="1" Content="Review(1-5, 1=bad abd 5=good)" HorizontalAlignment="Left"
                Margin="10,4,0,0" Grid.Row="1" VerticalAlignment="Top"
                FontSize="16"/>
         <Label Grid.Column="1" Content="Guides knowledge:" HorizontalAlignment="Left"

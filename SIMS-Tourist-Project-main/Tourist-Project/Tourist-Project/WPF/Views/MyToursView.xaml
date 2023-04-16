@@ -15,8 +15,8 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="My tours" FontSize="28"/>
-        <Label Content="Future tours:" FontSize="20" Margin="10,35,0,0"/>
+        <Label Content="My tours" FontSize="28" VerticalAlignment="Center"/>
+        <Label Content="Future tours:" FontSize="20" Margin="10,35,0,0" HorizontalAlignment="Center"/>
         <DataGrid Grid.Row="1" Margin="10,0,10,0" FontSize="18"
                   ItemsSource="{Binding FutureTours}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Start date" Binding="{Binding StartTime}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Row="2" Content="Todays tours:" FontSize="20" Margin="10,35,0,0"/>
+        <Label Grid.Row="2" Content="Todays tours:" FontSize="20" Margin="10,35,0,0" HorizontalAlignment="Center"/>
         <DataGrid Grid.Row="3" Margin="10,0,10,0" FontSize="18"
                   ItemsSource="{Binding TodaysTours}" SelectedItem="{Binding SelectedTodayTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -38,7 +38,7 @@
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Left" Margin="1182,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="74"/>
-        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Left" Margin="1052,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="82"/>
+        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Left" Margin="676,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="91" FontSize="17"/>
+        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Left" Margin="546,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="82" FontSize="17"/>
     </Grid>
 </Window>

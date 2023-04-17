@@ -15,8 +15,11 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class GuideProfileViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<string> Years { get; set; } = new();
+        private readonly TourService tourService = new ();
         private Window window;
         public Tour Tour { get; set; }
+
         private string selectedYear;
         public string SelectedYear
         {
@@ -28,15 +31,14 @@ namespace Tourist_Project.WPF.ViewModels
                 BestTourInfo();
             }
         }
+
+        #region IPropertyChange
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private readonly TourService tourService = new ();
-
-        public ObservableCollection<string> Years { get; set; } = new();
+        #endregion
 
         public ICommand HomeViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }

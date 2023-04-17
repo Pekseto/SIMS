@@ -27,11 +27,12 @@
                   ItemsSource="{Binding TourReviews}"
                   SelectedItem="{Binding SelectedReview}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="70" Binding="{Binding UserName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Language" Width="70" Binding="{Binding LanguageGrade}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Knowledge" Width="75" Binding="{Binding KnowledgeGrade}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Interest" Width="60" Binding="{Binding InterestGrade}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Status" Width="90" Binding="{Binding Valid}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Checkpoint" Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Width="50" Binding="{Binding Valid}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Checkpoint" Width="*" Binding="{Binding CheckpointName}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid x:Name="ReviewTextGrid" Grid.Row="1" Grid.Column="1">

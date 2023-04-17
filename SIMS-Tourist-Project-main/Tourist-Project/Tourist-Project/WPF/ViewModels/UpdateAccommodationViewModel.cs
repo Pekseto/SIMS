@@ -78,7 +78,7 @@ namespace Tourist_Project.WPF.ViewModels
         public void Update()
         {
             Accommodation.ImageIds = CreateImage();
-            Accommodation.ImageIdsCSV = FormIdesString(Accommodation.ImageIds);
+            Accommodation.ImageIdsCsv = FormIdesString(Accommodation.ImageIds);
             Accommodation.LocationId = locationService.GetId(Location.City, Location.Country);
             accommodationService.Update(accommodation);
             Window.Close();

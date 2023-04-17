@@ -26,8 +26,10 @@ namespace Tourist_Project.WPF.Views
         public static ObservableCollection<Image> Images { get; set; } = new();
         public AccommodationForm()
         {
+            /*
             InitializeComponent();
             DataContext = new CreateAccommodationViewModel(this);
+        */
         }
 
 
@@ -80,6 +82,7 @@ namespace Tourist_Project.WPF.Views
         */
         private void UpdateSelectedAccommodation()
         {
+            /*
             SelectedAccommodation.Name = Name.Text;
             //SelectedAccommodation.LocationId = GetLocationId();
             SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
@@ -87,8 +90,9 @@ namespace Tourist_Project.WPF.Views
             SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
             SelectedAccommodation.CancellationThreshold = int.Parse(CancellationThreshold.Text);
             //SelectedAccommodation.ImageIds = CreateImage();
-            SelectedAccommodation.ImageIdsCSV = Url.Text;
+            SelectedAccommodation.ImageIdsCsv = Url.Text;
             _ = accommodationRepository.Update(SelectedAccommodation);
+        */
         }
         /*
         private static string? FormIdesString(List<int> ids)

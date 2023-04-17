@@ -1,5 +1,4 @@
-﻿using System;
-using Tourist_Project.Serializer;
+﻿using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
@@ -7,7 +6,9 @@ namespace Tourist_Project.Domain.Models
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        //TODO
         public int ReservationId { get; set; }
+        //TODO
         public int GuestRatingId { get; set; }
         public Notification(){}
         public Notification(string type, int guestRatingId, int reservationId)
@@ -27,7 +28,6 @@ namespace Tourist_Project.Domain.Models
             };
             return csvValues;
         }
-
         public void FromCSV(string[] values)
         {
             Id = int.Parse(values[0]);
@@ -35,7 +35,6 @@ namespace Tourist_Project.Domain.Models
             GuestRatingId = int.Parse(values[2]);
             ReservationId = int.Parse(values[2]);
         }
-
         public override string ToString()
         {
             return Type switch

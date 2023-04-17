@@ -36,7 +36,7 @@ namespace Tourist_Project.Applications.UseCases
             var counterOlder = 0;
             foreach (var user in GetUsersOnTour(tourId))
             {
-                switch (DateTime.Now.Subtract(user.BirtDate).TotalDays / 365.25)
+                switch (DateTime.Now.Subtract(user.BirthDate).TotalDays / 365.25)
                 {
                     case < 18:
                         counterYounger++;

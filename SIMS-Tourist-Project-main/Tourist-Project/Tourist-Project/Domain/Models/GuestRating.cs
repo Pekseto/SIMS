@@ -22,7 +22,15 @@ namespace Tourist_Project.Domain.Models
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), OwnerId.ToString(), GuestId.ToString(), CleanlinessGrade.ToString(), RuleGrade.ToString(), Comment };
+            string[] csvValues =
+            {
+                Id.ToString(), 
+                OwnerId.ToString(), 
+                GuestId.ToString(), 
+                CleanlinessGrade.ToString(), 
+                RuleGrade.ToString(), 
+                Comment
+            };
             return csvValues;
         }
         public void FromCSV(string[] values)
@@ -34,6 +42,7 @@ namespace Tourist_Project.Domain.Models
             RuleGrade = Convert.ToInt32(values[4]);
             Comment = values[5];
         }
+        //TODO
         public bool IsReviewed()
         {
             return CleanlinessGrade != 0 && RuleGrade != 0 && !Comment.Equals("");

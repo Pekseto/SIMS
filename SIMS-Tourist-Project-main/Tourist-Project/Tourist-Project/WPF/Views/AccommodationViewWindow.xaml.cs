@@ -23,6 +23,7 @@ namespace Tourist_Project.WPF.Views
 
         private void InitializeFields(Accommodation selectedAccommodation)
         {
+            /*
             selectedAccommodation.Location = locationRepository.GetById(selectedAccommodation.LocationId);
             LoadImages(selectedAccommodation);
             Name.Text = selectedAccommodation.Name;
@@ -33,7 +34,7 @@ namespace Tourist_Project.WPF.Views
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             CancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
             Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;
-            Title.Content = selectedAccommodation.Name;
+            Title.Content = selectedAccommodation.Name;*/
         }
 
         private void LoadImages(Accommodation selectedAccommodation)

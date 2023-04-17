@@ -13,10 +13,7 @@ namespace Tourist_Project.Domain.Models
         public int GuestsNum { get; set; }
         public int StayingDays { get; set; }
         public int AccommodationId { get; set; } 
-
-        
         public List<Date> AvailableDates { get; set; }
-
         public Reservation() { }
         public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, int accommodationId)
         {
@@ -24,7 +21,6 @@ namespace Tourist_Project.Domain.Models
             CheckOut = checkOut;
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
-            
             AccommodationId = accommodationId;
             AvailableDates = new List<Date>();
         }

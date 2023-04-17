@@ -39,7 +39,7 @@ namespace Tourist_Project.WPF.ViewModels
                 if(value != selectedCountry)
                 {
                     selectedCountry = value;
-                    LoadCitiesComboBox(value);
+                    LoadCitiesComboBox();
                 }
             }
         }
@@ -123,43 +123,13 @@ namespace Tourist_Project.WPF.ViewModels
 
             ShowNotifications();
 
-            Tours = new ObservableCollection<TourDTO>();
-            Countries = new ObservableCollection<string>();
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
+            Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>();
-            Languages = new ObservableCollection<string>();
-            Vouchers = new ObservableCollection<Voucher>();
+            Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
+            Vouchers = new ObservableCollection<Voucher>(voucherService.GetAllForUser(user.Id));
 
-            foreach (Tour tour in tourService.GetAll())
-            {
-                var tourDTO = new TourDTO(tour)
-                {
-                    SpotsLeft = tourService.GetLeftoverSpots(tour),
-                    Location = locationService.GetLocation(tour)
-                };
-                Tours.Add(tourDTO);
-            }
-
-            foreach (Location location in locationService.GetAll().GroupBy(x => x.Country).Select(y => y.First()))
-            {
-                Countries.Add(location.Country);
-            }
-
-            foreach (Tour tour in tourService.GetAll().GroupBy(x => x.Language).Select(y => y.First()))
-            {
-                Languages.Add(tour.Language);
-            }
-
-            foreach(Voucher voucher in voucherService.GetAll())
-            {
-                if(voucher.UserId == LoggedInUser.Id && voucher.LastValidDate >= DateTime.Today)
-                {
-                    Vouchers.Add(voucher);
-                }
-                else if(voucher.LastValidDate < DateTime.Today)
-                {
-                    voucherService.Delete(voucher.Id);
-                }
-            }
+            voucherService.DeleteInvalidVouchers();
         }
 
         private void ShowNotifications()
@@ -223,16 +193,16 @@ namespace Tourist_Project.WPF.ViewModels
                     SelectedTour.SpotsLeft -= guestsNumber;
                     var tourReservation = new TourReservation(LoggedInUser.Id, SelectedTour.Id, guestsNumber, SelectedVoucher != null ? true : false);
                     reservationService.Save(tourReservation);
-                    MessageBox.Show("Reservation is successful");
+                    var tourAttendance = new TourAttendance(LoggedInUser.Id, SelectedTour.Id);
+                    attendanceService.Save(tourAttendance);
 
-                    if(SelectedVoucher != null)
+                    if (SelectedVoucher != null)
                     {
                         voucherService.Delete(SelectedVoucher.Id);
                         Vouchers.Remove(SelectedVoucher);
                     }
 
-                    var tourAttendance = new TourAttendance(LoggedInUser.Id, SelectedTour.Id);
-                    attendanceService.Save(tourAttendance);
+                    MessageBox.Show("Reservation is successful");                  
                 }
 
             }
@@ -270,7 +240,7 @@ namespace Tourist_Project.WPF.ViewModels
                 {
                     continue;
                 }
-                if (numberOfPeople != 0 && tourDTO.MaxGuestsNumber < numberOfPeople)
+                if (numberOfPeople != 0 && tourDTO.SpotsLeft < numberOfPeople)
                 {
                     continue;
                 }
@@ -280,7 +250,7 @@ namespace Tourist_Project.WPF.ViewModels
             toursDataGrid.ItemsSource = filteredList;
         }
 
-        private void LoadCitiesComboBox(string country)
+        private void LoadCitiesComboBox()
         {
             Cities.Clear();
             foreach (Location location in locationService.GetAll())

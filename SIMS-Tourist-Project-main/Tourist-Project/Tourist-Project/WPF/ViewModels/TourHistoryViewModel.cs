@@ -15,10 +15,8 @@ namespace Tourist_Project.WPF.ViewModels
     public class TourHistoryViewModel
     {
         private readonly TourService tourService;
-        private readonly LocationService locationService;
-        private readonly TourReservationService reservationService;
         public ObservableCollection<TourDTO> Tours { get; set; }
-        public TourDTO SelectedTour { get; set; }
+        public TourDTO? SelectedTour { get; set; }
         public User LoggedInUser { get; set; }
         public ICommand ReviewCommand { get; set; }
 
@@ -27,24 +25,10 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedInUser = user;
 
             tourService = new TourService();
-            locationService = new LocationService();
-            reservationService = new TourReservationService();
 
             ReviewCommand = new RelayCommand(OnReviewClick, CanReview);
 
-            Tours = new ObservableCollection<TourDTO>();
-            foreach(TourReservation t in  reservationService.GetAll())
-            {
-                if (t.UserId == LoggedInUser.Id && tourService.GetAll().Find(x => x.Id == t.TourId).StartTime < DateTime.Today)
-                {
-                    Tour tour = tourService.GetAll().Find(x => x.Id == t.TourId);
-                    var tourDTO = new TourDTO(tour)
-                    {
-                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
-                    };
-                    Tours.Add(tourDTO);
-                }
-            }
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(MainWindow.LoggedInUser.Id));
         }
 
         private bool CanReview()

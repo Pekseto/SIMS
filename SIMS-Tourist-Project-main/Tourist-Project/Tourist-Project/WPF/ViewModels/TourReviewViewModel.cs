@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class TourReviewViewModel
+    public class TourReviewViewModel : INotifyPropertyChanged
     {
         private readonly TourReviewService ratingService;
         private readonly ImageService imageService;
@@ -17,7 +20,20 @@ namespace Tourist_Project.WPF.ViewModels
         public int LanguageRating { get; set; }
         public int EntertainmentRating { get; set; }
         public string Comment { get; set; }
-        public string ImageURL { get; set; }
+        private string imageURL;
+        public string ImageURL
+        {
+            get => imageURL;
+            set
+            {
+                if(imageURL != value)
+                {
+                    imageURL = value;
+                    OnPropertyChanged(nameof(ImageURL));
+                }
+            }
+        }
+        public List<Image> Images { get; set; }
 
         public User LoggedInUser { get; set; }
         //public Tour SelectedTour { get; set; }
@@ -30,8 +46,12 @@ namespace Tourist_Project.WPF.ViewModels
         {
             LoggedInUser = user;
             SelectedTourId = tourId;
+
             ratingService = new TourReviewService();
             imageService = new ImageService();
+
+            ImageURL = string.Empty;
+            Images = new List<Image>();
 
             RateCommand = new RelayCommand(OnRateClick, CanRate);
             AddCommand = new RelayCommand(OnAddClick, CanAdd);
@@ -52,7 +72,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void OnAddClick()
         {
             Image image = new(ImageURL);
-            imageService.Save(image); 
+            Images.Add(image);
             ImageURL = string.Empty;
         }
 
@@ -69,6 +89,19 @@ namespace Tourist_Project.WPF.ViewModels
         {
             TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTourId, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
             ratingService.Save(tourReview);
+
+            foreach(var image in Images)
+            {
+                imageService.Save(image);
+            }
+
+            MessageBox.Show("Successfully rated the tour");
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Tourist_Project.Applications.UseCases
             return repository.GetAll();
         }
 
+        public TourPoint Update(TourPoint tourPoint)
+        {
+            return repository.Update(tourPoint);
+        }
+
         public void Save(TourPoint tourPoint)
         {
             repository.Save(tourPoint);
@@ -46,15 +51,12 @@ namespace Tourist_Project.Applications.UseCases
             }
         }
 
-        public void EndTour()
+        public List<TourPoint> GetAllForTour(int tourId)
         {
-            if (IsAllChecked())
-            {
-                RequestClose?.Invoke(this, EventArgs.Empty);
-            }
+            return repository.GetAllForTour(tourId);
         }
 
-        public bool IsAllChecked()
+        public bool EndTour()
         {
             return TourLiveViewModel.TourPoints.ToList().Find(tourPoint => tourPoint.Visited == false) == null;
         }

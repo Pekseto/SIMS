@@ -10,6 +10,8 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly IReservationRepository guestReviewRepository =
             injector.CreateInstance<IReservationRepository>();
+
+
         public ReservationService()
         {
         }
@@ -38,6 +40,14 @@ namespace Tourist_Project.Applications.UseCases
         {
             guestReviewRepository.Delete(id);
         }
+
+        public List<Reservation> FindReservationsForAccommodation(Accommodation selectedAccommodation)
+        {
+            List<Reservation> reservationsForAccommodation = guestReviewRepository.GetByAccommodation(selectedAccommodation);
+            return reservationsForAccommodation;
+        }
+
+
     }
 
 }

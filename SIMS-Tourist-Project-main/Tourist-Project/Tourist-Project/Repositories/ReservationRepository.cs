@@ -4,6 +4,7 @@ using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
+using Tourist_Project.Repositories;
 
 namespace Tourist_Project.Repositories
 {
@@ -12,6 +13,9 @@ namespace Tourist_Project.Repositories
         private const string FilePath = "../../../Data/reservations.csv";
         private readonly Serializer<Reservation> serializer;
         private List<Reservation> reservations;
+        private List<Reservation> reservationsForAccommodation = new();
+
+        private AccommodationRepository _accommodationRepository;
         public ReservationRepository()
         {
             serializer = new Serializer<Reservation>();
@@ -65,17 +69,16 @@ namespace Tourist_Project.Repositories
             return reservations.Find(c => c.Id == id);
         }
 
-        public Reservation GenerateAvailableDates(Reservation reservation)
+        public List<Reservation> GetByAccommodation(Accommodation selectedAccommodation)
         {
-            Date date = new Date(DateTime.Now, true);
-            reservation.AvailableDates.Add(date);
-           for(int i = 1; i < 10; i++)
+           foreach(Reservation reservation in reservations)
             {
-                Date addedDate = new Date(DateTime.FromOADate(i), true);
-                reservation.AvailableDates.Add(addedDate); 
+                if(reservation.Accommodation.Id == selectedAccommodation.Id)
+                {
+                    reservationsForAccommodation.Add(reservation);
+                }
             }
-
-            return reservation;
+            return reservationsForAccommodation;
         }
     }
 }

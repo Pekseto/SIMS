@@ -67,15 +67,23 @@ public class GuestOneViewModel
         AccommodationsType = new List<String>();
         AccommodationsType = GetAccommodationsType();
         Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
-        //LocationsToString();
-        //Odraditi toString za lokacije
+        GenerateLocations();
         RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRate);
         CreateReservation_Command = new RelayCommand(CreateReservation,CanCreateReservation);
+
     }
 
 
     #region LoadingObjectsForDisplay
    
+    public void GenerateLocations()
+    {   
+        foreach(Accommodation accommodation in Accommodations)
+        {
+            accommodation.Location = _locationService.Get(accommodation.LocationId);
+        }
+    }
+
 
     public List<String> GetAccommodationsType()
     {

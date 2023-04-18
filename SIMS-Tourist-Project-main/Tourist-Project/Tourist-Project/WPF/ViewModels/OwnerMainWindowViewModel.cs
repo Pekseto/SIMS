@@ -16,6 +16,7 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
         public static ObservableCollection<Notification> ReviewNotifications { get; set; }
         public static ObservableCollection<GuestRating> GuestRatings { get; set; }
+        public static ObservableCollection<RescheduleRequest> RescheduleRequests { get; set; }
         public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         private static AccommodationService accommodationService = new();
         private readonly LocationService locationService = new();
@@ -25,9 +26,11 @@ namespace Tourist_Project.WPF.ViewModels
         private static GuestRateService guestRateService = new();
         private static AccommodationRatingService accommodationRatingService = new();
         private static UserService userService = new();
+        private static RescheduleRequestService rescheduleRequestService = new();
         public static Accommodation SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
         public static Notification SelectedReview { get; set; }
+        public static RescheduleRequest SelectedRescheduleRequest { get; set; }
         public static User user { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
         public double Rating { get; set; }
@@ -35,18 +38,23 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand UpdateCommand { get; set; }
         public ICommand RateCommand { get; set; }
         public ICommand ShowReviewsCommand { get; set; }
+        public ICommand ConfirmRescheduleCommand { get; set; }
+        public ICommand CancelRescheduleCommand { get; set; }
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
         {
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             RateCommand = new RelayCommand(Rate, CanRate);
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
+            ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
+            CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             user = userService.GetOne(MainWindow.LoggedInUser.Id);
             OwnerMainWindow = ownerMainWindow;
             accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
+            RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
             HasUnratedGuests();
@@ -101,6 +109,32 @@ namespace Tourist_Project.WPF.ViewModels
         public static bool CanShow()
         {
             return GuestRatingNotifications.Count == 0;
+        }
+
+        public static void ConfirmReschedule()
+        {
+            var reservation = reservationService.Get(SelectedRescheduleRequest.ReservationId);
+            reservation.CheckIn = SelectedRescheduleRequest.NewBeginningDate;
+            reservation.CheckOut = SelectedRescheduleRequest.NewEndDate;
+            reservationService.Update(reservation);
+            SelectedRescheduleRequest.Status = RequestStatus.Confirmed;
+            rescheduleRequestService.Update(SelectedRescheduleRequest);
+        }
+
+        public static bool CanConfirmReschedule()
+        {
+            return SelectedRescheduleRequest != null;
+        }
+
+        public static void CancelReschedule()
+        {
+            var CancelRescheduleWindow = new CancelRescheduleRequest(SelectedRescheduleRequest);
+            CancelRescheduleWindow.ShowDialog();
+        }
+
+        public static bool CanCancelReschedule()
+        {
+            return SelectedRescheduleRequest != null;
         }
 
         public static void HasUnratedGuests()

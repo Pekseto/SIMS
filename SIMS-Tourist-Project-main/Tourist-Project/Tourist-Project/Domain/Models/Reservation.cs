@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tourist_Project.Serializer;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.Domain.Models
 {
@@ -14,8 +15,8 @@ namespace Tourist_Project.Domain.Models
         public int StayingDays { get; set; }
         public Accommodation Accommodation { get; set; } 
 
-        
-        public List<Date> AvailableDates { get; set; }
+            
+        //public List<DateTime> AvailableDates { get; set; }
 
         public Reservation() { }
         public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, Accommodation accommodation)
@@ -24,9 +25,8 @@ namespace Tourist_Project.Domain.Models
             CheckOut = checkOut;
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
-            
             Accommodation = accommodation;
-            AvailableDates = new List<Date>();
+            //AvailableDates = new List<DateTime>();
         }
         public string[] ToCSV()
         {
@@ -34,8 +34,7 @@ namespace Tourist_Project.Domain.Models
                 Id.ToString(), 
                 GuestId.ToString(), 
                 CheckIn.ToString(), 
-                CheckOut.ToString(), 
-                CheckOut.ToString(), 
+                CheckOut.ToString(),  
                 GuestsNum.ToString(), 
                 StayingDays.ToString(), 
                 Accommodation.Id.ToString() 

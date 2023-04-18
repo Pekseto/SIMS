@@ -4,41 +4,39 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.Converters
 {
-    public class RatingConverter : IValueConverter
-    { 
-        
+    public class OwnerRatingConverter
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var accommodationRatingValue = (int)value;
-                int Rating = 1;
+                int ownerRatingValue = (int)value;
+                int defaultRating = 1;
                 switch (parameter)
                 {
                     case "1":
-                        accommodationRatingValue = 1;
+                        ownerRatingValue = 1;
                         break;
                     case "2":
-                        accommodationRatingValue = 2;
+                        ownerRatingValue = 2;
                         break;
                     case "3":
-                        accommodationRatingValue = 3;
+                        ownerRatingValue = 3;
                         break;
                     case "4":
-                        accommodationRatingValue = 4;
+                        ownerRatingValue = 4;
                         break;
                     case "5":
-                        accommodationRatingValue = 5;
+                        ownerRatingValue = 5;
                         break;
                     default: return 0;
                 }
-                return Rating = accommodationRatingValue;
-            } 
+                return defaultRating.Equals(ownerRatingValue);
+            }
             catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
@@ -49,32 +47,33 @@ namespace Tourist_Project.WPF.Converters
         {
             try
             {
-                int AccommodationGrade;
+                int OwnerGrade = 1;
                 switch (parameter)
                 {
                     case "1":
-                        AccommodationGrade = 1;
+                        OwnerGrade = 1;
                         break;
                     case "2":
-                        AccommodationGrade = 2;
+                        OwnerGrade = 2;
                         break;
                     case "3":
-                        AccommodationGrade = 3;
+                        OwnerGrade = 3;
                         break;
                     case "4":
-                        AccommodationGrade = 4;
+                        OwnerGrade = 4;
                         break;
                     case "5":
-                        AccommodationGrade = 5;
+                        OwnerGrade = 5;
                         break;
                     default: return 0;
                 }
-                return AccommodationGrade;
+                return OwnerGrade;
             }
             catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
             }
-        }      
+        }
     }
 }
+

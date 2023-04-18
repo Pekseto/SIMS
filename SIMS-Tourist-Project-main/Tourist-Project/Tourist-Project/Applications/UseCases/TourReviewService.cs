@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
+using Tourist_Project.DTO;
 
 namespace Tourist_Project.Applications.UseCases
 {
@@ -14,6 +15,8 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly ITourReviewRepository repository = injector.CreateInstance<ITourReviewRepository>();
+        private readonly IUserRepository userRepository = injector.CreateInstance<IUserRepository>();
+        private readonly TourPointService tourPointService = new();
         public TourReviewService()
         {
 
@@ -37,6 +40,18 @@ namespace Tourist_Project.Applications.UseCases
         public void Save(TourReview tourReview)
         {
             repository.Save(tourReview);
+        }
+        
+        public List<TourReviewDTO> GetAllReviewDtos(int tourId)
+        {
+            List<TourReviewDTO> dtos = new();
+            foreach (var review in GetAllByTourId(tourId))
+            {
+                TourReviewDTO dto = new TourReviewDTO(review.Id, userRepository.GetOne(review.UserId).FullName,review.KnowledgeGrade, review.LanguageGrade, review.InterestGrade, review.Comment, tourPointService.GetCheckpointName(review.UserId, tourId), review.Valid);
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
     }
 }

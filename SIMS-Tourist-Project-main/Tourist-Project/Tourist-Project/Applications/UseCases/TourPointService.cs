@@ -18,11 +18,17 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly ITourPointRepository repository = injector.CreateInstance<ITourPointRepository>();
+        private readonly ITourAttendanceRepository tourAttendanceRepository = injector.CreateInstance<ITourAttendanceRepository>();
         public event EventHandler RequestClose;
 
         public TourPoint GetOne(int id)
         {
             return repository.GetOne(id);
+        }
+
+        public List<TourPoint> GetAll()
+        {
+            return repository.GetAll();
         }
 
         public void Save(TourPoint tourPoint)
@@ -53,5 +59,10 @@ namespace Tourist_Project.Applications.UseCases
             return TourLiveViewModel.TourPoints.ToList().Find(tourPoint => tourPoint.Visited == false) == null;
         }
 
+        public string GetCheckpointName(int userId, int tourId)
+        {
+           return GetOne(tourAttendanceRepository.GetAllByTourId(tourId).Find(attendance => attendance.UserId == userId)
+                .CheckPointId).Name;
+        }
     }
 }

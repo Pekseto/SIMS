@@ -47,7 +47,7 @@ namespace Tourist_Project.Applications.UseCases
             List<TourReviewDTO> dtos = new();
             foreach (var review in GetAllByTourId(tourId))
             {
-                TourReviewDTO dto = new TourReviewDTO(review.Id, userRepository.GetOne(review.UserId).FullName,review.KnowledgeGrade, review.LanguageGrade, review.InterestGrade, review.Comment, tourPointService.GetCheckpointName(review.UserId, tourId), review.Valid);
+                TourReviewDTO dto = new TourReviewDTO(review.Id, userRepository.GetOne(review.UserId).FullName,review.KnowledgeRating, review.LanguageRating, review.EntertainmentRating, review.Comment, tourPointService.GetCheckpointName(review.UserId, tourId), review.Valid);
                 dtos.Add(dto);
             }
 

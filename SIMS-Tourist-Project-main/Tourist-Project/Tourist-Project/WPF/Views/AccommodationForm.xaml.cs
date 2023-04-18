@@ -4,8 +4,6 @@ using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
-using Tourist_Project.WPF.ViewModels;
 using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.WPF.Views
@@ -26,8 +24,10 @@ namespace Tourist_Project.WPF.Views
         public static ObservableCollection<Image> Images { get; set; } = new();
         public AccommodationForm()
         {
+            /*
             InitializeComponent();
             DataContext = new CreateAccommodationViewModel(this);
+        */
         }
 
 
@@ -43,6 +43,7 @@ namespace Tourist_Project.WPF.Views
 
         private void Load(Accommodation selectedAccommodation, AccommodationDTO selectedAccommodationDto)
         {
+            /*
             SelectedAccommodation = selectedAccommodation;
             SelectedAccommodationDto = selectedAccommodationDto;
             SelectedAccommodation.Location = locationRepository.GetById(selectedAccommodation.LocationId);
@@ -53,7 +54,7 @@ namespace Tourist_Project.WPF.Views
             MaxNumGuests.Text = selectedAccommodation.MaxGuestNum.ToString();
             MinStayingDays.Text = selectedAccommodation.MinStayingDays.ToString();
             CancellationThreshold.Text = selectedAccommodation.CancellationThreshold.ToString();
-            Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;
+            Url.Text = imageRepository.GetById(selectedAccommodation.ImageId).Url;*/
         }
 
         /*private void Confirm(object sender, RoutedEventArgs e)
@@ -80,6 +81,7 @@ namespace Tourist_Project.WPF.Views
         */
         private void UpdateSelectedAccommodation()
         {
+            /*
             SelectedAccommodation.Name = Name.Text;
             //SelectedAccommodation.LocationId = GetLocationId();
             SelectedAccommodation.Type = Enum.Parse<AccommodationType>(Type.Text);
@@ -87,8 +89,9 @@ namespace Tourist_Project.WPF.Views
             SelectedAccommodation.MinStayingDays = int.Parse(MinStayingDays.Text);
             SelectedAccommodation.CancellationThreshold = int.Parse(CancellationThreshold.Text);
             //SelectedAccommodation.ImageIds = CreateImage();
-            SelectedAccommodation.ImageIdsCSV = Url.Text;
+            SelectedAccommodation.ImageIdsCsv = Url.Text;
             _ = accommodationRepository.Update(SelectedAccommodation);
+        */
         }
         /*
         private static string? FormIdesString(List<int> ids)

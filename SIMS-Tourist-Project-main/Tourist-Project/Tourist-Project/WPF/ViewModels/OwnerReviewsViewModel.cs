@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 

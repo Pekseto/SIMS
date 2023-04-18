@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -11,69 +10,74 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class OwnerMainWindowViewModel
     {
-        public static ObservableCollection<Accommodation> accommodations { get; set; }
+        #region Collections
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
         public static ObservableCollection<Notification> ReviewNotifications { get; set; }
         public static ObservableCollection<GuestRating> GuestRatings { get; set; }
         public static ObservableCollection<RescheduleRequest> RescheduleRequests { get; set; }
         public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
+        public static ObservableCollection<AccommodationViewModel> AccommodationView { get; set; }
+        #endregion
+        #region Services
         private static AccommodationService accommodationService = new();
-        private readonly LocationService locationService = new();
-        private readonly ImageService imageService = new();
         private static NotificationService notificationService = new();
         private static ReservationService reservationService = new();
         private static GuestRateService guestRateService = new();
         private static AccommodationRatingService accommodationRatingService = new();
         private static UserService userService = new();
         private static RescheduleRequestService rescheduleRequestService = new();
-        public static Accommodation SelectedAccommodation { get; set; }
+        #endregion
+        #region SelectedProperties
+        public static AccommodationViewModel SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
-        public static Notification SelectedReview { get; set; }
-        public static RescheduleRequest SelectedRescheduleRequest { get; set; }
-        public static User user { get; set; }
+        public static RescheduleRequest SelectedRescheduleRequest { get; set; } 
+        #endregion
+        public static User User { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
         public double Rating { get; set; }
+        #region Commands
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand RateCommand { get; set; }
         public ICommand ShowReviewsCommand { get; set; }
         public ICommand ConfirmRescheduleCommand { get; set; }
-        public ICommand CancelRescheduleCommand { get; set; }
+        public ICommand CancelRescheduleCommand { get; set; } 
+        #endregion
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
         {
+            OwnerMainWindow = ownerMainWindow;
+            #region CommandInstanting
             CreateCommand = new RelayCommand(Create, CanCreate);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
+            DeleteCommand = new RelayCommand(Delete, CanDelete);
             RateCommand = new RelayCommand(Rate, CanRate);
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
-            user = userService.GetOne(MainWindow.LoggedInUser.Id);
-            OwnerMainWindow = ownerMainWindow;
-            accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
+            #endregion
+            #region CollectionInstanting
+            User = userService.GetOne(MainWindow.LoggedInUser.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
-            HasUnratedGuests();
-            HasReviews();
-            getRating();
-            isSuper();
-            foreach (var accommodation in accommodations)
-            {
-                accommodation.Location = locationService.Get(accommodation.LocationId);
-                accommodation.ImageUrl = imageService.Get(accommodation.ImageId).Url;
-            }
+            AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
+            #endregion
+            notificationService.HasUnratedGuests();
+            notificationService.HasReviews();
+            Rating = accommodationRatingService.getRating();
+            showSuper();
         }
-
+        #region CommandsLogic
         public static void Create()
         {
             var createWindow = new CreateAccommodation();
             createWindow.ShowDialog();
         }
-
         public static bool CanCreate()
         {
             return true;
@@ -81,15 +85,23 @@ namespace Tourist_Project.WPF.ViewModels
 
         public static void Update()
         {
-            var updateWindow = new UpdateAccommodation(SelectedAccommodation);
+            var updateWindow = new UpdateAccommodation(SelectedAccommodation.Accommodation);
             updateWindow.ShowDialog();
-            accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll());
         }
-
         public static bool CanUpdate()
         {
             return true;
         }
+
+        public static void Delete()
+        {
+            accommodationService.Delete(SelectedAccommodation.Accommodation.Id);
+        }
+        public static bool CanDelete()
+        {
+            return true;
+        }
+
         public static void Rate()
         {
             var rateWindow = new RateGuestWindow(SelectedRating);
@@ -105,7 +117,6 @@ namespace Tourist_Project.WPF.ViewModels
             var showReviewsWindow = new OwnerReviewsView();
             showReviewsWindow.ShowDialog();
         }
-
         public static bool CanShow()
         {
             return GuestRatingNotifications.Count == 0;
@@ -120,7 +131,6 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedRescheduleRequest.Status = RequestStatus.Confirmed;
             rescheduleRequestService.Update(SelectedRescheduleRequest);
         }
-
         public static bool CanConfirmReschedule()
         {
             return SelectedRescheduleRequest != null;
@@ -131,61 +141,15 @@ namespace Tourist_Project.WPF.ViewModels
             var CancelRescheduleWindow = new CancelRescheduleRequest(SelectedRescheduleRequest);
             CancelRescheduleWindow.ShowDialog();
         }
-
         public static bool CanCancelReschedule()
         {
             return SelectedRescheduleRequest != null;
         }
-
-        public static void HasUnratedGuests()
-        {
-            foreach (var guestRate in GuestRatings)
-            {
-                foreach (var reservation in reservations)
-                {
-                    var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if (guestRate.IsReviewed() || daysSinceCheckOut.Days >= 5 ||
-                        guestRate.GuestId != reservation.GuestId) continue;
-                    if(GuestRatingNotifications.Count == 0)
-                            notificationService.Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
-                    foreach (var notification in GuestRatingNotifications)
-                    {
-                        if(notification.GuestRatingId != guestRate.Id && notification.ReservationId != reservation.Id)
-                            notificationService.Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
-                    }
-                }
-            }
-        }
-
-        public static void HasReviews()
-        {
-            if (AccommodationRatings.Count == 0) return;
-            foreach (var accommodationRating in AccommodationRatings)
-            {
-                if(accommodationRating.Notified) continue;
-                notificationService.Create(new Notification("Reviews", accommodationRating.UserId, accommodationRating.ReservationId));
-                accommodationRating.Notified = true;
-                accommodationRatingService.Update(accommodationRating);
-            }
-        }
-
-        public void isSuper()
-        {
-            if(user.IsSuper && AccommodationRatings.Count < 10 && Rating < 4.5)
-                user.IsSuper = false;
-            else
-                user.IsSuper = true;
-            userService.Update(user);
-        }
-
+        #endregion
+        
         public void showSuper()
         {
-            OwnerMainWindow.Super.Visibility = user.IsSuper ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        public void getRating()
-        {
-            Rating = (double)AccommodationRatings.Sum(accommodationRating => accommodationRating.AccommodationGrade + accommodationRating.Cleanness + accommodationRating.OwnerRating)/(AccommodationRatings.Count*3);
+            OwnerMainWindow.Super.Visibility = userService.IsSuper(User) ? Visibility.Visible : Visibility.Hidden;
         }
     }
 

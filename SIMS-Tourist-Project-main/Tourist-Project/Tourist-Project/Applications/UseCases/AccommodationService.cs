@@ -4,14 +4,11 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 
 namespace Tourist_Project.Applications.UseCases
 {
-    public class AccommodationService : IService<Accommodation>
+    public class AccommodationService
     {
         private static readonly Injector injector = new();
 
         private readonly IAccommodationRepository accommodationRepository = injector.CreateInstance<IAccommodationRepository>();
-
-        private readonly ILocationRepository locationRepository = injector.CreateInstance<ILocationRepository>();
-
         
         public AccommodationService()
         {

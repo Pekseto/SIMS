@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
     public class UpdateAccommodationViewModel : INotifyPropertyChanged
     {
+        #region UpdateProperties
         private Accommodation accommodation;
 
         public Accommodation Accommodation
@@ -46,7 +46,8 @@ namespace Tourist_Project.WPF.ViewModels
                 location = value;
                 OnPropertyChanged("Location");
             }
-        }
+        } 
+        #endregion
 
         private readonly ImageService imageService = new();
         private readonly LocationService locationService = new();
@@ -55,30 +56,32 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<string> Countries { get; set; } = new();
         public static ObservableCollection<string> Cities { get; set; } = new();
         public static ICommand ConfirmCommand { get; set; }
-        public Window Window;
+        public UpdateAccommodation Window;
 
-        public UpdateAccommodationViewModel(Window window, Accommodation accommodation)
+        public UpdateAccommodationViewModel(UpdateAccommodation window, Accommodation accommodation)
         {
             Accommodation = accommodation;
             Image = new Image();
             Location = new Location();
             Locations = new ObservableCollection<Location>(locationService.GetAll());
-            InitializeCitiesAndCountries();
+            Countries = new ObservableCollection<string>(locationService.GetAllCountries());
+            Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Update, CanUpdate);
             Window = window;
+            Window.Country.DropDownClosed += CountryDropDownClosed;
+            Window.City.DropDownClosed += CityDropDownClosed;
         }
-
+        #region PropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        #endregion
+        #region Commands
         public void Update()
         {
-            Accommodation.ImageIds = CreateImage();
-            Accommodation.ImageIdsCSV = FormIdesString(Accommodation.ImageIds);
+            Accommodation.ImageIdsCsv = imageService.FormIdesString(Image.Url);
             Accommodation.LocationId = locationService.GetId(Location.City, Location.Country);
             accommodationService.Update(accommodation);
             Window.Close();
@@ -89,43 +92,23 @@ namespace Tourist_Project.WPF.ViewModels
             return true;
         }
 
-        private static void InitializeCitiesAndCountries()
+        public void CountryDropDownClosed(object sender, EventArgs e)
+        {
+            Cities.Clear();
+            foreach (var location in Locations)
+            {
+                if (location.Country.Equals(Window.Country.Text))
+                    Cities.Add(location.City);
+            }
+        }
+        public void CityDropDownClosed(object sender, EventArgs e)
         {
             foreach (var location in Locations)
             {
-                Cities.Add(location.City);
-                if (!Countries.Contains(location.Country))
-                    Countries.Add(location.Country);
-
+                if (location.City.Equals(Window.City.Text))
+                    Window.Country.Text = location.Country;
             }
         }
-        private List<int> CreateImage()
-        {
-            List<int> ides = new();
-            if (!Image.Url.Contains(","))
-            {
-                Image newImage = new(Image.Url);
-                var savedImage = imageService.Create(newImage);
-                ides.Add(savedImage.Id);
-            }
-            else
-            {
-                foreach (var url in Image.Url.Split(","))
-                {
-                    Image newImage = new(url);
-                    var savedImage = imageService.Create(newImage);
-                    ides.Add(savedImage.Id);
-                }
-            }
-
-            return ides;
-        }
-        private static string? FormIdesString(List<int> ids)
-        {
-            if (ids.Count <= 0) return null;
-            var ides = ids.Aggregate(string.Empty, (current, imageId) => current + (imageId + ","));
-            ides = ides.Remove(ides.Length - 1);
-            return ides;
-        }
+        #endregion
     }
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -53,43 +52,39 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<string> Cities { get; set; } = new();
         public static ICommand ConfirmCommand { get; set; }
         public static ICommand CancelCommand { get; set; }
-        public Window Window;
+        public CreateAccommodation Window;
         
-        public CreateAccommodationViewModel(Window window)
+        public CreateAccommodationViewModel(CreateAccommodation window)
         {
             Locations = new ObservableCollection<Location>(locationService.GetAll());
             LocationToCreate = new Location();
             AccommodationToCreate = new Accommodation();
             ImageToCreate = new Image();
-            InitializeCitiesAndCountries();
+            Countries = new ObservableCollection<string>(locationService.GetAllCountries());
+            Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Create, CanCreate);
             CancelCommand = new RelayCommand(Cancel, CanCancel);
             Window = window;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        private static void InitializeCitiesAndCountries()
-        {
-            foreach (var location in Locations)
-            {
-                Cities.Add(location.City);
-                if (!Countries.Contains(location.Country))
-                    Countries.Add(location.Country);
-            }
+            Window.Country.DropDownClosed += CountryDropDownClosed;
+            Window.City.DropDownClosed += CityDropDownClosed;
         }
 
         public void Create()
         {
-            AccommodationToCreate.ImageIdsCSV = FormIdesString(CreateImage());
+            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
             AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
             accommodationService.Create(AccommodationToCreate);
             Window.Close();
         }
+        #region PropertyChanged
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+        #region Commands
 
         public static bool CanCreate()
         {
@@ -104,35 +99,24 @@ namespace Tourist_Project.WPF.ViewModels
         {
             return true;
         }
-        private List<int> CreateImage()
+        public void CountryDropDownClosed(object sender, EventArgs e)
         {
-            List<int> ides = new();
-            if (!ImageToCreate.Url.Contains(","))
+            Cities.Clear();
+            foreach (var location in Locations)
             {
-                Image newImage = new(ImageToCreate.Url);
-                var savedImage = imageService.Create(newImage);
-                ides.Add(savedImage.Id);
+                if (location.Country.Equals(Window.Country.Text))
+                    Cities.Add(location.City);
             }
-            else
-            {
-                foreach (var url in ImageToCreate.Url.Split(","))
-                {
-                    Image newImage = new(url);
-                    var savedImage = imageService.Create(newImage);
-                    ides.Add(savedImage.Id);
-                }
-            }
-
-            return ides;
         }
-        private static string? FormIdesString(List<int> ids)
+        public void CityDropDownClosed(object sender, EventArgs e)
         {
-            if (ids.Count <= 0) return null;
-            var ides = ids.Aggregate(string.Empty, (current, imageId) => current + (imageId + ","));
-            ides = ides.Remove(ides.Length - 1);
-            return ides;
-        }
-
+            foreach (var location in Locations)
+            {
+                if (location.City.Equals(Window.City.Text))
+                    Window.Country.Text = location.Country;
+            }
+        } 
+        #endregion
     }
 
 }

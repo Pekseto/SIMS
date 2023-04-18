@@ -10,37 +10,12 @@ namespace Tourist_Project.Domain.Models
         public DateTime OldEndDate { get; set; }
         public DateTime NewEndDate { get; set; }
         public DateTime NewBeginningDate { get; set; }
+        public int Id { get; set; }
+        public int ReservationId { get; set; }
+        public RequestStatus Status { get; set; }
+        public string Comment { get; set; }
 
-        private int id;
-        public int Id
-        {
-            get =>id;
-            set => id = value;
-        }
-
-        private int reservationId;
-        public int ReservationId
-        {
-            get => reservationId;
-            set => reservationId = value;
-        }
-
-        private RequestStatus status;
-        public RequestStatus Status
-        {
-            get => status;
-            set => status = value;
-        }
-
-        private string comment;
-
-        public string Comment
-        {
-            get => comment;
-            set => comment = value;
-        }
         public RescheduleRequest() { }
-
         public RescheduleRequest(DateTime oldBeginningDate, DateTime oldEndDate, DateTime newBeginningDate,DateTime newEndDate, int id, int reservationId, RequestStatus status, string comment)
         {
             Id = id;
@@ -52,10 +27,8 @@ namespace Tourist_Project.Domain.Models
             Status = status;
             Comment = comment;
         }
-
         public string[] ToCSV()
         {
-           
             string[] csvValues = {
                 Id.ToString(),
                 OldBeginningDate.ToString(),
@@ -80,7 +53,5 @@ namespace Tourist_Project.Domain.Models
             Status = Enum.Parse<RequestStatus>(values[6]);
             Comment = values[7];
         }
-
-
     }
 }

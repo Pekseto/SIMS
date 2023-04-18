@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Tourist_Project.Domain.Models;
 
-namespace MyNamespace
+namespace Tourist_Project.Domain.RepositoryInterfaces
 {
     public interface INotificationRepository
     {

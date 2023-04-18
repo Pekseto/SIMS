@@ -11,6 +11,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public Image Update(Image image);
         public Image GetById(int id);
+        public Image? GetByUrl(string url);
     }
 
 }

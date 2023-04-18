@@ -7,7 +7,7 @@ using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.Applications.UseCases
 {
-    public class LocationService : IService<Location>
+    public class LocationService
     {
         private static readonly Injector injector = new();
 
@@ -17,12 +17,6 @@ namespace Tourist_Project.Applications.UseCases
         public LocationService() 
         {
         }
-
-        public Location Create(Location location)
-        {
-            return locationRepository.Save(location);
-        }
-
         public List<Location> GetAll()
         {
             return locationRepository.GetAll();
@@ -31,16 +25,6 @@ namespace Tourist_Project.Applications.UseCases
         public Location Get(int id)
         {
             return locationRepository.GetById(id);
-        }
-
-        public Location Update(Location location)
-        {
-            return locationRepository.Update(location);
-        }
-
-        public void Delete(int id)
-        {
-            locationRepository.Delete(id);
         }
 
         public int GetId(string city, string country)

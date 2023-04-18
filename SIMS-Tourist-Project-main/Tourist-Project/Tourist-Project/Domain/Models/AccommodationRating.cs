@@ -1,97 +1,25 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
     public class AccommodationRating : ISerializable
     {
-        private int _id;
-        public int Id
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        private int _accommodationId;
-
-        public int AccommodationId
-        {
-            get => _accommodationId;
-            set => _accommodationId = value;
-        }
-
-        private int _userId;
-        public int UserId
-        {
-            get => _userId;
-            set => _userId = value;
-        }
-
-
-        private int cleanness;
-        public int Cleanness
-        {
-            get => cleanness;
-            set => cleanness = value;
-        }
-
-        private int accommodationGrade;
-
-        public int AccommodationGrade
-        {
-            get => accommodationGrade;
-            set => accommodationGrade = value;
-        }
-
-        private int ownerRating;
-        public int OwnerRating
-        {
-            get => ownerRating;
-            set => ownerRating = value;
-        }
-
-        private string comment;
-        public string Comment 
-        { 
-            get => comment;
-            set => comment = value;
-        }
-
-        private string imageUrl;
-        public string ImageUrl 
-        { 
-            get => imageUrl; 
-            set => imageUrl = value;
-        }
-
-        private int imageId;
-        public int ImageId
-        {
-            get => imageId;
-            set => imageId = value;
-        }
-
-        private bool notified;
-        public bool Notified
-        {
-            get => notified;
-            set => notified = value;
-            
-        }
-        private int reservationId;
-        public int ReservationId
-        {
-            get => reservationId;
-            set => reservationId = value;
-        }
-
-        public AccommodationRating()
-        {
-
-        }
-
+        public int Id { get; set; }
+        public int AccommodationId { get; set; }
+        public int UserId { get; set; }
+        public int Cleanness { get; set; }
+        public int AccommodationGrade { get; set; }
+        public int OwnerRating { get; set; }
+        public string Comment { get; set; }
+        //TODO
+        public string ImageUrl { get; set; }
+        public int ImageId { get; set; }
+        public bool Notified { get; set; }
+        public int ReservationId { get; set; }
+        
+        public AccommodationRating() { }
+        //TODO
         public AccommodationRating(int id, int accommodationId, int userId, int cleanness, string comment, int imageId, string imageUrl, bool notified, int reservationId, int ownerRating, int accommodationGrade)
         {
             Id = id;
@@ -106,7 +34,6 @@ namespace Tourist_Project.Domain.Models
             OwnerRating = ownerRating;
             AccommodationGrade = accommodationGrade;
         }
-
         public string[] ToCSV()
         {
             string[] csvValues =
@@ -125,7 +52,6 @@ namespace Tourist_Project.Domain.Models
             };
             return csvValues;
         }
-
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);

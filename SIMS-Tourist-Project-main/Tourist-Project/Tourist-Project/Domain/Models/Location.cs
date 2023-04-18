@@ -2,33 +2,12 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-
     public class Location : ISerializable
-
     {
-        private int id;
-        public int Id
-        {
-            get => id;
-            set => id = value;
-        }
-        private string city;
-        public string City
-        {
-            get => city;
-            set => city = value;
-        }
-        private string country;
-        public string Country
-        {
-            get => country;
-            set => country = value;
-        }
-
-        public Location()
-        {
-        }
-
+        public int Id { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public Location() { }
         public Location(string city, string country)
         {
             City = city;

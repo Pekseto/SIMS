@@ -62,5 +62,10 @@ namespace Tourist_Project.Repositories
         {
             return images.Find(c => c.Id == id);
         }
+
+        public Image? GetByUrl(string url)
+        {
+            return images.Find(c => c.Url == url);
+        }
     }
 }

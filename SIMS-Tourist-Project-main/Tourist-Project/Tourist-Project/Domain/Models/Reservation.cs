@@ -13,6 +13,8 @@ namespace Tourist_Project.Domain.Models
         public DateTime CheckOut { get; set; }
         public int GuestsNum { get; set; }
         public int StayingDays { get; set; }
+        public int AccommodationId { get; set; } 
+        public List<Date> AvailableDates { get; set; }
         public Accommodation Accommodation { get; set; } 
 
             
@@ -25,6 +27,8 @@ namespace Tourist_Project.Domain.Models
             CheckOut = checkOut;
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
+            AccommodationId = accommodationId;
+            AvailableDates = new List<Date>();
             Accommodation = accommodation;
             //AvailableDates = new List<DateTime>();
         }

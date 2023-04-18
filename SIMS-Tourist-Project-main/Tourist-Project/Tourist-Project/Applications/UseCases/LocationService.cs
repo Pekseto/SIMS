@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.WPF.ViewModels;
@@ -83,6 +84,19 @@ namespace Tourist_Project.Applications.UseCases
         public Location GetLocation(Tour tour)
         {
             return GetAll().Find(x => x.Id == tour.LocationId);
+        }
+
+        public ObservableCollection<string> GetCitiesFromCountry(string country)
+        {
+            var cities = new ObservableCollection<string>();
+            foreach(var location in GetAll())
+            {
+                if(location.Country == country)
+                {
+                    cities.Add(location.City);
+                }
+            }
+            return cities;
         }
     }
 }

@@ -12,10 +12,13 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using System.Windows.Input;
 using Tourist_Project.WPF.Views;
+using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class GuestTwoWindowViewModel
+    public class GuestTwoWindowViewModel : INotifyPropertyChanged
     {
         #region Services
         private readonly TourService tourService;
@@ -26,7 +29,19 @@ namespace Tourist_Project.WPF.ViewModels
         #endregion
         #region Fields
         public User LoggedInUser { get; set; }
-        public ObservableCollection<TourDTO> Tours { get; set; }
+        private ObservableCollection<TourDTO> tours;
+        public ObservableCollection<TourDTO> Tours
+        {
+            get { return tours; }
+            set
+            {
+                if (value != tours)
+                {
+                    tours = value;
+                    OnPropertyChanged(nameof(Tours));
+                }
+            }
+        }
         public TourDTO SelectedTour { get; set; }
         public ObservableCollection<string> Countries { get; set; }
 
@@ -36,15 +51,26 @@ namespace Tourist_Project.WPF.ViewModels
             get => selectedCountry;
             set
             {
-                if(value != selectedCountry)
+                if(selectedCountry != value)
                 {
                     selectedCountry = value;
                     LoadCitiesComboBox();
                 }
             }
         }
-
-        public ObservableCollection<string> Cities { get; set; }
+        private ObservableCollection<string> cities;
+        public ObservableCollection<string> Cities
+        {
+            get { return cities; }
+            set
+            {
+                if(cities != value)
+                {
+                    cities = value;
+                    OnPropertyChanged(nameof(Cities));
+                }
+            }
+        }
         public string SelectedCity { get; set; }
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
@@ -215,13 +241,13 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnShowAllClick()
         {
-            toursDataGrid.ItemsSource = Tours;
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
         }
 
         private void OnSearchClick()
         {
             var filteredList = new ObservableCollection<TourDTO>();
-            foreach (TourDTO tourDTO in Tours)
+            foreach (TourDTO tourDTO in tourService.GetAllAvailableToursDTO())
             {
                 //FILTERING
                 if (SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
@@ -247,19 +273,12 @@ namespace Tourist_Project.WPF.ViewModels
 
                 filteredList.Add(tourDTO);
             }
-            toursDataGrid.ItemsSource = filteredList;
+            Tours = filteredList;
         }
 
         private void LoadCitiesComboBox()
         {
-            Cities.Clear();
-            foreach (Location location in locationService.GetAll())
-            {
-                if (location.Country == SelectedCountry)
-                {
-                    Cities.Add(location.City);
-                }
-            }
+            Cities = locationService.GetCitiesFromCountry(SelectedCountry);
         }
 
         private void DisplaySimilarTours(TourDTO selectedTour)
@@ -268,14 +287,21 @@ namespace Tourist_Project.WPF.ViewModels
             int selectedTourId = selectedTour.Id;
 
             var filteredList = new ObservableCollection<TourDTO>();
-            foreach (TourDTO tour in Tours)
+            foreach (TourDTO tour in tourService.GetAllAvailableToursDTO())
             {
                 if (tour.LocationId == locationId && tour.Id != selectedTourId)
                 {
                     filteredList.Add(tour);
                 }
             }
-            toursDataGrid.ItemsSource = filteredList;
+            Tours = filteredList;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -159,7 +159,7 @@ namespace Tourist_Project.Applications.UseCases
             var tourDTOs = new List<TourDTO>();
             foreach (Tour tour in GetAll())
             {
-                if(tour.StartTime > DateTime.Now && tour.Status == Status.NotBegin)
+                if(tour.StartTime >= DateTime.Today && tour.Status == Status.NotBegin)
                 {
                     var tourDTO = new TourDTO(tour)
                     {
@@ -192,7 +192,7 @@ namespace Tourist_Project.Applications.UseCases
             foreach (TourReservation t in tourReservationService.GetAll())
             {
                 Tour tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId == userId && tour.StartTime < DateTime.Today)
+                if (t.UserId == userId && tour.StartTime < DateTime.Now && (tour.Status == Status.End || tour.Status == Status.Cancel))
                 {
                     var tourDTO = new TourDTO(tour)
                     {

@@ -62,5 +62,10 @@ namespace Tourist_Project.Applications.UseCases
         {
             return GetAll().Find(t => t.TourId == tourId && t.UserId == userId);
         }
+
+        public bool WasUserPresent(int userId, int tourId)
+        {
+            return GetAll().Find(t => t.TourId == tourId && t.UserId == userId).Presence == Presence.Yes ? true : false;
+        }
     }
 }

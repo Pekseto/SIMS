@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -16,6 +17,7 @@ namespace Tourist_Project.WPF.ViewModels
     {
         private readonly TourReviewService ratingService;
         private readonly ImageService imageService;
+        private readonly TourAttendanceService attendanceService;
         public int KnowledgeRating { get; set; }
         public int LanguageRating { get; set; }
         public int EntertainmentRating { get; set; }
@@ -49,6 +51,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             ratingService = new TourReviewService();
             imageService = new ImageService();
+            attendanceService = new TourAttendanceService();
 
             ImageURL = string.Empty;
             Images = new List<Image>();
@@ -87,15 +90,25 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnRateClick()
         {
-            TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTourId, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
-            ratingService.Save(tourReview);
-
-            foreach(var image in Images)
+            if(attendanceService.WasUserPresent(MainWindow.LoggedInUser.Id, SelectedTourId))
             {
-                imageService.Save(image);
+                TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTourId, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
+                ratingService.Save(tourReview);
+
+                foreach (var image in Images)
+                {
+                    imageService.Save(image);
+                }
+
+                MessageBox.Show("Successfully rated the tour");
+            }
+            else
+            {
+                MessageBox.Show("You weren't present on this tour, so you can't review it!");
             }
 
-            MessageBox.Show("Successfully rated the tour");
+
+            
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

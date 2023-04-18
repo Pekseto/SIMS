@@ -17,13 +17,8 @@ namespace Tourist_Project.WPF.Views
         public TourLiveView(Tour selectedTour)
         {
             InitializeComponent();
-            DataContext = new TourLiveViewModel(selectedTour);
+            DataContext = new TourLiveViewModel(selectedTour, this);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var service = new TourPointService();
-            service.RequestClose += (s, ev) => this.Close();
-        }
     }
 }

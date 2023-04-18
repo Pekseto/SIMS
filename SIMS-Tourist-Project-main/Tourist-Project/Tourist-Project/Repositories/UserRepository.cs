@@ -40,6 +40,10 @@ namespace Tourist_Project.Repository
             return user;
         }
 
+        public string GetFullName(int id)
+        {
+            return GetOne(id).FullName;
+        }
     }
 }
 

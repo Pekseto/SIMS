@@ -12,6 +12,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public User GetOne(int id);
         public User? GetByUsername(string username);
         public User Update(User user);
-
+        public string GetFullName(int id);
     }
 }

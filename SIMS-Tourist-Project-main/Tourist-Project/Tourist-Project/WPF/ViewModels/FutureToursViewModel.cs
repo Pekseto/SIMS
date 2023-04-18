@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,17 +15,35 @@ using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class FutureToursViewModel
+    public class FutureToursViewModel : INotifyPropertyChanged
     {
         private Window window;
 
         public static ObservableCollection<Tour> FutureTours { get; set; }
 
-        public string CurrentTime { get; set; } = DateTime.Now.ToString();
 
-        public Tour SelectedTour { get; set; }
-        private TourService tourService = new();
-        private TourVoucherService voucherService = new();
+        private Tour tour;
+
+        public Tour SelectedTour
+        {
+            get => tour;
+            set
+            {
+                tour = value;
+                OnPropertyChanged("SelectedTour");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        private readonly TourService tourService = new();
+        private readonly TourVoucherService voucherService = new();
         public ICommand CancelTourCommand { get; set; }
         public ICommand HomePageCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
@@ -37,6 +56,7 @@ namespace Tourist_Project.WPF.ViewModels
             HomePageCommand = new RelayCommand(HomePage, CanHomePage);
             CancelTourCommand = new RelayCommand(CancelTour, CanCancelTour);
             ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
+
         }
 
         private bool CanHomePage()
@@ -72,9 +92,9 @@ namespace Tourist_Project.WPF.ViewModels
         private void CancelTour()
         {
             SelectedTour.Status = Status.Cancel;
-            tourService.Update(SelectedTour);
-
             voucherService.VouchersDistribution(SelectedTour.Id);
+
+            UpdateData();
         }
 
         private bool CanProfileView()
@@ -86,6 +106,16 @@ namespace Tourist_Project.WPF.ViewModels
             var profileView = new GuideProfileView();
             profileView.Show();
             window.Close();
+        }
+
+        private void UpdateData()
+        {
+            tourService.Update(SelectedTour);
+            FutureTours.Clear();
+            foreach (var tour in tourService.GetFutureTours())
+            {
+                FutureTours.Add(tour);
+            }
         }
     }
 }

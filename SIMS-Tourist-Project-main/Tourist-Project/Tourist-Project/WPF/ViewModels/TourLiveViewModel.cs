@@ -5,6 +5,7 @@ using System.Linq;
 using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
@@ -20,21 +21,23 @@ namespace Tourist_Project.WPF.ViewModels
 
         public TourPoint SelectedTourPoint { get; set; }
         private Tour selectedTour;
+        private Window window;
 
-        private readonly TourPointRepository tourPointRepository = new();
-        private TourPointService tourPointService = new();
+        private readonly TourPointService tourPointService = new();
+        private readonly TourService tourService = new();
 
         public ICommand EarlyEndCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand OpenTouristListCommand { get; set; }
 
-        public TourLiveViewModel(Tour selectedTour) 
+        public TourLiveViewModel(Tour selectedTour, Window window) 
         {
             this.selectedTour = selectedTour;
+            this.window = window;
 
-            TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(selectedTour.Id));
+            TourPoints = new ObservableCollection<TourPoint>(tourPointService.GetAllForTour(selectedTour.Id));
             TourPoints[0].Visited = true;
-            tourPointRepository.Update(TourPoints[0]);
+            tourPointService.Update(TourPoints[0]);
 
             EarlyEndCommand = new RelayCommand(EarlyEnd, CanEarlyEnd);
             CheckCommand = new RelayCommand(Check, CanCheck);
@@ -49,6 +52,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             selectedTour.Status = Status.End;
             TodayToursViewModel.Live = false;
+            window.Close();
         }
 
         private bool CanCheck()
@@ -66,7 +70,12 @@ namespace Tourist_Project.WPF.ViewModels
         {
             SelectedTourPoint.Visited = true;
             tourPointService.UpdateCollection(SelectedTourPoint, selectedTour);
-            tourPointService.EndTour();
+            if (tourPointService.EndTour())
+            {
+                selectedTour.Status = Status.End;
+                tourService.Update(selectedTour);
+                window.Close();
+            }
         }
 
         private bool CanOpenTouristList()

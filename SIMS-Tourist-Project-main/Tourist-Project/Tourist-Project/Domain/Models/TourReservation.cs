@@ -4,42 +4,14 @@ namespace Tourist_Project.Domain.Models
 {
     public class TourReservation : ISerializable
     {
-        private int id;
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        private int userId;
-        public int UserId
-        {
-            get => userId;
-            set => userId = value;
-        }
-        private int tourId;
-        public int TourId
-        {
-            get { return tourId; }
-            set { tourId = value; }
-        }
-        private int guestsNumber;
-        public int GuestsNumber
-        {
-            get { return guestsNumber; }
-            set { guestsNumber = value; }
-        }
-
-        private bool voucher;
-
-        public bool Voucher
-        {
-            get { return voucher; }
-            set { voucher = value; }
-        }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int TourId { get; set; }
+        public int GuestsNumber { get; set; }
+        public bool Voucher { get; set; }
 
         public TourReservation()
         {
-
         }
 
         public TourReservation(int userId, int tourId, int guestsNumber, bool voucher)
@@ -47,7 +19,6 @@ namespace Tourist_Project.Domain.Models
             UserId = userId;
             TourId = tourId;
             GuestsNumber = guestsNumber;
-            //ZEKO VIDI OVO ZA VAUCER
             Voucher = voucher;
         }
 
@@ -55,22 +26,22 @@ namespace Tourist_Project.Domain.Models
         {
             string[] csvValues =
             {
-                id.ToString(),
-                userId.ToString(),
-                tourId.ToString(),
-                guestsNumber.ToString(),
-                voucher.ToString(),
+                Id.ToString(),
+                UserId.ToString(),
+                TourId.ToString(),
+                GuestsNumber.ToString(),
+                Voucher.ToString(),
             };
             return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
-            id = int.Parse(values[0]);
-            userId = int.Parse(values[1]);
-            tourId = int.Parse(values[2]);
-            guestsNumber = int.Parse(values[3]);
-            voucher = bool.Parse(values[4]);
+            Id = int.Parse(values[0]);
+            UserId = int.Parse(values[1]);
+            TourId = int.Parse(values[2]);
+            GuestsNumber = int.Parse(values[3]);
+            Voucher = bool.Parse(values[4]);
         }
     }
 }

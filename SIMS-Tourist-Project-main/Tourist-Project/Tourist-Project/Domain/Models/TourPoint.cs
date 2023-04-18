@@ -6,64 +6,21 @@ namespace Tourist_Project.Domain.Models
 {
     public class TourPoint : ISerializable
     {
-        private int id;
-        public int Id
-        {
-            get => id;
-            set => id = value;
-        }
-        string name;
-        public string Name
-        {
-            get => name;
-            set
-            {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
-            }
-
-        }
-        private int tourId;
-        public int TourId
-        {
-            get => tourId;
-            set
-            {
-                if (tourId != value)
-                {
-                    tourId = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private bool visited;
-        public bool Visited
-        {
-            get => visited;
-            set
-            {
-                if (visited != value)
-                {
-                    visited = value;
-                    OnPropertyChanged("Visited");
-                }
-            }
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int TourId { get; set; }
+        public bool Visited { get; set; }
 
         public TourPoint()
         {
-            visited = false;
+            Visited = false;
         }
 
         public TourPoint(string name, int tourId)
         {
-            this.name = name;
-            this.tourId = tourId;
-            visited = false;
+            Name = name;
+            TourId = tourId;
+            Visited = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,20 +33,20 @@ namespace Tourist_Project.Domain.Models
         {
             string[] csvValues =
             {
-                id.ToString(),
-                name,
-                tourId.ToString(),
-                visited.ToString(),
+                Id.ToString(),
+                Name,
+                TourId.ToString(),
+                Visited.ToString(),
             };
             return csvValues;
         }
 
         public void FromCSV(string[] values)
         {
-            id = int.Parse(values[0]);
-            name = values[1];
-            tourId = int.Parse(values[2]);
-            visited = bool.Parse(values[3]);
+            Id = int.Parse(values[0]);
+            Name = values[1];
+            TourId = int.Parse(values[2]);
+            Visited = bool.Parse(values[3]);
         }
     }
 }

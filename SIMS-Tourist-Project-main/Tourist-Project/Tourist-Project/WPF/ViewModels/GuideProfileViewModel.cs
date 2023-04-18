@@ -17,13 +17,13 @@ namespace Tourist_Project.WPF.ViewModels
     {
         public ObservableCollection<string> Years { get; set; } = new();
         private readonly TourService tourService = new ();
-        private Window window;
+        private readonly Window window;
         public Tour Tour { get; set; }
 
         private string selectedYear;
         public string SelectedYear
         {
-            get { return selectedYear; }
+            get => selectedYear;
             set
             {
                 selectedYear = value;

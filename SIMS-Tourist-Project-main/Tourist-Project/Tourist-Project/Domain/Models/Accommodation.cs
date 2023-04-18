@@ -11,8 +11,6 @@ namespace Tourist_Project.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int LocationId { get; set; }
-        //TODO
-        public Location Location { get; set; }
         public AccommodationType Type { get; set; }
         public int MaxGuestNum { get; set; }
         public int MinStayingDays { get; set; }
@@ -21,8 +19,7 @@ namespace Tourist_Project.Domain.Models
         public int UserId { get; set; }
         public List<int> ImageIds { get; set; } = new();
         public string ImageIdsCsv { get; set; }
-        //TODO
-        public string ImageUrl { get; set; }
+
         public Accommodation() { }
         public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes)
         {
@@ -35,7 +32,6 @@ namespace Tourist_Project.Domain.Models
             ImageId = imageId;
             ImageIdsCsv = imageIdes;
         }
-        //TODO
         public string[] ToCSV()
         {
             ImageIdesToCsv();

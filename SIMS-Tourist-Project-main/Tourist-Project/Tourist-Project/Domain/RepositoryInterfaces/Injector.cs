@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyNamespace;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 

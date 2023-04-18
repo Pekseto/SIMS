@@ -11,7 +11,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public Reservation Update(Reservation reservation);
         public Reservation GetById(int id);
-
         public Reservation GenerateAvailableDates(Reservation reservation);
     }
 

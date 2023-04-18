@@ -8,6 +8,8 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IUserRepository repository = injector.CreateInstance<IUserRepository>();
+        private readonly IAccommodationRatingRepository accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
+        private readonly AccommodationRatingService accommodationRatingService = new();
 
         public UserService()
         {
@@ -21,6 +23,15 @@ namespace Tourist_Project.Applications.UseCases
         public User Update(User user)
         {
             return repository.Update(user);
+        }
+        public bool IsSuper(User user)
+        {
+            if (accommodationRatingRepository.GetAll().Count < 10 || accommodationRatingService.getRating() < 4.5)
+                user.IsSuper = false;
+            else
+                user.IsSuper = true;
+            Update(user);
+            return user.IsSuper;
         }
     }
 }

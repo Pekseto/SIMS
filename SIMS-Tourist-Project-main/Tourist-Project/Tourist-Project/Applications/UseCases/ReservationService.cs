@@ -38,6 +38,7 @@ namespace Tourist_Project.Applications.UseCases
         {
             guestReviewRepository.Delete(id);
         }
+
     }
 
 }

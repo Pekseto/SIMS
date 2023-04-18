@@ -9,11 +9,11 @@
     <Window.Resources>
         <DataTemplate x:Key="AccommodationDataTemplate">
             <StackPanel Width="490" Height="auto">
-                <Image Width="400" Height="100" HorizontalAlignment="Left" Source="{Binding ImageUrl, UpdateSourceTrigger=PropertyChanged}"></Image>
-                <Label Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Height="45" Margin="210, -160, 10,0 "></Label>
+                <Image Width="400" Height="100" HorizontalAlignment="Left" Source="{Binding Image.Url, UpdateSourceTrigger=PropertyChanged}"></Image>
+                <Label Content="{Binding Accommodation.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Height="45" Margin="210, -160, 10,0 "></Label>
                 <Label Content="{Binding Location.Country, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="45" Margin="210, -80, 10,10 "></Label>
                 <Label Content="{Binding Location.City, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="45" Margin="310, -80, 10,10 "></Label>
-                <Label Content="{Binding Type, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="30" Margin="210, -30, 10,0 "></Label>
+                <Label Content="{Binding Accommodation.Type, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Height="30" Margin="210, -30, 10,0 "></Label>
                 <Separator></Separator>
             </StackPanel>
         </DataTemplate>
@@ -52,7 +52,7 @@
             <GroupBox Header="Actions">
                 <Grid>
                     <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"></Image>
-                    <Label Content="{Binding user.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50"/>
+                    <Label Content="{Binding User.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50"/>
                     <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500"/>
                     <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500"/>
                     <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="115,81,0,538" Height="50" HorizontalAlignment="Center"/>
@@ -60,7 +60,7 @@
                     <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0"></Label>
                     <Button Height="38" Margin="10,144,20,229" Content="Create(C)" Command="{Binding CreateCommand}"></Button>
                     <Button Height="38" Margin="10,190,20,163" Content="Update(U)" Command="{Binding UpdateCommand}"></Button>
-                    <Button Height="38" Margin="10,236,20,100" Content="Delete(DEL)"></Button>
+                    <Button Height="38" Margin="10,236,20,100" Content="Delete(DEL)" Command="{Binding DeleteCommand}"></Button>
                     <Label Content="Renovation" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="3,432,0,0"></Label>
                     <Button Height="38" Margin="10,403,20,70" Content="Renovate(Shift+R)"></Button>
                     <Button Height="38" Margin="10,449,20,10" Content="Show Renovations(Shift+S)"></Button>
@@ -91,14 +91,13 @@
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
-                                 SelectedItem="{Binding SelectedReview, UpdateSourceTrigger=PropertyChanged}"
                                  Height="119"></ListBox>
                         <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>
             <GroupBox Header="My accommodations(M)" Margin="20,20" Grid.Row="1">
-                <ListBox ItemsSource="{Binding accommodations, UpdateSourceTrigger=PropertyChanged}"
+                <ListBox ItemsSource="{Binding AccommodationView, UpdateSourceTrigger=PropertyChanged}"
                          ItemTemplate="{StaticResource AccommodationDataTemplate}"
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 

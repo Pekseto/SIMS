@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media.Animation;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 
@@ -9,7 +8,7 @@ namespace Tourist_Project.Applications.UseCases
     public class AccommodationRatingService : IService<AccommodationRating>
     {
         private static readonly Injector injector = new();
-        private readonly IAccommodationRatingRepository _accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
+        private readonly IAccommodationRatingRepository accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
 
         public AccommodationRatingService()
         {
@@ -17,28 +16,31 @@ namespace Tourist_Project.Applications.UseCases
 
         public AccommodationRating Create(AccommodationRating accommodationRating)
         {
-            return _accommodationRatingRepository.Save(accommodationRating);
+            return accommodationRatingRepository.Save(accommodationRating);
         }
 
         public List<AccommodationRating> GetAll()
         {
-            return _accommodationRatingRepository.GetAll();
+            return accommodationRatingRepository.GetAll();
         }
 
         public AccommodationRating Get(int id)
         {
-            return _accommodationRatingRepository.GetById(id);
+            return accommodationRatingRepository.GetById(id);
         }
 
         public void Delete(int id)
         {
-            _accommodationRatingRepository.Delete(id);
+            accommodationRatingRepository.Delete(id);
         }
 
         public AccommodationRating Update(AccommodationRating accommodationRating)
         {
-            return _accommodationRatingRepository.Update(accommodationRating);
+            return accommodationRatingRepository.Update(accommodationRating);
         }
-
+        public double getRating()
+        {
+            return (double)accommodationRatingRepository.GetAll().Sum(accommodationRating => accommodationRating.AccommodationGrade + accommodationRating.Cleanness + accommodationRating.OwnerRating) / (accommodationRatingRepository.GetAll().Count * 3);
+        }
     }
 }

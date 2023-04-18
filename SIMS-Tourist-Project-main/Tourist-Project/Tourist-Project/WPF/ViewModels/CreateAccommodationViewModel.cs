@@ -69,12 +69,6 @@ namespace Tourist_Project.WPF.ViewModels
             Window.City.DropDownClosed += CityDropDownClosed;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         public void Create()
         {
             AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
@@ -82,6 +76,15 @@ namespace Tourist_Project.WPF.ViewModels
             accommodationService.Create(AccommodationToCreate);
             Window.Close();
         }
+        #region PropertyChanged
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+        #region Commands
 
         public static bool CanCreate()
         {
@@ -112,7 +115,8 @@ namespace Tourist_Project.WPF.ViewModels
                 if (location.City.Equals(Window.City.Text))
                     Window.Country.Text = location.Country;
             }
-        }
+        } 
+        #endregion
     }
 
 }

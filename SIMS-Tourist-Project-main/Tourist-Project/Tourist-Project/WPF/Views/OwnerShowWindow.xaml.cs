@@ -30,7 +30,7 @@ namespace Tourist_Project.WPF.Views
             Accommodations = new ObservableCollection<Accommodation>(accommodationRepository.GetAll());
             Locations = new ObservableCollection<Location>(locationRepository.GetAll());
             Images = new ObservableCollection<Image>(imageRepository.GetAll());
-            AccommodationDtos = new ObservableCollection<AccommodationDTO>(accommodationDtoRepository.LoadAll(Accommodations, Locations, Images));
+            AccommodationDtos = new ObservableCollection<AccommodationDTO>(accommodationDtoRepository.LoadAll());
         }
 
         private void ShowCreateAccommodationForm(object sender, RoutedEventArgs e)

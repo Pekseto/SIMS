@@ -13,21 +13,11 @@ namespace Tourist_Project.WPF.ViewModels
     {
         private readonly VoucherService voucherService;
         public ObservableCollection<Voucher> Vouchers { get; set; }
-        public User LoggedInUser { get; set; }
 
         public VouchersViewModel(User user)
         {
             voucherService = new VoucherService();
-            Vouchers = new ObservableCollection<Voucher>();
-            LoggedInUser = user;
-
-            foreach (Voucher voucher in voucherService.GetAll())
-            {
-                if (voucher.UserId == LoggedInUser.Id)
-                {
-                    Vouchers.Add(voucher);
-                }
-            }
+            Vouchers = new ObservableCollection<Voucher>(voucherService.GetAllForUser(user.Id));
         }
     }
 }

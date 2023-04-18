@@ -38,5 +38,28 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.GetById(id);
         }
+        public List<Voucher> GetAllForUser(int userId)
+        {
+            var vouchers = new List<Voucher>();
+            foreach (Voucher voucher in GetAll())
+            {
+                if (voucher.UserId == userId && voucher.LastValidDate >= DateTime.Today)
+                {
+                    vouchers.Add(voucher);
+                }
+            }
+            return vouchers;
+        }
+
+        public void DeleteInvalidVouchers()
+        {
+            foreach(Voucher voucher in GetAll())
+            {
+                if(voucher.LastValidDate < DateTime.Today)
+                {
+                    Delete(voucher.Id);
+                }
+            }
+        }
     }
 }

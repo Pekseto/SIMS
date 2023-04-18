@@ -19,25 +19,24 @@ namespace Tourist_Project.Domain.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TourId { get; set; }
-        public int KnowledgeGrade { get; set; }
-        public int LanguageGrade { get; set; }
-        public int InterestGrade { get; set; }
+        public int KnowledgeRating { get; set; }
+        public int LanguageRating { get; set; }
+        public int EntertainmentRating { get; set; }
         public string Comment { get; set; }
         public ValidStatus Valid { get; set; }
 
         public TourReview()
         {
-            
+            Comment = string.Empty;
         }
 
-        public TourReview(int id, int userId, int tourId, int knowledgeGrade, int languageGrade, int interestGrade, string comment)
+        public TourReview(int userId, int tourId, int knowledgeGrade, int languageGrade, int interestGrade, string comment)
         {
-            Id = id;
             UserId = userId;
-            TourId = userId;
-            KnowledgeGrade = knowledgeGrade;
-            LanguageGrade = languageGrade;
-            InterestGrade = interestGrade;
+            TourId = tourId;
+            KnowledgeRating = knowledgeGrade;
+            LanguageRating = languageGrade;
+            EntertainmentRating = interestGrade;
             Comment = comment;
             Valid = ValidStatus.NotValid;
         }
@@ -49,9 +48,9 @@ namespace Tourist_Project.Domain.Models
                 Id.ToString(),
                 UserId.ToString(),
                 TourId.ToString(),
-                KnowledgeGrade.ToString(),
-                LanguageGrade.ToString(),
-                InterestGrade.ToString(),
+                KnowledgeRating.ToString(),
+                LanguageRating.ToString(),
+                EntertainmentRating.ToString(),
                 Comment,
                 Valid.ToString()
             };
@@ -64,9 +63,9 @@ namespace Tourist_Project.Domain.Models
             Id = int.Parse(values[0]);
             UserId = int.Parse(values[1]);
             TourId = int.Parse(values[2]);
-            KnowledgeGrade = int.Parse(values[3]);
-            LanguageGrade = int.Parse(values[4]);
-            InterestGrade = int.Parse(values[5]);
+            KnowledgeRating = int.Parse(values[3]);
+            LanguageRating = int.Parse(values[4]);
+            EntertainmentRating = int.Parse(values[5]);
             Comment = values[6];
             Valid = Enum.Parse<ValidStatus>(values[7]);
         }

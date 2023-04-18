@@ -8,16 +8,18 @@
         Title="MyToursView" Height="720" Width="1280">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="85"></RowDefinition>
-            <RowDefinition Height="200"></RowDefinition>
-            <RowDefinition Height="85"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="275"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="My tours" FontSize="28"/>
-        <Label Content="Future tours:" FontSize="20" Margin="10,35,0,0"/>
-        <DataGrid Grid.Row="1" Margin="10,0,10,0" FontSize="18"
+        <Label Content="My tours" FontSize="28" Margin="30,0,0,0"
+               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Label Content="Future tours:" Grid.Row="1" VerticalAlignment="Top"
+               FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center"/>
+        <DataGrid Grid.Row="1" Margin="10,40,10,0" FontSize="18"
                   ItemsSource="{Binding FutureTours}"
                   AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -27,8 +29,11 @@
                 <DataGridTextColumn Header="Start date" Binding="{Binding StartTime}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Grid.Row="2" Content="Todays tours:" FontSize="20" Margin="10,35,0,0"/>
-        <DataGrid Grid.Row="3" Margin="10,0,10,0" FontSize="18"
+        <Button Grid.Row="2" Content="Preview" FontSize="18" HorizontalAlignment="Center"
+                Height="40" Width="100" VerticalAlignment="Top" Margin="5"/>
+        <Label Grid.Row="3" Content="Todays tours:" VerticalContentAlignment="Top"
+               FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <DataGrid Grid.Row="3" Margin="10,40,10,0" FontSize="18"
                   ItemsSource="{Binding TodaysTours}" SelectedItem="{Binding SelectedTodayTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -38,7 +43,7 @@
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Left" Margin="1182,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="74"/>
-        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Left" Margin="1052,10,0,0" Grid.Row="4" VerticalAlignment="Top" Height="38" Width="82"/>
+        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Center" Margin="150,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="17"/>
+        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" Margin="0,11,150,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="17"/>
     </Grid>
 </Window>

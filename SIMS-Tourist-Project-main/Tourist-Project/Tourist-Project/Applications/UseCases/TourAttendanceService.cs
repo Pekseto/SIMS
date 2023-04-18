@@ -48,11 +48,6 @@ namespace Tourist_Project.Applications.UseCases
             return repository.GetAll();
         }
 
-        public void UpdateOnUserJoined(TourAttendance tourAttendance)
-        {
-            repository.Update(tourAttendance);
-        }
-
         public void Save(TourAttendance tourAttendance)
         {
             repository.Save(tourAttendance);
@@ -61,6 +56,16 @@ namespace Tourist_Project.Applications.UseCases
         public void Update(TourAttendance tourAttendance)
         {
             repository.Update(tourAttendance);
+        }
+
+        public TourAttendance GetByTourIdAndUserId(int tourId, int userId)
+        {
+            return GetAll().Find(t => t.TourId == tourId && t.UserId == userId);
+        }
+
+        public bool WasUserPresent(int userId, int tourId)
+        {
+            return GetAll().Find(t => t.TourId == tourId && t.UserId == userId).Presence == Presence.Yes ? true : false;
         }
     }
 }

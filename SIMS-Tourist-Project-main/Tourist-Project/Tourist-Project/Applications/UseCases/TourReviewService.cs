@@ -19,11 +19,7 @@ namespace Tourist_Project.Applications.UseCases
         private readonly TourPointService tourPointService = new();
         public TourReviewService()
         {
-        }
 
-        public TourReview Create(TourReview tourReview)
-        {
-            return repository.Save(tourReview);
         }
 
         public TourReview Update(TourReview tourReview)
@@ -41,6 +37,11 @@ namespace Tourist_Project.Applications.UseCases
             return repository.GetAllByTourId(tourId);
         }
 
+        public void Save(TourReview tourReview)
+        {
+            repository.Save(tourReview);
+        }
+        
         public List<TourReviewDTO> GetAllReviewDtos(int tourId)
         {
             List<TourReviewDTO> dtos = new();

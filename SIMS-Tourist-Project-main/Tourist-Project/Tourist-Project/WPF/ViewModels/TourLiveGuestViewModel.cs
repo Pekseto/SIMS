@@ -14,7 +14,6 @@ namespace Tourist_Project.WPF.ViewModels
     {
         public User LoggedInUser { get; set; }
         public ObservableCollection<TourPoint> TourPoints { get; set; }
-        public TourPoint SelectedTourPoint { get; set; }
 
         private readonly TourPointRepository tourPointRepository = new();
 

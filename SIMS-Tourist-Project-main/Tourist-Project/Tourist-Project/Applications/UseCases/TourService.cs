@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
+using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 
@@ -18,6 +20,7 @@ namespace Tourist_Project.Applications.UseCases
         private readonly ITourRepository repository = injector.CreateInstance<ITourRepository>();
 
         private readonly TourReservationService tourReservationService = new();
+        private readonly LocationService locationService = new();
 
         public TourService()
         {
@@ -149,6 +152,97 @@ namespace Tourist_Project.Applications.UseCases
                 }
             }
             return retVal;
+        }
+
+        public List<TourDTO> GetAllAvailableToursDTO()
+        {
+            var tourDTOs = new List<TourDTO>();
+            foreach (Tour tour in GetAll())
+            {
+                if(tour.StartTime >= DateTime.Today && tour.Status == Status.NotBegin)
+                {
+                    var tourDTO = new TourDTO(tour)
+                    {
+                        SpotsLeft = GetLeftoverSpots(tour),
+                        Location = locationService.GetLocation(tour)
+                    };
+                    tourDTOs.Add(tourDTO);
+                }                
+            }
+            return tourDTOs;
+        }
+
+        public List<string> GetAllLanguages()
+        {
+            var languages = new List<string>();
+            foreach (Tour tour in GetAll())
+            {
+                if (!languages.Contains(tour.Language))
+                {
+                    languages.Add(tour.Language);
+                }
+            }
+            return languages;
+        }
+
+        public List<TourDTO> GetAllPastTours(int userId)
+        {
+            var tours = new List<TourDTO>();
+
+            foreach (TourReservation t in tourReservationService.GetAll())
+            {
+                Tour tour = GetAll().Find(x => x.Id == t.TourId);
+                if (t.UserId == userId && tour.StartTime < DateTime.Now && (tour.Status == Status.End || tour.Status == Status.Cancel))
+                {
+                    var tourDTO = new TourDTO(tour)
+                    {
+                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                    };
+                    tours.Add(tourDTO);
+                }
+            }
+
+            return tours;
+        }
+
+        public List<TourDTO> GetUsersFutureTours(int userId)
+        {
+            var tours = new List<TourDTO>();
+
+            foreach (TourReservation t in tourReservationService.GetAll())
+            {
+                Tour tour = GetAll().Find(x => x.Id == t.TourId);
+                if (t.UserId == userId && tour.StartTime >= DateTime.Today)
+                {
+                    var tourDTO = new TourDTO(tour)
+                    {
+                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                    };
+                    tours.Add(tourDTO);
+                }
+            }
+
+            return tours;
+        }
+
+        public List<TourDTO> GetUsersTodayTours(int userId)
+        {
+            var tours = new List<TourDTO>();
+
+            foreach (TourReservation t in tourReservationService.GetAll())
+            {
+                Tour tour = GetAll().Find(x => x.Id == t.TourId);
+                if (t.UserId == userId && tour.StartTime == DateTime.Today)
+                {
+                    var tourDTO = new TourDTO(tour)
+                    {
+                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                    };
+                    tours.Add(tourDTO);
+                }
+            }
+
+            return tours;
         }
     }
 }

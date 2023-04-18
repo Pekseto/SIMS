@@ -12,7 +12,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public Reservation Update(Reservation reservation);
         public Reservation GetById(int id);
 
-        public Reservation GenerateAvailableDates(Reservation reservation);
+        public List<Reservation> GetByAccommodation(Accommodation accommodation);
     }
 
 }

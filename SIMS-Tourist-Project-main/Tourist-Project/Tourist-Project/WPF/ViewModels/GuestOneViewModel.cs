@@ -80,7 +80,7 @@ public class GuestOneViewModel
     {   
         foreach(Accommodation accommodation in Accommodations)
         {
-            accommodation.Location = _locationService.Get(accommodation.LocationId);
+            //accommodation.Location = _locationService.Get(accommodation.LocationId);
         }
     }
 

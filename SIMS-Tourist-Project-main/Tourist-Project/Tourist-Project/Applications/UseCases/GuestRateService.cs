@@ -4,7 +4,7 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 
 namespace Tourist_Project.Applications.UseCases
 { 
-    public class GuestRateService : IService<GuestRating>
+    public class GuestRateService
     {
         private static readonly Injector injector = new();
 

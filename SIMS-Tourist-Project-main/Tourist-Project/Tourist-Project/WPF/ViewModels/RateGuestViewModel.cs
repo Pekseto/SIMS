@@ -7,8 +7,8 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class RateGuestViewModel
     {
-        public  Notification Notification { get; set; }
-        public GuestRating GuestRate { get; set; }
+        public Notification Notification { get; set; }
+        public GuestRating GuestRate { get; set; } = new();
         private readonly GuestRateService ratingService = new ();
         private readonly NotificationService notificationService = new ();
         public ICommand RateCommand { get; set; }

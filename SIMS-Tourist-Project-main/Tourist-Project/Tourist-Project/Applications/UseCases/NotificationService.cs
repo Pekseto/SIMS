@@ -66,7 +66,7 @@ namespace Tourist_Project.Applications.UseCases
                 foreach (var reservation in reservationRepository.GetAll())
                 {
                     var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if (guestRate.IsReviewed() || daysSinceCheckOut.Days >= 5 || guestRate.GuestId != reservation.GuestId) continue;
+                    if (guestRate.IsReviewed() || Math.Abs(daysSinceCheckOut.Days) >= 5 || guestRate.GuestId != reservation.GuestId) continue;
                     if (GetAllByType("GuestRate").Count == 0)
                         Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
                     foreach (var notification in GetAllByType("GuestRate").Where(notification => notification.GuestRatingId != guestRate.Id && notification.ReservationId != reservation.Id))

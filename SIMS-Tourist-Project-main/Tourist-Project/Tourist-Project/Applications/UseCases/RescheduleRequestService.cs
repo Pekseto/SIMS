@@ -8,7 +8,7 @@ using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.Applications.UseCases
 {
-    public class RescheduleRequestService : IService<RescheduleRequest>
+    public class RescheduleRequestService
     {
         private static readonly Injector injector = new();
 

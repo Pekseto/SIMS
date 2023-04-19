@@ -27,7 +27,7 @@ namespace Tourist_Project.Domain.Models
             CheckOut = checkOut;
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
-            AccommodationId = accommodationId;
+            AccommodationId = accommodation.Id;
             AvailableDates = new List<Date>();
             Accommodation = accommodation;
             //AvailableDates = new List<DateTime>();

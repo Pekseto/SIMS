@@ -5,7 +5,7 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 
 namespace Tourist_Project.Applications.UseCases
 {
-    public class ImageService : IService<Image>
+    public class ImageService
     {
         private static readonly Injector injector = new();
 

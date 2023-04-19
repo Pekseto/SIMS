@@ -12,9 +12,9 @@
         <Label HorizontalAlignment="Left" Content="Cleanness:" Margin="34,76,0,316" Width="306" FontSize="20"></Label>
         <Label HorizontalAlignment="Left" Content="Rules:" Margin="34,158,0,233" Width="306" FontSize="20"></Label>
         <Label HorizontalAlignment="Left" Content="Additional comment:" Margin="34,244,0,147" Width="306" FontSize="20"></Label>
-        <xctk:IntegerUpDown Margin="34,123,34,356" Value="{Binding guestRate.CleanlinessGrade}" Minimum="1" Maximum="5"></xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Margin="34,200,34,275" Value="{Binding guestRate.RuleGrade}" Minimum="1" Maximum="5"></xctk:IntegerUpDown>
-        <TextBox Margin="34,287,34,133" Text="{Binding guestRate.Comment}"></TextBox>
+        <xctk:IntegerUpDown Margin="34,123,34,356" Value="{Binding GuestRate.CleanlinessGrade}" Minimum="1" Maximum="5"></xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Margin="34,200,34,275" Value="{Binding GuestRate.RuleGrade}" Minimum="1" Maximum="5"></xctk:IntegerUpDown>
+        <TextBox Margin="34,287,34,133" Text="{Binding GuestRate.Comment}"></TextBox>
         <Button Content="Rate(R)" FontSize="20" Height="38" Margin="34,409,34,47" Command="{Binding RateCommand}"></Button>
     </Grid>
 </Window>

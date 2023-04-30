@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels
 {

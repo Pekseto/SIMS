@@ -2,7 +2,7 @@
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Owner
 {
     /// <summary>
     /// Interaction logic for CancelRescheduleRequest.xaml

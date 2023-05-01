@@ -42,6 +42,43 @@
                 <Separator></Separator>
             </StackPanel>
         </DataTemplate>
+        <Style x:Key="{x:Type GroupBox}" TargetType="GroupBox">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#03888f"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Label}" TargetType="Label">
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Foreground" Value="#d9eeef"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#0da2a5"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type Grid}" TargetType="Grid">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+        </Style>
+        <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,22 +86,22 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid>
-            <GroupBox Header="Actions">
-                <Grid>
-                    <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"></Image>
-                    <Label Content="{Binding User.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50"/>
-                    <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500"/>
-                    <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500"/>
+            <GroupBox Margin="-5, 0,-1, -5">
+                <Grid Background="#03888f">
+                    <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"/>
+                    <Label Content="{Binding User.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50" Foreground="#67c9cb"/>
+                    <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500" Foreground="#67c9cb"/>
+                    <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500" Foreground="#67c9cb"/>
                     <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="115,81,0,538" Height="50" HorizontalAlignment="Center"/>
                     <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)"></Button>
-                    <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0"></Label>
+                    <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0" Foreground="#67c9cb"/>
                     <Button Height="38" Margin="10,144,20,229" Content="Create(C)" Command="{Binding CreateCommand}"></Button>
                     <Button Height="38" Margin="10,190,20,163" Content="Update(U)" Command="{Binding UpdateCommand}"></Button>
                     <Button Height="38" Margin="10,236,20,100" Content="Delete(DEL)" Command="{Binding DeleteCommand}"></Button>
-                    <Label Content="Renovation" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="3,432,0,0"></Label>
-                    <Button Height="38" Margin="10,403,20,70" Content="Renovate(Shift+R)"></Button>
-                    <Button Height="38" Margin="10,449,20,10" Content="Show Renovations(Shift+S)"></Button>
-                    <Button Height="38" Margin="10,613,20,10" Content="Demo(Q)"></Button>
+                    <Label Content="Renovation" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="3,432,0,0" Foreground="#67c9cb"/>
+                    <Button Height="38" Margin="10,403,20,70" Content="Renovate(Shift+R)"/>
+                    <Button Height="38" Margin="10,449,20,10" Content="Show Renovations(Shift+S)"/>
+                    <Button Height="38" Margin="10,613,20,0" Content="Demo(Q)"/>
                 </Grid>
             </GroupBox>
         </Grid>

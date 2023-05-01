@@ -22,7 +22,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
             </Grid>
         </ControlTemplate>
         <Style x:Key="LabelStyle" TargetType="Label">
@@ -31,32 +31,156 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#03888f"></Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
-            <Setter Property="BorderThickness" Value="3"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#0da2a5"></Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="BulletDecorator.Background" Value="#d9eeef"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#edf6f7"></Setter>
+                    <Setter Property="Foreground" Value="#027177"></Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="#d9eeef"></Setter>
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border x:Name="border"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#edf6f7"></Setter>
+                                <Setter TargetName="border" Property="BorderThickness" Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
         <Style x:Key="IntegerUpDownStyle" TargetType="xctk:IntegerUpDown">
             <Setter Property="Background" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Background" Value="#efdaee"></Setter>
+                    <Setter Property="BorderThickness" Value="1"></Setter>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
-            <Setter Property="Background" Value="#67c9cb"></Setter>
-            <Setter Property="Foreground" Value="#03888f"></Setter>
-            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-            <Setter Property="Border.Background" Value="#67c9cb"></Setter>
+            <Setter Property="Background" Value="#d9eeef"/>
+            <Setter Property="Foreground" Value="#03888f"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#03888f"></Setter>
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="border"
+                            Grid.Column="0"
+                            CornerRadius="5"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter x:Name="ContentSite"
+                                                  IsHitTestVisible="False"
+                                                  Content="{TemplateBinding ComboBox.SelectedItem}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ToggleButton BorderThickness="1" BorderBrush="#03888f" Background="Transparent" Grid.Column="1" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" >
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border x:Name="Border" 
+                                            Grid.ColumnSpan="2"
+                                            CornerRadius="4"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}" />
+                                            <Path x:Name="Arrow"
+                                          Grid.Column="1"     
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,6,0"     
+                                          Fill="#03888f"
+                                          Data="M 0 0 L 4 4 L 8 0 Z" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <Popup x:Name="popup" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True" Focusable="True">
+                                <Border x:Name="popupBorder"
+                                Background="#edf6f7"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Width="100"
+                                CornerRadius="10">
+                                    <ScrollViewer>
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="IsDropDownOpen" Value="True"></Setter>
+                                <Setter Property="BorderThickness" Value="1"></Setter>
+                                <Setter Property="BorderBrush" Value="#03888f"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                                <Setter Property="IsDropDownOpen" Value="False"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
     </Window.Resources>
     <Grid Background="#d9eeef">
         <Grid.RowDefinitions>
@@ -72,41 +196,72 @@
         <Label Content="Min staying days:" FontSize="15" Margin="44,155,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
         <Label Content="Cancellation threshold:" FontSize="15" Margin="44,220,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
         <Label Content="Image URL (split by comma):" FontSize="15" Margin="44,290,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
-        <TextBox Name="Name" Margin="49,59,49,40" Width="256" Height="28" HorizontalAlignment="Left" VerticalContentAlignment="Center" Style="{StaticResource TextBoxStyle}"> 
+        <TextBox Name="Name" Margin="49,59,49,40" Width="256" Height="28" Focusable="True" HorizontalAlignment="Left" VerticalContentAlignment="Center" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <TextBox.Text>
                 <Binding Path="AccommodationToCreate.Name" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <val:EmptyStingValidation/>
+                        <val:EmptyStringValidation/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-            <Validation.ErrorTemplate>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <AdornedElementPlaceholder  Grid.Column="0" Grid.Row="0"/>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                    </Grid>
-                </ControlTemplate>
-            </Validation.ErrorTemplate>
         </TextBox>
-        <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding LocationToCreate.Country, UpdateSourceTrigger=PropertyChanged}" x:Name="Country" Margin="49,78,169,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Style="{DynamicResource ComboBoxStyle}"></ComboBox>
-        <ComboBox ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding LocationToCreate.City, UpdateSourceTrigger=PropertyChanged}" x:Name="City" Margin="185,78,49,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Style="{StaticResource ComboBoxStyle}"></ComboBox>
+        <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="Country" Margin="49,78,169,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <ComboBox.SelectedItem>
+                <Binding Path="LocationToCreate.Country" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:ComboBoxValidation></val:ComboBoxValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <ComboBox ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="City" Margin="185,78,49,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left"  Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <ComboBox.SelectedItem>
+                <Binding Path="LocationToCreate.City" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <val:ComboBoxValidation></val:ComboBoxValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ComboBox.SelectedItem>
+        </ComboBox>
         <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Apartment}" Content="Apartment" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource RadioButtonStyle}"></RadioButton>
         <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=House}" Content="House" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource RadioButtonStyle}"></RadioButton>
         <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Cottage}" Content="Cottage" FontSize="13" Margin="49,-40,53,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-        <xctk:IntegerUpDown Name="MaxNumGuests" Margin="49,29,49,276" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Value="{Binding AccommodationToCreate.MaxGuestNum, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource IntegerUpDownStyle}"/>
-        <xctk:IntegerUpDown Name="MinStayDay" Margin="49,118,49,216" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Value="{Binding AccommodationToCreate.MinStayingDays, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource IntegerUpDownStyle}"/>
-        <xctk:IntegerUpDown Name="CancelThreshold" Margin="49,187,49,156" Height="28" Width="256" Grid.Row="1" Minimum="1" DefaultValue="1" VerticalContentAlignment="Center" Value="{Binding AccommodationToCreate.CancellationThreshold, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource IntegerUpDownStyle}"/>
-        <TextBox Name="Url" Margin="49,275,49,91" Height="28" Width="256" Grid.Row="1" VerticalContentAlignment="Center" Text="{Binding ImageToCreate.Url, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"/>
-        <Button Command="{Binding ConfirmCommand}" Content="Confirm(Enter)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1" Style="{StaticResource ButtonStyle}"></Button>
+        <xctk:IntegerUpDown Name="MaxNumGuests" Margin="49,29,49,276" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown.Value>
+                <Binding Path="AccommodationToCreate.MaxGuestNum" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:MinValueValidation></val:MinValueValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </xctk:IntegerUpDown.Value>
+        </xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Name="MinStayDay" Margin="49,118,49,216" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown.Value>
+                <Binding Path="AccommodationToCreate.MinStayingDays" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:MinValueValidation></val:MinValueValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </xctk:IntegerUpDown.Value>
+        </xctk:IntegerUpDown>
+        <xctk:IntegerUpDown Name="CancelThreshold" Margin="49,187,49,156" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown.Value>
+                <Binding Path="AccommodationToCreate.CancellationThreshold" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:MinValueValidation></val:MinValueValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </xctk:IntegerUpDown.Value>
+        </xctk:IntegerUpDown>
+        <TextBox Name="Url" Margin="49,275,49,91" Height="28" Width="256" Grid.Row="1" VerticalContentAlignment="Center" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <TextBox.Text>
+                <Binding Path="ImageToCreate.Url" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <val:EmptyStringValidation></val:EmptyStringValidation>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button Command="{Binding ConfirmCommand}" Content="Confirm(C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1" Style="{StaticResource ButtonStyle}"></Button>
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ namespace Tourist_Project.Applications.UseCases
         private readonly IAccommodationRatingRepository accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
         private readonly IGuestRateRepository guestRateRepository = injector.CreateInstance<IGuestRateRepository>();
         private readonly IReservationRepository reservationRepository = injector.CreateInstance<IReservationRepository>();
+        private readonly GuestRateService guestRateService = new();
         public NotificationService()
         {
         }
@@ -51,27 +52,26 @@ namespace Tourist_Project.Applications.UseCases
         public bool HasReviews()
         {
             if (accommodationRatingRepository.GetAll().Count == 0) return false;
-            foreach (var accommodationRating in accommodationRatingRepository.GetAll().Where(accommodationRating => !accommodationRating.Notified))
+            foreach (var accommodationRating in accommodationRatingRepository.GetAll())
             {
-                Create(new Notification("Reviews", accommodationRating.UserId, accommodationRating.ReservationId));
-                accommodationRating.Notified = true;
-                accommodationRatingRepository.Update(accommodationRating);
+                foreach (var notification in GetAll().Where(notification => notification.TypeId == accommodationRating.Id && notification.Notified))
+                {
+                    Create(new Notification("Reviews", true, accommodationRating.Id));
+                }
             }
             return true;
         }
         public void HasUnratedGuests()
         {
+            guestRateService.HasNewRatings();
             foreach (var guestRate in guestRateRepository.GetAll())
             {
                 foreach (var reservation in reservationRepository.GetAll())
                 {
                     var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if (guestRate.IsReviewed() || Math.Abs(daysSinceCheckOut.Days) >= 5 || guestRate.GuestId != reservation.GuestId) continue;
-                    if (GetAllByType("GuestRate").Count == 0)
-                        Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
-                    foreach (var notification in GetAllByType("GuestRate").Where(notification => notification.GuestRatingId != guestRate.Id && notification.ReservationId != reservation.Id))
+                    if ((notificationRepository.GetAll().Count == 0 || notificationRepository.GetAll().All(c => c.TypeId != guestRate.Id)) && !guestRate.IsReviewed() && Math.Abs(daysSinceCheckOut.Days) < 5 && guestRate.ReservationId == reservation.Id)
                     {
-                        Create(new Notification("GuestRate", guestRate.Id, reservation.Id));
+                        Create(new Notification("GuestRate", true, guestRate.Id));
                     }
                 }
             }

@@ -15,7 +15,6 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
         public static ObservableCollection<Notification> ReviewNotifications { get; set; }
-        public static ObservableCollection<GuestRating> GuestRatings { get; set; }
         public static ObservableCollection<RescheduleRequest> RescheduleRequests { get; set; }
         public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         public static ObservableCollection<AccommodationViewModel> AccommodationView { get; set; }
@@ -63,7 +62,6 @@ namespace Tourist_Project.WPF.ViewModels
             #region CollectionInstanting
             User = userService.GetOne(user.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
-            GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
@@ -112,7 +110,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         public static bool CanRate()
         {
-            return true;
+            return SelectedRating != null;
         }
 
         public static void ShowReview()

@@ -115,7 +115,7 @@
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,480,-20">
+                <GroupBox Header="Guest Ratings(F1)" Margin="20,0,479,-20">
                     <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"

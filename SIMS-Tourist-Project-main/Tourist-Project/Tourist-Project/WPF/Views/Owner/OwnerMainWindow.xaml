@@ -93,7 +93,7 @@
                     <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500" Foreground="#67c9cb"/>
                     <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500" Foreground="#67c9cb"/>
                     <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="115,81,0,538" Height="50" HorizontalAlignment="Center"/>
-                    <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)"></Button>
+                    <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)" Command="{Binding LogOutCommand}"></Button>
                     <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0" Foreground="#67c9cb"/>
                     <Button Height="38" Margin="10,144,20,229" Content="Create(C)" Command="{Binding CreateCommand}"></Button>
                     <Button Height="38" Margin="10,190,20,163" Content="Update(U)" Command="{Binding UpdateCommand}"></Button>

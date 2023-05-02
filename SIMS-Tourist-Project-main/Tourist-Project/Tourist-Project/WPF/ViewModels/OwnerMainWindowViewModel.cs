@@ -45,8 +45,9 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ShowReviewsCommand { get; set; }
         public ICommand ConfirmRescheduleCommand { get; set; }
         public ICommand CancelRescheduleCommand { get; set; } 
+        public ICommand LogOutCommand { get; set; }
         #endregion
-        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
+        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
             OwnerMainWindow = ownerMainWindow;
             #region CommandInstanting
@@ -57,9 +58,10 @@ namespace Tourist_Project.WPF.ViewModels
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
+            LogOutCommand = new RelayCommand(LogOut);
             #endregion
             #region CollectionInstanting
-            User = userService.GetOne(MainWindow.LoggedInUser.Id);
+            User = userService.GetOne(user.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
@@ -145,6 +147,13 @@ namespace Tourist_Project.WPF.ViewModels
         public static bool CanCancelReschedule()
         {
             return SelectedRescheduleRequest != null;
+        }
+
+        public void LogOut()
+        {
+            var loginWindow = new LoginWindow();
+            OwnerMainWindow.Close();
+            loginWindow.ShowDialog();
         }
         #endregion
         

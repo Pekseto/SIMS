@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -14,7 +15,6 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
         public static ObservableCollection<Notification> ReviewNotifications { get; set; }
-        public static ObservableCollection<GuestRating> GuestRatings { get; set; }
         public static ObservableCollection<RescheduleRequest> RescheduleRequests { get; set; }
         public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         public static ObservableCollection<AccommodationViewModel> AccommodationView { get; set; }
@@ -44,8 +44,9 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ShowReviewsCommand { get; set; }
         public ICommand ConfirmRescheduleCommand { get; set; }
         public ICommand CancelRescheduleCommand { get; set; } 
+        public ICommand LogOutCommand { get; set; }
         #endregion
-        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
+        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
             OwnerMainWindow = ownerMainWindow;
             #region CommandInstanting
@@ -56,11 +57,11 @@ namespace Tourist_Project.WPF.ViewModels
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
+            LogOutCommand = new RelayCommand(LogOut);
             #endregion
             #region CollectionInstanting
-            User = userService.GetOne(MainWindow.LoggedInUser.Id);
+            User = userService.GetOne(user.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
-            GuestRatings = new ObservableCollection<GuestRating>(guestRateService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
@@ -109,7 +110,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         public static bool CanRate()
         {
-            return true;
+            return SelectedRating != null;
         }
 
         public static void ShowReview()
@@ -144,6 +145,13 @@ namespace Tourist_Project.WPF.ViewModels
         public static bool CanCancelReschedule()
         {
             return SelectedRescheduleRequest != null;
+        }
+
+        public void LogOut()
+        {
+            var loginWindow = new LoginWindow();
+            OwnerMainWindow.Close();
+            loginWindow.ShowDialog();
         }
         #endregion
         

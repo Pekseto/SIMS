@@ -8,7 +8,7 @@ namespace Tourist_Project.WPF.ViewModels
     public class RateGuestViewModel
     {
         public Notification Notification { get; set; }
-        public GuestRating GuestRate { get; set; } = new();
+        public GuestRateViewModel GuestRate { get; set; }
         private readonly GuestRateService ratingService = new ();
         private readonly NotificationService notificationService = new ();
         public ICommand RateCommand { get; set; }
@@ -16,7 +16,7 @@ namespace Tourist_Project.WPF.ViewModels
         public RateGuestViewModel(Notification notification, Window window)
         {
             Notification = notification;
-            GuestRate = ratingService.Get(notification.GuestRatingId);
+            GuestRate = new GuestRateViewModel(notification);
             RateCommand = new RelayCommand(Rate, CanRate);
             Window = window;
         }
@@ -24,11 +24,11 @@ namespace Tourist_Project.WPF.ViewModels
         public void Rate()
         {
             notificationService.Delete(Notification.Id);
-            ratingService.Update(GuestRate);
+            ratingService.Update(GuestRate.GuestRating);
             Window.Close();
         }
 
-        public static bool CanRate()
+        public bool CanRate()
         {
             return true;
         } 

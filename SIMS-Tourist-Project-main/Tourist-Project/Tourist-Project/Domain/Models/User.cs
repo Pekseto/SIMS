@@ -3,7 +3,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public enum UserRole { owner, guide, guest }
+    public enum UserRole { owner, guide, guest1, guest2 }
     public class User : ISerializable
     {
         public int Id { get; set; }

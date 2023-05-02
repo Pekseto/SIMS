@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.View;
+using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -19,7 +20,7 @@ namespace Tourist_Project.WPF.Views
 
         private void OwnerButtonClick(object sender, RoutedEventArgs e)
         {
-            var ownerShowWindow = new OwnerMainWindow();
+            var ownerShowWindow = new OwnerMainWindow(LoggedInUser);
             ownerShowWindow.Show();
         }
         private void Guest1ButtonClick(object sender, RoutedEventArgs e)
@@ -29,7 +30,7 @@ namespace Tourist_Project.WPF.Views
         }
         private void Guest2ButtonClick(object sender, RoutedEventArgs e)
         {
-            if (LoggedInUser.Role == UserRole.guest)
+            if (LoggedInUser.Role == UserRole.guest2)
             {
                 var guestTwoWindow = new GuestTwoWindow(LoggedInUser);
                 guestTwoWindow.Show();

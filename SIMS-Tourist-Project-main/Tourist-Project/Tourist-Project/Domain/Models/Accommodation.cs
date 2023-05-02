@@ -1,24 +1,134 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
     public enum AccommodationType { Apartment, House, Cottage }
-    public class Accommodation : ISerializable
+    public class Accommodation : ISerializable, INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int LocationId { get; set; }
-        public AccommodationType Type { get; set; }
-        public int MaxGuestNum { get; set; }
-        public int MinStayingDays { get; set; }
-        public int CancellationThreshold { get; set; }
-        public int ImageId { get; set; }
-        public int UserId { get; set; }
+        private int id;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                if (value == id) return;
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (value == name) return;
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+
+        private int locationId;
+        public int LocationId
+        {
+            get => locationId;
+            set
+            {
+                if (value == locationId) return;
+                locationId = value;
+                OnPropertyChanged("LocationId");
+            }
+        }
+
+        private AccommodationType type;
+        public AccommodationType Type
+        {
+            get => type;
+            set
+            {
+                if (value == type) return;
+                type = value;
+                OnPropertyChanged("Type");
+            }
+        }
+
+        private int maxGuestNum;
+        public int MaxGuestNum
+        {
+            get => maxGuestNum;
+            set
+            {
+                if (value == maxGuestNum) return;
+                maxGuestNum = value;
+                OnPropertyChanged("MaxGuestNum");
+            }
+        }
+
+        private int minStayingDays;
+        public int MinStayingDays
+        {
+            get => minStayingDays;
+            set
+            {
+                if (value == minStayingDays) return;
+                minStayingDays = value;
+                OnPropertyChanged("MinStayingDays");
+            }
+        }
+
+        private int cancellationThreshold;
+        public int CancellationThreshold
+        {
+            get => cancellationThreshold;
+            set
+            {
+                if (value == cancellationThreshold) return;
+                cancellationThreshold = value;
+                OnPropertyChanged("CancellationThreshold");
+            }
+        }
+
+        private int imageId;
+        public int ImageId
+        {
+            get => imageId;
+            set
+            {
+                if (value == imageId) return;
+                imageId = value;
+                OnPropertyChanged("ImageId");
+            }
+        }
+
+        private int userId;
+        public int UserId
+        {
+            get => userId;
+            set
+            {
+                if (value == userId) return;
+                userId = value;
+                OnPropertyChanged("UserId");
+            }
+        }
+
+        private string imageIdsCsv;
+        public string ImageIdsCsv
+        {
+            get => imageIdsCsv;
+            set
+            {
+                if (value == imageIdsCsv) return;
+                imageIdsCsv = value;
+                OnPropertyChanged("ImageIdsCsv");
+            }
+        }
         public List<int> ImageIds { get; set; } = new();
-        public string ImageIdsCsv { get; set; }
 
         public Accommodation() { }
         public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes)
@@ -83,6 +193,13 @@ namespace Tourist_Project.Domain.Models
                 if (imageIde != string.Empty)
                     ImageIds.Add(int.Parse(imageIde));
             }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

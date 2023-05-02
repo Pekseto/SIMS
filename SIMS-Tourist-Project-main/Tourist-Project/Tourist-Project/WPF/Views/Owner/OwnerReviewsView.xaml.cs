@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Owner
 {
     /// <summary>
     /// Interaction logic for OwnerReviewsView.xaml

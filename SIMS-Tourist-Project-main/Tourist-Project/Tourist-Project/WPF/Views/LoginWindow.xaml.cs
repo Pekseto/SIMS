@@ -1,9 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
+using Tourist_Project.View;
+using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -30,14 +33,46 @@ namespace Tourist_Project.WPF.Views
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            User user = repository.GetByUsername(Username);
+            var user = repository.GetByUsername(Username);
             if (user != null)
             {
                 if (user.Password == txtPassword.Password)
                 {
-                    var mainWindow = new MainWindow(user);
-                    mainWindow.Show();
-                    Close();
+                    //TODO
+                    MainWindow.LoggedInUser = user;
+                    switch (user.Role)
+                    {
+                        case UserRole.owner:
+                        {
+                            var ownerShowWindow = new OwnerMainWindow(user);
+                            ownerShowWindow.Show();
+                            Close();
+                            break;
+                        }
+                        case UserRole.guest1:
+                        {
+                            var guestOne = new GuestOne(user);
+                            guestOne.Show();
+                            Close();
+                            break;
+                        }
+                        case UserRole.guest2:
+                        {
+                            var guestTwoWindow = new GuestTwoWindow(user);
+                            guestTwoWindow.Show();
+                            Close();
+                            break;
+                        }
+                        case UserRole.guide:
+                        {
+                            var guideShowWindow = new TodayToursView();
+                            guideShowWindow.Show();
+                            Close();
+                            break;
+                        }
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
                 else
                 {

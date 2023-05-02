@@ -15,12 +15,10 @@ namespace Tourist_Project.Domain.Models
         //TODO
         public string ImageUrl { get; set; }
         public int ImageId { get; set; }
-        public bool Notified { get; set; }
         public int ReservationId { get; set; }
         
         public AccommodationRating() { }
-        //TODO
-        public AccommodationRating(int id, int accommodationId, int userId, int cleanness, string comment, int imageId, string imageUrl, bool notified, int reservationId, int ownerRating, int accommodationGrade)
+        public AccommodationRating(int id, int accommodationId, int userId, int cleanness, string comment, int imageId, string imageUrl, int reservationId, int ownerRating, int accommodationGrade)
         {
             Id = id;
             AccommodationId = accommodationId;
@@ -29,7 +27,6 @@ namespace Tourist_Project.Domain.Models
             Comment = comment;
             ImageId = imageId;
             ImageUrl = imageUrl;
-            Notified = notified;
             ReservationId = reservationId;
             OwnerRating = ownerRating;
             AccommodationGrade = accommodationGrade;
@@ -48,7 +45,6 @@ namespace Tourist_Project.Domain.Models
                 Comment,
                 ImageId.ToString(),
                 ImageUrl,
-                Notified.ToString()
             };
             return csvValues;
         }
@@ -64,7 +60,6 @@ namespace Tourist_Project.Domain.Models
             Comment = values[7];
             ImageId = Convert.ToInt32(values[8]);
             ImageUrl = values[9];
-            Notified = Convert.ToBoolean(values[10]);
         }
     }
 }

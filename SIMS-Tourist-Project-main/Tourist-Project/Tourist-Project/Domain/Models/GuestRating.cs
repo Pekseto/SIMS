@@ -6,18 +6,16 @@ namespace Tourist_Project.Domain.Models
     public class GuestRating : ISerializable
     {
         public int Id { get; set; }
-        public int OwnerId { get; set; }
-        public int GuestId { get; set; }
+        public int ReservationId { get; set; }
         public int CleanlinessGrade { get; set; }
-        public int RuleGrade { get; set; }
+        public int RuleCompliance { get; set; }
         public string Comment { get; set; }
         public GuestRating() { }
-        public GuestRating(int ownerId, int guestId, int cleanlinessGrade, int ruleGrade, string comment)
+        public GuestRating(int reservationId, int cleanlinessGrade, int ruleCompliance, string comment)
         {
-            OwnerId = ownerId;
-            GuestId = guestId;
+            ReservationId = reservationId;
             CleanlinessGrade = cleanlinessGrade;
-            RuleGrade = ruleGrade;
+            RuleCompliance = ruleCompliance;
             Comment = comment;
         }
         public string[] ToCSV()
@@ -25,10 +23,9 @@ namespace Tourist_Project.Domain.Models
             string[] csvValues =
             {
                 Id.ToString(), 
-                OwnerId.ToString(), 
-                GuestId.ToString(), 
+                ReservationId.ToString(), 
                 CleanlinessGrade.ToString(), 
-                RuleGrade.ToString(), 
+                RuleCompliance.ToString(), 
                 Comment
             };
             return csvValues;
@@ -36,16 +33,15 @@ namespace Tourist_Project.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            OwnerId = Convert.ToInt32(values[1]);
-            GuestId = Id = Convert.ToInt32(values[2]);
-            CleanlinessGrade = Convert.ToInt32(values[3]);
-            RuleGrade = Convert.ToInt32(values[4]);
-            Comment = values[5];
+            ReservationId = Id = Convert.ToInt32(values[1]);
+            CleanlinessGrade = Convert.ToInt32(values[2]);
+            RuleCompliance = Convert.ToInt32(values[3]);
+            Comment = values[4];
         }
         //TODO
         public bool IsReviewed()
         {
-            return CleanlinessGrade != 0 && RuleGrade != 0 && !Comment.Equals("");
+            return CleanlinessGrade != 0 && RuleCompliance != 0 && !Comment.Equals("");
         }
     }
 }

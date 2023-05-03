@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -20,10 +21,10 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class RescheduleReservation : Window
     {
-        public RescheduleReservation()
+        public RescheduleReservation(Reservation selectedReservation)
         {
             InitializeComponent();
-            this.DataContext = new RescheduleReservationViewModel(this);
+            this.DataContext = new RescheduleReservationViewModel(this, selectedReservation);
         }
     }
 }

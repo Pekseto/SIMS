@@ -198,5 +198,9 @@ namespace Tourist_Project.Domain.Models
                     ImageIds.Add(int.Parse(imageIde));
             }
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -57,6 +57,7 @@ public class GuestOneViewModel
     public ICommand RateAccommodation_Command { get; set; }
     public ICommand CreateReservation_Command { get; set; }
 
+    public ICommand Search_Command { get; set; }
     public GuestOneViewModel(Window window)
     {
         this._window = window;
@@ -180,11 +181,22 @@ public class GuestOneViewModel
         return false;
     }
 
-    public bool CanCreateReservation()
+    private bool CanCreateReservation()
     {
         if (SelectedAccommodation != null)
             return true;
         return false;
+    }
+
+    private bool CanSearch()
+    {
+        return true;
+    }
+
+    private void NewSearchWindow()
+    {
+        var newSearchWindow = new GuestOneSearchWindow();
+        newSearchWindow.Show();
     }
 
     private void RateAccommodation()

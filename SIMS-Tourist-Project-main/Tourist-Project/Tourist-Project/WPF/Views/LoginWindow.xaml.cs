@@ -86,4 +86,5 @@ namespace Tourist_Project.WPF.Views
 
         }
     }
+
 }

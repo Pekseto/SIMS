@@ -26,7 +26,7 @@ namespace Tourist_Project.View
     public partial class GuestOne : Window
     {
 
-        public ObservableCollection<AccommodationDTO> SearchResults { get; set; }
+        /*public ObservableCollection<AccommodationDTO> SearchResults { get; set; }
         public ObservableCollection<Accommodation> Accommodations { get; set; }
         public Accommodation SelectedAccommodation { get; set; }
         public List<AccommodationDTO> AccommodationDTOs { get; set; }
@@ -64,17 +64,17 @@ namespace Tourist_Project.View
 
         public ObservableCollection<string> AccommodationTypes { get; set; }
 
-        public User LoggedInUser { get; set; }
+        public User LoggedInUser { get; set; }*/
         public GuestOne(User user)
         {
             InitializeComponent();
-            this.DataContext = new GuestOneViewModel(this);
+            this.DataContext = new GuestOneViewModel(this, DataGrid);
             //LoggedInUser = user;
 
             
         }
 
-        public void HandleAny()
+        /*public void HandleAny()
         {
             AccommodationTypes.Add("Any");
         }
@@ -227,6 +227,6 @@ namespace Tourist_Project.View
         {
             // var BookAccommodation = new BookAccommodationWindow(SelectedAccommodationDTO);
             //BookAccommodation.Show();
-        }
+        }*/
     }
 }

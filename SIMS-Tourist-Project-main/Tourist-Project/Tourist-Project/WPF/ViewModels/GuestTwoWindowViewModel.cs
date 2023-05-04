@@ -141,6 +141,7 @@ namespace Tourist_Project.WPF.ViewModels
             MyToursCommand = new RelayCommand(OnMyToursClick);
             HistoryCommand = new RelayCommand(OnHistoryClick);
 
+
             tourService = new TourService();
             locationService = new LocationService();
             reservationService = new TourReservationService();

@@ -11,20 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for RescheduleRequests.xaml
+    /// Interaction logic for UserReservationsWindow.xaml
     /// </summary>
-    public partial class RescheduleRequests : Window
+    public partial class UserReservationsWindow : Window
     {
-        public RescheduleRequests(Reservation selectedReservation)
+        public UserReservationsWindow()
         {
             InitializeComponent();
-            this.DataContext = new RescheduleRequestsViewModel(this,selectedReservation);
+            this.DataContext = new UserReservationsViewModel(this);
         }
     }
 }

@@ -16,18 +16,18 @@
                 <ComboBox ItemsSource ="{Binding AccommodationsType}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Left" Width="68"/>
 
                 <Label Content="Country" Height="26"/>
-                <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" SelectionChanged="SelectedCountryChanged" Width="64" VerticalAlignment="Top"/>
+                <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}"  Width="64" VerticalAlignment="Top"/>
                 <Label Content="City" Height="26"/>
-                <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" SelectionChanged="SelectedCityChanged" Width="64" VerticalAlignment="Top"/>
+                <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}"  Width="64" VerticalAlignment="Top"/>
                 <Label Content="Geusts Number" Height="26"/>
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path=MaxGuestNum}" Width="54"/>
                 <Label Content="Days Before Cancel" Height="26" Width="110"/>
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Path= SearchedCancelationThreshold}" Width="58"/>
-                <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SearchClick"/>
-                <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowAllClick"/>
+                <Button Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding SearchReservations_Command}"/>
+                <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowAll_Command}"/>
                 <Button Content="Reserve Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding CreateReservation_Command}"/>
                 <Button Content="Rate Accommodatoin" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding RateAccommodation_Command}"></Button>
-
+                <Button Content="Your Reservations" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowUserReservations_Command}"></Button>
             </ToolBar>
 
             <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481" Width="800">

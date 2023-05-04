@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="RescheduleRequests" Height="450" Width="800">
     <Grid>
-        
+        <DataGrid x:Name="rescheduleRequestsDataGrid" Grid.Row="1" Margin="10"
+                  ItemsSource="{Binding RescheduleRequestsForReservation, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedRescheduleRequest, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="OldBeginnigDate" Binding="{Binding OldBeginningDate}" Width="*"/>
+                <DataGridTextColumn Header="OldEndingDate" Binding="{Binding OldEndingDate}" Width="*"/>
+                <DataGridTextColumn Header="NewBeginnigDate" Binding="{Binding NewBeggingDate}" Width="*"/>
+                <DataGridTextColumn Header="NewEndingDate" Binding="{Binding NewEndingDate}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding RequestStatus}" Width="*"/>
+                <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
     </Grid>
 </Window>

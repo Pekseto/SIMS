@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.View;
+using System.Windows.Controls;
 
 namespace Tourist_Project.WPF.ViewModels;
 
@@ -23,8 +24,8 @@ public class GuestOneViewModel
     private AccommodationService _accommodationService = new AccommodationService();
 
     #region SearchParameters
-    public ObservableCollection<String> Countries { get; set; }
-    public ObservableCollection<String> Cities { get; set; }
+    public List<String> Countries { get; set; }
+    public List<String> Cities { get; set; }
 
     public List<String> AccommodationsType { get; set; }
 
@@ -43,11 +44,8 @@ public class GuestOneViewModel
 
     #region Presentation
     public static ObservableCollection<String> LocationsFullName = new();
-    
-
-    public ObservableCollection<Accommodation> Accommodations { get; set; }
-
-    public List<Accommodation> SearchResults = new();
+    public ObservableCollection<Accommodation> Accommodations { get; set; } = new();
+    public ObservableCollection<Accommodation> AccommodationsView { get; set; } = new();
 
     public List<Location> Locations { get; set; }
 
@@ -57,33 +55,69 @@ public class GuestOneViewModel
     public ICommand RateAccommodation_Command { get; set; }
     public ICommand CreateReservation_Command { get; set; }
 
-    public GuestOneViewModel(Window window)
+    public ICommand ShowUserReservations_Command { get; set; }
+
+    public ICommand SearchReservations_Command { get; set; }
+
+    private DataGrid DataGrid;
+
+    public ICommand ShowAll_Command { get; set; }
+    public GuestOneViewModel(Window window, DataGrid dataGrid)
     {
         this._window = window;
+        this.DataGrid = dataGrid;
         Locations = new List<Location>();
         Locations = GetLocationsForAccommodations();
-        Countries = new ObservableCollection<String>(_locationService.GetAllCountries());
-        Cities = new ObservableCollection<String>(_locationService.GetAllCities());
+        AccommodationsView = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
+        Countries = _locationService.GetAllCountries();
+        Countries.Add("Any");
+        Cities = _locationService.GetAllCities();
+        Cities.Add("Any");
         AccommodationsType = new List<String>();
         AccommodationsType = GetAccommodationsType();
         Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
         GenerateLocations();
+        HandleCitiesForCountry();
         RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRate);
-        CreateReservation_Command = new RelayCommand(CreateReservation,CanCreateReservation);
-
+        CreateReservation_Command = new RelayCommand(CreateReservation, CanCreateReservation);
+        ShowUserReservations_Command = new RelayCommand(ShowReservations, CanShowReservations);
+        SearchReservations_Command = new RelayCommand(SearchLogic, CanSearch);
+        ShowAll_Command = new RelayCommand(ShowAllReservations, CanShowAll);
     }
 
 
     #region LoadingObjectsForDisplay
-   
-    public void GenerateLocations()
-    {   
-        foreach(Accommodation accommodation in Accommodations)
+
+    public bool CanShowAll()
+    {
+        return true;
+    }
+
+    public void ShowAllReservations()
+    {
+        DataGrid.ItemsSource = AccommodationsView;
+        foreach (Accommodation accommodation in AccommodationsView)
         {
             //accommodation.Location = _locationService.Get(accommodation.LocationId);
         }
     }
+    public bool CanSearch()
+    {
+        return true;
+    }
+    public bool CanShowReservations()
+    {
+        return true;
+    }
 
+    public void GenerateLocations()
+    {
+        foreach (Accommodation accommodation in Accommodations)
+        {
+            accommodation.Location = _locationService.Get(accommodation.LocationId);
+        }
+
+    }
 
     public List<String> GetAccommodationsType()
     {
@@ -100,7 +134,7 @@ public class GuestOneViewModel
 
     public List<Location> GetLocationsForAccommodations()
     {
-        foreach(Accommodation accommodation in _accommodationService.GetAll())
+        foreach (Accommodation accommodation in _accommodationService.GetAll())
         {
             var temp = _locationService.Get(accommodation.LocationId);
             temp.ToString();
@@ -111,7 +145,7 @@ public class GuestOneViewModel
 
     public void LocationsToString()
     {
-        foreach(Location location in Locations)
+        foreach (Location location in Locations)
         {
             location.ToString();
         }
@@ -127,12 +161,12 @@ public class GuestOneViewModel
             AccommodationName = string.Empty;
         }
 
-        if (SelectedCountry == null)
+        if (SelectedCountry == null || SelectedCountry == "Any")
         {
             SelectedCountry = string.Empty;
         }
 
-        if (SelectedCity == null)
+        if (SelectedCity == null || SelectedCity == "Any")
         {
             SelectedCity = string.Empty;
         }
@@ -157,21 +191,37 @@ public class GuestOneViewModel
     }
     public void SearchLogic()
     {
-        SearchResults.Clear();
+        //Accommodations.Clear();
+        var searchedAccommodations = new ObservableCollection<Accommodation>();
         HandleEmptyStrings();
         foreach (Accommodation accommodation in Accommodations)
         {
             if (accommodation.Name.ToLower().Contains(AccommodationName.ToLower()) && accommodation.MaxGuestNum >= MaxGuestNum
                 && accommodation.MinStayingDays >= MinStayingDays &&
                 accommodation.Type.ToString().Contains(SelectedType) &&
-                LocationsFullName.Contains(SelectedCountry + ", " + SelectedCity))
+                accommodation.Location.ToString().Contains(SelectedCity + ", " + SelectedCountry))
             {
-                SearchResults.Add(accommodation);
+                searchedAccommodations.Add(accommodation);
             }
         }
+        DataGrid.ItemsSource = searchedAccommodations;
     }
     #endregion
 
+    private void HandleCitiesForCountry()
+    {
+        if (SelectedCountry != null)
+        {
+            Cities.Clear();
+            foreach (Location location in Locations)
+            {
+                if (location.Country == SelectedCountry)
+                {
+                    Cities.Add(location.City);
+                }
+            }
+        }
+    }
 
     private bool CanRate()
     {
@@ -199,6 +249,37 @@ public class GuestOneViewModel
         createReservation.Show();
     }
 
+    private void ShowReservations()
+    {
+        var userReservationWindow = new UserReservationsWindow();
+        userReservationWindow.Show();
+    }
 
 
+    /*private void SelectedCountryChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+        Cities.Clear();
+        foreach (Location location in Locations)
+        {
+            if (location.Country == SelectedCountry)
+            {
+                Cities.Add(location.City);
+            }
+        }
+    }*/
+
+
+    /*private void SelectedCityChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+        foreach (Location location in Locations)
+        {
+            if (location.City == SelectedCity)
+            {
+                SelectedCountry = location.Country;
+            }
+        }
+
+    }*/
 }

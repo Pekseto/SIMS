@@ -13,7 +13,7 @@ using Image = Tourist_Project.Domain.Models.Image;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Applications.UseCases;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
     /// Interaction logic for CreateTour.xaml

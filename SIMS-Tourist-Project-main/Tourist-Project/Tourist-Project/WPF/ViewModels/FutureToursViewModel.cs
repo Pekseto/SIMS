@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.Guide;
 
 namespace Tourist_Project.WPF.ViewModels
 {

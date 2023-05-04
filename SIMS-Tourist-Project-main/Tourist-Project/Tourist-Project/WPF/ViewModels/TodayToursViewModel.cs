@@ -8,8 +8,8 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.Guide;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -17,29 +17,41 @@ namespace Tourist_Project.WPF.ViewModels
     {
         public static ObservableCollection<Tour> TodayTours { get; set; }
         public Tour SelectedTour { get; set; } 
-        private TourService tourService = new();
-        private Window window;
-        private User user;
+        private readonly TourService tourService = new();
+        private readonly Window window;
         public static bool Live { get; set; } 
         public ICommand CreateCommand { get; set; }
         public ICommand StartTourCommand { get; set; }
         public ICommand FutureToursCommand { get; set; }
         public ICommand HistoryCommand { get; set; }
+        public ICommand RequestsCommand { get; set; }
         public TodayToursViewModel(Window window)
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
 
-            SelectedTour = new();
+            SelectedTour = new Tour();
             this.window = window;
             Live = false;
-            this.user = user;
 
             CreateCommand = new RelayCommand(CreateTour, CanCreateTour);
             StartTourCommand = new RelayCommand(StartTour, CanStartTour);
             FutureToursCommand = new RelayCommand(FutureTours, CanFutureTours);
             HistoryCommand = new RelayCommand(History, CanHistory);
+            RequestsCommand = new RelayCommand(Requests, CanRequests);
             this.window = window;
         }
+
+        private bool CanRequests()
+        {
+            return true;
+        }
+
+        private void Requests()
+        {
+            var requestsWindow = new RequestsGuideView();
+            requestsWindow.Show();
+            window.Close();
+        } 
 
         private bool CanHistory()
         {
@@ -72,31 +84,20 @@ namespace Tourist_Project.WPF.ViewModels
         private void CreateTour()
         {
             var createTourWindow = new CreateTourView();
+            createTourWindow.Owner = window;
+            createTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             createTourWindow.Show();
         }
 
         private bool CanStartTour()
         {
-            if (Live) {
-                if (SelectedTour.Status == Status.Begin)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (Live)
+            {
+                return SelectedTour.Status == Status.Begin;
             }
             else
             {
-                if (SelectedTour.Status == Status.End || SelectedTour is null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return SelectedTour.Status != Status.End && SelectedTour is not null;
             }
         }
         private void StartTour()

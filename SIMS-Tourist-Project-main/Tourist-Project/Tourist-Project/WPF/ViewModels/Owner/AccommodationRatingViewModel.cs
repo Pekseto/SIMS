@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Views.Owner;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class AccommodationRatingViewModel : INotifyPropertyChanged
     {
@@ -83,6 +85,8 @@ namespace Tourist_Project.WPF.ViewModels
         private static UserService userService = new();
         private static AccommodationService accommodationService = new();
         private static ImageService imageService = new();
+        public ICommand UpdateCommand { get; set; }
+        public ICommand RenovateCommand { get; set; }
 
         public AccommodationRatingViewModel(AccommodationRating accommodationRating)
         {
@@ -92,8 +96,20 @@ namespace Tourist_Project.WPF.ViewModels
             Guest = userService.Get(Reservation.GuestId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
             Image = imageService.Get(AccommodationRating.ImageId);
+            UpdateCommand = new RelayCommand(Update);
+            RenovateCommand = new RelayCommand(Renovate);
         }
 
+        public void Update()
+        {
+            var updateWindow = new UpdateAccommodation(Accommodation);
+            updateWindow.Show();
+        }
+
+        public void Renovate()
+        {
+            //TODO
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

@@ -7,46 +7,41 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views.Owner;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Owner
 {
-    public class UpdateAccommodationViewModel : INotifyPropertyChanged
+    public class CreateAccommodationViewModel : INotifyPropertyChanged
     {
-        #region UpdateProperties
-        private Accommodation accommodation;
-
-        public Accommodation Accommodation
+        #region ToCreate
+        private Accommodation accommodationToCreate;
+        public Accommodation AccommodationToCreate
         {
-            get => accommodation;
+            get => accommodationToCreate;
             set
             {
-                accommodation = value;
-                OnPropertyChanged("Accommodation");
+                accommodationToCreate = value;
+                OnPropertyChanged("AccommodationToCreate");
             }
         }
-
-        private Image image;
-
-        public Image Image
+        private Location locationToCreate;
+        public Location LocationToCreate
         {
-            get => image;
+            get => locationToCreate;
             set
             {
-                image = value;
-                OnPropertyChanged("Image");
+                locationToCreate = value;
+                OnPropertyChanged("LocationToCreate");
             }
         }
-
-        private Location location;
-
-        public Location Location
+        private Image imageToCreate;
+        public Image ImageToCreate
         {
-            get => location;
+            get => imageToCreate;
             set
             {
-                location = value;
-                OnPropertyChanged("Location");
+                imageToCreate = value;
+                OnPropertyChanged("ImageToCreate");
             }
-        } 
+        }
         #endregion
 
         private readonly ImageService imageService = new();
@@ -56,22 +51,33 @@ namespace Tourist_Project.WPF.ViewModels
         public static ObservableCollection<string> Countries { get; set; } = new();
         public static ObservableCollection<string> Cities { get; set; } = new();
         public static ICommand ConfirmCommand { get; set; }
-        public UpdateAccommodation Window;
-
-        public UpdateAccommodationViewModel(UpdateAccommodation window, Accommodation accommodation)
+        public static ICommand CancelCommand { get; set; }
+        public CreateAccommodation Window;
+        
+        public CreateAccommodationViewModel(CreateAccommodation window)
         {
-            Accommodation = accommodation;
-            Image = new Image();
-            Location = new Location();
             Locations = new ObservableCollection<Location>(locationService.GetAll());
+            LocationToCreate = new Location();
+            AccommodationToCreate = new Accommodation();
+            ImageToCreate = new Image();
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
-            ConfirmCommand = new RelayCommand(Update, CanUpdate);
+            ConfirmCommand = new RelayCommand(Create, CanCreate);
+            CancelCommand = new RelayCommand(Cancel, CanCancel);
             Window = window;
             Window.Country.DropDownClosed += CountryDropDownClosed;
             Window.City.DropDownClosed += CityDropDownClosed;
         }
+
+        public void Create()
+        {
+            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
+            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
+            accommodationService.Create(AccommodationToCreate);
+            Window.Close();
+        }
         #region PropertyChanged
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
@@ -79,19 +85,20 @@ namespace Tourist_Project.WPF.ViewModels
         }
         #endregion
         #region Commands
-        public void Update()
-        {
-            Accommodation.ImageIdsCsv = imageService.FormIdesString(Image.Url);
-            Accommodation.LocationId = locationService.GetId(Location.City, Location.Country);
-            accommodationService.Update(accommodation);
-            Window.Close();
-        }
 
-        public static bool CanUpdate()
+        public static bool CanCreate()
         {
             return true;
         }
+        public void Cancel()
+        {
+            Window.Close();
+        }
 
+        public static bool CanCancel()
+        {
+            return true;
+        }
         public void CountryDropDownClosed(object sender, EventArgs e)
         {
             Cities.Clear();
@@ -108,7 +115,8 @@ namespace Tourist_Project.WPF.ViewModels
                 if (location.City.Equals(Window.City.Text))
                     Window.Country.Text = location.Country;
             }
-        }
+        } 
         #endregion
     }
+
 }

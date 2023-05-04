@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="OwnerReviewsView" Height="560" Width="670" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="OwnerReviewsView" Height="512" Width="670" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <DataTemplate x:Key="ReviewDataTemplate">
             <Grid Width="620">
@@ -26,20 +26,18 @@
                 <Grid Grid.Row="1">
                     <Image Source="{Binding Image.Url}" Width="290" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0"></Image>
                     <Label Content="Cleanness:" Margin="10,10,0,10"></Label>
-                    <Label Content="{Binding AccommodationRating.Cleanness}" Margin="190,10,0,10"></Label>
-                    <Label Content="/5" Margin="199,10,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.Cleanness}" Margin="268,10,0,10"></Label>
+                    <Label Content="/5" Margin="279,10,0,10"></Label>
                     <Label Content="Owner:" Margin="10,50,0,10"></Label>
-                    <Label Content="{Binding AccommodationRating.OwnerRating}" Margin="190,50,0,10"></Label>
-                    <Label Content="/5" Margin="199,50,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.OwnerRating}" Margin="268,50,0,10"></Label>
+                    <Label Content="/5" Margin="279,50,0,10"></Label>
                     <Label Content="Accommodation:" Margin="10,90,0,10"></Label>
-                    <Label Content="{Binding AccommodationRating.AccommodationGrade}" Margin="190,90,0,10"></Label>
-                    <Label Content="/5" Margin="199,90,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.AccommodationGrade}" Margin="268,90,0,10"></Label>
+                    <Label Content="/5" Margin="279,90,0,10"></Label>
                     <Label Content="Additional comment:" Margin="10,130,0,10"></Label>
-                    <TextBox Text="{Binding AccommodationRating.Comment}" HorizontalAlignment="Left" IsReadOnly="True" Width="290" Height="50" Focusable="False" FontSize="16" Margin="10,50,0,0"></TextBox>
-                    <Button Content="Update accommodation(U)" Height="38" Width="290" HorizontalAlignment="Left" Margin="10,200,100,10"></Button>
-                    <Button Content="Renovate accommodation(R)" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,200,10,10"></Button>
-                    <Button Content="View all photos(V)" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,290,10,10"></Button>
-                    <Button Content="Delete accommodation(DEL)" Height="38" Width="290" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,290,100,10"></Button>
+                    <TextBox Text="{Binding AccommodationRating.Comment}" HorizontalAlignment="Left" IsReadOnly="True" Width="290" Height="50" Focusable="False" FontSize="16" Margin="10,120,0,10"></TextBox>
+                    <Button Content="Update accommodation(U)" Command="{Binding UpdateCommand}" Height="38" Width="290" HorizontalAlignment="Left" Margin="10,240,100,10"></Button>
+                    <Button Content="Renovate accommodation(R)" Command="{Binding RenovateCommand}" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,240,10,10"></Button>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -102,6 +100,7 @@
     </Window.Resources>
     <Grid>
         <ListBox Background="#d9eeef" Height="690" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
-                 ItemTemplate="{StaticResource ReviewDataTemplate}"></ListBox>
+                 ItemTemplate="{StaticResource ReviewDataTemplate}"
+                 SelectedItem="{Binding SelectedReview}"></ListBox>
     </Grid>
 </Window>

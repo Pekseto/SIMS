@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
-using Tourist_Project.Repository;
-using Tourist_Project.View;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.Applications.UseCases

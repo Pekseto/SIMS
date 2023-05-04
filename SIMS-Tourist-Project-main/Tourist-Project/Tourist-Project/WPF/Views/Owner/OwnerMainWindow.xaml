@@ -124,7 +124,7 @@
                         <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Reviews(F2)" Margin="209,0,288,-20">
+                <GroupBox Header="Reviews(F2)" Margin="209,0,286,-20">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"

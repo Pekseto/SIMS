@@ -15,7 +15,6 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels

@@ -8,7 +8,6 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
 
 namespace Tourist_Project.Applications.UseCases
 {

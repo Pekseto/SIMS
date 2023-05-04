@@ -7,7 +7,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Owner;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class OwnerMainWindowViewModel
     {
@@ -65,7 +65,7 @@ namespace Tourist_Project.WPF.ViewModels
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
-            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews"));
+            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.Notified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
             #endregion
             notificationService.HasUnratedGuests();
@@ -116,6 +116,11 @@ namespace Tourist_Project.WPF.ViewModels
         public static void ShowReview()
         {
             var showReviewsWindow = new OwnerReviewsView();
+            foreach (var notification in ReviewNotifications)
+            {
+                notification.Notified = true;
+                notificationService.Update(notification);
+            }
             showReviewsWindow.ShowDialog();
         }
         public static bool CanShow()

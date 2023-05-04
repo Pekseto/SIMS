@@ -49,18 +49,14 @@ namespace Tourist_Project.Applications.UseCases
             notificationRepository.Delete(id);
         }
 
-        public bool HasReviews()
+        public void HasReviews()
         {
-            if (accommodationRatingRepository.GetAll().Count == 0) return false;
+            if (accommodationRatingRepository.GetAll().Count == 0) return;
             foreach (var accommodationRating in accommodationRatingRepository.GetAll())
             {
-                foreach (var notification in GetAll())
-                {
-                    if (notification.TypeId == accommodationRating.Id && !notification.Notified)
-                        Create(new Notification("Reviews", false, accommodationRating.Id));
-                }
+                if(GetAll().All(notification => notification.TypeId != accommodationRating.Id))
+                    Create(new Notification("Reviews", false, accommodationRating.Id));
             }
-            return true;
         }
         public void HasUnratedGuests()
         {

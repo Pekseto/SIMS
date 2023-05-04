@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
 
 namespace Tourist_Project.Domain.RepositoryInterfaces
 {

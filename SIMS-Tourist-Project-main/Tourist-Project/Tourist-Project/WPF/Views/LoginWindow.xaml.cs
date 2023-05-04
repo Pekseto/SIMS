@@ -4,8 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
-using Tourist_Project.View;
 using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views

@@ -41,7 +41,7 @@ namespace Tourist_Project.Domain.Models
                 "GuestRate" => "You have unrated guest.",
                 "Forum" => "A new forum has opened. Check it out",
                 "Recommended" => "You have a new \nrecommendation.",
-                "Reviews" => "Guest has rated your \naccommodation.",
+                "Reviews" => "NEW!\nGuest has rated your \naccommodation.",
                 _ => string.Empty
             };
         }

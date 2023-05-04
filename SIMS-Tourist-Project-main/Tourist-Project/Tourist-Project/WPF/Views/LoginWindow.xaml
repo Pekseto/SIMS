@@ -106,7 +106,7 @@
         </Style>
     </Window.Resources>
     <Grid Background="#d9eeef">
-        <Image Source="https://cdn2.iconfinder.com/data/icons/audio-16/96/user_avatar_profile_login_button_account_member-512.png" Height="100" Margin="20,0,20,280"></Image>
+        <Image Source="../../Data/loginIcon.png" Height="100" Margin="20,0,20,280"></Image>
         <Label Height="35" Margin="20, 0,20,120" Width="320" FontSize="18">Username:</Label>
         <Label Height="35" Margin="20,20,20,-40" Width="320" FontSize="18">Password:</Label>
         <TextBox Height="35" Width="290" TextWrapping="Wrap" VerticalAlignment="Center" Margin="20,0,20, 40" FontSize="18" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">

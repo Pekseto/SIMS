@@ -41,7 +41,7 @@ namespace Tourist_Project.Domain.Models
                 CheckOut.ToString(),  
                 GuestsNum.ToString(), 
                 StayingDays.ToString(), 
-                Accommodation.Id.ToString() 
+                AccommodationId.ToString() 
             };
             return csvValues;
         }
@@ -53,7 +53,7 @@ namespace Tourist_Project.Domain.Models
             CheckOut = DateTime.Parse(values[3]);
             GuestsNum = Convert.ToInt32(values[4]);
             StayingDays = Convert.ToInt32(values[5]);
-            Accommodation = new Accommodation() { Id = Convert.ToInt32(values[6]) };
+            AccommodationId = Convert.ToInt32(values[6]);
         }
     }
 }

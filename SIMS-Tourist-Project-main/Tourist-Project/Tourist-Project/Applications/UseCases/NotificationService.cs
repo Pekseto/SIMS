@@ -54,9 +54,10 @@ namespace Tourist_Project.Applications.UseCases
             if (accommodationRatingRepository.GetAll().Count == 0) return false;
             foreach (var accommodationRating in accommodationRatingRepository.GetAll())
             {
-                foreach (var notification in GetAll().Where(notification => notification.TypeId == accommodationRating.Id && notification.Notified))
+                foreach (var notification in GetAll())
                 {
-                    Create(new Notification("Reviews", true, accommodationRating.Id));
+                    if (notification.TypeId == accommodationRating.Id && !notification.Notified)
+                        Create(new Notification("Reviews", false, accommodationRating.Id));
                 }
             }
             return true;

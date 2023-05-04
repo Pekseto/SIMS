@@ -5,25 +5,103 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="OwnerReviewsView" Height="450" Width="550" WindowStartupLocation="CenterScreen">
+        Title="OwnerReviewsView" Height="560" Width="670" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <DataTemplate x:Key="ReviewDataTemplate">
-            <StackPanel>
-                <Label FontSize="20" Content="Cleanness:"></Label>
-                <Label FontSize="20" Margin="210, -35, 0, 0" Content="{Binding Cleanness}"></Label>
-                <Label FontSize="20" Content="Owner:"></Label>
-                <Label FontSize="20" Margin="210, -35, 0, 0" Content="{Binding OwnerRating}"></Label>
-                <Label FontSize="20" Content="Accommodation:"></Label>
-                <Label FontSize="20" Content="{Binding AccommodationGrade}" Margin="210, -35, 0, 0"></Label>
-                <Label FontSize="20" Content="Additional comment:"></Label>
-                <TextBox IsEnabled="False" Width="200" Height="50" Margin="-49, 0, 230, 0" Text="{Binding Comment}"></TextBox>
-                <Image Width="240" Margin="250, -200, 0, 00" Source="{Binding ImageUrl}"></Image>
-                <Separator></Separator>
-            </StackPanel>
+            <Grid Width="620">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Background="#88dcdc">
+                    <Label Content="Accommodation name:" FontSize="22" FontWeight="SemiBold" Margin="10,5"></Label>
+                    <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315,5,0,5"></Label>
+                    <Label Content="Guest name:" FontSize="22" FontWeight="SemiBold" Margin="10, 50, 10,5"></Label>
+                    <Label Content="{Binding Guest.FullName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315, 50, 10, 5"></Label>
+                    <Label Content="Checked in:" FontSize="16" FontWeight="SemiBold" Margin="10,95,10,5"></Label>
+                    <Label Content="{Binding Reservation.CheckIn}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,95,10,5"></Label>
+                    <Label Content="Checked out:" FontSize="16" FontWeight="SemiBold" Margin="10,140,10,5"></Label>
+                    <Label Content="{Binding Reservation.CheckOut}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,140,10,5"></Label>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Image Source="{Binding Image.Url}" Width="290" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0"></Image>
+                    <Label Content="Cleanness:" Margin="10,10,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.Cleanness}" Margin="190,10,0,10"></Label>
+                    <Label Content="/5" Margin="199,10,0,10"></Label>
+                    <Label Content="Owner:" Margin="10,50,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.OwnerRating}" Margin="190,50,0,10"></Label>
+                    <Label Content="/5" Margin="199,50,0,10"></Label>
+                    <Label Content="Accommodation:" Margin="10,90,0,10"></Label>
+                    <Label Content="{Binding AccommodationRating.AccommodationGrade}" Margin="190,90,0,10"></Label>
+                    <Label Content="/5" Margin="199,90,0,10"></Label>
+                    <Label Content="Additional comment:" Margin="10,130,0,10"></Label>
+                    <TextBox Text="{Binding AccommodationRating.Comment}" HorizontalAlignment="Left" IsReadOnly="True" Width="290" Height="50" Focusable="False" FontSize="16" Margin="10,50,0,0"></TextBox>
+                    <Button Content="Update accommodation(U)" Height="38" Width="290" HorizontalAlignment="Left" Margin="10,200,100,10"></Button>
+                    <Button Content="Renovate accommodation(R)" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,200,10,10"></Button>
+                    <Button Content="View all photos(V)" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,290,10,10"></Button>
+                    <Button Content="Delete accommodation(DEL)" Height="38" Width="290" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,290,100,10"></Button>
+                </Grid>
+            </Grid>
         </DataTemplate>
+        <Style x:Key="{x:Type Label}" TargetType="Label">
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Foreground" Value="#d9eeef"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#0da2a5"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type TextBox}" TargetType="TextBox">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border x:Name="border"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#edf6f7"></Setter>
+                                <Setter TargetName="border" Property="BorderThickness" Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
-        <ListBox Height="400" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
+        <ListBox Background="#d9eeef" Height="690" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ReviewDataTemplate}"></ListBox>
     </Grid>
 </Window>

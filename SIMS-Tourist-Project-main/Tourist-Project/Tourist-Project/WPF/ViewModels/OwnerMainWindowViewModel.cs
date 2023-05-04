@@ -60,7 +60,7 @@ namespace Tourist_Project.WPF.ViewModels
             LogOutCommand = new RelayCommand(LogOut);
             #endregion
             #region CollectionInstanting
-            User = userService.GetOne(user.Id);
+            User = userService.Get(user.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));

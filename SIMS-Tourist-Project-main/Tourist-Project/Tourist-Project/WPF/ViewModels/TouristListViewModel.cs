@@ -55,7 +55,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             foreach (TourAttendance attendace in TourAttendances)
             {
-                attendace.User = userService.GetOne(attendace.UserId);
+                attendace.User = userService.Get(attendace.UserId);
                 attendace.TourPoint = tourPointService.GetOne(attendace.CheckPointId);
             }
         }

@@ -33,7 +33,7 @@ namespace Tourist_Project.Domain.Models
         public void FromCSV(string[] values)
         {
             Id = Convert.ToInt32(values[0]);
-            ReservationId = Id = Convert.ToInt32(values[1]);
+            ReservationId = Convert.ToInt32(values[1]);
             CleanlinessGrade = Convert.ToInt32(values[2]);
             RuleCompliance = Convert.ToInt32(values[3]);
             Comment = values[4];

@@ -24,7 +24,7 @@ namespace Tourist_Project.WPF.Views
         public TourHistoryView(User user)
         {
             InitializeComponent();
-            DataContext = new TourHistoryViewModel(user);
+            //DataContext = new TourHistoryViewModel(user);
         }
     }
 }

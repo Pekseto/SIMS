@@ -6,22 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 
 namespace Tourist_Project.WPF.ViewModels
 {
     public class TourLiveGuestViewModel
     {
-        public User LoggedInUser { get; set; }
+        public TourDTO SelectedTour { get; set; }
         public ObservableCollection<TourPoint> TourPoints { get; set; }
 
         private readonly TourPointRepository tourPointRepository = new();
 
-        public TourLiveGuestViewModel(User user, int selectedTourId)
+        public TourLiveGuestViewModel(TourDTO tour)
         {
-            LoggedInUser = user;
-
-            TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(selectedTourId));
+            SelectedTour = tour;
+            TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(SelectedTour.Id));
         }
     }
 }

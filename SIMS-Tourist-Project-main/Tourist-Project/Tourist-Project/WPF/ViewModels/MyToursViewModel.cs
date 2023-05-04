@@ -46,7 +46,7 @@ namespace Tourist_Project.WPF.ViewModels
             TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, MainWindow.LoggedInUser.Id);
             if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.Yes)
             {
-                var TourLiveGuestWindow = new TourLiveGuestView(LoggedInUser, SelectedTodayTour.Id);
+                var TourLiveGuestWindow = new TourLiveGuestView(SelectedTodayTour);
                 TourLiveGuestWindow.Show();                
             }
             else

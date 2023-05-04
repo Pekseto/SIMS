@@ -6,6 +6,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 using Tourist_Project.View;
+using Tourist_Project.WPF.Views.GuestTwo;
 using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views
@@ -58,7 +59,7 @@ namespace Tourist_Project.WPF.Views
                         }
                         case UserRole.guest2:
                         {
-                            var guestTwoWindow = new GuestTwoWindow(user);
+                            var guestTwoWindow = new GuestTwoView(user);
                             guestTwoWindow.Show();
                             Close();
                             break;

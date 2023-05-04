@@ -10,22 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestTwo
 {
     /// <summary>
     /// Interaction logic for TourLiveGuestView.xaml
     /// </summary>
-    public partial class TourLiveGuestView : Window
+    public partial class TourLiveGuestView : UserControl
     {
-        public TourLiveGuestView(TourDTO selectedTour)
+        public TourLiveGuestView(TourDTO tour)
         {
             InitializeComponent();
-            DataContext = new TourLiveGuestViewModel(selectedTour);
+            DataContext = new TourLiveGuestViewModel(tour);
         }
     }
 }

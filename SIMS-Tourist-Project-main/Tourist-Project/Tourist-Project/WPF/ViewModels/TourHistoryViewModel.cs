@@ -18,17 +18,19 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO? SelectedTour { get; set; }
         public User LoggedInUser { get; set; }
+        public object CurrentViewModel { get; set; }
         public ICommand ReviewCommand { get; set; }
 
-        public TourHistoryViewModel(User user)
+        public TourHistoryViewModel(User user, object currentViewModel)
         {
             LoggedInUser = user;
+            CurrentViewModel = currentViewModel;
 
             tourService = new TourService();
 
             ReviewCommand = new RelayCommand(OnReviewClick, CanReview);
 
-            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(MainWindow.LoggedInUser.Id));
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
         }
 
         private bool CanReview()
@@ -42,7 +44,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnReviewClick()
         {
-            var reviewWindow = new TourReviewView(LoggedInUser, SelectedTour.Id);
+            var reviewWindow = new TourReviewView(LoggedInUser, SelectedTour);
             reviewWindow.Show();
         }
     }

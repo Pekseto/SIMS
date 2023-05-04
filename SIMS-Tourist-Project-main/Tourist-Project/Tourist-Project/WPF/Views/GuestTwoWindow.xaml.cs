@@ -31,7 +31,7 @@ namespace Tourist_Project.WPF.Views
         public GuestTwoWindow(User user)
         {
             InitializeComponent();
-            DataContext = new GuestTwoWindowViewModel(user, toursDataGrid);
+            DataContext = new GuestTwoWindowViewModel(user);
             
         }
 

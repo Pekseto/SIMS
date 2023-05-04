@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.DTO;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
@@ -38,16 +39,15 @@ namespace Tourist_Project.WPF.ViewModels
         public List<Image> Images { get; set; }
 
         public User LoggedInUser { get; set; }
-        //public Tour SelectedTour { get; set; }
-        public int SelectedTourId { get; set; }
+        public TourDTO SelectedTour { get; set; }
 
         public ICommand RateCommand { get; set; }
         public ICommand AddCommand { get; set; }
 
-        public TourReviewViewModel(User user, int tourId)
+        public TourReviewViewModel(User user, TourDTO tour)
         {
             LoggedInUser = user;
-            SelectedTourId = tourId;
+            SelectedTour = tour;
 
             ratingService = new TourReviewService();
             imageService = new ImageService();
@@ -90,9 +90,9 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnRateClick()
         {
-            if(attendanceService.WasUserPresent(MainWindow.LoggedInUser.Id, SelectedTourId))
+            if(attendanceService.WasUserPresent(MainWindow.LoggedInUser.Id, SelectedTour.Id))
             {
-                TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTourId, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
+                TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTour.Id, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
                 ratingService.Save(tourReview);
 
                 foreach (var image in Images)

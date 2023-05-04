@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.DTO;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
@@ -21,10 +22,10 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class TourReviewView : Window
     {
-        public TourReviewView(User user, int tourId)
+        public TourReviewView(User user, TourDTO tour)
         {
             InitializeComponent();
-            DataContext = new TourReviewViewModel(user, tourId);
+            DataContext = new TourReviewViewModel(user, tour);
         }
     }
 }

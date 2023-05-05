@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
+             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MyToursViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="Transparent">
@@ -13,7 +13,7 @@
             <RowDefinition Height="275"></RowDefinition>
             <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -45,8 +45,8 @@
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Center" Margin="150,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="17"/>
-        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" Margin="0,11,150,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="17"/>
+        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Center" Margin="150,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="16"/>
+        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" Margin="0,11,150,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="16"/>
 
     </Grid>
 </UserControl>

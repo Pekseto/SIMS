@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Stores;
 using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views.GuestTwo
@@ -24,7 +25,9 @@ namespace Tourist_Project.WPF.Views.GuestTwo
         public GuestTwoView(User user)
         {
             InitializeComponent();
-            DataContext = new GuestTwoViewModel(user);
+            var navigationStore = new NavigationStore();
+            navigationStore.CurrentViewModel = new HomeViewModel(user, navigationStore);
+            DataContext = new GuestTwoViewModel(user, navigationStore);
         }
     }
 }

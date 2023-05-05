@@ -24,10 +24,16 @@
             <views:TourHistoryView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:VouchersViewModel}">
-            <views:HomeView/>
+            <views:VouchersView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:TourReservationViewModel}">
             <views:TourReservationView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourLiveGuestViewModel}">
+            <views:TourLiveGuestView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourReviewViewModel}">
+            <views:TourReviewView/>
         </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
@@ -76,8 +82,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Guest 2" FontSize="48" Grid.Row="0"
-                           VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Guest 2" FontSize="48"
+                           Grid.Row="0" FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding HomeCommand}" MouseAction="LeftClick"/>
                     </TextBlock.InputBindings>
@@ -110,7 +118,8 @@
                     <RadioButton Content="Vouchers"
                                  Height="50"
                                  FontSize="24"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding VouchersCommand}"/>
                     <RadioButton Content="Notifications"
                                  Height="50"
                                  FontSize="24"

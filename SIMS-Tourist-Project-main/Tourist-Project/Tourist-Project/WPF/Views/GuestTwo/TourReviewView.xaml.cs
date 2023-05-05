@@ -23,10 +23,9 @@ namespace Tourist_Project.WPF.Views.GuestTwo
     /// </summary>
     public partial class TourReviewView : UserControl
     {
-        public TourReviewView(User user, TourDTO tour)
+        public TourReviewView()
         {
             InitializeComponent();
-            DataContext = new TourReviewViewModel(user, tour);
         }
     }
 }

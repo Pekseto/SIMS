@@ -51,11 +51,11 @@ namespace Tourist_Project.Applications.UseCases
             return vouchers;
         }
 
-        public void DeleteInvalidVouchers()
+        public void DeleteInvalidVouchers(int userId)
         {
             foreach(Voucher voucher in GetAll())
             {
-                if(voucher.LastValidDate < DateTime.Today)
+                if(voucher.UserId == userId && voucher.LastValidDate < DateTime.Today)
                 {
                     Delete(voucher.Id);
                 }

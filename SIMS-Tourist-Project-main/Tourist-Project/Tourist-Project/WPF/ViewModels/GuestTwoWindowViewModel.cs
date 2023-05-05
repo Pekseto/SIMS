@@ -122,8 +122,6 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand ShowAllCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
-        public ICommand VouchersCommand { get; set; }
-        public ICommand MyToursCommand { get; set; }
         public ICommand HistoryCommand { get; set; }
         #endregion
 
@@ -134,8 +132,6 @@ namespace Tourist_Project.WPF.ViewModels
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
             ReserveCommand = new RelayCommand(OnReserveClick);
-            VouchersCommand = new RelayCommand(OnVouchersClick);
-            MyToursCommand = new RelayCommand(OnMyToursClick);
             HistoryCommand = new RelayCommand(OnHistoryClick);
 
             tourService = new TourService();
@@ -152,7 +148,7 @@ namespace Tourist_Project.WPF.ViewModels
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
             Vouchers = new ObservableCollection<Voucher>(voucherService.GetAllForUser(user.Id));
 
-            voucherService.DeleteInvalidVouchers();
+            voucherService.DeleteInvalidVouchers(LoggedInUser.Id);
         }
 
         private void ShowNotifications()
@@ -179,18 +175,6 @@ namespace Tourist_Project.WPF.ViewModels
         {
             var HistoryWindow = new TourHistoryView(LoggedInUser);
             HistoryWindow.Show();
-        }
-
-        private void OnMyToursClick()
-        {
-            var MyToursWindow = new MyToursView(LoggedInUser);
-            MyToursWindow.Show();
-        }
-
-        private void OnVouchersClick()
-        {
-            var VouchersWindow = new VouchersView(LoggedInUser);
-            VouchersWindow.Show();
         }
 
         private void OnReserveClick()

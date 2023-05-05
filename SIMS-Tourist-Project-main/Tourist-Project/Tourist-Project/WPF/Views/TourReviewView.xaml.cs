@@ -22,10 +22,9 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class TourReviewView : Window
     {
-        public TourReviewView(User user, TourDTO tour)
+        public TourReviewView()
         {
             InitializeComponent();
-            DataContext = new TourReviewViewModel(user, tour);
         }
     }
 }

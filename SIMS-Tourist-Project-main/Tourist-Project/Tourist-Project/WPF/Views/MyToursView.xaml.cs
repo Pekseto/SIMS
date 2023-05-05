@@ -21,10 +21,9 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class MyToursView : Window
     {
-        public MyToursView(User user)
+        public MyToursView()
         {
             InitializeComponent();
-            DataContext = new MyToursViewModel(user);
         }
     }
 }

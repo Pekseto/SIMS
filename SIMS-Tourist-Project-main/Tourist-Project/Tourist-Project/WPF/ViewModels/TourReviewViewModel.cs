@@ -10,11 +10,12 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Stores;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class TourReviewViewModel : INotifyPropertyChanged
+    public class TourReviewViewModel : ViewModelBase
     {
         private readonly TourReviewService ratingService;
         private readonly ImageService imageService;
@@ -39,15 +40,17 @@ namespace Tourist_Project.WPF.ViewModels
         public List<Image> Images { get; set; }
 
         public User LoggedInUser { get; set; }
+        private readonly NavigationStore navigationStore;
         public TourDTO SelectedTour { get; set; }
 
         public ICommand RateCommand { get; set; }
         public ICommand AddCommand { get; set; }
 
-        public TourReviewViewModel(User user, TourDTO tour)
+        public TourReviewViewModel(User user, TourDTO tour, NavigationStore navigationStore)
         {
             LoggedInUser = user;
             SelectedTour = tour;
+            this.navigationStore = navigationStore;
 
             ratingService = new TourReviewService();
             imageService = new ImageService();

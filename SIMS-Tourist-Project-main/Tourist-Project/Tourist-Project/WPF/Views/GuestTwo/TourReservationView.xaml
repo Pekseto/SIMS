@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourReservationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="White">
@@ -84,21 +84,21 @@
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SelectedTour.Name}"
                      HorizontalAlignment="Left" TextWrapping="Wrap"
                VerticalAlignment="Center" FontSize="17" Margin="0,0,0,0" Width="300" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="Subotica, Srbija" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedTour.LocationStr, Mode=OneWay}" HorizontalAlignment="Left"
                VerticalAlignment="Center" FontSize="17" Margin="0,0,0,0" Width="300" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="Lagana setnjica po subotici i te scene" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedTour.Description}" HorizontalAlignment="Left"
                VerticalAlignment="top" FontSize="17" Margin="0,10" Grid.RowSpan="2"
                       Height="65" Width="300" IsReadOnly="True" TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="Radijalac, Dudova suma, Centar, Prozivka" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedTour.Name}" HorizontalAlignment="Left"
                      VerticalAlignment="Top" FontSize="17" Margin="0,10" Grid.RowSpan="2"
                      Height="65" Width="300" IsReadOnly="True" TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" Grid.Row="6" Text="Srpski" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding SelectedTour.Language}" HorizontalAlignment="Left"
                VerticalAlignment="Center" FontSize="17" Margin="0,0" Width="300" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="7" Text="7 hours" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding SelectedTour.Duration}" HorizontalAlignment="Left"
                VerticalAlignment="Center" FontSize="17" Margin="0,0,0,0" Width="300" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="8" Text="20" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding SelectedTour.MaxGuestsNumber}" HorizontalAlignment="Left"
                VerticalAlignment="Center" FontSize="17" Margin="0,0,0,0" Width="300" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="9" Text="3" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding SelectedTour.SpotsLeft}" HorizontalAlignment="Left"
                VerticalAlignment="Center" FontSize="17" Margin="0,0,0,0" Width="300" IsReadOnly="True"/>
         </Grid>
 

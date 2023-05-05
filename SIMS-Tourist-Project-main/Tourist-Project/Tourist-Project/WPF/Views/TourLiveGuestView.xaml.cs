@@ -25,7 +25,6 @@ namespace Tourist_Project.WPF.Views
         public TourLiveGuestView(TourDTO selectedTour)
         {
             InitializeComponent();
-            DataContext = new TourLiveGuestViewModel(selectedTour);
         }
     }
 }

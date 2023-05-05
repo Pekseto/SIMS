@@ -6,60 +6,43 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Commands;
+using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class GuestTwoViewModel : INotifyPropertyChanged
+    public class GuestTwoViewModel : ViewModelBase
     {
         public User LoggedUser { get; set; }
-
-        private object currentViewModel;
-        public object CurrentViewModel
-        {
-            get { return currentViewModel; }
-            set 
-            {
-                currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
-                
-            }
-        }
-
+        public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
+        private readonly NavigationStore navigationStore;
+        private readonly VoucherService voucherService;
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand TourHistoryCommand { get; set; }
+        public ICommand VouchersCommand { get; set; }
 
-        public GuestTwoViewModel(User user)
+        public GuestTwoViewModel(User user, NavigationStore navigationStore)
         {
             LoggedUser = user;
-            CurrentViewModel = new HomeViewModel(user, CurrentViewModel);
+            this.navigationStore = navigationStore;
+            navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            HomeCommand = new RelayCommand(OnHomeClick);
-            MyToursCommand = new RelayCommand(OnMyToursClick);
-            TourHistoryCommand = new RelayCommand(OnTourHistoryClick);
+            voucherService = new VoucherService();
+
+            HomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(user, navigationStore));
+            MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));
+            TourHistoryCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => new TourHistoryViewModel(user, navigationStore));
+            VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
+
+            voucherService.DeleteInvalidVouchers(LoggedUser.Id);
         }
 
-        private void OnTourHistoryClick()
+        private void OnCurrentViewModelChanged()
         {
-            CurrentViewModel = new TourHistoryViewModel(LoggedUser, CurrentViewModel);
-        }
-
-        private void OnMyToursClick()
-        {
-            CurrentViewModel = new MyToursViewModel(LoggedUser);
-        }
-
-        private void OnHomeClick()
-        {
-            CurrentViewModel = new HomeViewModel(LoggedUser, CurrentViewModel);
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

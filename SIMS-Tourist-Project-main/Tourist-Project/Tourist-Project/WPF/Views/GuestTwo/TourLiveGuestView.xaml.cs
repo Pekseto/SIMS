@@ -22,10 +22,9 @@ namespace Tourist_Project.WPF.Views.GuestTwo
     /// </summary>
     public partial class TourLiveGuestView : UserControl
     {
-        public TourLiveGuestView(TourDTO tour)
+        public TourLiveGuestView()
         {
             InitializeComponent();
-            DataContext = new TourLiveGuestViewModel(tour);
         }
     }
 }

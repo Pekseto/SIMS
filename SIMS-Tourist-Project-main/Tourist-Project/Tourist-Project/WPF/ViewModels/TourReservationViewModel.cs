@@ -9,10 +9,11 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class TourReservationViewModel
+    public class TourReservationViewModel : ViewModelBase
     {
         private readonly VoucherService voucherService;
         private readonly TourReservationService reservationService;
@@ -21,13 +22,15 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<Voucher> Vouchers { get; set; }
         public Voucher SelectedVoucher { get; set; }
         public User LoggedUser { get; set; }
+        private readonly NavigationStore navigationStore;
         public TourDTO SelectedTour { get; set; }
         public ICommand ReserveCommand { get; set; }
 
-        public TourReservationViewModel(User user, TourDTO tour)
+        public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore)
         {
             LoggedUser = user;
             SelectedTour = tour;
+            this.navigationStore = navigationStore;
 
             ReserveCommand = new RelayCommand(OnReserveClick);
 

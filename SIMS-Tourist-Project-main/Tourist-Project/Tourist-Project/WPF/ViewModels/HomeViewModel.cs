@@ -12,15 +12,18 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Commands;
+using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class HomeViewModel : INotifyPropertyChanged
+    public class HomeViewModel : ViewModelBase
     {
         private readonly TourService tourService;
         private readonly LocationService locationService;
 
         public User LoggedInUser { get; set; }
+        private readonly NavigationStore navigationStore;
 
         private ObservableCollection<TourDTO> tours;
         public ObservableCollection<TourDTO> Tours
@@ -111,29 +114,18 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        private object currentViewModel;
-        public object CurrentViewModel
-        {
-            get => currentViewModel;
-            set
-            {
-                currentViewModel = value;
-                OnPropertyChanged(nameof(CurrentViewModel));
-            }
-        }
-
         public ICommand SearchCommand { get; set; }
         public ICommand ShowAllCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
 
-        public HomeViewModel(User user, object currentViewModel)
+        public HomeViewModel(User user, NavigationStore navigationStore)
         {
             LoggedInUser = user;
-            CurrentViewModel = currentViewModel;
+            this.navigationStore = navigationStore;
 
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
-            ReserveCommand = new RelayCommand(OnReserveClick);
+            ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore));
 
             tourService = new TourService();
             locationService = new LocationService();
@@ -144,14 +136,6 @@ namespace Tourist_Project.WPF.ViewModels
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
-
-            //voucherService.DeleteInvalidVouchers();
-
-        }
-
-        private void OnReserveClick()
-        {
-            CurrentViewModel = new TourReservationViewModel(LoggedInUser, SelectedTour);
         }
 
         private void ShowNotifications()
@@ -214,13 +198,6 @@ namespace Tourist_Project.WPF.ViewModels
         private void LoadCitiesComboBox()
         {
             Cities = locationService.GetCitiesFromCountry(SelectedCountry);
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

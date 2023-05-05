@@ -3,13 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:local="clr-namespace:Tourist_Project.View"
-        xmlns:vm="clr-namespace:Tourist_Project.WPF.ViewModels"
+        xmlns:ns="clr-namespace:Tourist_Project"
+        xmlns:val="clr-namespace:Tourist_Project.WPF.Validation"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Tourist application" Height="500" Width="1100">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid x:Name="WindowGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -34,28 +48,74 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Label x:Name="TourName" Grid.Column="0" Grid.Row="0" Content="TourName" FontSize="25"/>
-            <Label x:Name="Location" Grid.Column="0" Grid.Row="1" Content="CityAndCountry" FontSize="25"/>
-            <Label x:Name="Description" Grid.Column="0" Grid.Row="2" Content="Description" FontSize="25"/>
-            <Label x:Name="Language" Grid.Column="0" Grid.Row="3" Content="Language" FontSize="25"/>
-            <Label x:Name="MaxNumberGuests" Grid.Column="0" Grid.Row="4" Content="MaxGuestsNumber" FontSize="25"/>
-            <Label x:Name="Date" Grid.Column="0" Grid.Row="5" Content="TourDate" FontSize="25"/>
-            <Label x:Name="Duration" Grid.Column="0" Grid.Row="6" Content="TourDuration" FontSize="25"/>
+            <Label x:Name="TourName" Grid.Column="0" Grid.Row="0" Content="{ns:Loc TourName}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Location" Grid.Column="0" Grid.Row="1" Content="{ns:Loc CityAndCountry}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Description" Grid.Column="0" Grid.Row="2" Content="{ns:Loc Description}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Language" Grid.Column="0" Grid.Row="3" Content="{ns:Loc Language}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="MaxNumberGuests" Grid.Column="0" Grid.Row="4" Content="{ns:Loc MaxGuestsNumber}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Date" Grid.Column="0" Grid.Row="5" Content="{ns:Loc TourDate}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Duration" Grid.Column="0" Grid.Row="6" Content="{ns:Loc TourDuration}" VerticalAlignment="Center" FontSize="20"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" Text="{Binding TourForAdd.Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Location.City}"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Location.Country}"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" Text="{Binding TourForAdd.Description, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40" Text="{Binding TourForAdd.Language, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="TourForAdd.Name" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation></val:EmptyStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBox.SelectedItem>
+                    <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:ComboBoxValidation></val:ComboBoxValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBox.SelectedItem>
+                    <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:ComboBoxValidation></val:ComboBoxValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.SelectedItem>
+            </ComboBox>
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="TourForAdd.Description" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation></val:EmptyStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                <TextBox.Text>
+                    <Binding Path="TourForAdd.Language" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:MinValueValidation></val:MinValueValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1">
                 <xctk:IntegerUpDown.Value>
-                    <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged"></Binding>
+                    <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules></Binding.ValidationRules>
+                    </Binding>
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
-            <TextBox Grid.Column="1" Grid.Row="5" Width="270" Height="40" Text="{Binding TourForAdd.StartTime, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Text="{Binding TourForAdd.StartTime, UpdateSourceTrigger=PropertyChanged}"></xctk:DateTimePicker>
             <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1">
                 <xctk:IntegerUpDown.Value>
-                    <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged"></Binding>
+                    <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:MinValueValidation></val:MinValueValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
         </Grid>
@@ -70,20 +130,58 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="360"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label x:Name="Checkpoint" Grid.Column="0" Grid.Row="0" Content="Checkpoints" FontSize="25"/>
-            <Label x:Name="Image" Grid.Column="0" Grid.Row="2" Content="Images" FontSize="25"/>
+            <Label x:Name="Checkpoint" Grid.Column="0" Grid.Row="0" Content="{ns:Loc Checkpoints}" VerticalAlignment="Center" FontSize="20"/>
+            <Label x:Name="Image" Grid.Column="0" Grid.Row="2" Content="{ns:Loc Images}" VerticalAlignment="Center" FontSize="20"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Text="{Binding PointForAdd.Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0">
+                <TextBox.Text>
+                    <Binding Path="PointForAdd.Name" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation></val:EmptyStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Button Grid.Column="1" Grid.Row="0" Content="+" Command="{Binding AddCheckpointCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Text="{Binding ImageForAdd.Url, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0">
+                <TextBox.Text>
+                    <Binding Path="ImageForAdd.Url" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation></val:EmptyStringValidation>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <Button Grid.Column="1" Grid.Row="2" Content="+" Command="{Binding AddImageCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0"/>
 
-            <ListBox x:Name="CheckpointsBox" Grid.Column="1" Grid.Row="1" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 "/>
-            <ListBox x:Name="ImagesBox" Grid.Column="1" Grid.Row="3" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 "/>
+            <ListBox x:Name="CheckpointsBox" Grid.Column="1" Grid.Row="1" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 " ItemsSource="{Binding Checkpoints, UpdateSourceTrigger=PropertyChanged}">
+            </ListBox>
+                <ListBox x:Name="ImagesBox" Grid.Column="1" Grid.Row="3" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 " ItemsSource="{Binding Images, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid x:Name="ButtonGrid" Grid.Column="1" Grid.Row="1">
-            <Button x:Name="CreateButton" Content="Create" Command="{Binding CreateCommand}" Width="200" Height="40" HorizontalAlignment="Left" Margin="20 0 0 0"/>
-            <Button x:Name="CancelButton" Content="Cancel" Command="{Binding CancelCommand}" Width="200" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0"/>
+            <Button x:Name="CreateButton" Command="{Binding CreateCommand}" Width="200" Height="40" HorizontalAlignment="Left" Margin="20 0 0 0">
+                <Grid x:Name="CreateGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Images/addGuideIcon.png" Grid.Column="0"></Image>
+                    <TextBlock Grid.Column="1" Text="{ns:Loc Create}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30 0 0 0"></TextBlock>
+                </Grid>
+            </Button>
+            <Button x:Name="CancelButton" Command="{Binding CancelCommand}" Width="200" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0">
+                <Grid x:Name="CancelGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Images/cancelGuideIcon.png" Grid.Column="0"></Image>
+                    <TextBlock Grid.Column="1" Text="{ns:Loc Cancel}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30 0 0 0"></TextBlock>
+                </Grid>
+            </Button>
         </Grid>
+        <StatusBar x:Name="BottomGrid" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="{ns:Loc CreateTour}" FontSize="15" Height="25"></TextBlock>
+        </StatusBar>
     </Grid>
 </Window>

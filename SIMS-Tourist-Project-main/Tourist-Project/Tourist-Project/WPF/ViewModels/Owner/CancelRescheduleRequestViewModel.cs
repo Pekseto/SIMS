@@ -7,23 +7,18 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class CancelRescheduleViewModel
     {
-        public RescheduleRequest RescheduleRequest { get; set; }
         public ICommand ConfirmCommand { get; set; }
         public CancelRescheduleRequest Window { get; set; }
         private readonly RescheduleRequestService rescheduleRequestService = new();
 
-        public CancelRescheduleViewModel(RescheduleRequest rescheduleRequest, CancelRescheduleRequest window)
+        public CancelRescheduleViewModel(CancelRescheduleRequest window)
         {
-            RescheduleRequest = rescheduleRequest;
             ConfirmCommand = new RelayCommand(Confirm, CanConfirm);
             Window = window;
         }
         #region Commands
         public void Confirm()
         {
-            RescheduleRequest.Comment = Window.Comment.Text;
-            RescheduleRequest.Status = RequestStatus.Declined;
-            rescheduleRequestService.Update(RescheduleRequest);
             Window.Close();
         }
         public static bool CanConfirm()

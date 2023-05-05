@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
@@ -9,13 +11,23 @@ using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
-    public class OwnerMainWindowViewModel
+    public class OwnerMainWindowViewModel : INotifyPropertyChanged
     {
         #region Collections
         public static ObservableCollection<Reservation> reservations { get; set; }
         public static ObservableCollection<Notification> GuestRatingNotifications { get; set; }
         public static ObservableCollection<Notification> ReviewNotifications { get; set; }
-        public static ObservableCollection<RescheduleRequest> RescheduleRequests { get; set; }
+        private ObservableCollection<ReschedulingReservationViewModel> rescheduleRequests;
+        public ObservableCollection<ReschedulingReservationViewModel> RescheduleRequests
+        {
+            get => rescheduleRequests;
+            set
+            {
+                if(value == rescheduleRequests) return;
+                rescheduleRequests = value;
+                OnPropertyChanged("RescheduleRequests");
+            }
+        }
         public static ObservableCollection<AccommodationRating> AccommodationRatings { get; set; }
         public static ObservableCollection<AccommodationViewModel> AccommodationView { get; set; }
         #endregion
@@ -31,7 +43,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         #region SelectedProperties
         public static AccommodationViewModel SelectedAccommodation { get; set; }
         public static Notification SelectedRating { get; set; }
-        public static RescheduleRequest SelectedRescheduleRequest { get; set; } 
+        public static ReschedulingReservationViewModel SelectedRescheduleRequest { get; set; } 
         #endregion
         public static User User { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
@@ -42,8 +54,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand DeleteCommand { get; set; }
         public ICommand RateCommand { get; set; }
         public ICommand ShowReviewsCommand { get; set; }
-        public ICommand ConfirmRescheduleCommand { get; set; }
-        public ICommand CancelRescheduleCommand { get; set; } 
         public ICommand LogOutCommand { get; set; }
         #endregion
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
@@ -55,15 +65,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             DeleteCommand = new RelayCommand(Delete, CanDelete);
             RateCommand = new RelayCommand(Rate, CanRate);
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
-            ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
-            CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             LogOutCommand = new RelayCommand(LogOut);
             #endregion
             #region CollectionInstanting
             User = userService.Get(user.Id);
             reservations = new ObservableCollection<Reservation>(reservationService.GetAll());
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
-            RescheduleRequests = new ObservableCollection<RescheduleRequest>(rescheduleRequestService.GetByStatus(RequestStatus.Pending));
+            RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest)));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.Notified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
@@ -127,31 +135,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             return GuestRatingNotifications.Count == 0;
         }
-
-        public static void ConfirmReschedule()
-        {
-            var reservation = reservationService.Get(SelectedRescheduleRequest.ReservationId);
-            reservation.CheckIn = SelectedRescheduleRequest.NewBeginningDate;
-            reservation.CheckOut = SelectedRescheduleRequest.NewEndDate;
-            reservationService.Update(reservation);
-            SelectedRescheduleRequest.Status = RequestStatus.Confirmed;
-            rescheduleRequestService.Update(SelectedRescheduleRequest);
-        }
-        public static bool CanConfirmReschedule()
-        {
-            return SelectedRescheduleRequest != null;
-        }
-
-        public static void CancelReschedule()
-        {
-            var CancelRescheduleWindow = new CancelRescheduleRequest(SelectedRescheduleRequest);
-            CancelRescheduleWindow.ShowDialog();
-        }
-        public static bool CanCancelReschedule()
-        {
-            return SelectedRescheduleRequest != null;
-        }
-
         public void LogOut()
         {
             var loginWindow = new LoginWindow();
@@ -163,6 +146,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public void showSuper()
         {
             OwnerMainWindow.Super.Visibility = userService.IsSuper(User) ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

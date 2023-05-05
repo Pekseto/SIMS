@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace Tourist_Project.WPF.ViewModels.Owner
+namespace Tourist_Project.WPF.ViewModels
 {
     public class RescheduleReservationViewModel
     {

@@ -25,22 +25,29 @@
         </DataTemplate>
         <DataTemplate x:Key="ReviewsDataTemplate">
             <StackPanel>
-                <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
+                <Label Content="{Binding }" HorizontalContentAlignment="Left" FontWeight="Bold"></Label>
                 <Separator/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ReservationDataTemplate">
-            <StackPanel>
-                <Label Content="{Binding ReservationId}" Margin="0,0,0,0"></Label>
-                <Label Content="                      CheckIn            CheckOut"></Label>
-                <Label Content="Old dates:"></Label>
-                <Label Content="{Binding OldBeginningDate}" Margin="70,-26"></Label>
-                <Label Content="{Binding OldEndDate}" Margin="153,-26,0,0"></Label>
-                <Label Content="New dates:"></Label>
-                <Label Content="{Binding NewBeginningDate}" Margin="70, -26"></Label>
-                <Label Content="{Binding NewEndDate}" Margin="153, -26, 0, 0"></Label>
-                <Separator></Separator>
-            </StackPanel>
+            <Grid>
+                <Grid Background="#acdcdc" Margin="5,10,0,200">
+                    <Label Content="Accommodation name:" FontWeight="DemiBold" Margin="5,0,0,0"></Label>
+                    <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,0,0,0"></Label>
+                    <Label Content="Guest name:" FontWeight="DemiBold" Margin="5,30,0,0"></Label>
+                    <Label Content="{Binding User.FullName}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,30,0,0"></Label>
+                </Grid>
+                <Label Content="CheckIn         CheckOut" FontWeight="Bold" Margin="100,65,0,0"></Label>
+                <Label Content="Old dates:" Margin="5,90,0,0" Foreground="Red"></Label>
+                <Label Content="{Binding RescheduleRequest.OldBeginningDate}" Foreground="Red" Margin="100,90,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.OldEndDate}" Foreground="Red" Margin="173,90,0,0"></Label>
+                <Label Content="New dates:" Margin="5,120,0,0" Foreground="Green"></Label>
+                <Label Content="{Binding RescheduleRequest.NewBeginningDate}" Foreground="Green" Margin="100, 120,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.NewEndDate}" Foreground="Green" Margin="173, 120, 0, 0"></Label>
+                <Button Content="Confirm(Alt+C)" Command="{Binding ConfirmRescheduleCommand}" Height="38" Margin="5,100,10,0"></Button>
+                <Button Content="Cancel(Alt+C)" Command="{Binding CancelRescheduleCommand}" Height="38" Margin="5,190,10,0"></Button>
+                <Separator Margin="0,250,0,10"></Separator>
+            </Grid>
         </DataTemplate>
         <Style x:Key="{x:Type GroupBox}" TargetType="GroupBox">
             <Setter Property="Background" Value="#d9eeef"></Setter>
@@ -78,6 +85,110 @@
         </Style>
         <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
             <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="BorderBrush" Value="#03888f"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Grid>
+                            <Border CornerRadius="20,10,20,10"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Padding="5">
+                                <ScrollViewer>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type RepeatButton}" TargetType="RepeatButton">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Thumb}" TargetType="Thumb">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border CornerRadius="5"
+                                    BorderBrush="#0da2a5"
+                                    BorderThickness="1"
+                                    Background="#0da2a5"></Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#d9eeef" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="18"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="5"
+                                    BorderThickness="0"></Border>
+                            <RepeatButton Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineUpButton" Command="ScrollBar.LineUpCommand" Height="18" Content="▲" />
+                            <Track x:Name="Track" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="white" Height="Auto" Width="Auto"/>
+                                </Track.Thumb>
+                            </Track>
+                            <RepeatButton Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineDownButton" Command="ScrollBar.LineDownCommand" Height="18" Content="▼" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height" Value="10"></Setter>
+                                <Setter TargetName="Track" Property="IsDirectionReversed" Value="False"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="Track" Property="Grid.RowSpan" Value="3"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Column" Value="1"></Setter>
+                                <Setter TargetName="Track" Property="Grid.ColumnSpan" Value="2"></Setter>
+                                <Setter TargetName="Track" Property="Margin" Value="-25,0,2,0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Content" Value="◄" />
+                                <Setter TargetName="LineUpButton" Property="Width" Value="18" />
+                                <Setter TargetName="LineUpButton" Property="Height" Value="18"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Command" Value="ScrollBar.LineLeftCommand"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Column" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Column" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Command" Value="ScrollBar.LineRightCommand"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Content" Value="►" />
+                                <Setter TargetName="LineDownButton" Property="Width" Value="18" />
+                                <Setter TargetName="Thumb" Property="Width" Value="10" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid>
@@ -124,7 +235,7 @@
                         <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Reviews(F2)" Margin="209,0,286,-20">
+                <GroupBox Header="Reviews(F2)" Margin="209,0,282,-20">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
@@ -139,13 +250,11 @@
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 
             </GroupBox>
-            <GroupBox Header="Reschedule requests(F5)" Grid.Column="1" Grid.Row="1" Margin="10,20">
+            <GroupBox Header="Reschedule requests(F5)" Grid.Column="1" Grid.Row="1" Margin="0,20,10,0">
                 <StackPanel>
                     <ListBox ItemsSource="{Binding RescheduleRequests, UpdateSourceTrigger=PropertyChanged}"
                              ItemTemplate="{StaticResource ReservationDataTemplate}"
-                             SelectedItem="{Binding SelectedRescheduleRequest, UpdateSourceTrigger=PropertyChanged}" Height="395"></ListBox>
-                    <Button Height="38" Content="Confirm(Alt+C)" VerticalAlignment="Bottom" Command="{Binding ConfirmRescheduleCommand}"></Button>
-                    <Button Height="38" Content="Cancel(Alt+X)" VerticalAlignment="Bottom" Command="{Binding CancelRescheduleCommand}"></Button>
+                             SelectedItem="{Binding SelectedRescheduleRequest, UpdateSourceTrigger=PropertyChanged}" Height="474"></ListBox>
                 </StackPanel>
             </GroupBox>
         </Grid>

@@ -10,10 +10,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class CancelRescheduleRequest : Window
     {
-        public CancelRescheduleRequest(RescheduleRequest rescheduleRequest)
+        public CancelRescheduleRequest()
         {
             InitializeComponent();
-            DataContext = new CancelRescheduleViewModel(rescheduleRequest, this);
+            DataContext = new CancelRescheduleViewModel(this);
         }
     }
 }

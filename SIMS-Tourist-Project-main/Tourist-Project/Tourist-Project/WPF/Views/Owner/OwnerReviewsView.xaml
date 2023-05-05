@@ -97,6 +97,84 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="{x:Type RepeatButton}" TargetType="RepeatButton">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Thumb}" TargetType="Thumb">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border CornerRadius="5"
+                                    BorderBrush="#0da2a5"
+                                    BorderThickness="1"
+                                    Background="#0da2a5"></Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#d9eeef" />
+            <Setter Property="Margin" Value="0,0,0,215"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="18"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="5"
+                                    BorderThickness="0"></Border>
+                            <RepeatButton Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineUpButton" Command="ScrollBar.LineUpCommand" Height="18" Content="▲" Background="#d9eeef" />
+                            <Track x:Name="Track" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="#d9eeef" Height="Auto" Width="Auto"/>
+                                </Track.Thumb>
+                            </Track>
+                            <RepeatButton Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineDownButton" Command="ScrollBar.LineDownCommand" Height="18" Content="▼" Background="#d9eeef" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height" Value="10"></Setter>
+                                <Setter TargetName="Track" Property="IsDirectionReversed" Value="False"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="Track" Property="Grid.RowSpan" Value="3"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Column" Value="1"></Setter>
+                                <Setter TargetName="Track" Property="Grid.ColumnSpan" Value="2"></Setter>
+                                <Setter TargetName="Track" Property="Margin" Value="-25,0,2,0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Content" Value="◄" />
+                                <Setter TargetName="LineUpButton" Property="Width" Value="18" />
+                                <Setter TargetName="LineUpButton" Property="Height" Value="18"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Command" Value="ScrollBar.LineLeftCommand"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Column" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Column" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Command" Value="ScrollBar.LineRightCommand"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Content" Value="►" />
+                                <Setter TargetName="LineDownButton" Property="Width" Value="18" />
+                                <Setter TargetName="Thumb" Property="Width" Value="10" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <ListBox Background="#d9eeef" Height="690" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"

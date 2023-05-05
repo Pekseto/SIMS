@@ -17,7 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="450"/>
+            <RowDefinition Height="500"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -55,7 +55,7 @@
                        Margin="10,0,0,0" FontSize="15"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"/>
-                <xctk:IntegerUpDown Text="{Binding Duration}"
+                <xctk:IntegerUpDown Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"
                                     Width="50" FontSize="13"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
@@ -83,7 +83,7 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"/>
-                <xctk:IntegerUpDown Text="{Binding NumberOfPeople}"
+                <xctk:IntegerUpDown Text="{Binding NumberOfPeople, UpdateSourceTrigger=PropertyChanged}"
                                     Width="50" FontSize="13"
                                     HorizontalAlignment="Left" 
                                     VerticalAlignment="Center" 

@@ -30,7 +30,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             tourService = new TourService();
 
-            ReviewCommand = new NavigateCommand<TourReviewViewModel>(this.navigationStore, () => new TourReviewViewModel(user, SelectedTour, this.navigationStore), CanReview);
+            ReviewCommand = new NavigateCommand<TourReviewViewModel>(this.navigationStore, () => new TourReviewViewModel(user, SelectedTour, this.navigationStore, this), CanReview);
 
             Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
         }

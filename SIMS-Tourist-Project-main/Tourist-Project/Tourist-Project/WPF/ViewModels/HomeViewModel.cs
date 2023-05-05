@@ -71,45 +71,28 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
 
-        private readonly Regex numberRegex = new Regex("^[0-9]+$");
         private int duration;
-        public string Duration
+        public int Duration
         {
-            get { return duration.ToString(); }
+            get { return duration; }
             set
             {
-                Match match = numberRegex.Match(value);
-                if (match.Success)
+                if(value >= 0)
                 {
-                    duration = int.Parse(value);
+                    duration = value;
                 }
             }
         }
 
         private int numberOfPeople;
-        public string NumberOfPeople
+        public int NumberOfPeople
         {
-            get { return numberOfPeople.ToString(); }
+            get { return numberOfPeople; }
             set
             {
-                Match match = numberRegex.Match(value);
-                if (match.Success)
+                if(value >= 0)
                 {
-                    numberOfPeople = int.Parse(value);
-                }
-            }
-        }
-
-        private int guestsNumber;
-        public string GuestsNumber
-        {
-            get { return guestsNumber.ToString(); }
-            set
-            {
-                Match match = numberRegex.Match(value);
-                if (match.Success)
-                {
-                    guestsNumber = int.Parse(value);
+                    numberOfPeople = value;
                 }
             }
         }
@@ -125,7 +108,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
-            ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore));
+            ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore, this), CanReserve);
 
             tourService = new TourService();
             locationService = new LocationService();
@@ -136,6 +119,11 @@ namespace Tourist_Project.WPF.ViewModels
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
+        }
+
+        private bool CanReserve()
+        {
+            return SelectedTour != null;
         }
 
         private void ShowNotifications()

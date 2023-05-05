@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Commands;
 using Tourist_Project.WPF.Stores;
 using Tourist_Project.WPF.Views;
 
@@ -45,8 +46,9 @@ namespace Tourist_Project.WPF.ViewModels
 
         public ICommand RateCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        public ICommand BackCommand { get; set; }
 
-        public TourReviewViewModel(User user, TourDTO tour, NavigationStore navigationStore)
+        public TourReviewViewModel(User user, TourDTO tour, NavigationStore navigationStore, TourHistoryViewModel previousViewModel)
         {
             LoggedInUser = user;
             SelectedTour = tour;
@@ -61,6 +63,8 @@ namespace Tourist_Project.WPF.ViewModels
 
             RateCommand = new RelayCommand(OnRateClick, CanRate);
             AddCommand = new RelayCommand(OnAddClick, CanAdd);
+            BackCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => previousViewModel);
+
 
             Comment = string.Empty;
             ImageURL = string.Empty;

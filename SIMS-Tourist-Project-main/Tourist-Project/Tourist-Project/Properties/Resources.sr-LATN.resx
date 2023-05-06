@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Otkaži</value>
   </data>
+  <data name="CancelTour" xml:space="preserve">
+    <value>Otkaži turu</value>
+  </data>
   <data name="Checkpoints" xml:space="preserve">
     <value>Ključne tačke:</value>
   </data>
@@ -130,10 +133,37 @@
     <value>Kreiraj</value>
   </data>
   <data name="CreateTour" xml:space="preserve">
-    <value>Pravljenje nove ture</value>
+    <value>Napravi novu turu</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Opis:</value>
+  </data>
+  <data name="DescriptionTable" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Trajanje</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>engleski</value>
+  </data>
+  <data name="FutureTitle" xml:space="preserve">
+    <value>Pregled budućih tura</value>
+  </data>
+  <data name="FutureTours" xml:space="preserve">
+    <value>Buduće ture</value>
+  </data>
+  <data name="Guide" xml:space="preserve">
+    <value>Vodič</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Istorija tura</value>
+  </data>
+  <data name="Home page" xml:space="preserve">
+    <value>Početna</value>
   </data>
   <data name="Images" xml:space="preserve">
     <value>Slike:</value>
@@ -141,8 +171,35 @@
   <data name="Language" xml:space="preserve">
     <value>Jezik:</value>
   </data>
+  <data name="LanguageTable" xml:space="preserve">
+    <value>Jezik</value>
+  </data>
   <data name="MaxGuestsNumber" xml:space="preserve">
     <value>Maksimalan broj gostiju:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ime</value>
+  </data>
+  <data name="NumberOfTourists" xml:space="preserve">
+    <value>Broj gostiju</value>
+  </data>
+  <data name="PickedLanguage" xml:space="preserve">
+    <value>srpski</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Zahtevi za ture</value>
+  </data>
+  <data name="Serbian" xml:space="preserve">
+    <value>srpski</value>
+  </data>
+  <data name="StartTour" xml:space="preserve">
+    <value>Započni turu</value>
+  </data>
+  <data name="TodayTitle" xml:space="preserve">
+    <value>Pregled današnjih tura</value>
+  </data>
+  <data name="TodayTours" xml:space="preserve">
+    <value>Današnje ture</value>
   </data>
   <data name="TourDate" xml:space="preserve">
     <value>Datum održavanja:</value>

@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:Tourist_Project"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
-         
+         <Image x:Key="RequestsImageGuide" Source="/Images/requestGuideIcon.png" Margin="5"></Image>
+         <Image x:Key="HistoryImageGuide" Source="/Images/historyGuideIcon.png" Margin="5"></Image>
+         <Image x:Key="FutureImageGuide" Source="/Images/futureGuideIcon.png" Margin="5"></Image>
+        <Image x:Key="StartTourImageGuide" Source="/Images/startGuideIcon.png" Margin="5"></Image>
+        <Image x:Key="CreateTourImageGuide" Source="/Images/addGuideIcon.png" Margin="5"></Image>
     </Application.Resources>
 </Application>

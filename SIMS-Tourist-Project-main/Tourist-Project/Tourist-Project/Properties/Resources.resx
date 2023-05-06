@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CancelTour" xml:space="preserve">
+    <value>Cancel tour</value>
+  </data>
   <data name="Checkpoints" xml:space="preserve">
     <value>Checkpoints:</value>
   </data>
@@ -132,8 +135,35 @@
   <data name="CreateTour" xml:space="preserve">
     <value>Create new tour</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description:</value>
+  </data>
+  <data name="DescriptionTable" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>english</value>
+  </data>
+  <data name="FutureTitle" xml:space="preserve">
+    <value>Overview of future tours</value>
+  </data>
+  <data name="FutureTours" xml:space="preserve">
+    <value>Future tours</value>
+  </data>
+  <data name="Guide" xml:space="preserve">
+    <value>Guide</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Home page</value>
   </data>
   <data name="Images" xml:space="preserve">
     <value>Images:</value>
@@ -141,8 +171,35 @@
   <data name="Language" xml:space="preserve">
     <value>Language:</value>
   </data>
+  <data name="LanguageTable" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="MaxGuestsNumber" xml:space="preserve">
     <value>Maximum guests number:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NumberOfTourists" xml:space="preserve">
+    <value>Number of tourists</value>
+  </data>
+  <data name="PickedLanguage" xml:space="preserve">
+    <value>english</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>Requests</value>
+  </data>
+  <data name="Serbian" xml:space="preserve">
+    <value>serbian</value>
+  </data>
+  <data name="StartTour" xml:space="preserve">
+    <value>Start tour</value>
+  </data>
+  <data name="TodayTitle" xml:space="preserve">
+    <value>Overview of today tours</value>
+  </data>
+  <data name="TodayTours" xml:space="preserve">
+    <value>Today tours</value>
   </data>
   <data name="TourDate" xml:space="preserve">
     <value>Date:</value>

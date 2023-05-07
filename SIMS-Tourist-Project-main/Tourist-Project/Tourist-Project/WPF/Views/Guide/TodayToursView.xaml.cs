@@ -11,10 +11,10 @@ namespace Tourist_Project.WPF.Views.Guide
     /// </summary>
     public partial class TodayToursView : Window
     {
-        public TodayToursView()
+        public TodayToursView(User LoggedInUser)
         {
             InitializeComponent();
-            DataContext = new TodayToursViewModel(this);
+            DataContext = new TodayToursViewModel(this, LoggedInUser);
         }
     }
 }

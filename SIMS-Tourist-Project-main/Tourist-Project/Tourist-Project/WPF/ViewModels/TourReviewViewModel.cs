@@ -90,7 +90,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnRateClick()
         {
-            if(attendanceService.WasUserPresent(MainWindow.LoggedInUser.Id, SelectedTourId))
+            if(attendanceService.WasUserPresent(LoggedInUser.Id, SelectedTourId))
             {
                 TourReview tourReview = new TourReview(LoggedInUser.Id, SelectedTourId, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
                 ratingService.Save(tourReview);

@@ -6,6 +6,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.Repository;
 using Tourist_Project.View;
+using Tourist_Project.WPF.Views.Guide;
 using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views
@@ -38,8 +39,6 @@ namespace Tourist_Project.WPF.Views
             {
                 if (user.Password == txtPassword.Password)
                 {
-                    //TODO
-                    MainWindow.LoggedInUser = user;
                     switch (user.Role)
                     {
                         case UserRole.owner:
@@ -65,7 +64,7 @@ namespace Tourist_Project.WPF.Views
                         }
                         case UserRole.guide:
                         {
-                            var guideShowWindow = new TodayToursView();
+                            var guideShowWindow = new TodayToursView(user);
                             guideShowWindow.Show();
                             Close();
                             break;

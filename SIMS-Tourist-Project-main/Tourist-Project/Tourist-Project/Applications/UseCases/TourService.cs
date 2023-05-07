@@ -68,26 +68,26 @@ namespace Tourist_Project.Applications.UseCases
             return repository.GetPastTours();
         }
 
-        public List<Tour> GetAllByYear(int year)
+        public List<Tour> GetAllByYear(int year, User loggedInUser)
         {
-            return repository.GetAllByYear(year);
+            return repository.GetAllByYear(year, loggedInUser);
         }
 
-        public List<Tour> GetYearAppointments(string name, int year)
+        public List<Tour> GetYearAppointments(string name, int year, User loggedInUser)
         {
-            return repository.GetYearAppointments(name, year);
+            return repository.GetYearAppointments(name, year, loggedInUser);
         }
 
-        public Tour GetMostVisited(int year)
+        public Tour GetMostVisited(int year, User loggedInUser)
         {
             var mostVisitedTour = new Tour();
             var mostTourists = 0;
-            foreach (var tour in GetAllByYear(year))
+            foreach (var tour in GetAllByYear(year, loggedInUser))
             {
 
-                if (mostTourists < TouristsCountByYear(tour.Name, year))
+                if (mostTourists < TouristsCountByYear(tour.Name, year, loggedInUser))
                 {
-                    mostTourists = TouristsCountByYear(tour.Name, year);
+                    mostTourists = TouristsCountByYear(tour.Name, year, loggedInUser);
                     mostVisitedTour = tour;
                 }
 
@@ -96,10 +96,10 @@ namespace Tourist_Project.Applications.UseCases
             return mostVisitedTour;
         }
 
-        public int TouristsCountByYear(string tourName, int year)
+        public int TouristsCountByYear(string tourName, int year, User loggedInUser)
         {
             var touristsCounter = 0;
-            foreach (var appointment in GetYearAppointments(tourName, year))
+            foreach (var appointment in GetYearAppointments(tourName, year, loggedInUser))
             {
                 touristsCounter += tourReservationService.CountTourists(appointment.Id);
             }
@@ -107,7 +107,7 @@ namespace Tourist_Project.Applications.UseCases
             return touristsCounter;
         }
 
-        public Tour GetOverallBest()
+        public Tour GetOverallBest(User loggedInUser)
         {
 
             var mostVisitedTour = new Tour();
@@ -115,9 +115,9 @@ namespace Tourist_Project.Applications.UseCases
             foreach (var tour in GetAll())
             {
 
-                if (mostTourists < TouristsCount(tour.Name))
+                if (mostTourists < TouristsCount(tour.Name, loggedInUser))
                 {
-                    mostTourists = TouristsCount(tour.Name);
+                    mostTourists = TouristsCount(tour.Name, loggedInUser);
                     mostVisitedTour = tour;
                 }
 
@@ -126,19 +126,19 @@ namespace Tourist_Project.Applications.UseCases
             return mostVisitedTour;
         }
 
-        public int TouristsCount(string tourName)
+        public int TouristsCount(string tourName, User loggedInUser)
         {
             var touristsCounter = 0;
-            foreach (var appointment in GetAllTourAppointments(tourName))
+            foreach (var appointment in GetAllTourAppointments(tourName, loggedInUser))
             {
                 touristsCounter += tourReservationService.CountTourists(appointment.Id);
             }
             return touristsCounter;
         }
 
-        public List<Tour> GetAllTourAppointments(string tourName)
+        public List<Tour> GetAllTourAppointments(string tourName, User loggedInUser)
         {
-            return repository.GetAllTourAppointments(tourName);
+            return repository.GetAllTourAppointments(tourName, loggedInUser);
         }
 
         public int GetLeftoverSpots(Tour tour)

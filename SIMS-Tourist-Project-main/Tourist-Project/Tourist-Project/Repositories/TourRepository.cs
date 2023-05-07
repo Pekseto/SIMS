@@ -75,19 +75,19 @@ namespace Tourist_Project.Repositories
             return current;
         }
 
-        public List<Tour> GetAllByYear(int year)
+        public List<Tour> GetAllByYear(int year, User loggedInUser)
         {
-            return GetAll().FindAll(tour => tour.StartTime.Year == year && tour.UserId == MainWindow.LoggedInUser.Id && tour.Status == Status.End);
+            return GetAll().FindAll(tour => tour.StartTime.Year == year && tour.UserId == loggedInUser.Id && tour.Status == Status.End);
         }
 
-        public List<Tour> GetYearAppointments(string name, int year)
+        public List<Tour> GetYearAppointments(string name, int year, User loggedInUser)
         {
-            return GetAllByYear(year).FindAll(tour => tour.Name == name);
+            return GetAllByYear(year, loggedInUser).FindAll(tour => tour.Name == name);
         }
 
-        public List<Tour> GetAllTourAppointments(string name)
+        public List<Tour> GetAllTourAppointments(string name, User loggedInUser)
         {
-            return GetAll().FindAll(tour => tour.Name == name && tour.UserId == MainWindow.LoggedInUser.Id && tour.Status == Status.End);
+            return GetAll().FindAll(tour => tour.Name == name && tour.UserId == loggedInUser.Id && tour.Status == Status.End);
         }
     }
 }

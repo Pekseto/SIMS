@@ -20,10 +20,10 @@ namespace Tourist_Project.WPF.Views.Guide
     /// </summary>
     public partial class CreateTourView : Window
     {
-        public CreateTourView()
+        public CreateTourView(User LoggedInUser)
         {
             InitializeComponent();
-            DataContext = new CreateTourViewModel(this);
+            DataContext = new CreateTourViewModel(this, LoggedInUser);
         }
     }
 }

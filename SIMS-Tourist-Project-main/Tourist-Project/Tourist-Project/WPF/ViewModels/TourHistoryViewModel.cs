@@ -28,7 +28,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             ReviewCommand = new RelayCommand(OnReviewClick, CanReview);
 
-            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(MainWindow.LoggedInUser.Id));
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
         }
 
         private bool CanReview()

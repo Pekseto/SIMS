@@ -37,13 +37,13 @@ namespace Tourist_Project.WPF.ViewModels
             WatchLiveCommand = new RelayCommand(OnWatchLiveClick);
 
             LoggedInUser = user;
-            FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(MainWindow.LoggedInUser.Id));
-            TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(MainWindow.LoggedInUser.Id));
+            FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(LoggedInUser.Id));
+            TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(LoggedInUser.Id));
         }
 
         private void OnWatchLiveClick()
         {
-            TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, MainWindow.LoggedInUser.Id);
+            TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
             if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.Yes)
             {
                 var TourLiveGuestWindow = new TourLiveGuestView(LoggedInUser, SelectedTodayTour.Id);
@@ -57,7 +57,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnJoinClick()
         {
-            TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, MainWindow.LoggedInUser.Id);
+            TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
             if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.No)//DODATI DA NE MOZE DA JOINUJE AKO JE VEC PRISUTAN NA TURI ILI AKO JE PENDING
             {
                 tourAttendance.Presence = Presence.Joined;

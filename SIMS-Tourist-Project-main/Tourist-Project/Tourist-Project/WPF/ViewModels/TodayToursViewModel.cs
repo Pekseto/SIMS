@@ -34,7 +34,9 @@ namespace Tourist_Project.WPF.ViewModels
         public static bool Live { get; set; }
         private readonly TourService tourService = new();
         private readonly Window window;
-        private string CurrentLanguage;
+        public string CurrentLanguage;
+        public User LoggedInUser { get; set; }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
@@ -51,13 +53,14 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ProfileViewCommand { get; set; }
         public ICommand SwitchLanguageCommand { get; set; }
         #endregion
-        public TodayToursViewModel(Window window)
+        public TodayToursViewModel(Window window, User loggedInUser)
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
 
             SelectedTour = new Tour();
             this.window = window;
             Live = false;
+            LoggedInUser = loggedInUser;
             CurrentLanguage = "en - US";
 
             startClock();
@@ -111,7 +114,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void ProfileView()
         {
-            var profileWindow = new GuideProfileView();
+            var profileWindow = new GuideProfileView(LoggedInUser);
             profileWindow.Owner = window;
             profileWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             profileWindow.Show();
@@ -137,7 +140,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void History()
         {
-            var historyWindow = new HistoryOfToursView();
+            var historyWindow = new HistoryOfToursView(LoggedInUser);
             historyWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             historyWindow.Show();
             window.Close();
@@ -150,7 +153,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void FutureTours()
         {
-            var futureWindow = new FutureToursView();
+            var futureWindow = new FutureToursView(LoggedInUser);
             futureWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             futureWindow.Show();
             window.Close();
@@ -162,7 +165,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private void CreateTour()
         {
-            var createTourWindow = new CreateTourView();
+            var createTourWindow = new CreateTourView(LoggedInUser);
             createTourWindow.Owner = window;
             createTourWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             createTourWindow.Show();

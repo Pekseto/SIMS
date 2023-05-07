@@ -21,10 +21,10 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class GuideProfileView : Window
     {
-        public GuideProfileView()
+        public GuideProfileView(User loggedInUser)
         {
             InitializeComponent();
-            DataContext = new GuideProfileViewModel(this);
+            DataContext = new GuideProfileViewModel(this, loggedInUser);
         }
     }
 }

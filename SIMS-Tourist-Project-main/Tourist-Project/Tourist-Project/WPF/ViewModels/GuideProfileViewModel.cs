@@ -20,6 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourService tourService = new ();
         private readonly Window window;
         public Tour Tour { get; set; }
+        public User LoggedInUser { get; set; }
 
         private string selectedYear;
         public string SelectedYear
@@ -43,9 +44,10 @@ namespace Tourist_Project.WPF.ViewModels
 
         public ICommand HomeViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }
-        public GuideProfileViewModel(Window window)
+        public GuideProfileViewModel(Window window, User loggedInUser)
         {
             this.window = window;
+            LoggedInUser = loggedInUser;
 
             HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
@@ -61,7 +63,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void HomeView()
         {
-            var homeWindow = new TodayToursView();
+            var homeWindow = new TodayToursView(LoggedInUser);
             homeWindow.Show();
             window.Close();
         }
@@ -93,11 +95,11 @@ namespace Tourist_Project.WPF.ViewModels
         {
             if (!SelectedYear.Equals("Overall"))
             {
-                Tour = tourService.GetMostVisited(Int32.Parse(SelectedYear));
+                Tour = tourService.GetMostVisited(Int32.Parse(SelectedYear), LoggedInUser);
             }
             else
             {
-                Tour = tourService.GetOverallBest();
+                Tour = tourService.GetOverallBest(LoggedInUser);
             }
             OnPropertyChanged("Tour");
         }

@@ -69,6 +69,8 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
+        public User LoggedInUser { get; set; }
+
         #region Command
         public ICommand CreateCommand { get; set; }
         public ICommand CancelCommand { get; set; }
@@ -127,10 +129,12 @@ namespace Tourist_Project.WPF.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public CreateTourViewModel(Window window)
+        public CreateTourViewModel(Window window, User loggedInUser)
         {
             this.window = window;
             CurrentLanguage = "en-US";
+            LoggedInUser = loggedInUser;
+
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Checkpoints = new ObservableCollection<string>();
@@ -173,7 +177,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void Create()
         {
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
-            TourForAdd.UserId = MainWindow.LoggedInUser.Id;
+            TourForAdd.UserId = LoggedInUser.Id;
             tourService.Save(TourForAdd);
 
             if (TourForAdd.StartTime.Date == DateTime.Today.Date)

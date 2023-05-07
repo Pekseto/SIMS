@@ -21,7 +21,8 @@ namespace Tourist_Project.WPF.ViewModels
         private Window window;
         private Tour tour;
 
-        public string CurrentLanguage;
+        public string CurrentLanguage { get; set; }
+        public User LoggedInUser { get; set; }
 
         public static ObservableCollection<Tour> FutureTours { get; set; }
         private DateTime currentTime;
@@ -65,10 +66,11 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand RequestsViewCommand { get; set; }
         #endregion
 
-        public FutureToursViewModel(Window window)
+        public FutureToursViewModel(Window window, User loggedInUser)
         {
             FutureTours = new ObservableCollection<Tour>(tourService.GetFutureTours());
 
+            LoggedInUser = loggedInUser;
             this.window = window;
             CurrentLanguage = "en-US";
             startClock();
@@ -132,7 +134,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private void HomePage()
         {
-            var todayToursView = new TodayToursView();
+            var todayToursView = new TodayToursView(LoggedInUser);
             todayToursView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             todayToursView.Show();
             window.Close();
@@ -171,7 +173,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private void ProfileView()
         {
-            var profileView = new GuideProfileView();
+            var profileView = new GuideProfileView(LoggedInUser);
             profileView.Owner = window;
             profileView.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             profileView.Show();

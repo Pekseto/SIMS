@@ -37,6 +37,7 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         public string CurrentLanguage { get; set; }
+        public User LoggedInUser { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
@@ -53,8 +54,9 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand RequestsViewCommand { get; set; }
         public ICommand SwitchLanguageCommand { get; set; }
         #endregion
-        public HistoryOfToursViewModel(Window window) 
+        public HistoryOfToursViewModel(Window window, User loggedInUser) 
         {
+            LoggedInUser = loggedInUser;
             this.window = window;
             SelectedTour = null;
             CurrentLanguage = "en-US";
@@ -124,7 +126,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void ProfileView()
         {
-            var profileWindow = new GuideProfileView();
+            var profileWindow = new GuideProfileView(LoggedInUser);
             profileWindow.Owner = window;
             profileWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             profileWindow.Show();
@@ -137,7 +139,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void HomeView()
         {
-            var homeWindow = new TodayToursView();
+            var homeWindow = new TodayToursView(LoggedInUser);
             homeWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             homeWindow.Show();
             window.Close();
@@ -150,7 +152,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void FutureView()
         {
-            var futureWindow = new FutureToursView();
+            var futureWindow = new FutureToursView(LoggedInUser);
             futureWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             futureWindow.Show();
             window.Close();

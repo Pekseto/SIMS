@@ -196,6 +196,24 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History of tours.
+        /// </summary>
+        internal static string HistoryTitle {
+            get {
+                return ResourceManager.GetString("HistoryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History tours.
+        /// </summary>
+        internal static string HistoryTours {
+            get {
+                return ResourceManager.GetString("HistoryTours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home page.
         /// </summary>
         internal static string HomePage {
@@ -277,6 +295,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews.
+        /// </summary>
+        internal static string Reviews {
+            get {
+                return ResourceManager.GetString("Reviews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to serbian.
         /// </summary>
         internal static string Serbian {
@@ -291,6 +318,15 @@ namespace Tourist_Project.Properties {
         internal static string StartTour {
             get {
                 return ResourceManager.GetString("StartTour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        internal static string Statistics {
+            get {
+                return ResourceManager.GetString("Statistics", resourceCulture);
             }
         }
         

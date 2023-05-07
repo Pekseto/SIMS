@@ -125,6 +125,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void Requests()
         {
             var requestsWindow = new RequestsGuideView();
+            requestsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             requestsWindow.Show();
             window.Close();
         } 
@@ -137,6 +138,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void History()
         {
             var historyWindow = new HistoryOfToursView();
+            historyWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             historyWindow.Show();
             window.Close();
         }

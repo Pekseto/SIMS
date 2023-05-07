@@ -19,11 +19,22 @@ namespace Tourist_Project.WPF.ViewModels
     public class FutureToursViewModel : INotifyPropertyChanged
     {
         private Window window;
+        private Tour tour;
+
+        public string CurrentLanguage;
 
         public static ObservableCollection<Tour> FutureTours { get; set; }
+        private DateTime currentTime;
 
-
-        private Tour tour;
+        public DateTime CurrentTime
+        {
+            get { return currentTime; }
+            set
+            {
+                currentTime = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Tour SelectedTour
         {
@@ -45,19 +56,74 @@ namespace Tourist_Project.WPF.ViewModels
 
         private readonly TourService tourService = new();
         private readonly TourVoucherService voucherService = new();
+
+        #region Command
         public ICommand CancelTourCommand { get; set; }
         public ICommand HomePageCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
+        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand RequestsViewCommand { get; set; }
+        #endregion
+
         public FutureToursViewModel(Window window)
         {
-            this.window = window;
-
             FutureTours = new ObservableCollection<Tour>(tourService.GetFutureTours());
+
+            this.window = window;
+            CurrentLanguage = "en-US";
+            startClock();
 
             HomePageCommand = new RelayCommand(HomePage, CanHomePage);
             CancelTourCommand = new RelayCommand(CancelTour, CanCancelTour);
             ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
+            RequestsViewCommand = new RelayCommand(RequestsView, CanRequestsView);
+            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+        }
 
+        private void startClock()
+        {
+            CurrentTime = DateTime.Now;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += tickEvent;
+            timer.Start();
+        }
+
+        private void tickEvent(object sender, EventArgs e)
+        {
+            CurrentTime = DateTime.Now;
+        }
+
+        private bool CanRequestsView()
+        {
+            return true;
+        }
+
+        private void RequestsView()
+        {
+            var requestsWindow = new RequestsGuideView();
+            requestsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            requestsWindow.Show();
+            window.Close();
+        }
+
+        private bool CanSwitchLanguage()
+        {
+            return true;
+        }
+
+        public void SwitchLanguage()
+        {
+            var app = (App)Application.Current;
+            if (CurrentLanguage.Equals("en-US"))
+            {
+                CurrentLanguage = "sr-LATN";
+            }
+            else
+            {
+                CurrentLanguage = "en-US";
+            }
+            app.ChangeLanguage(CurrentLanguage);
         }
 
         private bool CanHomePage()
@@ -67,6 +133,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void HomePage()
         {
             var todayToursView = new TodayToursView();
+            todayToursView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             todayToursView.Show();
             window.Close();
         }
@@ -105,8 +172,9 @@ namespace Tourist_Project.WPF.ViewModels
         private void ProfileView()
         {
             var profileView = new GuideProfileView();
+            profileView.Owner = window;
+            profileView.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             profileView.Show();
-            window.Close();
         }
 
         private void UpdateData()

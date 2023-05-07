@@ -11,19 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for HistoryOfToursView.xaml
+    /// Interaction logic for RequestsGuideView.xaml
     /// </summary>
-    public partial class HistoryOfToursView : Window
+    public partial class RequestsGuideView : Window
     {
-        public HistoryOfToursView()
+        public RequestsGuideView()
         {
             InitializeComponent();
-            DataContext = new HistoryOfToursViewModel(this);
         }
     }
 }

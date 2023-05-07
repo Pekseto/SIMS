@@ -25,6 +25,28 @@ namespace Tourist_Project.WPF.ViewModels
         #region ObservableCollection
         public static ObservableCollection<string> Countries { get; set; }
         public static ObservableCollection<string> Cities { get; set; }
+        private ObservableCollection<string> checkpoints;
+        public ObservableCollection<string> Checkpoints
+        {
+            get { return checkpoints; }
+            set
+            {
+                checkpoints = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> images;
+
+        public ObservableCollection<string> Images
+        {
+            get { return images; }
+            set
+            {
+                images = value; 
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Service
@@ -34,8 +56,18 @@ namespace Tourist_Project.WPF.ViewModels
         private ImageService imageService = new();
         #endregion
         private int numberOfPoints = 0;
-        private Window window;
+        private readonly Window window;
         private User user;
+        private string currentLanguage;
+
+        public string CurrentLanguage
+        {
+            get => currentLanguage;
+            set
+            {
+                currentLanguage = value;
+            }
+        }
 
         #region Command
         public ICommand CreateCommand { get; set; }
@@ -90,7 +122,7 @@ namespace Tourist_Project.WPF.ViewModels
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -98,8 +130,11 @@ namespace Tourist_Project.WPF.ViewModels
         public CreateTourViewModel(Window window)
         {
             this.window = window;
+            CurrentLanguage = "en-US";
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
+            Checkpoints = new ObservableCollection<string>();
+            Images = new ObservableCollection<string>();
 
             ImageForAdd = new();
             PointForAdd = new();
@@ -149,24 +184,6 @@ namespace Tourist_Project.WPF.ViewModels
             window.Close();
         }
 
-        private void CountryDropDownClosed(object sender, EventArgs e)
-        {
-            Cities.Clear();
-            foreach (var location in locationService.GetAll())
-            {
-                if (location.Country.Equals(Location.Country))
-                    Cities.Add(location.City);
-            }
-        }
-        private void CityDropDownClosed(object sender, EventArgs e)
-        {
-            foreach (var location in locationService.GetAll())
-            {
-                if (location.City.Equals(Location.City))
-                    Countries.Add(location.Country);
-            }
-        }
-
         private bool CanAddImage()
         {
             return true;
@@ -174,6 +191,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void AddImage()
         {
+            Images.Add(ImageForAdd.Url);
             imageService.Save(ImageForAdd);
             ImageForAdd = new Image();
         }
@@ -185,6 +203,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void AddCheckpoint()
         {
+            Checkpoints.Add(PointForAdd.Name);
             PointForAdd.TourId = tourService.NexttId();
             tourPointService.Save(PointForAdd);
             PointForAdd = new TourPoint();

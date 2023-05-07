@@ -20,3 +20,4 @@ namespace Tourist_Project.WPF.Validation
         }
     } 
 }
+

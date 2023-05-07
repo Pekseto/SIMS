@@ -2,6 +2,8 @@
 using Tourist_Project.Domain.Models;
 using Tourist_Project.View;
 using Tourist_Project.WPF.Views.Owner;
+using Tourist_Project.WPF.Views.Guide;
+
 
 namespace Tourist_Project.WPF.Views
 {

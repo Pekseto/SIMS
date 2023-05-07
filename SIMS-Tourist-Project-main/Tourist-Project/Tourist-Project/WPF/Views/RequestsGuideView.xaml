@@ -1,4 +1,4 @@
-﻿<Window x:Class="Tourist_Project.WPF.Views.FutureToursView"
+﻿<Window x:Class="Tourist_Project.WPF.Views.RequestsGuideView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -30,9 +30,10 @@
                 <Label Margin="10 270 10 0" Content="Guide" HorizontalAlignment="Center" FontSize="15"></Label>
             </Grid>
             <Grid x:Name="ButtonsGrid" Grid.Row="1">
-                <Button Width="200" Height="40" Margin="50,44,50,305" Content="Home page" Command="{Binding HomePageCommand}"/>
-                <Button Width="200" Height="40" Margin="50,119,50,220" Content="Cancel tour" Command="{Binding CancelTourCommand}"/>
-                <Button Width="200" Height="40" Margin="50,349,50,0" Content="Requests"/>
+                <Button Width="200" Height="40" Margin="50,14,50,377" Content="Create tour" Command="{Binding HomeCommand}"/>
+                <Button Width="200" Height="40" Margin="50,60,50,304" Content="Start tour" Command="{Binding AcceptCommand}"/>
+                <Button Width="200" Height="40" Margin="50,107,50,227" Content="Future tours" Command="{Binding AcceptPartTourCommand}"/>
+                <Button Width="200" Height="40" Margin="50,171,50,163" Content="History" Command="{Binding StatisticsCommand}"/>
             </Grid>
         </Grid>
         <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0">
@@ -40,7 +41,7 @@
                 <RowDefinition Height="160"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="Overview of future tours" FontSize="35" HorizontalAlignment="Left" Width="390"></Label>
+            <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="Requests" FontSize="35" HorizontalAlignment="Left" Width="390"></Label>
             <Label x:Name="DateAndTime" x:FieldModifier="private" Grid.Row="0" Margin="443,45,0,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Left" Width="312"/>
 
             <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="0,0,0,20"
@@ -57,8 +58,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <StatusBar x:Name="StatusBar" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock Text="Future tours" FontSize="15" Height="25"/>
+        <StatusBar x:Name="StatusBar" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Text="Today tours" FontSize="15" Height="25"/>
         </StatusBar>
     </Grid>
 </Window>

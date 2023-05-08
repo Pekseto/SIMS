@@ -73,7 +73,10 @@ namespace Tourist_Project.Applications.UseCases
             return counter;
         }
 
-
+        public TourReservation? GetByUserIdAndTourId(int userId, int tourId)
+        {
+            return GetAll().Find(tr => tr.UserId == userId && tr.TourId == tourId);
+        }
 
 
         public List<TourReservation> GetAll()

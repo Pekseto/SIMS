@@ -35,8 +35,6 @@ namespace Tourist_Project.DTO
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
         public Status Status { get; set; }
-        public List<TourPoint> Checkpoints { get; set; }
-        public string CheckpointsStr => Checkpoints.ToString();
 
         public TourDTO()
         {

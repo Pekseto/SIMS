@@ -32,8 +32,8 @@ namespace Tourist_Project.WPF.Views
         {
             if (LoggedInUser.Role == UserRole.guest2)
             {
-                var guestTwoWindow = new GuestTwoWindow(LoggedInUser);
-                guestTwoWindow.Show();
+                /*var guestTwoWindow = new GuestTwoWindow(LoggedInUser);
+                guestTwoWindow.Show();*/
             }
             else
             {

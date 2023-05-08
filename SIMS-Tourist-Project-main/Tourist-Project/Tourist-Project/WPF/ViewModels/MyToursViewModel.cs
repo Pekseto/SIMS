@@ -17,13 +17,28 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class MyToursViewModel : ViewModelBase
     {
-        private readonly TourService tourService;
-        private readonly TourAttendanceService attendanceService;
+        private readonly TourService tourService = new();
+        private readonly TourAttendanceService attendanceService = new();
         public User LoggedInUser { get; set; }
         private readonly NavigationStore navigationStore;
         public ObservableCollection<TourDTO> FutureTours { get; set; }
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
         public TourDTO SelectedTodayTour { get; set; }
+        public TourAttendance TourAttendance => attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
+
+        private Message message;
+        public Message Message
+        {
+            get { return message; }
+            set
+            {
+                if (message != value)
+                {
+                    message = value;
+                    OnPropertyChanged(nameof(Message));
+                }
+            }
+        }
         public ICommand JoinCommand { get; set; }
         public ICommand WatchLiveCommand { get; set; }
 
@@ -32,26 +47,18 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedInUser = user;
             this.navigationStore = navigationStore;
 
-            tourService = new TourService();
-            attendanceService = new TourAttendanceService();
+            Message = new Message();
+            FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(LoggedInUser.Id));
+            TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(LoggedInUser.Id));
 
             JoinCommand = new RelayCommand(OnJoinClick, CanJoin);
-            WatchLiveCommand = new NavigateCommand<TourLiveGuestViewModel>(this.navigationStore, () => new TourLiveGuestViewModel(SelectedTodayTour, navigationStore), CanWatchLive);
-
-            FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(MainWindow.LoggedInUser.Id));
-            TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(MainWindow.LoggedInUser.Id));
+            WatchLiveCommand = new NavigateCommand<TourLiveGuestViewModel>(this.navigationStore, () => new TourLiveGuestViewModel(SelectedTodayTour, navigationStore, this), CanWatchLive);
         }
 
         private bool CanJoin()
         {
-            if(SelectedTodayTour != null)
-            {
-                TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
-                if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.No)//DODATI DA NE MOZE DA JOINUJE AKO JE VEC PRISUTAN NA TURI ILI AKO JE PENDING
-                {
-                    return true;
-                    
-                }
+            return SelectedTodayTour != null && SelectedTodayTour.Status == Status.Begin && TourAttendance.Presence == Presence.No;
+
                 /*else if (SelectedTodayTour.Status != Status.Begin)
                 {
                     MessageBox.Show("The tour hasn't begun yet");
@@ -64,21 +71,18 @@ namespace Tourist_Project.WPF.ViewModels
                 {
                     MessageBox.Show("You are already present on the tour, click the Watch live button the follow your progress");
                 }*/ //OVO CE TREBATI U HELPU DA ISPISE ZASTO NE MOZE DA SE JOINUJE 
-            }
-            return false;
         }
 
         private bool CanWatchLive()
         {
-            if(SelectedTodayTour != null)
-            {
-                TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
-                if(tourAttendance.Presence == Presence.Yes)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return SelectedTodayTour != null && TourAttendance.Presence == Presence.Yes;
+        }
+
+        private async Task ShowMessageAndHide(Message message)
+        {
+            Message = message;
+            await Task.Delay(5000);
+            Message = new Message();
         }
 
         private void OnJoinClick()
@@ -86,7 +90,7 @@ namespace Tourist_Project.WPF.ViewModels
             TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
             tourAttendance.Presence = Presence.Joined;
             attendanceService.Update(tourAttendance);
-            MessageBox.Show("You have joined the tour, now you have to wait for the guide to call you out");
+            _ = ShowMessageAndHide(new Message(true, "You have successfully joined the tour,\nnow you have to wait for the guide to call you out"));
 
         }
     }

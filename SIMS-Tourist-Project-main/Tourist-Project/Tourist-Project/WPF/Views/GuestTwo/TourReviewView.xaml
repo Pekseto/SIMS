@@ -6,7 +6,21 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourReviewViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="Transparent">
+             Background="White">
+
+    <UserControl.Resources>
+        <Style x:Key="MessageColor" TargetType="Label">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Message.Type}" Value="True">
+                    <Setter Property="Foreground" Value="Green"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Message.Type}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -67,29 +81,35 @@
             <xctk:IntegerUpDown Text="{Binding KnowledgeRating, UpdateSourceTrigger=PropertyChanged}"
                                 Width="80"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Grid.Row="1" Grid.Column="1" FontSize="16"
+                                Grid.Row="1" Grid.Column="1" FontSize="15"
                                 Margin="0,5"/>
             <xctk:IntegerUpDown Text="{Binding LanguageRating, UpdateSourceTrigger=PropertyChanged}" Width="80"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Grid.Row="2" Grid.Column="1" FontSize="16"
+                                Grid.Row="2" Grid.Column="1" FontSize="15"
                                 Margin="0,5"/>
             <xctk:IntegerUpDown Text="{Binding EntertainmentRating, UpdateSourceTrigger=PropertyChanged}" Width="80"
                                 HorizontalAlignment="Left" VerticalAlignment="Top"
-                                Grid.Row="3" Grid.Column="1" FontSize="16"
+                                Grid.Row="3" Grid.Column="1" FontSize="15"
                                 Margin="0,5"/>
             <TextBox Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"
-                     Width="150" HorizontalAlignment="Left" FontSize="17"/>
+                     Width="200" HorizontalAlignment="Left" FontSize="15"
+                     TextWrapping="Wrap"/>
             <TextBox Text="{Binding ImageURL, UpdateSourceTrigger=PropertyChanged}"
-                     Grid.Row="5" Grid.Column="1" Height="20" Width="100"
-                     HorizontalAlignment="Left" FontSize="17"/>
+                     Grid.Row="5" Grid.Column="1" Height="20" Width="150"
+                     HorizontalAlignment="Left" FontSize="15"/>
             <Button Command="{Binding AddCommand}" Grid.Row="5" Grid.Column="1"
-                    Height="20" Width="26" Content="+"
+                    Height="20" Width="26" Content="+" Margin="120,0,0,0"
                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Button Command="{Binding RateCommand}"
                     Grid.Row="6" Grid.ColumnSpan="2" Height="40" Width="100"
                     Content="Post review" FontSize="17"
                     Margin="0,15,0,0"/>
         </Grid>
+
+        <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+               Style="{StaticResource MessageColor}"
+               HorizontalAlignment="Center"
+               Grid.Row="3" Grid.Column="1" Margin="0,10"/>
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -134,7 +154,7 @@
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedTour.Description}" HorizontalAlignment="Left"
                VerticalAlignment="top" FontSize="16" Margin="0,10" Grid.RowSpan="2"
                       Height="65" Width="250" IsReadOnly="True" TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedTour.Name}" HorizontalAlignment="Left"
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Checkpoints}" HorizontalAlignment="Left"
                      VerticalAlignment="Top" FontSize="16" Margin="0,10" Grid.RowSpan="2"
                      Height="65" Width="250" IsReadOnly="True" TextWrapping="Wrap"/>
             <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding SelectedTour.Language}" HorizontalAlignment="Left"

@@ -19,8 +19,8 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        private readonly TourService tourService;
-        private readonly LocationService locationService;
+        private readonly TourService tourService = new();
+        private readonly LocationService locationService = new();
 
         public User LoggedInUser { get; set; }
         private readonly NavigationStore navigationStore;
@@ -106,19 +106,16 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedInUser = user;
             this.navigationStore = navigationStore;
 
-            SearchCommand = new RelayCommand(OnSearchClick);
-            ShowAllCommand = new RelayCommand(OnShowAllClick);
-            ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore, this), CanReserve);
-
-            tourService = new TourService();
-            locationService = new LocationService();
-
-            ShowNotifications();
-
             Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
+
+            SearchCommand = new RelayCommand(OnSearchClick);
+            ShowAllCommand = new RelayCommand(OnShowAllClick);
+            ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore, this), CanReserve);
+
+            ShowNotifications();
         }
 
         private bool CanReserve()

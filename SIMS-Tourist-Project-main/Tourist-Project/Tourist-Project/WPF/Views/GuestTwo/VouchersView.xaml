@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:VouchersViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="Transparent">
+             Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

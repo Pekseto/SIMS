@@ -16,7 +16,7 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class TourHistoryViewModel : ViewModelBase
     {
-        private readonly TourService tourService;
+        private readonly TourService tourService = new();
         public ObservableCollection<TourDTO> Tours { get; set; }
         public TourDTO SelectedTour { get; set; }
         public User LoggedInUser { get; set; }
@@ -28,22 +28,14 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedInUser = user;
             this.navigationStore = navigationStore;
 
-            tourService = new TourService();
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
 
             ReviewCommand = new NavigateCommand<TourReviewViewModel>(this.navigationStore, () => new TourReviewViewModel(user, SelectedTour, this.navigationStore, this), CanReview);
-
-            Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
         }
 
         private bool CanReview()
         {
             return SelectedTour != null;
         }
-
-        /*private void OnReviewClick()
-        {
-            var reviewWindow = new TourReviewView(LoggedInUser, SelectedTour);
-            reviewWindow.Show();
-        }*/
     }
 }

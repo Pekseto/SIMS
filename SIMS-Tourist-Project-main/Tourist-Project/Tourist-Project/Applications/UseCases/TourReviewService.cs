@@ -54,5 +54,10 @@ namespace Tourist_Project.Applications.UseCases
 
             return dtos;
         }
+
+        public bool DidUserReview(int userId, int tourId)
+        {
+            return repository.GetAll().Find(tr => tr.UserId == userId && tr.TourId == tourId) != null;
+        }
     }
 }

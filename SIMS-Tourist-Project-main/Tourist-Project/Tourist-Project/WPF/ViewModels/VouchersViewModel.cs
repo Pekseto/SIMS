@@ -9,7 +9,7 @@ using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class VouchersViewModel
+    public class VouchersViewModel : ViewModelBase
     {
         private readonly VoucherService voucherService;
         public ObservableCollection<Voucher> Vouchers { get; set; }

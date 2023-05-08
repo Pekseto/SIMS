@@ -38,6 +38,11 @@ namespace Tourist_Project.Repositories
             return tourReviews.Max(c => c.Id) + 1;
         }
 
+        public List<TourReview> GetAll()
+        {
+            return serializer.FromCSV(filePath);
+        }
+
         public TourReview GetOne(int id)
         {
             return tourReviews.Find(t => t.Id == id);

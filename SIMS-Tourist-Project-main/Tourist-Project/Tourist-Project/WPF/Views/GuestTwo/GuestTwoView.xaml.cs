@@ -12,19 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Stores;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestTwo
 {
     /// <summary>
-    /// Interaction logic for TourLiveGuestView.xaml
+    /// Interaction logic for GuestTwoView.xaml
     /// </summary>
-    public partial class TourLiveGuestView : Window
+    public partial class GuestTwoView : Window
     {
-        public TourLiveGuestView(User user, int selectedTourId)
+        public GuestTwoView(User user)
         {
             InitializeComponent();
-            DataContext = new TourLiveGuestViewModel(user, selectedTourId);
+            var navigationStore = new NavigationStore();
+            navigationStore.CurrentViewModel = new HomeViewModel(user, navigationStore);
+            DataContext = new GuestTwoViewModel(user, navigationStore);
         }
     }
 }

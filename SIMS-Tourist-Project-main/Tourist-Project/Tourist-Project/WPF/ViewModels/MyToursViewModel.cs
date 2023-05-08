@@ -9,74 +9,88 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.DTO;
+using Tourist_Project.WPF.Commands;
+using Tourist_Project.WPF.Stores;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class MyToursViewModel
+    public class MyToursViewModel : ViewModelBase
     {
-        private readonly TourReservationService reservationService;
-        private readonly TourService tourService;
-        private readonly LocationService locationService;
-        private readonly TourAttendanceService attendanceService;
+        private readonly TourService tourService = new();
+        private readonly TourAttendanceService attendanceService = new();
         public User LoggedInUser { get; set; }
+        private readonly NavigationStore navigationStore;
         public ObservableCollection<TourDTO> FutureTours { get; set; }
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
         public TourDTO SelectedTodayTour { get; set; }
+        public TourAttendance TourAttendance => attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
+
+        private Message message;
+        public Message Message
+        {
+            get { return message; }
+            set
+            {
+                if (message != value)
+                {
+                    message = value;
+                    OnPropertyChanged(nameof(Message));
+                }
+            }
+        }
         public ICommand JoinCommand { get; set; }
         public ICommand WatchLiveCommand { get; set; }
 
-        public MyToursViewModel(User user) 
+        public MyToursViewModel(User user, NavigationStore navigationStore) 
         {
-            tourService = new TourService();
-            reservationService = new TourReservationService();
-            locationService = new LocationService();
-            attendanceService = new TourAttendanceService();
-
-            JoinCommand = new RelayCommand(OnJoinClick);
-            WatchLiveCommand = new RelayCommand(OnWatchLiveClick);
-
             LoggedInUser = user;
+            this.navigationStore = navigationStore;
+
+            Message = new Message();
             FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(LoggedInUser.Id));
             TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(LoggedInUser.Id));
+
+            JoinCommand = new RelayCommand(OnJoinClick, CanJoin);
+            WatchLiveCommand = new NavigateCommand<TourLiveGuestViewModel>(this.navigationStore, () => new TourLiveGuestViewModel(SelectedTodayTour, navigationStore, this), CanWatchLive);
         }
 
-        private void OnWatchLiveClick()
+        private bool CanJoin()
         {
-            TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
-            if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.Yes)
-            {
-                var TourLiveGuestWindow = new TourLiveGuestView(LoggedInUser, SelectedTodayTour.Id);
-                TourLiveGuestWindow.Show();                
-            }
-            else
-            {
-                MessageBox.Show("First you have to join the tour, then wait for the guide to call you out before you can watch the tour");
-            }
+            return SelectedTodayTour != null && SelectedTodayTour.Status == Status.Begin && TourAttendance.Presence == Presence.No;
+
+                /*else if (SelectedTodayTour.Status != Status.Begin)
+                {
+                    MessageBox.Show("The tour hasn't begun yet");
+                }
+                else if (tourAttendance.Presence == Presence.Joined)
+                {
+                    MessageBox.Show("You have already joined the tour, wait for the guide to call you out");
+                }
+                else if (tourAttendance.Presence == Presence.Yes)
+                {
+                    MessageBox.Show("You are already present on the tour, click the Watch live button the follow your progress");
+                }*/ //OVO CE TREBATI U HELPU DA ISPISE ZASTO NE MOZE DA SE JOINUJE 
+        }
+
+        private bool CanWatchLive()
+        {
+            return SelectedTodayTour != null && TourAttendance.Presence == Presence.Yes;
+        }
+
+        private async Task ShowMessageAndHide(Message message)
+        {
+            Message = message;
+            await Task.Delay(5000);
+            Message = new Message();
         }
 
         private void OnJoinClick()
         {
             TourAttendance tourAttendance = attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
-            if (SelectedTodayTour.Status == Status.Begin && tourAttendance.Presence == Presence.No)//DODATI DA NE MOZE DA JOINUJE AKO JE VEC PRISUTAN NA TURI ILI AKO JE PENDING
-            {
-                tourAttendance.Presence = Presence.Joined;
-                attendanceService.Update(tourAttendance);
-                MessageBox.Show("You have joined the tour, now you have to wait for the guide to call you out");
-            }
-            else if(SelectedTodayTour.Status != Status.Begin)
-            {
-                MessageBox.Show("The tour hasn't begun yet");
-            }
-            else if(tourAttendance.Presence == Presence.Joined)
-            {
-                MessageBox.Show("You have already joined the tour, wait for the guide to call you out");
-            }
-            else if(tourAttendance.Presence == Presence.Yes)
-            {
-                MessageBox.Show("You are already present on the tour, click the Watch live button the follow your progress");
-            }
-           
+            tourAttendance.Presence = Presence.Joined;
+            attendanceService.Update(tourAttendance);
+            _ = ShowMessageAndHide(new Message(true, "You have successfully joined the tour,\nnow you have to wait for the guide to call you out"));
         }
     }
 }

@@ -62,5 +62,21 @@ namespace Tourist_Project.Repositories
             return GetAll().Find(tourPoint => tourPoint.Id == id);
         }
 
+        public string GetAllForTourString(int id)
+        {
+            string retVal = string.Empty;
+            foreach(TourPoint tourPoint in GetAllForTour(id))
+            {
+                retVal += tourPoint.Name + ", ";
+            }
+
+            if(retVal.Length > 2)
+            {
+                retVal = retVal.Remove(retVal.Length - 2, 2);
+            }
+
+            return retVal;
+        }
+
     }
 }

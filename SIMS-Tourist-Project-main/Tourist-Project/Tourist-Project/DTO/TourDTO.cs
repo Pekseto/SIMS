@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Domain.Models;
@@ -10,6 +13,7 @@ namespace Tourist_Project.DTO
         public int Id { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; }
+        public string LocationStr => Location.ToString();
         public string Name { get; set; }
         public string Description { get; set; }
         public string Language { get; set; }

@@ -4,24 +4,34 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
+using Tourist_Project.WPF.Commands;
+using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class TourLiveGuestViewModel
+    public class TourLiveGuestViewModel : ViewModelBase
     {
-        public User LoggedInUser { get; set; }
+        public TourDTO SelectedTour { get; set; }
+        public string Checkpoints { get; set; }
         public ObservableCollection<TourPoint> TourPoints { get; set; }
 
         private readonly TourPointRepository tourPointRepository = new();
+        private readonly NavigationStore navigationStore;
+        public ICommand BackCommand { get; set; }
 
-        public TourLiveGuestViewModel(User user, int selectedTourId)
+        public TourLiveGuestViewModel(TourDTO tour, NavigationStore navigationStore, MyToursViewModel previousViewModel)
         {
-            LoggedInUser = user;
+            SelectedTour = tour;
+            this.navigationStore = navigationStore;
+            Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
+            TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(SelectedTour.Id));
 
-            TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(selectedTourId));
+            BackCommand = new NavigateCommand<MyToursViewModel>(this.navigationStore, () => previousViewModel);
         }
     }
 }

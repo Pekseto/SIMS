@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourReservationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="White">
+             Background="PeachPuff">
 
     <UserControl.Resources>
         <Style x:Key="MessageColor" TargetType="Label">
@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1">
-                <Label HorizontalAlignment="Center" FontSize="25" Margin="0,20">Reservation</Label>
+                <Label HorizontalAlignment="Center" FontSize="25" Margin="0,40,0,0">Reservation</Label>
                 <Label HorizontalAlignment="Center" FontSize="15" Margin="0,25,0,10">                   
                 How many spots you wish to reserve:</Label>
                 <xctk:IntegerUpDown Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Width="80"
@@ -58,7 +58,7 @@
                     Optionally, select one of your vouchers:</Label>
                 <ComboBox ItemsSource="{Binding Vouchers, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedVoucher}"
-                          Height="25" Width="150" FontSize="15"
+                          Height="25" Width="150" FontSize="14"
                           HorizontalAlignment="Center"/>
                 <Button Content="Reserve" Command="{Binding ReserveCommand}"
                         Width="100" Height="35" FontSize="15"

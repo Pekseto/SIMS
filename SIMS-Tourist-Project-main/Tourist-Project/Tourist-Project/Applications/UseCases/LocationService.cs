@@ -82,5 +82,18 @@ namespace Tourist_Project.Applications.UseCases
             }
             return cities;
         }
+
+        public string GetCountryFromCity(string selectedCity)
+        {
+            string retVal = string.Empty;
+            foreach(var location in GetAll())
+            {
+                if(location.City == selectedCity)
+                {
+                    retVal = location.Country;
+                }
+            }
+            return retVal;
+        }
     }
 }

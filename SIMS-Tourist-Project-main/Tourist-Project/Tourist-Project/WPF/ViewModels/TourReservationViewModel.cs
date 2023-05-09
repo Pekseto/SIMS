@@ -23,7 +23,19 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourPointRepository tourPointRepository = new();
         public int GuestsNumber { get; set; }
         public ObservableCollection<Voucher> Vouchers { get; set; }
-        public Voucher SelectedVoucher { get; set; }
+        private Voucher selectedVoucher;
+        public Voucher SelectedVoucher
+        {
+            get => selectedVoucher;
+            set
+            {
+                if(value != selectedVoucher)
+                {
+                    selectedVoucher = value;
+                    OnPropertyChanged(nameof(SelectedVoucher));
+                }
+            }
+        }
         public User LoggedUser { get; set; }
         private readonly NavigationStore navigationStore;
         public TourDTO SelectedTour { get; set; }
@@ -53,7 +65,32 @@ namespace Tourist_Project.WPF.ViewModels
             BackCommand = new NavigateCommand<HomeViewModel>(this.navigationStore, () => previousViewModel);
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
-            Vouchers = new ObservableCollection<Voucher>(voucherService.GetAllForUser(user.Id));
+            Vouchers = LoadVouchers();
+            SelectedVoucher = Vouchers.First();
+        }
+
+        public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore, SimilarToursViewModel previousViewModel)
+        {
+            LoggedUser = user;
+            SelectedTour = tour;
+            this.navigationStore = navigationStore;
+
+            ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
+            BackCommand = new NavigateCommand<SimilarToursViewModel>(this.navigationStore, () => previousViewModel);
+
+            Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
+            Vouchers = LoadVouchers();
+            SelectedVoucher = Vouchers.First();
+        }
+
+        private ObservableCollection<Voucher> LoadVouchers()
+        {
+            var retVal = new ObservableCollection<Voucher>{ new Voucher() };
+            foreach (Voucher voucher in voucherService.GetAllForUser(LoggedUser.Id))
+            {
+                retVal.Add(voucher);
+            }
+            return retVal;
         }
 
         private bool CanReserve()
@@ -74,9 +111,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             if (tourCapacityLeft == 0)
             {
-                _ = ShowMessageAndHide(new Message(false, "This tours capacity is full at the moment.\n" +
-                                                          "Here are some other tours on the same location!"));
-                //DisplaySimilarTours(SelectedTour);     DODATI OVU FUNKCIONALNOST
+                navigationStore.CurrentViewModel = new SimilarToursViewModel(LoggedUser, SelectedTour.LocationId, SelectedTour.Id, navigationStore, this);
             }
             else if (tourCapacityLeft < GuestsNumber)
             {
@@ -101,7 +136,7 @@ namespace Tourist_Project.WPF.ViewModels
 
 
                 SelectedTour.SpotsLeft -= GuestsNumber;
-                if (SelectedVoucher != null)
+                if (SelectedVoucher.Name != "Without voucher")
                 {
                     voucherService.Delete(SelectedVoucher.Id);
                     Vouchers.Remove(SelectedVoucher);

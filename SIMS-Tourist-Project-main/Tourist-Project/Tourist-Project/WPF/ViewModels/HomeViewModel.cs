@@ -39,7 +39,21 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
         public TourDTO SelectedTour { get; set; }
-        public ObservableCollection<string> Countries { get; set; }
+
+        private ObservableCollection<string> countries;
+        public ObservableCollection<string> Countries
+        {
+            get => countries;
+            set
+            {
+                if(value != countries)
+                {
+                    countries = value;
+                    SelectedCountry = value.First();
+                    OnPropertyChanged(nameof(Countries));
+                }
+            }
+        }
 
         private string selectedCountry;
         public string SelectedCountry
@@ -50,7 +64,8 @@ namespace Tourist_Project.WPF.ViewModels
                 if (selectedCountry != value)
                 {
                     selectedCountry = value;
-                    LoadCitiesComboBox();
+                    Cities = locationService.GetCitiesFromCountry(SelectedCountry);
+                    OnPropertyChanged(nameof(SelectedCountry));
                 }
             }
         }
@@ -63,11 +78,24 @@ namespace Tourist_Project.WPF.ViewModels
                 if (cities != value)
                 {
                     cities = value;
+                    SelectedCity = value.First();
                     OnPropertyChanged(nameof(Cities));
                 }
             }
         }
-        public string SelectedCity { get; set; }
+        private string selectedCity { get; set; }
+        public string SelectedCity
+        {
+            get => selectedCity;
+            set
+            {
+                if(selectedCity != value)
+                {
+                    selectedCity = value;
+                    OnPropertyChanged(nameof(SelectedCity));
+                }
+            }
+        }
         public ObservableCollection<string> Languages { get; set; }
         public string SelectedLanguage { get; set; }
 
@@ -108,8 +136,8 @@ namespace Tourist_Project.WPF.ViewModels
 
             Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
-            Cities = new ObservableCollection<string>();
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
+            SelectedLanguage = Languages.First();
 
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
@@ -178,11 +206,6 @@ namespace Tourist_Project.WPF.ViewModels
                 filteredList.Add(tourDTO);
             }
             Tours = filteredList;
-        }
-
-        private void LoadCitiesComboBox()
-        {
-            Cities = locationService.GetCitiesFromCountry(SelectedCountry);
         }
     }
 }

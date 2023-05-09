@@ -16,7 +16,10 @@ namespace Tourist_Project.Domain.Models
         public string WayAcquired { get; set; }
         public DateTime LastValidDate { get; set; }
 
-        public Voucher() { }
+        public Voucher()
+        {
+            Name = "Without voucher";
+        }
 
         public Voucher(int id, int userId, string name, string wayAcquired, DateTime lastValidDate)
         {

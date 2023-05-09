@@ -23,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly NavigationStore navigationStore;
         public ObservableCollection<TourDTO> FutureTours { get; set; }
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
+        public TourDTO SelectedFutureTour { get; set; }
         public TourDTO SelectedTodayTour { get; set; }
         public TourAttendance TourAttendance => attendanceService.GetByTourIdAndUserId(SelectedTodayTour.Id, LoggedInUser.Id);
 
@@ -39,6 +40,7 @@ namespace Tourist_Project.WPF.ViewModels
                 }
             }
         }
+        public ICommand PreviewCommand { get; set; }
         public ICommand JoinCommand { get; set; }
         public ICommand WatchLiveCommand { get; set; }
 
@@ -51,8 +53,14 @@ namespace Tourist_Project.WPF.ViewModels
             FutureTours = new ObservableCollection<TourDTO>(tourService.GetUsersFutureTours(LoggedInUser.Id));
             TodaysTours = new ObservableCollection<TourDTO>(tourService.GetUsersTodayTours(LoggedInUser.Id));
 
+            PreviewCommand = new NavigateCommand<MyTourPreviewViewModel>(this.navigationStore, () => new MyTourPreviewViewModel(SelectedFutureTour, this.navigationStore, this), CanPreview);
             JoinCommand = new RelayCommand(OnJoinClick, CanJoin);
             WatchLiveCommand = new NavigateCommand<TourLiveGuestViewModel>(this.navigationStore, () => new TourLiveGuestViewModel(SelectedTodayTour, navigationStore, this), CanWatchLive);
+        }
+
+        private bool CanPreview()
+        {
+            return SelectedFutureTour != null;
         }
 
         private bool CanJoin()

@@ -7,12 +7,8 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="White">
+             Background="PeachPuff">
 
-    <UserControl.Resources>
-        
-    </UserControl.Resources>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -38,7 +34,7 @@
                 <Label Content="Location:" FontSize="15"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
+                       Margin="20,0,0,0"/>
                 <ComboBox ItemsSource="{Binding Countries}"
                       SelectedItem="{Binding SelectedCountry}"                  
                       Width="80" Height="25" HorizontalAlignment="Left"
@@ -100,7 +96,7 @@
                         Grid.Row="2" Width="70" Height="30" FontSize="15"
                         HorizontalAlignment="Right" 
                         VerticalAlignment="Center"
-                        Margin="30,0,0,0"/>
+                        Margin="20,0,0,0"/>
 
             </StackPanel>
 
@@ -108,7 +104,7 @@
 
 
 
-        <DataGrid FontSize="15" Grid.Row="2" Margin="10"
+        <DataGrid FontSize="15" Grid.Row="2" Margin="30,10,30,10"
                   ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedTour, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">

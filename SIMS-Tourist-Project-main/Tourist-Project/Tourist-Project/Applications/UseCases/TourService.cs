@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -237,6 +238,25 @@ namespace Tourist_Project.Applications.UseCases
                     var tourDTO = new TourDTO(tour)
                     {
                         Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                    };
+                    tours.Add(tourDTO);
+                }
+            }
+
+            return tours;
+        }
+
+        public List<TourDTO> GetSimilarTours(int locationId, int tourId)
+        {
+            var tours = new List<TourDTO>();
+
+            foreach(Tour tour in GetAll())
+            {
+                if(tour.LocationId == locationId && tour.Id != tourId && tour.StartTime > DateTime.Now)
+                {
+                    var tourDTO = new TourDTO(tour)
+                    {
+                        Location = locationService.GetAll().Find(x => x.Id == locationId)
                     };
                     tours.Add(tourDTO);
                 }

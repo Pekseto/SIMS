@@ -51,7 +51,7 @@ namespace Tourist_Project.WPF.Views
                         }
                         case UserRole.guest1:
                         {
-                            var guestOne = new GuestOne(user);
+                            var guestOne = new GuestOneWindow(user);
                             guestOne.Show();
                             Close();
                             break;

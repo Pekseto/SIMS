@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.Views
 {
@@ -20,10 +21,11 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class GuestOneSearchWindow : Window
     {
+        private User _user;
         public GuestOneSearchWindow()
         {
             InitializeComponent();
-            this.DataContext = new GuestOneSearchViewModel(this);
+            this.DataContext = new GuestOneSearchViewModel(this, _user);
         }
     }
 }

@@ -36,16 +36,16 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBox TextWrapping="Wrap" Text="{Binding AccommodationName}" Width ="130" HorizontalAlignment="Center" Grid.Column="1" Margin="80,12"/>
-            <ComboBox ItemsSource ="{Binding AccommodationsType}" SelectedItem ="{Binding SelectedType}" SelectionChanged ="SelectedTypeChanged" HorizontalAlignment="Center" Width="130" Margin="80,12"/>
-            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" SelectionChanged="SelectedCountryChanged" Width="130" VerticalAlignment="Center" Margin="80,12" Grid.Column="1"/>
-            <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Margin="80,12" SelectionChanged="SelectedCityChanged" Width="130" VerticalAlignment="Top"/>
+            <ComboBox ItemsSource ="{Binding AccommodationTypes}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Center" Width="130" Margin="80,12"/>
+            <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="130" VerticalAlignment="Center" Margin="80,12" Grid.Column="1"/>
+            <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Margin="80,12" Width="130" VerticalAlignment="Top"/>
             <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SearchedCancelationThreshold}" Width="130" VerticalAlignment="Center" Grid.Column="1" Margin="80,12"/>
             <TextBox TextWrapping="Wrap" Text="{Binding SearchedGuestNum}" Width="130" Margin="80,12" HorizontalAlignment="Center" Grid.Column="1"/>
         </StackPanel>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Button Content="Search" Width="60" Command="{Binding Search_Command}" Height="20"  Margin="20,10" HorizontalAlignment="Left"></Button>
             <Button Content="Show All" Width="60" Command="{Binding ShowAll_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"/>
-            <Button Content="Cancel" Width="60" Command="{Binding Cancel_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"></Button>
+            <Button Content="Close" Width="60" Command="{Binding Close_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"></Button>
         </DockPanel>
     </Grid>
 </Window>

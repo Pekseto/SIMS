@@ -55,14 +55,8 @@ public class GuestOneViewModel
     public ICommand RateAccommodation_Command { get; set; }
     public ICommand CreateReservation_Command { get; set; }
 
-    public ICommand ShowUserReservations_Command { get; set; }
-
-    public ICommand SearchReservations_Command { get; set; }
-
-    private DataGrid DataGrid;
-
-    public ICommand ShowAll_Command { get; set; }
-    public GuestOneViewModel(Window window, DataGrid dataGrid)
+    public ICommand Search_Command { get; set; }
+    public GuestOneViewModel(Window window)
     {
         this._window = window;
         this.DataGrid = dataGrid;
@@ -230,11 +224,22 @@ public class GuestOneViewModel
         return false;
     }
 
-    public bool CanCreateReservation()
+    private bool CanCreateReservation()
     {
         if (SelectedAccommodation != null)
             return true;
         return false;
+    }
+
+    private bool CanSearch()
+    {
+        return true;
+    }
+
+    private void NewSearchWindow()
+    {
+        var newSearchWindow = new GuestOneSearchWindow();
+        newSearchWindow.Show();
     }
 
     private void RateAccommodation()

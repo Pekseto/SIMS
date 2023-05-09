@@ -142,7 +142,7 @@
 
                     <Image VerticalAlignment="Top"
                        HorizontalAlignment="Left"
-                       Source="/WPF/Views/GuestTwo/Darth Vader.jpg"
+                       Source="/Images/Darth Vader.jpg"
                        Height="100" Margin="20,10,0,0"/>
                     
                     <StackPanel Grid.Column="1" Margin="0,10">

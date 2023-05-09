@@ -12,6 +12,7 @@
     <None Remove="Images\add.png" />
     <None Remove="Images\addGuideIcon.png" />
     <None Remove="Images\cancelGuideIcon.png" />
+    <None Remove="Images\Darth Vader.jpg" />
     <None Remove="Images\delete.png" />
     <None Remove="Images\edit.png" />
     <None Remove="Images\futureGuideIcon.png" />
@@ -31,6 +32,9 @@
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addGuideIcon.png" />
     <Resource Include="Images\cancelGuideIcon.png" />
+    <Content Include="Images\Darth Vader.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\edit.png" />
     <Resource Include="Images\futureGuideIcon.png" />

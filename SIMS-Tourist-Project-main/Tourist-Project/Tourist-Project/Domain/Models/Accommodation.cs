@@ -201,5 +201,9 @@ namespace Tourist_Project.Domain.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

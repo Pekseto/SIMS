@@ -22,7 +22,7 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class RateAccommodationWindow : Window
     {
-        public RateAccommodationWindow(Accommodation SelectedAccommodation)
+        public RateAccommodationWindow(AccommodationViewModel SelectedAccommodation)
         {
             InitializeComponent();
             this.DataContext = new RateAccommodationViewModel(this);

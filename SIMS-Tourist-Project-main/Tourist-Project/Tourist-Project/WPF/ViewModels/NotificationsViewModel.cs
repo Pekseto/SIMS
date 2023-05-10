@@ -29,9 +29,12 @@ namespace Tourist_Project.WPF.ViewModels
                 {
                     notificationNavigationStore.CurrentViewModel = value.NotificationType switch
                     {
-                        NotificationType.ConfirmPresence => new ConfirmPresenceViewModel(),
+                        NotificationType.ConfirmPresence => new ConfirmPresenceViewModel(value),
                         _ => notificationNavigationStore.CurrentViewModel
                     };
+
+                    value.Opened = true;
+                    notificationService.Update(value);
                 }
             }
         }

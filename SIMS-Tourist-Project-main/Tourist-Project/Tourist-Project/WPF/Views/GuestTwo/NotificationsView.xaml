@@ -11,8 +11,8 @@
              Background="PeachPuff">
 
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
-            <views:HomeView/>
+        <DataTemplate DataType="{x:Type viewmodels:ConfirmPresenceViewModel}">
+            <views:ConfirmPresenceView/>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -30,7 +30,7 @@
                HorizontalAlignment="Left"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <DataGrid Margin="100,100,0,100" FontSize="16"
+            <DataGrid Margin="125,125,0,125" FontSize="16"
                       ItemsSource="{Binding Notifications}"
                       SelectedItem="{Binding SelectedNotification}"
                       AutoGenerateColumns="False" IsReadOnly="True"
@@ -41,7 +41,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <ContentControl Height="400" Width="375"
+            <ContentControl Height="350" Width="350"
                             Content="{Binding CurrentViewModel}"/>
         </StackPanel>
 

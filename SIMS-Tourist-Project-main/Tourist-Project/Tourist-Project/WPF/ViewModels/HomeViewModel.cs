@@ -28,7 +28,7 @@ namespace Tourist_Project.WPF.ViewModels
         private ObservableCollection<TourDTO> tours;
         public ObservableCollection<TourDTO> Tours
         {
-            get { return tours; }
+            get => tours;
             set
             {
                 if (value != tours)
@@ -134,7 +134,7 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedInUser = user;
             this.navigationStore = navigationStore;
 
-            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDto());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Languages = new ObservableCollection<string>(tourService.GetAllLanguages());
             SelectedLanguage = Languages.First();
@@ -173,37 +173,20 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnShowAllClick()
         {
-            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDTO());
+            Tours = new ObservableCollection<TourDTO>(tourService.GetAllAvailableToursDto());
         }
 
         private void OnSearchClick()
         {
             var filteredList = new ObservableCollection<TourDTO>();
-            foreach (TourDTO tourDTO in tourService.GetAllAvailableToursDTO())
+            foreach (var tourDto in from tourDto in tourService.GetAllAvailableToursDto()
+                     where SelectedCountry == null || tourDto.Location.Country == SelectedCountry
+                     where SelectedCity == null || tourDto.Location.City == SelectedCity
+                     where duration == 0 || tourDto.Duration == duration
+                     where SelectedLanguage == null || tourDto.Language == SelectedLanguage
+                     where numberOfPeople == 0 || tourDto.SpotsLeft >= numberOfPeople select tourDto)
             {
-                //FILTERING
-                if (SelectedCountry != null && tourDTO.Location.Country != SelectedCountry)
-                {
-                    continue;
-                }
-                if (SelectedCity != null && tourDTO.Location.City != SelectedCity)
-                {
-                    continue;
-                }
-                if (duration != 0 && tourDTO.Duration != duration)
-                {
-                    continue;
-                }
-                if (SelectedLanguage != null && tourDTO.Language != SelectedLanguage)
-                {
-                    continue;
-                }
-                if (numberOfPeople != 0 && tourDTO.SpotsLeft < numberOfPeople)
-                {
-                    continue;
-                }
-
-                filteredList.Add(tourDTO);
+                filteredList.Add(tourDto);
             }
             Tours = filteredList;
         }

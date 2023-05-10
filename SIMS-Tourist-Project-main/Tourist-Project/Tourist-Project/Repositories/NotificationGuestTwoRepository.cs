@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,12 @@ namespace Tourist_Project.Repositories
             var found = notifications.Find(x => x.Id == id);
             notifications.Remove(found);
             serializer.ToCSV(filePath, notifications);
+        }
+
+        public List<NotificationGuestTwo> GetAllForUser(int userId)
+        {
+            notifications = GetAll();
+            return notifications.Where(notification => notification.UserId == userId).ToList();
         }
 
         public List<NotificationGuestTwo> GetAll()

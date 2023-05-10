@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public NotificationGuestTwo Save(NotificationGuestTwo notification);
         public NotificationGuestTwo Update(NotificationGuestTwo notification);
         public void Delete(int id);
+        List<NotificationGuestTwo> GetAllForUser(int userId);
     }
 }

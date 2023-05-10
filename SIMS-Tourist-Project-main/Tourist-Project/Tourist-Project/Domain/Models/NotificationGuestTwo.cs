@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
@@ -35,21 +30,13 @@ namespace Tourist_Project.Domain.Models
             Opened = false;
             NotificationType = notificationType;
 
-            switch (notificationType)
+            Title = notificationType switch
             {
-                case NotificationType.ConfirmPresence:
-                    Title = "Confirm your presence";
-                    break;
-                case NotificationType.TourAccepted:
-                    Title = "Tour accepted";
-                    break;
-                case NotificationType.NewTour:
-                    Title = "A new tour according to your requirements";
-                    break;
-                default:
-                    Title = string.Empty;
-                    break;
-            }
+                NotificationType.ConfirmPresence => "Confirm your presence",
+                NotificationType.TourAccepted => "Tour accepted",
+                NotificationType.NewTour => "A new tour according to your requirements",
+                _ => string.Empty
+            };
         }
 
         public string[] ToCSV()
@@ -68,21 +55,13 @@ namespace Tourist_Project.Domain.Models
             Opened = bool.Parse(values[5]);
             NotificationType = Enum.Parse<NotificationType>(values[6]);
 
-            switch (NotificationType)
+            Title = NotificationType switch
             {
-                case NotificationType.ConfirmPresence:
-                    Title = "Confirm your presence";
-                    break;
-                case NotificationType.TourAccepted:
-                    Title = "Tour accepted";
-                    break;
-                case NotificationType.NewTour:
-                    Title = "A new tour according to your requirements";
-                    break;
-                default:
-                    Title = string.Empty;
-                    break;
-            }
+                NotificationType.ConfirmPresence => "Confirm your presence",
+                NotificationType.TourAccepted => "Tour accepted",
+                NotificationType.NewTour => "A new tour according to your requirements",
+                _ => string.Empty
+            };
         }
     }
 }

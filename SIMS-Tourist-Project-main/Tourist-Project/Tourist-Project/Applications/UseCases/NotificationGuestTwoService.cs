@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,11 @@ namespace Tourist_Project.Applications.UseCases
         public void Delete(int id)
         {
             notificationRepository.Delete(id);
+        }
+
+        public List<NotificationGuestTwo> GetAllForUser(int userId)
+        {
+            return notificationRepository.GetAllForUser(userId);
         }
     }
 }

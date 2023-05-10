@@ -63,7 +63,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="5">
+                            CornerRadius="10,5,10,5">
                                 <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
                         </Grid>

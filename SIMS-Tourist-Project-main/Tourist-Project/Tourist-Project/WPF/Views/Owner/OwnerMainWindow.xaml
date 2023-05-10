@@ -19,13 +19,13 @@
         </DataTemplate>
         <DataTemplate x:Key="GuestRatingDataTemplate">
             <StackPanel>
-                <Label Content="{Binding }" HorizontalContentAlignment="Left"></Label>
+                <Label Content="{Binding  UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left"></Label>
                 <Separator/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ReviewsDataTemplate">
             <StackPanel>
-                <Label Content="{Binding }" HorizontalContentAlignment="Left" FontWeight="Bold"></Label>
+                <Label Content="{Binding UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" FontWeight="Bold"></Label>
                 <Separator/>
             </StackPanel>
         </DataTemplate>
@@ -33,19 +33,19 @@
             <Grid>
                 <Grid Background="#acdcdc" Margin="5,10,0,200">
                     <Label Content="Accommodation name:" FontWeight="DemiBold" Margin="5,0,0,0"></Label>
-                    <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,0,0,0"></Label>
+                    <Label Content="{Binding Accommodation.Name, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,0,0,0"></Label>
                     <Label Content="Guest name:" FontWeight="DemiBold" Margin="5,30,0,0"></Label>
-                    <Label Content="{Binding User.FullName}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,30,0,0"></Label>
+                    <Label Content="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,30,0,0"></Label>
                 </Grid>
                 <Label Content="CheckIn         CheckOut" FontWeight="Bold" Margin="100,65,0,0"></Label>
                 <Label Content="Old dates:" Margin="5,90,0,0" Foreground="Red"></Label>
-                <Label Content="{Binding RescheduleRequest.OldBeginningDate}" Foreground="Red" Margin="100,90,0,0"></Label>
-                <Label Content="{Binding RescheduleRequest.OldEndDate}" Foreground="Red" Margin="173,90,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.OldBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" Margin="100,90,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.OldEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" Margin="173,90,0,0"></Label>
                 <Label Content="New dates:" Margin="5,120,0,0" Foreground="Green"></Label>
-                <Label Content="{Binding RescheduleRequest.NewBeginningDate}" Foreground="Green" Margin="100, 120,0,0"></Label>
-                <Label Content="{Binding RescheduleRequest.NewEndDate}" Foreground="Green" Margin="173, 120, 0, 0"></Label>
-                <Button Content="Confirm(Alt+C)" Command="{Binding ConfirmRescheduleCommand}" Height="38" Margin="5,100,10,0"></Button>
-                <Button Content="Cancel(Alt+C)" Command="{Binding CancelRescheduleCommand}" Height="38" Margin="5,190,10,0"></Button>
+                <Label Content="{Binding RescheduleRequest.NewBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Green" Margin="100, 120,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.NewEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Green" Margin="173, 120, 0, 0"></Label>
+                <Button Content="Confirm(Alt+C)" Command="{Binding ConfirmRescheduleCommand, UpdateSourceTrigger=PropertyChanged}" Height="38" Margin="5,100,10,0"></Button>
+                <Button Content="Cancel(Alt+C)" Command="{Binding CancelRescheduleCommand, UpdateSourceTrigger=PropertyChanged}" Height="38" Margin="5,190,10,0"></Button>
                 <Separator Margin="0,250,0,10"></Separator>
             </Grid>
         </DataTemplate>
@@ -76,7 +76,11 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="#0da2a5"></Setter>
+                    <Setter Property="Background" Value="#d3d2f4"></Setter>
+                    <Setter Property="Foreground" Value="#03888f"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#376f72"></Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -105,10 +109,26 @@
             </Setter>
         </Style>
         <Style x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <ContentPresenter/>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True" />
+                                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="border" Property="Background" Value="#d2d387" />
+                            </MultiTrigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                                <Setter Property="IsSelected" Value="False"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -200,9 +220,9 @@
             <GroupBox Margin="-5, 0,-1, -5">
                 <Grid Background="#03888f">
                     <Image VerticalAlignment="Top" Source="https://i.pinimg.com/236x/b6/3e/52/b63e52d00df4c76d0403e836f5e81f32.jpg" Height="143" Margin="-22,0,92,0"/>
-                    <Label Content="{Binding User.FullName}" FontSize="20" Margin="132,-5,10,646" Height="50" Foreground="#67c9cb"/>
+                    <Label Content="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Margin="132,-5,10,646" Height="50" Foreground="#67c9cb"/>
                     <Label Content="Rating:" FontSize="15" Height="59" Margin="132,-32,22,500" Foreground="#67c9cb"/>
-                    <Label Content="{Binding Rating}" FontSize="15" Height="59" Margin="199,-32,12,500" Foreground="#67c9cb"/>
+                    <Label Content="{Binding Rating, UpdateSourceTrigger=PropertyChanged}" FontSize="15" Height="59" Margin="199,-32,12,500" Foreground="#67c9cb"/>
                     <Image x:Name="Super" Source="http://www.clipartbest.com/cliparts/9iR/Lzj/9iRLzjKkT.png" Margin="115,81,0,538" Height="50" HorizontalAlignment="Center"/>
                     <Button Height="38" Margin="10,-20,20,261" Content="Log out(ESC)" Command="{Binding LogOutCommand}"></Button>
                     <Label Content="Accommodation" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="27" FontWeight="Bold" Margin="-22,228,0,0" Foreground="#67c9cb"/>
@@ -245,7 +265,8 @@
                 </GroupBox>
             </Grid>
             <GroupBox Header="My accommodations(M)" Margin="20,20" Grid.Row="1">
-                <ListBox ItemsSource="{Binding AccommodationView, UpdateSourceTrigger=PropertyChanged}"
+                <ListBox x:Name="AccommodationListBox"
+                         ItemsSource="{Binding AccommodationView, UpdateSourceTrigger=PropertyChanged}"
                          ItemTemplate="{StaticResource AccommodationDataTemplate}"
                          SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"/>
 

@@ -1,21 +1,46 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
-    public class RateGuestViewModel
+    public class RateGuestViewModel : INotifyPropertyChanged
     {
-        public Notification Notification { get; set; }
-        public GuestRateViewModel GuestRate { get; set; }
+        private Notification notification;
+        public Notification Notification
+        {
+            get => notification;
+            set
+            {
+                if(value == notification) return;
+                notification = value;
+                OnPropertyChanged("Notification");
+            }
+        }
+
+        private GuestRateViewModel guestRate;
+        public GuestRateViewModel GuestRate
+        {
+            get => guestRate;
+            set
+            {
+                if(value == guestRate) return;
+                guestRate = value;
+                OnPropertyChanged("GuestRate");
+            }
+        }
         private readonly GuestRateService ratingService = new ();
         private readonly NotificationService notificationService = new ();
         public ICommand RateCommand { get; set; }
         public Window Window { get; set; }
-        public RateGuestViewModel(Notification notification, Window window)
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
+        public RateGuestViewModel(Notification notification, Window window, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             Notification = notification;
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
             GuestRate = new GuestRateViewModel(notification);
             RateCommand = new RelayCommand(Rate, CanRate);
             Window = window;
@@ -25,6 +50,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             notificationService.Delete(Notification.Id);
             ratingService.Update(GuestRate.GuestRating);
+            OwnerMainWindowViewModel.GuestRateUpdate(Notification);
             Window.Close();
         }
 
@@ -33,6 +59,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return true;
         } 
         #endregion
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
 }

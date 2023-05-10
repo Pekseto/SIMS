@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.Views.Owner
@@ -9,10 +9,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class CreateAccommodation : Window
     {
-        public CreateAccommodation()
+        public CreateAccommodation(User user)
         {
             InitializeComponent();
-            DataContext = new CreateAccommodationViewModel(this);
+            DataContext = new CreateAccommodationViewModel(user, this);
         }
     }
 }

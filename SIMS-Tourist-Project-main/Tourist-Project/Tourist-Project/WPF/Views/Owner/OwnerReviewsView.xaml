@@ -83,7 +83,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="5">
+                            CornerRadius="10,5,10,5">
                                 <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
                         </Grid>
@@ -121,7 +121,6 @@
         </Style>
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="Background" Value="#d9eeef" />
-            <Setter Property="Margin" Value="0,0,0,215"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -177,7 +176,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <ListBox Background="#d9eeef" Height="690" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
+        <ListBox Background="#d9eeef" Height="475" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ReviewDataTemplate}"
                  SelectedItem="{Binding SelectedReview}"></ListBox>
     </Grid>

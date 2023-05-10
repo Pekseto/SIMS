@@ -63,13 +63,11 @@ namespace Tourist_Project.Applications.UseCases
             guestRateService.HasNewRatings();
             foreach (var guestRate in guestRateRepository.GetAll())
             {
-                foreach (var reservation in reservationRepository.GetAll())
+                var reservation = reservationRepository.GetById(guestRate.ReservationId);
+                var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
+                if ((notificationRepository.GetAllByType("GuestRate").Count == 0 || notificationRepository.GetAllByType("GuestRate").All(c => c.TypeId != guestRate.Id)) && !guestRate.IsReviewed() && Math.Abs(daysSinceCheckOut.Days) < 5)
                 {
-                    var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if ((notificationRepository.GetAll().Count == 0 || notificationRepository.GetAll().All(c => c.TypeId != guestRate.Id)) && !guestRate.IsReviewed() && Math.Abs(daysSinceCheckOut.Days) < 5 && guestRate.ReservationId == reservation.Id)
-                    {
-                        Create(new Notification("GuestRate", true, guestRate.Id));
-                    }
+                    Create(new Notification("GuestRate", true, guestRate.Id));
                 }
             }
         }

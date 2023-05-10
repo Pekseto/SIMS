@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.Views.Owner
@@ -10,10 +9,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class CancelRescheduleRequest : Window
     {
-        public CancelRescheduleRequest()
+        public CancelRescheduleRequest(RescheduleRequest rescheduleRequest)
         {
             InitializeComponent();
-            DataContext = new CancelRescheduleViewModel(this);
+            DataContext = new CancelRescheduleViewModel(rescheduleRequest, this);
         }
     }
 }

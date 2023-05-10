@@ -3,18 +3,20 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class ReschedulingReservationViewModel : INotifyPropertyChanged
     {
         private RescheduleRequest rescheduleRequest;
+
         public RescheduleRequest RescheduleRequest
         {
             get => rescheduleRequest;
             set
             {
-                if(value == rescheduleRequest) return;
+                if (value == rescheduleRequest) return;
                 rescheduleRequest = value;
                 OnPropertyChanged("RescheduleRequest");
             }
@@ -87,10 +89,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return true;
         }
 
-        public static void CancelReschedule()
+        public void CancelReschedule()
         {
-            //var CancelRescheduleWindow = new CancelRescheduleRequest(SelectedRescheduleRequest);
-            //CancelRescheduleWindow.ShowDialog();
+            var cancelRescheduleWindow = new CancelRescheduleRequest(RescheduleRequest);
+            cancelRescheduleWindow.ShowDialog();
         }
         public static bool CanCancelReschedule()
         {

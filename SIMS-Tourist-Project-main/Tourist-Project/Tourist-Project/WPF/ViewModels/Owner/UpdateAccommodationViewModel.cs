@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -13,7 +12,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
     {
         #region UpdateProperties
         private Accommodation accommodation;
-
         public Accommodation Accommodation
         {
             get => accommodation;
@@ -25,7 +23,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         }
 
         private Image image;
-
         public Image Image
         {
             get => image;
@@ -37,7 +34,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         }
 
         private Location location;
-
         public Location Location
         {
             get => location;
@@ -52,9 +48,40 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private readonly ImageService imageService = new();
         private readonly LocationService locationService = new();
         private readonly AccommodationService accommodationService = new();
-        public static ObservableCollection<Location> Locations { get; set; } = new();
-        public static ObservableCollection<string> Countries { get; set; } = new();
-        public static ObservableCollection<string> Cities { get; set; } = new();
+        private ObservableCollection<Location> locations;
+        public ObservableCollection<Location> Locations
+        {
+            get => locations;
+            set
+            {
+                if(value == locations) return;
+                locations = value;
+                OnPropertyChanged("Locations");
+            }
+        }
+
+        private ObservableCollection<string> countries;
+        public ObservableCollection<string> Countries
+        {
+            get => countries;
+            set
+            {
+                if(value == countries) return;
+                countries = value;
+                OnPropertyChanged("Countries");
+            }
+        }
+        private ObservableCollection<string> cities;
+        public ObservableCollection<string> Cities
+        {
+            get => cities;
+            set
+            {
+                if (value == cities) return;
+                cities = value;
+                OnPropertyChanged("Cities");
+            }
+        }
         public static ICommand ConfirmCommand { get; set; }
         public UpdateAccommodation Window;
 
@@ -68,8 +95,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Update, CanUpdate);
             Window = window;
-            Window.Country.DropDownClosed += CountryDropDownClosed;
-            Window.City.DropDownClosed += CityDropDownClosed;
+            Window.Country.GotKeyboardFocus += CountryDropDownClosed;
+            Window.City.GotKeyboardFocus += CityDropDownClosed;
         }
         #region PropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -92,7 +119,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return true;
         }
 
-        public void CountryDropDownClosed(object sender, EventArgs e)
+        public void CountryDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)
         {
             Cities.Clear();
             foreach (var location in Locations)
@@ -101,7 +128,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                     Cities.Add(location.City);
             }
         }
-        public void CityDropDownClosed(object sender, EventArgs e)
+        public void CityDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)
         {
             foreach (var location in Locations)
             {

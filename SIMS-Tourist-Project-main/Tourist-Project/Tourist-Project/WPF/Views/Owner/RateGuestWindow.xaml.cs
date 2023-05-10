@@ -10,10 +10,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class RateGuestWindow : Window
     {
-        public RateGuestWindow(Notification notification)
+        public RateGuestWindow(Notification notification, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             InitializeComponent();
-            DataContext = new RateGuestViewModel(notification, this);
+            DataContext = new RateGuestViewModel(notification, this, ownerMainWindowViewModel);
         }
     }
 }

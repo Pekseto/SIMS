@@ -131,7 +131,7 @@ namespace Tourist_Project.Domain.Models
         public List<int> ImageIds { get; set; } = new();
 
         public Accommodation() { }
-        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes)
+        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes, int userId)
         {
             Name = name;
             LocationId = locationId;
@@ -141,6 +141,7 @@ namespace Tourist_Project.Domain.Models
             CancellationThreshold = daysBeforeCancel;
             ImageId = imageId;
             ImageIdsCsv = imageIdes;
+            UserId = userId;
         }
         public string[] ToCSV()
         {

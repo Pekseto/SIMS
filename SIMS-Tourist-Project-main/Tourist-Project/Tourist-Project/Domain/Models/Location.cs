@@ -1,12 +1,46 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class Location : ISerializable
+    public class Location : ISerializable, INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
+        private int id;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                if(value == id) return;
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        private string city;
+        public string City
+        {
+            get => city;
+            set
+            {
+                if(value == city) return;
+                city = value;
+                OnPropertyChanged("City");
+            }
+        }
+
+        private string country;
+        public string Country
+        {
+            get => country;
+            set
+            {
+                if(value == country) return;
+                country = value;
+                OnPropertyChanged("Country");
+            }
+        }
         public Location() { }
         public Location(string city, string country)
         {
@@ -32,6 +66,13 @@ namespace Tourist_Project.Domain.Models
         public override string ToString()
         {
             return City + ", " + Country;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
+             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MyTourPreviewViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="PeachPuff">
@@ -18,7 +18,25 @@
             <RowDefinition Height="550"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
+        <Image Grid.Row="2" Grid.Column="1"
+               Height="300" Width="300"
+               Source="{Binding CurrentImage.Url}"/>
+
+        <Button Grid.Row="2" Grid.Column="1"
+                Height="30" Width="30"
+                HorizontalAlignment="Left"
+                Margin="60"
+                Content="&lt;" FontSize="17"
+                Command="{Binding PreviousCommand}"/>
+
+        <Button Grid.Row="2" Grid.Column="1"
+                Height="30" Width="30"
+                HorizontalAlignment="Right"
+                Margin="60"
+                Content=">" FontSize="17"
+                Command="{Binding NextCommand}"/>
+
         <Label Content="My tour preview"
                HorizontalAlignment="Left" Margin="20,0,0,0"
                VerticalAlignment="Center" FontSize="32"/>

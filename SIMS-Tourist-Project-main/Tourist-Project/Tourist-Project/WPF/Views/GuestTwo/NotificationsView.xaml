@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Tourist_Project.WPF.Views.GuestTwo.NotificationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
+             xmlns:views="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
+             xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:NotificationsViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1000"
+             Background="PeachPuff">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:ConfirmPresenceViewModel}">
+            <views:ConfirmPresenceView/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="600"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="Notifications"
+               FontSize="32"
+               Margin="10,0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <DataGrid Margin="125,125,0,125" FontSize="16"
+                      ItemsSource="{Binding Notifications}"
+                      SelectedItem="{Binding SelectedNotification}"
+                      AutoGenerateColumns="False" IsReadOnly="True"
+                      Width="400" HorizontalAlignment="Left">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="200"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <ContentControl Height="350" Width="350"
+                            Content="{Binding CurrentViewModel}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

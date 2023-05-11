@@ -44,12 +44,12 @@ namespace Tourist_Project.WPF.ViewModels
         private Message message;
         public Message Message
         {
-            get { return message; }
+            get => message;
             set
             {
                 if (value == message) return;
                 message = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Message));
             }
         }
         public ICommand ReserveCommand { get; set; }

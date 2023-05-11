@@ -144,8 +144,8 @@ namespace Tourist_Project.Applications.UseCases
 
         public int GetLeftoverSpots(Tour tour)
         {
-            int retVal = tour.MaxGuestsNumber;
-            foreach (TourReservation reservation in tourReservationService.GetAll())
+            var retVal = tour.MaxGuestsNumber;
+            foreach (var reservation in tourReservationService.GetAll())
             {
                 if (reservation.TourId == tour.Id)
                 {
@@ -155,20 +155,18 @@ namespace Tourist_Project.Applications.UseCases
             return retVal;
         }
 
-        public List<TourDTO> GetAllAvailableToursDTO()
+        public List<TourDTO> GetAllAvailableToursDto()
         {
             var tourDTOs = new List<TourDTO>();
-            foreach (Tour tour in GetAll())
+            foreach (var tour in GetAll())
             {
-                if(tour.StartTime >= DateTime.Today && tour.Status == Status.NotBegin)
+                if (tour.StartTime < DateTime.Today || tour.Status != Status.NotBegin) continue;
+                var tourDTO = new TourDTO(tour)
                 {
-                    var tourDTO = new TourDTO(tour)
-                    {
-                        SpotsLeft = GetLeftoverSpots(tour),
-                        Location = locationService.GetLocation(tour)
-                    };
-                    tourDTOs.Add(tourDTO);
-                }                
+                    SpotsLeft = GetLeftoverSpots(tour),
+                    Location = locationService.GetLocation(tour)
+                };
+                tourDTOs.Add(tourDTO);
             }
             return tourDTOs;
         }
@@ -176,12 +174,9 @@ namespace Tourist_Project.Applications.UseCases
         public List<string> GetAllLanguages()
         {
             var languages = new List<string>();
-            foreach (Tour tour in GetAll())
+            foreach (var tour in GetAll().Where(tour => !languages.Contains(tour.Language)))
             {
-                if (!languages.Contains(tour.Language))
-                {
-                    languages.Add(tour.Language);
-                }
+                languages.Add(tour.Language);
             }
             return languages;
         }
@@ -190,17 +185,18 @@ namespace Tourist_Project.Applications.UseCases
         {
             var tours = new List<TourDTO>();
 
-            foreach (TourReservation t in tourReservationService.GetAll())
+            foreach (var t in tourReservationService.GetAll())
             {
-                Tour tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId == userId && tour.StartTime < DateTime.Now && (tour.Status == Status.End || tour.Status == Status.Cancel))
+                var tour = GetAll().Find(x => x.Id == t.TourId);
+                if (t.UserId != userId || tour.StartTime >= DateTime.Now ||
+                    (tour.Status != Status.End && tour.Status != Status.Cancel)) continue;
+                
+                var tourDTO = new TourDTO(tour)
                 {
-                    var tourDTO = new TourDTO(tour)
-                    {
-                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
-                    };
-                    tours.Add(tourDTO);
-                }
+                    Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                };
+                tours.Add(tourDTO);
+                
             }
 
             return tours;

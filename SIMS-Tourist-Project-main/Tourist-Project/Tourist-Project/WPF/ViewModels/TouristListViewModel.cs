@@ -20,6 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private UserService userService = new();
         private TourPointService tourPointService = new();
         private TourAttendanceService tourAttendanceService = new();
+        private NotificationGuestTwoService notificationService = new();
 
         public ICommand CallOutCommand { get; set; }
         public TouristListViewModel(TourPoint selectedTourPoint) 
@@ -45,6 +46,7 @@ namespace Tourist_Project.WPF.ViewModels
             if(SelectedTourAttendance.Presence == Presence.Joined)
             {
                 SelectedTourAttendance.Presence = Presence.Pending;
+                notificationService.Save(new NotificationGuestTwo(SelectedTourAttendance.UserId, SelectedTourAttendance.TourId, DateTime.Now.Date, NotificationType.ConfirmPresence));
             }
             tourAttendanceService.UpdateCollection(SelectedTourAttendance, SelectedTourPoint);
         }

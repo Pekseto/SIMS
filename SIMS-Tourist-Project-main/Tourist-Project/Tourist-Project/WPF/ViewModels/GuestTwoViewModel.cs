@@ -22,27 +22,27 @@ namespace Tourist_Project.WPF.ViewModels
         public User LoggedUser { get; set; }
         public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
         private readonly NavigationStore navigationStore;
-        private readonly VoucherService voucherService;
+        private readonly VoucherService voucherService = new();
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand TourHistoryCommand { get; set; }
         public ICommand VouchersCommand { get; set; }
         public ICommand SignOutCommand { get; set; }
         public ICommand ExitCommand { get; set; }
+        public ICommand NotificationsCommand { get; set; }
 
         public GuestTwoViewModel(User user, NavigationStore navigationStore, GuestTwoView guestTwoWindow)
         {
             LoggedUser = user;
             this.navigationStore = navigationStore;
             this.guestTwoWindow = guestTwoWindow;
-            navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-
-            voucherService = new VoucherService();
+            this.navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
             HomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(user, navigationStore));
             MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));
             TourHistoryCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => new TourHistoryViewModel(user, navigationStore));
             VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
+            NotificationsCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => new NotificationsViewModel(user, navigationStore));
             SignOutCommand = new RelayCommand(OnSignOutClick);
             ExitCommand = new RelayCommand(OnExitClick);
 

@@ -41,6 +41,9 @@
         <DataTemplate DataType="{x:Type viewmodels:MyTourPreviewViewModel}">
             <views:MyTourPreviewView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:NotificationsViewModel}">
+            <views:NotificationsView/>
+        </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="{x:Type RadioButton}"
@@ -131,7 +134,8 @@
                     <RadioButton Content="Notifications"
                                  Height="50"
                                  FontSize="24"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding NotificationsCommand}"/>
                 </StackPanel>
 
                 <Grid Grid.Row="2">

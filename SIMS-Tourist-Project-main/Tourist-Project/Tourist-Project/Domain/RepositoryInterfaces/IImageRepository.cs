@@ -12,6 +12,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public Image Update(Image image);
         public Image GetById(int id);
         public Image? GetByUrl(string url);
+        public List<Image> GetByAssociationAndId(ImageAssociation association, int associationId);
     }
 
 }

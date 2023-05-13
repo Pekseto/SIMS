@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Commands;
@@ -21,6 +22,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourReservationService reservationService = new();
         private readonly TourAttendanceService attendanceService = new();
         private readonly TourPointRepository tourPointRepository = new();
+        private readonly ImageRepository imageRepository = new();
         public int GuestsNumber { get; set; }
         public ObservableCollection<Voucher> Vouchers { get; set; }
         private Voucher selectedVoucher;
@@ -52,6 +54,25 @@ namespace Tourist_Project.WPF.ViewModels
                 OnPropertyChanged(nameof(Message));
             }
         }
+
+        public List<Image> TourImages { get; set; }
+        private int imageId;
+        private readonly int imagesCount;
+        private Image currentImage;
+        public Image CurrentImage
+        {
+            get => currentImage;
+            set
+            {
+                if (value != currentImage)
+                {
+                    currentImage = value;
+                    OnPropertyChanged(nameof(CurrentImage));
+                }
+            }
+        }
+        public ICommand NextCommand { get; set; }
+        public ICommand PreviousCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
         public ICommand BackCommand { get; set; }
 
@@ -61,12 +82,27 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTour = tour;
             this.navigationStore = navigationStore;
 
-            ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
-            BackCommand = new NavigateCommand<HomeViewModel>(this.navigationStore, () => previousViewModel);
+            TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
+            imagesCount = TourImages.Count;
+            if (imagesCount > 0)
+            {
+                CurrentImage = TourImages[0];
+                imageId = 0;
+            }
+            else
+            {
+                CurrentImage = new Image("/Images/No images to show.jpg");
+            }
+
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
             Vouchers = LoadVouchers();
             SelectedVoucher = Vouchers.First();
+
+            ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
+            BackCommand = new NavigateCommand<HomeViewModel>(this.navigationStore, () => previousViewModel);
+            NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
+            PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
         }
 
         public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore, SimilarToursViewModel previousViewModel)
@@ -75,18 +111,37 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTour = tour;
             this.navigationStore = navigationStore;
 
-            ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
-            BackCommand = new NavigateCommand<SimilarToursViewModel>(this.navigationStore, () => previousViewModel);
+            TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
+            CurrentImage = TourImages[0];
+            imagesCount = TourImages.Count;
+            imageId = 0;
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
             Vouchers = LoadVouchers();
             SelectedVoucher = Vouchers.First();
+
+            ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
+            BackCommand = new NavigateCommand<SimilarToursViewModel>(this.navigationStore, () => previousViewModel);
+            NextCommand = new RelayCommand(OnNextClick);
+            PreviousCommand = new RelayCommand(OnPreviousClick);
+        }
+
+        private void OnPreviousClick()
+        {
+            imageId = imageId - 1 < 0 ? imagesCount - 1 : imageId - 1;
+            CurrentImage = TourImages[imageId];
+        }
+
+        private void OnNextClick()
+        {
+            imageId = imageId + 1 == imagesCount ? 0 : imageId + 1;
+            CurrentImage = TourImages[imageId];
         }
 
         private ObservableCollection<Voucher> LoadVouchers()
         {
             var retVal = new ObservableCollection<Voucher>{ new Voucher() };
-            foreach (Voucher voucher in voucherService.GetAllForUser(LoggedUser.Id))
+            foreach (var voucher in voucherService.GetAllForUser(LoggedUser.Id))
             {
                 retVal.Add(voucher);
             }
@@ -107,7 +162,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void OnReserveClick()
         {
-            int tourCapacityLeft = SelectedTour.SpotsLeft;
+            var tourCapacityLeft = SelectedTour.SpotsLeft;
 
             if (tourCapacityLeft == 0)
             {

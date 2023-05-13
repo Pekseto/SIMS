@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourReviewViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
 
     <UserControl.Resources>
         <Style x:Key="MessageColor" TargetType="Label">
@@ -27,24 +27,23 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="65"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="550"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Label Content="Tour review"
-               HorizontalAlignment="Left"
-               Margin="20,0,0,0"
-               VerticalAlignment="Center" 
-               FontSize="32"/>
 
-        <Button Content="&lt;Back"
-                Grid.Row="1"
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="Review"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
+
+        <Button Grid.Row="1" Content="&lt;Back"
                 HorizontalAlignment="Left"
-                Height="25" Width="60"
-                Margin="30,0"
-                FontSize="14"
+                VerticalAlignment="Top"
+                Width="60" FontSize="14"
+                Margin="37,2"
+                Height="25" Cursor="Hand"
                 Command="{Binding BackCommand}"/>
 
 
@@ -63,20 +62,34 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Content="Review(1-5, 1=bad and 5=good)" HorizontalAlignment="Left"
-               Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontSize="25" Margin="50,0"/>
-            <Label Grid.Column="0" Content="Guides knowledge:" HorizontalAlignment="Left"
-               Grid.Row="1" VerticalAlignment="Top" FontSize="17" Margin="70,0,0,0"/>
-            <Label Grid.Column="0" Content="Guides language:" HorizontalAlignment="Left"
-               Grid.Row="2" VerticalAlignment="Top" FontSize="17" Margin="70,0,0,0"/>
-            <Label Grid.Column="0" Content="Tour entertainment:" HorizontalAlignment="Left"
-               Grid.Row="3" VerticalAlignment="Top" FontSize="17" Margin="70,0,0,0"/>
-            <Label Grid.Column="0" Content="Leave a comment:" HorizontalAlignment="Left"
-               Grid.Row="4" VerticalAlignment="Top" FontSize="17" Margin="70,0,0,0"/>
-            <Label Grid.Column="0" Content="Add an image:" HorizontalAlignment="Left"
-               Grid.Row="5" VerticalAlignment="Center" FontSize="17" Margin="70,0,0,0"/>
-            <Label Grid.Column="0" Content="(paste url)" HorizontalAlignment="Left"
-               Grid.Row="5" VerticalAlignment="Bottom" FontSize="14" Margin="85,0,0,0"/>
+            <Label Grid.Column="0" Content="Review (1=bad and 5=good)" 
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2"
+                   FontSize="25" Margin="50,0"/>
+            <Label Grid.Column="0" Content="Guides knowledge:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="1" VerticalAlignment="Top" FontSize="17"
+                   Margin="70,0,0,0"/>
+            <Label Grid.Column="0" Content="Guides language:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="2" VerticalAlignment="Top" FontSize="17"
+                   Margin="70,0,0,0"/>
+            <Label Grid.Column="0" Content="Tour entertainment:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="3" VerticalAlignment="Top" FontSize="17"
+                   Margin="70,0,0,0"/>
+            <Label Grid.Column="0" Content="Leave a comment:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="4" VerticalAlignment="Top" FontSize="17"
+                   Margin="70,0,0,0"/>
+            <Label Grid.Column="0" Content="Add an image:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="5" VerticalAlignment="Center" FontSize="17"
+                   Margin="70,0,0,0"/>
+            <Label Grid.Column="0" Content="(paste url)"
+                   HorizontalAlignment="Left" Foreground="White"
+                   Grid.Row="5" VerticalAlignment="Bottom" FontSize="14"
+                   Margin="85,0,0,0"/>
 
             <xctk:IntegerUpDown Text="{Binding KnowledgeRating, UpdateSourceTrigger=PropertyChanged}"
                                 Width="80"
@@ -98,11 +111,12 @@
                      Grid.Row="5" Grid.Column="1" Height="20" Width="150"
                      HorizontalAlignment="Left" FontSize="15"/>
             <Button Command="{Binding AddCommand}" Grid.Row="5" Grid.Column="1"
-                    Height="20" Width="26" Content="+" Margin="120,0,0,0"
+                    Height="20" Width="26" Content="+"
+                    Margin="120,0,0,0" Cursor="Hand"
                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Button Command="{Binding RateCommand}"
                     Grid.Row="6" Grid.ColumnSpan="2" Height="40" Width="100"
-                    Content="Post review" FontSize="17"
+                    Content="Post review" FontSize="17" Cursor="Hand"
                     Margin="0,15,0,0"/>
         </Grid>
 
@@ -129,43 +143,76 @@
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Content="Name:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="Location:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="2" Content="Description:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="4" Content="Checkpoints:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="6" Content="Language:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="7" Content="Duration:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="8" Content="Maximum guests:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
-            <Label Grid.Column="0" Grid.Row="9" Content="Spots left:" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="75,0,0,0"/>
+            <Label Grid.Row="0" Content="Name:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center"
+                   FontSize="17" Margin="75,0,0,0"/>
+            <Label Grid.Row="1" Content="Location:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center"
+                   FontSize="17" Margin="75,0,0,0"/>
+            <Label Grid.Row="2" Content="Description:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="4" Content="Checkpoints:" 
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="6" Content="Language:" 
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="7" Content="Duration:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="8" Content="Maximum guests:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="9" Content="Spots left:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17" 
+                   Margin="75,0,0,0"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SelectedTour.Name}"
+            <TextBox Grid.Column="1" Grid.Row="0"
+                     Text="{Binding SelectedTour.Name}"
                      HorizontalAlignment="Left" TextWrapping="Wrap"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0,0,0" Width="250" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedTour.LocationStr, Mode=OneWay}" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0,0,0" Width="250" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedTour.Description}" HorizontalAlignment="Left"
-               VerticalAlignment="top" FontSize="16" Margin="0,10" Grid.RowSpan="2"
-                      Height="65" Width="250" IsReadOnly="True" TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Checkpoints}" HorizontalAlignment="Left"
-                     VerticalAlignment="Top" FontSize="16" Margin="0,10" Grid.RowSpan="2"
-                     Height="65" Width="250" IsReadOnly="True" TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding SelectedTour.Language}" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0" Width="250" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding SelectedTour.Duration}" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0,0,0" Width="250" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding SelectedTour.MaxGuestsNumber}" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0,0,0" Width="250" IsReadOnly="True"/>
-            <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding SelectedTour.SpotsLeft}" HorizontalAlignment="Left"
-               VerticalAlignment="Center" FontSize="16" Margin="0,0,0,0" Width="250" IsReadOnly="True"/>
-        </Grid>
+                     VerticalAlignment="Center" FontSize="17"
+                     Margin="0,0,0,0" Width="250"
+                     IsReadOnly="True" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="1"
+                     Text="{Binding SelectedTour.LocationStr, Mode=OneWay}"
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     FontSize="17" Margin="0,0,0,0"
+                     Width="250" IsReadOnly="True" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedTour.Description}"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     FontSize="17" Margin="0,14,0,0" Grid.RowSpan="2"
+                     Height="75" Width="250" IsReadOnly="True"
+                     TextWrapping="Wrap" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Checkpoints, Mode=OneWay}"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     FontSize="17" Margin="0,14,0,0" Grid.RowSpan="2"
+                     Height="75" Width="250" IsReadOnly="True"
+                     TextWrapping="Wrap" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="6" Text="{Binding SelectedTour.Language}" 
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     FontSize="17" Margin="0,0" Width="250"
+                     IsReadOnly="True" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding SelectedTour.Duration}"
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     FontSize="17" Margin="0,0,0,0" Width="250"
+                     IsReadOnly="True" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="8" Text="{Binding SelectedTour.MaxGuestsNumber}"
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     FontSize="17" Margin="0,0,0,0" Width="250"
+                     IsReadOnly="True" Cursor="Arrow"/>
+            <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding SelectedTour.SpotsLeft}"
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     FontSize="17" Margin="0,0,0,0" Width="250"
+                     IsReadOnly="True" Cursor="Arrow"/></Grid>
 
     </Grid>
 </UserControl>

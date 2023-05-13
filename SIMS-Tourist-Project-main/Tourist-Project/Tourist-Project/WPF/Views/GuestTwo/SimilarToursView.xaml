@@ -6,26 +6,35 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:SimilarToursViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="65"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="500"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Margin="20,0,0,0" FontSize="28"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Center">Similar tours</Label>
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="Similar tours"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
 
         <Button Grid.Row="1" Content="&lt;Back"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Top"
                 Width="60" FontSize="14"
-                Margin="30,0"
-                Height="25"
+                Margin="37,2"
+                Height="25" Cursor="Hand"
                 Command="{Binding BackCommand}"/>
+
+        <Label Grid.Row="1" FontSize="14"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Center"
+               Foreground="Red"
+               Content="Unfortunately, there weren't enough spots on that tour, here are some other tours on the same location"/>
+
 
         <DataGrid FontSize="15" Grid.Row="2" Margin="30,10,30,10"
                   ItemsSource="{Binding Tours, UpdateSourceTrigger=PropertyChanged}"
@@ -43,15 +52,12 @@
             </DataGrid.Columns>
 
         </DataGrid>
+
         <Button Content="Reserve" FontSize="15"
                 Command="{Binding ReserveCommand}"
                 Grid.Row="3" Width="80" Height="40"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Center" Cursor="Hand"
                 VerticalAlignment="Top"/>
-        <Label Grid.Row="1" FontSize="14"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               Foreground="Red">Unfortunately, there weren't enough spots on that tour, here are some other tours on the same location</Label>
-
+        
     </Grid>
 </UserControl>

@@ -105,8 +105,13 @@
             </Style.Setters>
         </Style>
 
-        <Style TargetType="DataGridRow">
+        <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+        </Style>
+
+        <Style TargetType="DataGridRow">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="LightGray"/>

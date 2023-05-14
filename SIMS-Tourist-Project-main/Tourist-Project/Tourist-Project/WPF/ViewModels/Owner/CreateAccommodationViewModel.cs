@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
@@ -85,10 +86,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public static ICommand ConfirmCommand { get; set; }
         public static ICommand CancelCommand { get; set; }
         public CreateAccommodation Window;
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
 
-        public CreateAccommodationViewModel(User user, CreateAccommodation window)
+        public CreateAccommodationViewModel(User user, CreateAccommodation window, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             User = user;
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
             Locations = new ObservableCollection<Location>(locationService.GetAll());
             LocationToCreate = new Location();
             AccommodationToCreate = new Accommodation();
@@ -96,21 +99,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Create, CanCreate);
-            CancelCommand = new RelayCommand(Cancel, CanCancel);
+            CancelCommand = new RelayCommand(Cancel);
             Window = window;
             Window.Country.GotKeyboardFocus += CountryDropDownClosed;
             Window.City.GotKeyboardFocus += CityDropDownClosed;
 
         }
 
-        public void Create()
-        {
-            AccommodationToCreate.UserId = User.Id;
-            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
-            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
-            accommodationService.Create(AccommodationToCreate);
-            Window.Close();
-        }
         #region PropertyChanged
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -120,19 +115,24 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         }
         #endregion
         #region Commands
-
-        public static bool CanCreate()
+        public void Create()
         {
-            return true;
+            AccommodationToCreate.UserId = User.Id;
+            AccommodationToCreate.ImageId = CoverPhotoId();
+            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
+            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
+            accommodationService.Create(AccommodationToCreate);
+            OwnerMainWindowViewModel.CreateAccommodation(accommodationToCreate);
+            Window.Close();
+        }
+
+        public bool CanCreate()
+        {
+            return AccommodationToCreate.IsValid && LocationToCreate.IsValid;
         }
         public void Cancel()
         {
             Window.Close();
-        }
-
-        public static bool CanCancel()
-        {
-            return true;
         }
         public void CountryDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -151,6 +151,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 if (location.City.Equals(Window.City.Text))
                     Window.Country.Text = location.Country;
             }
+        }
+
+        public int CoverPhotoId()
+        {
+            var ids = imageService.CreateImages(ImageToCreate.Url);
+            return ids.FirstOrDefault();
         }
         #endregion
     }

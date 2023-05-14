@@ -9,10 +9,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class CreateAccommodation : Window
     {
-        public CreateAccommodation(User user)
+        public CreateAccommodation(User user, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             InitializeComponent();
-            DataContext = new CreateAccommodationViewModel(user, this);
+            DataContext = new CreateAccommodationViewModel(user, this, ownerMainWindowViewModel);
         }
     }
 }

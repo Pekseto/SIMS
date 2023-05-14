@@ -8,7 +8,7 @@ using Tourist_Project.Serializer;
 namespace Tourist_Project.Domain.Models
 {
     public enum AccommodationType { Apartment, House, Cottage }
-    public class Accommodation : ISerializable, INotifyPropertyChanged
+    public class Accommodation : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         private int id;
         public int Id
@@ -193,6 +193,41 @@ namespace Tourist_Project.Domain.Models
             {
                 if (imageIde != string.Empty)
                     ImageIds.Add(int.Parse(imageIde));
+            }
+        }
+
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Name" when string.IsNullOrEmpty(Name):
+                        return "Name is required";
+                    case "AccommodationType" when string.IsNullOrEmpty(Type.ToString()):
+                        return "Type is required";
+                    case "MaxNoGuests" when MaxGuestNum < 1:
+                        return "Max is required";
+                    case "MinStayDay" when MinStayingDays < 1:
+                        return "Min is required";
+                    case "CancelThreshold" when CancellationThreshold < 1:
+                        return "Cancel is required";
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private readonly string[] validatedProperties = { "Name", "AccommodationType", "MaxNoGuests", "MinStayDay", "CancelThreshold" };
+
+        public bool IsValid
+        {
+            get
+            {
+                return validatedProperties.All(property => this[property] == null);
             }
         }
 

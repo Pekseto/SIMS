@@ -10,10 +10,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class UpdateAccommodation : Window
     {
-        public UpdateAccommodation(Accommodation accommodation)
+        public UpdateAccommodation(AccommodationViewModel accommodationViewModel, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             InitializeComponent();
-            DataContext = new UpdateAccommodationViewModel(this, accommodation);
+            DataContext = new UpdateAccommodationViewModel(this, accommodationViewModel, ownerMainWindowViewModel);
         }
     }
 }

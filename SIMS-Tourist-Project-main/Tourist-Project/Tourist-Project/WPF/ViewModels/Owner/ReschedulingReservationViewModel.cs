@@ -65,12 +65,14 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public ICommand ConfirmRescheduleCommand { get; set; }
         public ICommand CancelRescheduleCommand { get; set; }
-        public ReschedulingReservationViewModel(RescheduleRequest rescheduleRequest)
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
+        public ReschedulingReservationViewModel(RescheduleRequest rescheduleRequest, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             RescheduleRequest = rescheduleRequest;
             Reservation = reservationService.Get(RescheduleRequest.ReservationId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
             User = userService.Get(Reservation.GuestId);
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
 
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
@@ -83,20 +85,21 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             reservationService.Update(reservation);
             RescheduleRequest.Status = RequestStatus.Confirmed;
             rescheduleRequestService.Update(RescheduleRequest);
+            OwnerMainWindowViewModel.RescheduleRequestUpdate(this);
         }
-        public static bool CanConfirmReschedule()
+        public bool CanConfirmReschedule()
         {
-            return true;
+            return RescheduleRequest != null;
         }
 
         public void CancelReschedule()
         {
-            var cancelRescheduleWindow = new CancelRescheduleRequest(RescheduleRequest);
+            var cancelRescheduleWindow = new CancelRescheduleRequest(OwnerMainWindowViewModel, this);
             cancelRescheduleWindow.ShowDialog();
         }
-        public static bool CanCancelReschedule()
+        public bool CanCancelReschedule()
         {
-            return true;
+            return RescheduleRequest != null;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

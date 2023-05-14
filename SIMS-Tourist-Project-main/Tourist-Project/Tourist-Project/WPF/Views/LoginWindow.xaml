@@ -43,6 +43,9 @@
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="Background" Value="#0da2a5"></Setter>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#376f72"></Setter>
+                </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="{x:Type Label}" TargetType="Label">
@@ -90,7 +93,7 @@
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     Background="{TemplateBinding Background}"
-                                    CornerRadius="5">
+                                    CornerRadius="10,5,10,5">
                                 <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
                         </Grid>
@@ -105,13 +108,17 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" Command="{Binding SignInCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid Background="#d9eeef">
         <Image Source="../../Data/loginIcon.png" Height="100" Margin="20,0,20,280"></Image>
         <Label Height="35" Margin="20, 0,20,120" Width="320" FontSize="18">Username:</Label>
         <Label Height="35" Margin="20,20,20,-40" Width="320" FontSize="18">Password:</Label>
         <TextBox Height="35" Width="290" TextWrapping="Wrap" VerticalAlignment="Center" Margin="20,0,20, 40" FontSize="18" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <TextBox.Text>
-                <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="Username" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <val:EmptyStringValidation></val:EmptyStringValidation>
                     </Binding.ValidationRules>
@@ -119,6 +126,6 @@
             </TextBox.Text>
         </TextBox>
         <PasswordBox Name="txtPassword" Height="35" VerticalAlignment="Center" Width="290" Margin="20, 50, 20, -80"/>
-        <Button Click="SignIn" Content="Sign in" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Height="38" Width="290" Margin="20, 150, 20, -150"/>
+        <Button Command="{Binding SignInCommand}" Content="Sign in(Enter)" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Height="38" Width="290" Margin="20, 150, 20, -150"/>
     </Grid>
 </Window>

@@ -35,6 +35,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private readonly GuestRateService ratingService = new ();
         private readonly NotificationService notificationService = new ();
         public ICommand RateCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public Window Window { get; set; }
         public OwnerMainWindowViewModel OwnerMainWindowViewModel;
         public RateGuestViewModel(Notification notification, Window window, OwnerMainWindowViewModel ownerMainWindowViewModel)
@@ -43,6 +44,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             OwnerMainWindowViewModel = ownerMainWindowViewModel;
             GuestRate = new GuestRateViewModel(notification);
             RateCommand = new RelayCommand(Rate, CanRate);
+            CancelCommand = new RelayCommand(Cancel);
             Window = window;
         }
         #region Commands
@@ -57,7 +59,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public bool CanRate()
         {
             return true;
-        } 
+        }
+
+        public void Cancel()
+        {
+            Window.Close();
+        }
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;

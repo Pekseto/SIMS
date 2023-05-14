@@ -1,10 +1,11 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class Location : ISerializable, INotifyPropertyChanged
+    public class Location : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         private int id;
         public int Id
@@ -66,6 +67,34 @@ namespace Tourist_Project.Domain.Models
         public override string ToString()
         {
             return City + ", " + Country;
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Country" when string.IsNullOrEmpty(Country):
+                        return "Country is required";
+                    case "City" when string.IsNullOrEmpty(City):
+                        return "City is required";
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private readonly string[] validatedProperties = { "Country", "City" };
+
+        public bool IsValid
+        {
+            get
+            {
+                return validatedProperties.All(property => this[property] == null);
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

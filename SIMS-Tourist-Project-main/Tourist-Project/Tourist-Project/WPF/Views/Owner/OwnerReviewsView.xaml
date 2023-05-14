@@ -13,18 +13,29 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Grid Background="#88dcdc">
-                    <Label Content="Accommodation name:" FontSize="22" FontWeight="SemiBold" Margin="10,5"></Label>
-                    <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315,5,0,5"></Label>
-                    <Label Content="Guest name:" FontSize="22" FontWeight="SemiBold" Margin="10, 50, 10,5"></Label>
-                    <Label Content="{Binding Guest.FullName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315, 50, 10, 5"></Label>
-                    <Label Content="Checked in:" FontSize="16" FontWeight="SemiBold" Margin="10,95,10,5"></Label>
-                    <Label Content="{Binding Reservation.CheckIn}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,95,10,5"></Label>
-                    <Label Content="Checked out:" FontSize="16" FontWeight="SemiBold" Margin="10,140,10,5"></Label>
-                    <Label Content="{Binding Reservation.CheckOut}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,140,10,5"></Label>
-                </Grid>
+                <Border CornerRadius="20, 10, 20, 10"
+                        Background="#88dcdc">
+                    <Grid>
+                        <Label Content="Accommodation name:" FontSize="22" FontWeight="SemiBold" Margin="10,5"></Label>
+                        <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315,5,0,5"></Label>
+                        <Label Content="Guest name:" FontSize="22" FontWeight="SemiBold" Margin="10, 50, 10,5"></Label>
+                        <Label Content="{Binding Guest.FullName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315, 50, 10, 5"></Label>
+                        <Label Content="Checked in:" FontSize="16" FontWeight="SemiBold" Margin="10,95,10,5"></Label>
+                        <Label Content="{Binding Reservation.CheckIn}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,95,10,5"></Label>
+                        <Label Content="Checked out:" FontSize="16" FontWeight="SemiBold" Margin="10,140,10,5"></Label>
+                        <Label Content="{Binding Reservation.CheckOut}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,140,10,5"></Label>
+                    </Grid>
+                </Border>
                 <Grid Grid.Row="1">
-                    <Image Source="{Binding Image.Url}" Width="290" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0"></Image>
+                    <Border Height="220"
+                            Width="290"
+                            HorizontalAlignment="Right"
+                            Margin="10,-50,5,10"
+                            CornerRadius="20,10,20,10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding Image.Url}"></ImageBrush>
+                        </Border.Background>
+                    </Border>
                     <Label Content="Cleanness:" Margin="10,10,0,10"></Label>
                     <Label Content="{Binding AccommodationRating.Cleanness}" Margin="268,10,0,10"></Label>
                     <Label Content="/5" Margin="279,10,0,10"></Label>
@@ -37,7 +48,7 @@
                     <Label Content="Additional comment:" Margin="10,130,0,10"></Label>
                     <TextBox Text="{Binding AccommodationRating.Comment}" HorizontalAlignment="Left" IsReadOnly="True" Width="290" Height="50" Focusable="False" FontSize="16" Margin="10,120,0,10"></TextBox>
                     <Button Content="Update accommodation(U)" Command="{Binding UpdateCommand}" Height="38" Width="290" HorizontalAlignment="Left" Margin="10,240,100,10"></Button>
-                    <Button Content="Renovate accommodation(R)" Command="{Binding RenovateCommand}" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,240,10,10"></Button>
+                    <Button Content="Renovate accommodation(R)" Command="{Binding RenovateCommand}" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,240,10,10" IsEnabled="False"></Button>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -65,7 +76,10 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Background" Value="#0da2a5"></Setter>
+                    <Setter Property="Background" Value="#0fbdc6"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#376f72"></Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -91,6 +105,52 @@
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#edf6f7"></Setter>
                                 <Setter TargetName="border" Property="BorderThickness" Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="BorderBrush" Value="#03888f"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Grid>
+                            <Border CornerRadius="20,10,20,10"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    Padding="5">
+                                <ScrollViewer>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ListBoxItem}" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True" />
+                                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="border" Property="Background" Value="#a5e2e5" />
+                            </MultiTrigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="False">
+                                <Setter Property="IsSelected" Value="False"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -175,7 +235,11 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
+        <KeyBinding Key="U" Command="{Binding UpdateCommand}"></KeyBinding>
+    </Window.InputBindings>
+    <Grid Background="#d9eeef">
         <ListBox Background="#d9eeef" Height="475" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ReviewDataTemplate}"
                  SelectedItem="{Binding SelectedReview}"></ListBox>

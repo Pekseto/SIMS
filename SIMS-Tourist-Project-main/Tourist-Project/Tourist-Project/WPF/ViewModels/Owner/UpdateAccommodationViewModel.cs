@@ -83,17 +83,21 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
         public static ICommand ConfirmCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public UpdateAccommodation Window;
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
 
-        public UpdateAccommodationViewModel(UpdateAccommodation window, Accommodation accommodation)
+        public UpdateAccommodationViewModel(UpdateAccommodation window, AccommodationViewModel accommodationViewModel, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
-            Accommodation = accommodation;
-            Image = new Image();
-            Location = new Location();
+            Accommodation = accommodationViewModel.Accommodation;
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
+            Image = accommodationViewModel.Image;
+            Location = accommodationViewModel.Location;
             Locations = new ObservableCollection<Location>(locationService.GetAll());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Update, CanUpdate);
+            CancelCommand = new RelayCommand(Cancel);
             Window = window;
             Window.Country.GotKeyboardFocus += CountryDropDownClosed;
             Window.City.GotKeyboardFocus += CityDropDownClosed;
@@ -111,12 +115,17 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Accommodation.ImageIdsCsv = imageService.FormIdesString(Image.Url);
             Accommodation.LocationId = locationService.GetId(Location.City, Location.Country);
             accommodationService.Update(accommodation);
+            OwnerMainWindowViewModel.UpdateAccommodation();
             Window.Close();
         }
 
-        public static bool CanUpdate()
+        public bool CanUpdate()
         {
-            return true;
+            return Accommodation.IsValid && Location.IsValid;
+        }
+        public void Cancel()
+        {
+            Window.Close();
         }
 
         public void CountryDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)

@@ -87,25 +87,31 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private static ImageService imageService = new();
         public ICommand UpdateCommand { get; set; }
         public ICommand RenovateCommand { get; set; }
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
 
-        public AccommodationRatingViewModel(AccommodationRating accommodationRating)
+        public AccommodationRatingViewModel(AccommodationRating accommodationRating, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
             AccommodationRating = accommodationRating;
             Reservation = reservationService.Get(AccommodationRating.ReservationId);
             Owner = userService.Get(AccommodationRating.UserId);
             Guest = userService.Get(Reservation.GuestId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
             Image = imageService.Get(AccommodationRating.ImageId);
-            UpdateCommand = new RelayCommand(Update);
+            UpdateCommand = new RelayCommand(Update, CanUpdate);
             RenovateCommand = new RelayCommand(Renovate);
         }
 
         public void Update()
         {
-            var updateWindow = new UpdateAccommodation(Accommodation);
+            var updateWindow = new UpdateAccommodation(new AccommodationViewModel(Accommodation), OwnerMainWindowViewModel);
             updateWindow.Show();
         }
 
+        public bool CanUpdate()
+        {
+            return false;
+        }
         public void Renovate()
         {
             //TODO

@@ -85,7 +85,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         #endregion
         public static User User { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
-        public double Rating { get; set; }
+        public string Rating { get; set; }
         #region Commands
         public ICommand CreateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
@@ -93,6 +93,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand RateCommand { get; set; }
         public ICommand ShowReviewsCommand { get; set; }
         public ICommand LogOutCommand { get; set; }
+        public ICommand ConfirmRescheduleCommand { get; set; }
+        public ICommand CancelRescheduleCommand { get; set; }
         #endregion
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
@@ -106,22 +108,24 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             RateCommand = new RelayCommand(Rate, CanRate);
             ShowReviewsCommand = new RelayCommand(ShowReview, CanShow);
             LogOutCommand = new RelayCommand(LogOut);
+            ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
+            CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             #endregion
             #region CollectionInstanting
             User = userService.Get(user.Id);
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
-            RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest)));
+            RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.Notified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
             #endregion
-            Rating = accommodationRatingService.getRating();
+            Rating = accommodationRatingService.getRating().ToString("F3");
             showSuper();
         }
         #region CommandsLogic
         public void Create()
         {
-            var createWindow = new CreateAccommodation(User);
+            var createWindow = new CreateAccommodation(User, this);
             createWindow.ShowDialog();
         }
         public static bool CanCreate()
@@ -129,9 +133,9 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return true;
         }
 
-        public static void Update()
+        public void Update()
         {
-            var updateWindow = new UpdateAccommodation(SelectedAccommodation.Accommodation);
+            var updateWindow = new UpdateAccommodation(SelectedAccommodation, this);
             updateWindow.ShowDialog();
         }
         public static bool CanUpdate()
@@ -139,9 +143,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return SelectedAccommodation != null;
         }
 
-        public static void Delete()
+        public void Delete()
         {
+            var messageBoxResult = MessageBox.Show($"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}", "Deleting an accommodation", MessageBoxButton.YesNo);
+            if (messageBoxResult != MessageBoxResult.Yes) return;
             accommodationService.Delete(SelectedAccommodation.Accommodation.Id);
+            accommodationView.Remove(SelectedAccommodation);
         }
         public static bool CanDelete()
         {
@@ -160,7 +167,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void ShowReview()
         {
-            var showReviewsWindow = new OwnerReviewsView();
+            var showReviewsWindow = new OwnerReviewsView(this);
             foreach (var notification in ReviewNotifications)
             {
                 notification.Notified = true;
@@ -180,8 +187,31 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             OwnerMainWindow.Close();
             loginWindow.ShowDialog();
         }
+        public void ConfirmReschedule()
+        {
+            SelectedRescheduleRequest.Reservation.CheckIn = SelectedRescheduleRequest.RescheduleRequest.NewBeginningDate;
+            SelectedRescheduleRequest.Reservation.CheckOut = SelectedRescheduleRequest.RescheduleRequest.NewEndDate;
+            reservationService.Update(SelectedRescheduleRequest.Reservation);
+            SelectedRescheduleRequest.RescheduleRequest.Status = RequestStatus.Confirmed;
+            rescheduleRequestService.Update(SelectedRescheduleRequest.RescheduleRequest);
+            RescheduleRequests.Remove(SelectedRescheduleRequest);
+        }
+        public bool CanConfirmReschedule()
+        {
+            return SelectedRescheduleRequest != null;
+        }
+
+        public void CancelReschedule()
+        {
+            var cancelRescheduleWindow = new CancelRescheduleRequest(this, SelectedRescheduleRequest);
+            cancelRescheduleWindow.ShowDialog();
+        }
+        public bool CanCancelReschedule()
+        {
+            return SelectedRescheduleRequest != null;
+        }
         #endregion
-        
+
         public void showSuper()
         {
             OwnerMainWindow.Super.Visibility = userService.IsSuper(User) ? Visibility.Visible : Visibility.Hidden;
@@ -190,6 +220,28 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public void GuestRateUpdate(Notification notification)
         {
             GuestRatingNotifications.Remove(notification);
+        }
+
+        public void RescheduleRequestUpdate(ReschedulingReservationViewModel reschedulingReservationViewModel)
+        {
+            if (SelectedRescheduleRequest == null) 
+                rescheduleRequests.Remove(reschedulingReservationViewModel); 
+            else 
+                RescheduleRequests.Remove(SelectedRescheduleRequest);
+
+        }
+
+        public void CreateAccommodation(Accommodation accommodation)
+        {
+            var accommodationViewModel = new AccommodationViewModel(accommodation);
+            AccommodationView.Add(accommodationViewModel);
+        }
+
+        public void UpdateAccommodation()
+        {
+            AccommodationView.Remove(SelectedAccommodation);
+            var accommodationViewModel = new AccommodationViewModel(accommodationService.Get(SelectedAccommodation.Accommodation.Id));
+            AccommodationView.Add(accommodationViewModel);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

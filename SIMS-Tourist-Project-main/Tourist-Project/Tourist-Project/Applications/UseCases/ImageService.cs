@@ -53,15 +53,19 @@ namespace Tourist_Project.Applications.UseCases
         public List<int> CreateImages(string url)
         {
             var ids = new List<int>();
-            if (imageRepository.GetByUrl(url) != null)
+            var urls = url.Split(",");
+            foreach (var imageUrl in urls)
             {
-                ids.Add(imageRepository.GetByUrl(url).Id);
-            }
-            else
-            {
-                Image newImage = new(url);
-                var savedImage = Create(newImage);
-                ids.Add(savedImage.Id);
+                if (imageRepository.GetByUrl(imageUrl) != null)
+                {
+                    ids.Add(imageRepository.GetByUrl(imageUrl).Id);
+                }
+                else
+                {
+                    Image newImage = new(imageUrl);
+                    var savedImage = Create(newImage);
+                    ids.Add(savedImage.Id);
+                } 
             }
             return ids;
         }

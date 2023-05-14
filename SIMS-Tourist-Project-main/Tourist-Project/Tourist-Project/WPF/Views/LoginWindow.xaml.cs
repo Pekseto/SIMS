@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
+using Tourist_Project.WPF.Views.GuestTwo;
+using Tourist_Project.WPF.Views.Guide;
 using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views

@@ -95,7 +95,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Locations = new ObservableCollection<Location>(locationService.GetAll());
             LocationToCreate = new Location();
             AccommodationToCreate = new Accommodation();
-            ImageToCreate = new Image();
+            ImageToCreate = new Image
+            {
+                Association = ImageAssociation.Accommodation
+            };
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Create, CanCreate);
@@ -117,18 +120,31 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         #region Commands
         public void Create()
         {
-            AccommodationToCreate.UserId = User.Id;
-            AccommodationToCreate.ImageId = CoverPhotoId();
-            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
-            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
+            IdesInitialization();
             accommodationService.Create(AccommodationToCreate);
+            ImageUpdate();
             OwnerMainWindowViewModel.CreateAccommodation(accommodationToCreate);
             Window.Close();
         }
 
+        private void IdesInitialization()
+        {
+            AccommodationToCreate.UserId = User.Id;
+            AccommodationToCreate.ImageId = CoverPhotoId();
+            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
+            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
+        }
+
+        private void ImageUpdate()
+        {
+            ImageToCreate = imageService.Get(AccommodationToCreate.ImageId);
+            ImageToCreate.AssociationId = AccommodationToCreate.Id;
+            imageService.Update(ImageToCreate);
+        }
+
         public bool CanCreate()
         {
-            return AccommodationToCreate.IsValid && LocationToCreate.IsValid;
+            return AccommodationToCreate.IsValid && LocationToCreate.IsValid && ImageToCreate.IsValid;
         }
         public void Cancel()
         {

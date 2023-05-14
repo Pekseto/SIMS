@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
@@ -7,7 +11,7 @@ namespace Tourist_Project.Domain.Models
     {
         Accommodation, Tour, TourReview
     }
-    public class Image : ISerializable
+    public class Image : ISerializable, INotifyPropertyChanged, IDataErrorInfo
     {
         public int Id { get; set; }
         public ImageAssociation Association { get; set; }
@@ -43,6 +47,32 @@ namespace Tourist_Project.Domain.Models
             Association = Enum.Parse<ImageAssociation>(values[1]);
             AssociationId = int.Parse(values[2]);
             Url = values[3];
+        }
+
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Url" when string.IsNullOrEmpty(Url):
+                        return "Url is required";
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private readonly string[] validatedProperties = { "Url" };
+
+        public bool IsValid
+        {
+            get
+            {
+                return validatedProperties.All(property => this[property] == null);
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

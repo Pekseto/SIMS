@@ -121,7 +121,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public bool CanUpdate()
         {
-            return Accommodation.IsValid && Location.IsValid;
+            return Accommodation.IsValid && Location.IsValid && Image.IsValid;
         }
         public void Cancel()
         {

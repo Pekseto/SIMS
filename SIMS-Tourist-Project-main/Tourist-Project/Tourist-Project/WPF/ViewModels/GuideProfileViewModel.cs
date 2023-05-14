@@ -21,6 +21,8 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly Window window;
         public Tour Tour { get; set; }
         public User LoggedInUser { get; set; }
+        public string CurrentLanguage { get; set; }
+
 
         private string selectedYear;
         public string SelectedYear
@@ -44,16 +46,37 @@ namespace Tourist_Project.WPF.ViewModels
 
         public ICommand HomeViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }
+        public ICommand SwitchLanguageCommand { get; set; }
         public GuideProfileViewModel(Window window, User loggedInUser)
         {
             this.window = window;
             LoggedInUser = loggedInUser;
+            CurrentLanguage = "en-US";
 
             HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
+            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
 
             InitializeYears();
             SelectedYear = "2022";
+        }
+        private bool CanSwitchLanguage()
+        {
+            return true;
+        }
+
+        public void SwitchLanguage()
+        {
+            var app = (App)Application.Current;
+            if (CurrentLanguage.Equals("en-US"))
+            {
+                CurrentLanguage = "sr-LATN";
+            }
+            else
+            {
+                CurrentLanguage = "en-US";
+            }
+            app.ChangeLanguage(CurrentLanguage);
         }
 
         private bool CanHomeView()
@@ -63,8 +86,6 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void HomeView()
         {
-            var homeWindow = new TodayToursView(LoggedInUser);
-            homeWindow.Show();
             window.Close();
         }
 

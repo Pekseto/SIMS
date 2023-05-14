@@ -23,6 +23,7 @@ namespace Tourist_Project.Domain.Models
 
         public Tour()
         {
+            Status = Status.NotBegin;
         }
 
         public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId, int userId)

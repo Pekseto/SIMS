@@ -23,7 +23,79 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
             </Grid>
         </ControlTemplate>
-    </Window.Resources>
+        <Style x:Key="CreateButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../../Images/addGuideIcon.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc Create}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CancelButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../../Images/cancelGuideIcon.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc Cancel}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+</Window.Resources>
     <Grid x:Name="WindowGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -90,20 +162,29 @@
                 <TextBox.Text>
                     <Binding Path="TourForAdd.Language" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <val:MinValueValidation></val:MinValueValidation>
+                            <val:EmptyStringValidation></val:EmptyStringValidation>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1">
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <xctk:IntegerUpDown.Value>
-                    <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules></Binding.ValidationRules>
+                    <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource">
+                        <Binding.ValidationRules>
+                            <val:MinValueValidation></val:MinValueValidation>
+                        </Binding.ValidationRules>
                     </Binding>
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
-            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Text="{Binding TourForAdd.StartTime, UpdateSourceTrigger=PropertyChanged}"></xctk:DateTimePicker>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1">
+            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                <xctk:DateTimePicker.Value>
+                    <Binding Path="TourForAdd.StartTime" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource">
+                        <Binding.ValidationRules>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </xctk:DateTimePicker.Value>
+            </xctk:DateTimePicker>
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <xctk:IntegerUpDown.Value>
                     <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -127,7 +208,7 @@
             <Label x:Name="Checkpoint" Grid.Column="0" Grid.Row="0" Content="{ns:Loc Checkpoints}" VerticalAlignment="Center" FontSize="20"/>
             <Label x:Name="Image" Grid.Column="0" Grid.Row="2" Content="{ns:Loc Images}" VerticalAlignment="Center" FontSize="20"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0">
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <TextBox.Text>
                     <Binding Path="PointForAdd.Name" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -136,8 +217,9 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Button Grid.Column="1" Grid.Row="0" Content="+" Command="{Binding AddCheckpointCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0">
+            <Button Grid.Column="1" Grid.Row="0" Content="+" Command="{Binding AddCheckpointCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0" BorderThickness="1">
+            </Button>
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <TextBox.Text>
                     <Binding Path="ImageForAdd.Url" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -153,26 +235,10 @@
                 <ListBox x:Name="ImagesBox" Grid.Column="1" Grid.Row="3" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 " ItemsSource="{Binding Images, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <Grid x:Name="ButtonGrid" Grid.Column="1" Grid.Row="1">
-            <Button x:Name="CreateButton" Command="{Binding CreateCommand}" Width="200" Height="40" HorizontalAlignment="Left" Margin="20 0 0 0">
-                <Grid x:Name="CreateGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"></ColumnDefinition>
-                        <ColumnDefinition Width="160"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="/Images/addGuideIcon.png" Grid.Column="0"></Image>
-                    <TextBlock Grid.Column="1" Text="{ns:Loc Create}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30 0 0 0"></TextBlock>
-                </Grid>
-            </Button>
-            <Button x:Name="CancelButton" Command="{Binding CancelCommand}" Width="200" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0">
-                <Grid x:Name="CancelGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"></ColumnDefinition>
-                        <ColumnDefinition Width="160"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Image Source="/Images/cancelGuideIcon.png" Grid.Column="0"></Image>
-                    <TextBlock Grid.Column="1" Text="{ns:Loc Cancel}" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="30 0 0 0"></TextBlock>
-                </Grid>
-            </Button>
+            <xctk:IconButton x:Name="CreateButton" Command="{Binding CreateCommand}" Width="200" Height="40" HorizontalAlignment="Left" Margin="20 0 0 0" Style="{StaticResource CreateButton}">
+            </xctk:IconButton>
+            <xctk:IconButton x:Name="CancelButton" Command="{Binding CancelCommand}" Width="200" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0" Style="{StaticResource CancelButton}">
+            </xctk:IconButton>
         </Grid>
         <StatusBar x:Name="BottomGrid" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
             <TextBlock Text="{ns:Loc CreateTour}" FontSize="15" Height="25"></TextBlock>

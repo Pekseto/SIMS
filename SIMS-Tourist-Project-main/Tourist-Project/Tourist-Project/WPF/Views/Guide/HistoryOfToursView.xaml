@@ -7,7 +7,84 @@
         xmlns:ns="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
         Title="Tourists application" Height="800" Width="1100">
-        <Grid x:Name="Window">
+    <Window.Resources>
+        <Style x:Key="StatisticsButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="CancelImage"  Source="../../../Images/statisticsGuideIcon.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc Statistics}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ReviewsButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="CancelImage"  Source="../../../Images/reviewGuideIcon.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc Reviews}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="Window">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -22,12 +99,12 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30" Cursor="Hand">
+                    <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30" Style="{StaticResource GuideProfileImage}">
                         <Image.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ProfileViewCommand, Mode=OneTime}"/>
                         </Image.InputBindings>
                 </Image>
-                    <Label Margin="10 240 10 25" Content="Luka Todorovic" HorizontalAlignment="Center" FontSize="20" Cursor="Hand">
+                    <Label Margin="10 240 10 25" Content="Luka Todorovic" HorizontalAlignment="Center" FontSize="20" Style="{StaticResource GuideName}">
                         <Label.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding ProfileViewCommand, Mode=OneTime}"/>
                         </Label.InputBindings>
@@ -35,11 +112,11 @@
                     <Label Margin="10 270 10 0" Content="{ns:Loc Guide}" HorizontalAlignment="Center" FontSize="15"></Label>
                 </Grid>
                 <Grid Grid.Row="1">
-                <Button Width="200" Height="40" Margin="50,10,50,382" Content="{ns:Loc HomePage}" Cursor="Hand" Command="{Binding HomeViewCommand}"/>
-                <Button Width="200" Height="40" Margin="50,70,50,314" Content="{ns:Loc FutureTours}" Cursor="Hand" Command="{Binding FutureViewCommand}"/>
-                <Button Width="200" Height="40" Margin="50,130,50,249" Content="{ns:Loc Statistics}" Cursor="Hand" Command="{Binding StatisticsViewCommand}"/>
-                <Button Width="200" Height="40" Margin="50,190,50,187" Content="{ns:Loc Reviews}" Cursor="Hand" Command="{Binding ReviewViewCommand}"/>
-                <Button Width="200" Height="40" Margin="50,257,50,132" Content="{ns:Loc Requests}" Cursor="Hand" Command="{Binding RequestsViewCommand}"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,10,50,382" Command="{Binding HomeViewCommand}" Style="{StaticResource HomeButtonGuide}"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,70,50,314" Command="{Binding FutureViewCommand}" Style="{StaticResource FutureButton}"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,130,50,249" Command="{Binding StatisticsViewCommand}" Style="{StaticResource StatisticsButton}"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,190,50,187" Command="{Binding ReviewViewCommand}" Style="{StaticResource ReviewsButton}"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,257,50,132" Content="{ns:Loc Requests}" Cursor="Hand" Command="{Binding RequestsViewCommand}" Style="{StaticResource RequestsButton}"/>
 
                 <Label Content="{ns:Loc PickedLanguage}" Width="90" Height="35" Margin="50,392,0,0" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
                     <Label.InputBindings>
@@ -54,19 +131,20 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="{ns:Loc HistoryTitle}" FontSize="35" HorizontalAlignment="Left" Width="330"></Label>
-                <Label x:Name="DateAndTime" Grid.Row="0" Margin="443,45,0,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Left" Width="312"/>
+                <Label x:Name="DateAndTime" Grid.Row="0" Margin="443,45,20,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Right" Width="327"/>
 
                 <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="0,0,20,20"
                       ItemsSource="{Binding Tours}"
                       SelectedItem="{Binding SelectedTour}"
                       AutoGenerateColumns="False" IsReadOnly="True"
-                      Cursor="Hand">
+                      Cursor="Hand"
+                      Style="{StaticResource DataGridStyle}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{ns:Loc Name}" Binding="{Binding Name}" Width="150"></DataGridTextColumn>
-                        <DataGridTextColumn Header="{ns:Loc DescriptionTable}" Binding="{Binding Description}" Width="200"></DataGridTextColumn>
-                        <DataGridTextColumn Header="{ns:Loc LanguageTable}" Binding="{Binding Language}" Width="100"></DataGridTextColumn>
+                        <DataGridTextColumn Header="{ns:Loc Name}" Binding="{Binding Name}" Width="135"></DataGridTextColumn>
+                        <DataGridTextColumn Header="{ns:Loc DescriptionTable}" Binding="{Binding Description}" Width="185"></DataGridTextColumn>
+                        <DataGridTextColumn Header="{ns:Loc LanguageTable}" Binding="{Binding Language}" Width="90"></DataGridTextColumn>
                         <DataGridTextColumn Header="{ns:Loc NumberOfTourists}" Binding="{Binding MaxGuestsNumber}" Width="120"></DataGridTextColumn>
-                        <DataGridTextColumn Header="{ns:Loc Date}" Binding="{Binding StartTime}" Width="130"></DataGridTextColumn>
+                        <DataGridTextColumn Header="{ns:Loc Date}" Binding="{Binding StartTime}" Width="160"></DataGridTextColumn>
                         <DataGridTextColumn Header="{ns:Loc Duration}" Binding="{Binding Duration}" Width="*"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>

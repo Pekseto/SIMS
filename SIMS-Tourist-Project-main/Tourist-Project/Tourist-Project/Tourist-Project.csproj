@@ -12,17 +12,31 @@
     <None Remove="Data\loginIcon.png" />
     <None Remove="Images\add.png" />
     <None Remove="Images\addGuideIcon.png" />
+    <None Remove="Images\back.png" />
+    <None Remove="Images\calloutImage.png" />
     <None Remove="Images\cancelGuideIcon.png" />
+<<<<<<< HEAD
     <None Remove="Images\Darth Vader.jpg" />
+=======
+    <None Remove="Images\checkGuideIcon.png" />
+>>>>>>> feat/GuideStyleHCI
     <None Remove="Images\delete.png" />
+    <None Remove="Images\dismissalGuideIcon.png" />
     <None Remove="Images\edit.png" />
+    <None Remove="Images\exitGuideIcon.jpg" />
     <None Remove="Images\futureGuideIcon.png" />
     <None Remove="Images\historyGuideIcon.png" />
     <None Remove="Images\homeGuideIcon.png" />
+<<<<<<< HEAD
     <None Remove="Images\No images to show.jpg" />
+=======
+    <None Remove="Images\listGuideIcon.png" />
+>>>>>>> feat/GuideStyleHCI
     <None Remove="Images\profile.jpg" />
     <None Remove="Images\requestGuideIcon.png" />
+    <None Remove="Images\reviewGuideIcon.png" />
     <None Remove="Images\startGuideIcon.png" />
+    <None Remove="Images\statisticsGuideIcon.png" />
     <None Remove="Images\view.png" />
   </ItemGroup>
 
@@ -35,27 +49,38 @@
     <Resource Include="Data\loginIcon.png" />
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addGuideIcon.png" />
+    <Resource Include="Images\back.png" />
+    <Resource Include="Images\calloutImage.png" />
     <Resource Include="Images\cancelGuideIcon.png" />
+<<<<<<< HEAD
     <Content Include="Images\Darth Vader.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\No images to show.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+=======
+    <Resource Include="Images\checkGuideIcon.png" />
+>>>>>>> feat/GuideStyleHCI
     <Resource Include="Images\delete.png" />
+    <Resource Include="Images\dismissalGuideIcon.png" />
     <Resource Include="Images\edit.png" />
+    <Resource Include="Images\exitGuideIcon.jpg" />
     <Resource Include="Images\futureGuideIcon.png" />
     <Resource Include="Images\historyGuideIcon.png" />
     <Resource Include="Images\homeGuideIcon.png" />
+    <Resource Include="Images\listGuideIcon.png" />
     <Resource Include="Images\profile.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\requestGuideIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\reviewGuideIcon.png" />
     <Resource Include="Images\startGuideIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\statisticsGuideIcon.png" />
     <Resource Include="Images\view.png" />
 
   </ItemGroup>

@@ -1,33 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
+using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.Guide;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class TouristListViewModel
+    public class TouristListViewModel : INotifyPropertyChanged
     {
         public static ObservableCollection<TourAttendance> TourAttendances { get; set; }
         public TourAttendance SelectedTourAttendance { get; set; }
         public TourPoint SelectedTourPoint { get; set; }
+        public Tour ActiveTour { get; set; }
 
         private UserService userService = new();
         private TourPointService tourPointService = new();
         private TourAttendanceService tourAttendanceService = new();
         private NotificationGuestTwoService notificationService = new();
+        private Window window;
+
+        private DateTime currentTime;
+
+        public DateTime CurrentTime
+        {
+            get { return currentTime; }
+            set
+            {
+                currentTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public ICommand CallOutCommand { get; set; }
-        public TouristListViewModel(TourPoint selectedTourPoint) 
+        public ICommand BackCommand { get; set; }
+        public ICommand HomeCommand { get; set; }
+        public TouristListViewModel(TourPoint selectedTourPoint, Tour tour, Window window) 
         { 
             this.SelectedTourPoint = selectedTourPoint;
+            ActiveTour = tour;
+            this.window = window;
+
+            startClock();
+
             CallOutCommand = new RelayCommand(CallOut, CanCallOut);
+            BackCommand = new RelayCommand(Back, CanBack);
+            HomeCommand = new RelayCommand(HomeView, CanHomeView);
             LoadTourAttendaces();
+        }
+
+        private void startClock()
+        {
+            CurrentTime = DateTime.Now;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += tickevent;
+            timer.Start();
+        }
+
+        private void tickevent(object sender, EventArgs e)
+        {
+            CurrentTime = DateTime.Now;
+        }
+
+        private bool CanBack()
+        {
+            return true;
+        }
+
+        private void Back()
+        {
+            var tourLiveWindow = new TourLiveView(ActiveTour);
+            tourLiveWindow.Show();
+            window.Close();
+        }
+
+        private bool CanHomeView()
+        {
+            return true;
+        }
+
+        private void HomeView()
+        {
+            window.Close();
         }
 
         private bool CanCallOut()
@@ -53,7 +123,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void LoadTourAttendaces()
         {
-            TourAttendances = new(tourAttendanceService.GetAllByTourId(SelectedTourPoint.TourId));
+            TourAttendances = new ObservableCollection<TourAttendance>(tourAttendanceService.GetAllByTourId(SelectedTourPoint.TourId));
 
             foreach (TourAttendance attendace in TourAttendances)
             {

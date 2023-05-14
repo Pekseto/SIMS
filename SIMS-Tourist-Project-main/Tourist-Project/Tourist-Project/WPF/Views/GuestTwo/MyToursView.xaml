@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MyToursViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
 
     <UserControl.Resources>
         <Style x:Key="MessageColor" TargetType="Label">
@@ -23,19 +23,23 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="65"></RowDefinition>
-            <RowDefinition Height="275"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="200"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="275"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="My tours" FontSize="32" Margin="30,0,0,0"
-               VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="My tours"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
         <Label Content="Future tours:" Grid.Row="1" VerticalAlignment="Top"
-               FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center"/>
-        <DataGrid Grid.Row="1" Margin="30,40,30,0" FontSize="18"
+               FontSize="20" Margin="0,0,0,0"
+               HorizontalAlignment="Center"
+               Foreground="White"/>
+        <DataGrid Grid.Row="1" Margin="30,40,30,0" FontSize="17"
                   ItemsSource="{Binding FutureTours}"
                   SelectedItem="{Binding SelectedFutureTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -48,12 +52,15 @@
         </DataGrid>
         <Button Grid.Row="2" Content="Preview" FontSize="18"
                 HorizontalAlignment="Center"
-                Height="40" Width="100"
+                Height="40" Width="100" Cursor="Hand"
                 VerticalAlignment="Top"
                 Margin="5" Command="{Binding PreviewCommand}"/>
-        <Label Grid.Row="3" Content="Todays tours:" VerticalContentAlignment="Top"
-               FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <DataGrid Grid.Row="3" Margin="30,40,30,0" FontSize="18"
+        <Label Grid.Row="3" Content="Todays tours:"
+               VerticalContentAlignment="Top"
+               Foreground="White"
+               FontSize="20" Margin="0,0,0,0"
+               HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <DataGrid Grid.Row="3" Margin="30,40,30,0" FontSize="17"
                   ItemsSource="{Binding TodaysTours}" SelectedItem="{Binding SelectedTodayTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
@@ -63,11 +70,20 @@
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Command="{Binding WatchLiveCommand}" Content="Watch live" HorizontalAlignment="Center" Margin="150,11,0,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="16"/>
-        <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" Margin="0,11,150,0" Grid.Row="4" VerticalAlignment="Top" Height="40" Width="100" FontSize="16"/>
+        <Button Command="{Binding WatchLiveCommand}"
+                Content="Watch live" HorizontalAlignment="Center"
+                Margin="150,11,0,0" Grid.Row="4"
+                VerticalAlignment="Top" Height="40"
+                Width="100" FontSize="16" Cursor="Hand"/>
+        <Button Command="{Binding JoinCommand}"
+                Content="Join" HorizontalAlignment="Center"
+                Margin="0,11,150,0" Grid.Row="4"
+                VerticalAlignment="Top" Height="40"
+                Width="100" FontSize="16" Cursor="Hand"/>
         <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
                Style="{StaticResource MessageColor}"
                HorizontalAlignment="Center"
-               Grid.Row="5" Grid.Column="1" Margin="0,10"/>
+               VerticalAlignment="Top"
+               Grid.Row="5" Margin="0,0"/>
     </Grid>
 </UserControl>

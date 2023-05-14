@@ -8,26 +8,28 @@
              xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:NotificationsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
 
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewmodels:ConfirmPresenceViewModel}">
             <views:ConfirmPresenceView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SelectNotificationViewModel}">
+            <views:SelectNotificationView/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="75"></RowDefinition>
             <RowDefinition Height="600"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="Notifications"
-               FontSize="32"
-               Margin="10,0"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Left"/>
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="Notifications"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <DataGrid Margin="125,125,0,125" FontSize="16"

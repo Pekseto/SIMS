@@ -6,19 +6,18 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:VouchersViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="600"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="600"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Content="Vouchers"
-               FontSize="32"
-               Margin="10,0"
-               VerticalAlignment="Top"
-               HorizontalAlignment="Left"/>
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="Vouchers"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
         <DataGrid Grid.Row="1" Margin="50" FontSize="16"
                   ItemsSource="{Binding Vouchers}"
                   AutoGenerateColumns="False" IsReadOnly="True">

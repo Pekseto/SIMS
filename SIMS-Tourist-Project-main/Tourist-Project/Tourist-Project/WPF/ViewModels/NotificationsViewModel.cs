@@ -45,6 +45,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             Notifications = new ObservableCollection<NotificationGuestTwo>(notificationService.GetAllForUser(user.Id));
             notificationNavigationStore = new NavigationStore();
+            notificationNavigationStore.CurrentViewModel = new SelectNotificationViewModel();
 
             notificationNavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }

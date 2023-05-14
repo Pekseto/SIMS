@@ -4,22 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
-             Background="PeachPuff">
+             Background="#252530">
+
+    
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="75"/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="500"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Margin="20,0,0,0" FontSize="28"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Center">Home</Label>
+        <Label Margin="30,15,0,0"
+               FontSize="32" Content="Home"
+               HorizontalAlignment="Left" Foreground="White"
+               VerticalAlignment="Center"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -32,7 +35,7 @@
 
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Label Content="Location:" FontSize="15"
-                       HorizontalAlignment="Left"
+                       HorizontalAlignment="Left" Foreground="White"
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"/>
                 <ComboBox ItemsSource="{Binding Countries}"
@@ -47,7 +50,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Label Content="Duration:"
+                <Label Content="Duration:" Foreground="White"
                        Margin="10,0,0,0" FontSize="15"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"/>
@@ -55,15 +58,17 @@
                                     Width="50" FontSize="13"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Margin="0,0,0,0"/>
+                                    Margin="0,0,0,0">
+                </xctk:IntegerUpDown>
+
                 <Label Content="h" FontSize="15"
-                       HorizontalAlignment="Left"
+                       HorizontalAlignment="Left" Foreground="White"
                        VerticalAlignment="Center" Margin="0,0,0,0"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Label Content="Language:" FontSize="15"
-                       HorizontalAlignment="Left"
+                       HorizontalAlignment="Left" Foreground="White"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"/>
                 <ComboBox ItemsSource="{Binding Languages}"
@@ -76,7 +81,7 @@
 
             <StackPanel Grid.Column="3" Orientation="Horizontal">
                 <Label Content="Number of people:" FontSize="15"
-                       HorizontalAlignment="Left"
+                       HorizontalAlignment="Left" Foreground="White"
                        VerticalAlignment="Center"
                        Margin="10,0,0,0"/>
                 <xctk:IntegerUpDown Text="{Binding NumberOfPeople, UpdateSourceTrigger=PropertyChanged}"
@@ -87,15 +92,15 @@
             </StackPanel>
 
             <StackPanel Grid.Column="4" Orientation="Horizontal">
-                <Button Content="Search"
+                <Button Content="Search" Cursor="Hand"
                         Command="{Binding SearchCommand}"
                         Width="70" Height="30" FontSize="15"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         Margin="20,0,0,0"/>
                 <Button Content="Show all" Command="{Binding ShowAllCommand}" 
-                        Grid.Row="2" Width="70" Height="30" FontSize="15"
+                        Width="70" Height="30" FontSize="15"
                         HorizontalAlignment="Right" 
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Center" Cursor="Hand"
                         Margin="20,0,0,0"/>
 
             </StackPanel>
@@ -124,7 +129,7 @@
                 Command="{Binding ReserveCommand}"
                 Grid.Row="3" Width="80" Height="40"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                VerticalAlignment="Top" Cursor="Hand"
                 Margin="0,0,0,0"/>
 
 

@@ -20,7 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         public string Checkpoints { get; set; }
         public List<Image> TourImages { get; set; }
         private int imageId;
-        private int imagesCount;
+        private readonly int imagesCount;
         private Image currentImage;
         public Image CurrentImage
         {
@@ -43,13 +43,20 @@ namespace Tourist_Project.WPF.ViewModels
             Checkpoints = tourPointRepository.GetAllForTourString(tour.Id);
 
             TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
-            CurrentImage = TourImages[0];
             imagesCount = TourImages.Count;
-            imageId = 0;
+            if (imagesCount > 0)
+            {
+                CurrentImage = TourImages[0];
+                imageId = 0;
+            }
+            else
+            {
+                CurrentImage = new Image("/Images/No images to show.jpg");
+            }
 
             BackCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => previousViewModel);
-            NextCommand = new RelayCommand(OnNextClick);
-            PreviousCommand = new RelayCommand(OnPreviousClick);
+            NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
+            PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
         }
 
         private void OnPreviousClick()

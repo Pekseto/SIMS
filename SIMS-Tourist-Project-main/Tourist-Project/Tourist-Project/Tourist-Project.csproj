@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\loginIcon.png" />
     <None Remove="Images\add.png" />
     <None Remove="Images\addGuideIcon.png" />
     <None Remove="Images\cancelGuideIcon.png" />
@@ -27,9 +28,11 @@
 
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Data\loginIcon.png" />
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addGuideIcon.png" />
     <Resource Include="Images\cancelGuideIcon.png" />

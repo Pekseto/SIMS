@@ -44,5 +44,12 @@ namespace Tourist_Project.Domain.Models
             AssociationId = int.Parse(values[2]);
             Url = values[3];
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

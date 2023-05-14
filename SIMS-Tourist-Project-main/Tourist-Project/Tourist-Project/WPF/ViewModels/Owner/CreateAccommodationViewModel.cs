@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Media;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views.Owner;
+using Location = Tourist_Project.Domain.Models.Location;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class CreateAccommodationViewModel : INotifyPropertyChanged
     {
@@ -43,20 +43,55 @@ namespace Tourist_Project.WPF.ViewModels
                 OnPropertyChanged("ImageToCreate");
             }
         }
+        public User User { get; set; }
         #endregion
 
         private readonly ImageService imageService = new();
         private readonly LocationService locationService = new();
         private readonly AccommodationService accommodationService = new();
-        public static ObservableCollection<Location> Locations { get; set; } = new();
-        public static ObservableCollection<string> Countries { get; set; } = new();
-        public static ObservableCollection<string> Cities { get; set; } = new();
+        private ObservableCollection<Location> locations;
+        public ObservableCollection<Location> Locations
+        {
+            get => locations;
+            set
+            {
+                if (value == locations) return;
+                locations = value;
+                OnPropertyChanged("Locations");
+            }
+        }
+
+        private ObservableCollection<string> countries;
+        public ObservableCollection<string> Countries
+        {
+            get => countries;
+            set
+            {
+                if (value == countries) return;
+                countries = value;
+                OnPropertyChanged("Countries");
+            }
+        }
+        private ObservableCollection<string> cities;
+        public ObservableCollection<string> Cities
+        {
+            get => cities;
+            set
+            {
+                if (value == cities) return;
+                cities = value;
+                OnPropertyChanged("Cities");
+            }
+        }
         public static ICommand ConfirmCommand { get; set; }
         public static ICommand CancelCommand { get; set; }
         public CreateAccommodation Window;
-        
-        public CreateAccommodationViewModel(CreateAccommodation window)
+        public OwnerMainWindowViewModel OwnerMainWindowViewModel;
+
+        public CreateAccommodationViewModel(User user, CreateAccommodation window, OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
+            User = user;
+            OwnerMainWindowViewModel = ownerMainWindowViewModel;
             Locations = new ObservableCollection<Location>(locationService.GetAll());
             LocationToCreate = new Location();
             AccommodationToCreate = new Accommodation();
@@ -64,19 +99,13 @@ namespace Tourist_Project.WPF.ViewModels
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             Cities = new ObservableCollection<string>(locationService.GetAllCities());
             ConfirmCommand = new RelayCommand(Create, CanCreate);
-            CancelCommand = new RelayCommand(Cancel, CanCancel);
+            CancelCommand = new RelayCommand(Cancel);
             Window = window;
-            Window.Country.DropDownClosed += CountryDropDownClosed;
-            Window.City.DropDownClosed += CityDropDownClosed;
+            Window.Country.GotKeyboardFocus += CountryDropDownClosed;
+            Window.City.GotKeyboardFocus += CityDropDownClosed;
+
         }
 
-        public void Create()
-        {
-            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
-            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
-            accommodationService.Create(AccommodationToCreate);
-            Window.Close();
-        }
         #region PropertyChanged
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -86,21 +115,26 @@ namespace Tourist_Project.WPF.ViewModels
         }
         #endregion
         #region Commands
-
-        public static bool CanCreate()
+        public void Create()
         {
-            return true;
+            AccommodationToCreate.UserId = User.Id;
+            AccommodationToCreate.ImageId = CoverPhotoId();
+            AccommodationToCreate.ImageIdsCsv = imageService.FormIdesString(ImageToCreate.Url);
+            AccommodationToCreate.LocationId = locationService.GetId(LocationToCreate.City, LocationToCreate.Country);
+            accommodationService.Create(AccommodationToCreate);
+            OwnerMainWindowViewModel.CreateAccommodation(accommodationToCreate);
+            Window.Close();
+        }
+
+        public bool CanCreate()
+        {
+            return AccommodationToCreate.IsValid && LocationToCreate.IsValid;
         }
         public void Cancel()
         {
             Window.Close();
         }
-
-        public static bool CanCancel()
-        {
-            return true;
-        }
-        public void CountryDropDownClosed(object sender, EventArgs e)
+        public void CountryDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)
         {
             Cities.Clear();
             foreach (var location in Locations)
@@ -109,14 +143,21 @@ namespace Tourist_Project.WPF.ViewModels
                     Cities.Add(location.City);
             }
         }
-        public void CityDropDownClosed(object sender, EventArgs e)
+        public void CityDropDownClosed(object sender, KeyboardFocusChangedEventArgs e)
         {
+            
             foreach (var location in Locations)
             {
                 if (location.City.Equals(Window.City.Text))
                     Window.Country.Text = location.Country;
             }
-        } 
+        }
+
+        public int CoverPhotoId()
+        {
+            var ids = imageService.CreateImages(ImageToCreate.Url);
+            return ids.FirstOrDefault();
+        }
         #endregion
     }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Controls;
 
 namespace Tourist_Project.WPF.Validation
@@ -11,9 +10,9 @@ namespace Tourist_Project.WPF.Validation
         {
             try
             {
-                return ((string)value).Length > 0
-                    ? new ValidationResult(true, null)
-                    : new ValidationResult(false, "Field must not be empty");
+                return string.IsNullOrWhiteSpace((string)value) ? 
+                    new ValidationResult(false, "Field mustn't be empty!") 
+                    : ValidationResult.ValidResult;
             }
             catch
             {

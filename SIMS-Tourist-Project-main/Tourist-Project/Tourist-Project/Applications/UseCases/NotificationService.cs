@@ -49,30 +49,25 @@ namespace Tourist_Project.Applications.UseCases
             notificationRepository.Delete(id);
         }
 
-        public bool HasReviews()
+        public void HasReviews()
         {
-            if (accommodationRatingRepository.GetAll().Count == 0) return false;
+            if (accommodationRatingRepository.GetAll().Count == 0) return;
             foreach (var accommodationRating in accommodationRatingRepository.GetAll())
             {
-                foreach (var notification in GetAll().Where(notification => notification.TypeId == accommodationRating.Id && notification.Notified))
-                {
-                    Create(new Notification("Reviews", true, accommodationRating.Id));
-                }
+                if(GetAll().All(notification => notification.TypeId != accommodationRating.Id))
+                    Create(new Notification("Reviews", false, accommodationRating.Id));
             }
-            return true;
         }
         public void HasUnratedGuests()
         {
             guestRateService.HasNewRatings();
             foreach (var guestRate in guestRateRepository.GetAll())
             {
-                foreach (var reservation in reservationRepository.GetAll())
+                var reservation = reservationRepository.GetById(guestRate.ReservationId);
+                var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
+                if ((notificationRepository.GetAllByType("GuestRate").Count == 0 || notificationRepository.GetAllByType("GuestRate").All(c => c.TypeId != guestRate.Id)) && !guestRate.IsReviewed() && Math.Abs(daysSinceCheckOut.Days) < 5)
                 {
-                    var daysSinceCheckOut = DateTime.Now - reservation.CheckOut;
-                    if ((notificationRepository.GetAll().Count == 0 || notificationRepository.GetAll().All(c => c.TypeId != guestRate.Id)) && !guestRate.IsReviewed() && Math.Abs(daysSinceCheckOut.Days) < 5 && guestRate.ReservationId == reservation.Id)
-                    {
-                        Create(new Notification("GuestRate", true, guestRate.Id));
-                    }
+                    Create(new Notification("GuestRate", true, guestRate.Id));
                 }
             }
         }

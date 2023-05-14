@@ -1,14 +1,58 @@
-﻿using System;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class Notification : ISerializable
+    public class Notification : ISerializable, INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public string Type { get; set; }
-        public bool Notified { get; set; }
-        public int TypeId { get; set; }
+        private int id;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                if (value == id) return;
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        public string type;
+        public string Type
+        {
+            get => type;
+            set
+            {
+                if(value == type) return;
+                type = value;
+                OnPropertyChanged("Type");
+            }
+        }
+
+        private bool notified;
+        public bool Notified
+        {
+            get => notified;
+            set
+            {
+                if(value == notified) return;
+                notified = value;
+                OnPropertyChanged("Notified");
+            }
+        }
+
+        private int typeId;
+        public int TypeId
+        {
+            get => typeId;
+            set
+            {
+                if(value == typeId) return;
+                typeId = value;
+                OnPropertyChanged("TypeId");
+            }
+        }
         public Notification(){}
         public Notification(string type, bool notified, int typeId)
         {
@@ -41,9 +85,16 @@ namespace Tourist_Project.Domain.Models
                 "GuestRate" => "You have unrated guest.",
                 "Forum" => "A new forum has opened. Check it out",
                 "Recommended" => "You have a new \nrecommendation.",
-                "Reviews" => "Guest has rated your \naccommodation.",
+                "Reviews" => "NEW!\nGuest has rated your \naccommodation.",
                 _ => string.Empty
             };
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

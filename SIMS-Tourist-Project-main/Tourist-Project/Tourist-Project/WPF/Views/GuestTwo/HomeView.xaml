@@ -41,11 +41,10 @@
                 <ComboBox ItemsSource="{Binding Countries}"
                       SelectedItem="{Binding SelectedCountry}"                  
                       Width="80" Height="25" HorizontalAlignment="Left"
-                      Margin="0,0,0,0" FontSize="13"
-                      Cursor="Hand"/>
+                      Margin="0,0,0,0" FontSize="13"/>
                 <ComboBox ItemsSource="{Binding Cities}"
                           SelectedItem="{Binding SelectedCity}"
-                          Width="100" Height="25" Cursor="Hand"
+                          Width="100" Height="25"
                           HorizontalAlignment="Left"
                           Margin="10,0,0,0" FontSize="13"/>
             </StackPanel>
@@ -59,7 +58,9 @@
                                     Width="50" FontSize="13"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Margin="0,0,0,0"/>
+                                    Margin="0,0,0,0">
+                </xctk:IntegerUpDown>
+
                 <Label Content="h" FontSize="15"
                        HorizontalAlignment="Left" Foreground="White"
                        VerticalAlignment="Center" Margin="0,0,0,0"/>
@@ -72,7 +73,7 @@
                        Margin="10,0,0,0"/>
                 <ComboBox ItemsSource="{Binding Languages}"
                           SelectedItem="{Binding SelectedLanguage}"
-                          Width="80" FontSize="13" Cursor="Hand"
+                          Width="80" FontSize="13"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Center"
                           Margin="0,0,0,0"/>

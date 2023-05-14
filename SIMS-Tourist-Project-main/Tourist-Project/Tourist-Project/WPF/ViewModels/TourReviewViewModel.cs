@@ -23,9 +23,41 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly ImageService imageService = new();
         private readonly TourAttendanceService attendanceService = new();
         private readonly TourPointRepository tourPointRepository = new();
-        public int KnowledgeRating { get; set; }
-        public int LanguageRating { get; set; }
-        public int EntertainmentRating { get; set; }
+        private int knowledgeRating;
+
+        public int KnowledgeRating
+        {
+            get => knowledgeRating;
+            set
+            {
+                knowledgeRating = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int languageRating;
+
+        public int LanguageRating
+        {
+            get => languageRating;
+            set
+            {
+                languageRating = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int entertainmentRating;
+
+        public int EntertainmentRating
+        {
+            get => entertainmentRating;
+            set
+            {
+                entertainmentRating = value;
+                OnPropertyChanged();
+            }
+        }
         public string Comment { get; set; }
 
         private string imageURL;

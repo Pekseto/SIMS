@@ -33,7 +33,7 @@
                VerticalAlignment="Center"/>
         
         <DataGrid Grid.Row="2" Grid.Column="1" ItemsSource="{Binding TourPoints, UpdateSourceTrigger=PropertyChanged}"
-                  SelectionMode="Single" IsReadOnly="True" Margin="10"
+                  SelectionMode="Single" IsReadOnly="True" Margin="0,30,30,30"
                   AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="17">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Checkpoint" Binding="{Binding Name}" Width="270"/>

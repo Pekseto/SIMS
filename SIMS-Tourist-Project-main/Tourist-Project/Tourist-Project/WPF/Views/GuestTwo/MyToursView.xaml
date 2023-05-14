@@ -39,7 +39,7 @@
                FontSize="20" Margin="0,0,0,0"
                HorizontalAlignment="Center"
                Foreground="White"/>
-        <DataGrid Grid.Row="1" Margin="30,40,30,0" FontSize="18"
+        <DataGrid Grid.Row="1" Margin="30,40,30,0" FontSize="17"
                   ItemsSource="{Binding FutureTours}"
                   SelectedItem="{Binding SelectedFutureTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -60,7 +60,7 @@
                Foreground="White"
                FontSize="20" Margin="0,0,0,0"
                HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <DataGrid Grid.Row="3" Margin="30,40,30,0" FontSize="18"
+        <DataGrid Grid.Row="3" Margin="30,40,30,0" FontSize="17"
                   ItemsSource="{Binding TodaysTours}" SelectedItem="{Binding SelectedTodayTour}"
                   AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>

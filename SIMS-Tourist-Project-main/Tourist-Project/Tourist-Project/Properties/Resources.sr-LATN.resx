@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Attendance" xml:space="preserve">
+    <value>Attendance</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Nazad</value>
+  </data>
+  <data name="CallOut" xml:space="preserve">
+    <value>Prozovi</value>
+  </data>
+  <data name="CallOutTourists" xml:space="preserve">
+    <value>Prozivanje putnika</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Otkaži</value>
   </data>
   <data name="CancelTour" xml:space="preserve">
     <value>Otkaži turu</value>
+  </data>
+  <data name="CheckButton" xml:space="preserve">
+    <value>Oznaka ključne tačke</value>
+  </data>
+  <data name="CheckpointName" xml:space="preserve">
+    <value>Checkpoint name</value>
   </data>
   <data name="Checkpoints" xml:space="preserve">
     <value>Ključne tačke:</value>
@@ -144,8 +162,14 @@
   <data name="DescriptionTable" xml:space="preserve">
     <value>Opis</value>
   </data>
+  <data name="Dismissal" xml:space="preserve">
+    <value>Otkaz</value>
+  </data>
   <data name="Duration" xml:space="preserve">
     <value>Trajanje</value>
+  </data>
+  <data name="EmergencyEnd" xml:space="preserve">
+    <value>Hitan završetak</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>engleski</value>
@@ -168,7 +192,7 @@
   <data name="HistoryTours" xml:space="preserve">
     <value>Održane ture</value>
   </data>
-  <data name="Home page" xml:space="preserve">
+  <data name="HomePage" xml:space="preserve">
     <value>Početna</value>
   </data>
   <data name="Images" xml:space="preserve">
@@ -191,6 +215,9 @@
   </data>
   <data name="PickedLanguage" xml:space="preserve">
     <value>srpski</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Nalog korisnika</value>
   </data>
   <data name="Requests" xml:space="preserve">
     <value>Zahtevi za ture</value>
@@ -219,7 +246,16 @@
   <data name="TourDuration" xml:space="preserve">
     <value>Trajanje ture:</value>
   </data>
+  <data name="TouristsList" xml:space="preserve">
+    <value>Lista turista</value>
+  </data>
+  <data name="TourLive" xml:space="preserve">
+    <value>Praćenje ture uživo</value>
+  </data>
   <data name="TourName" xml:space="preserve">
     <value>Naziv ture:</value>
+  </data>
+  <data name="Visited" xml:space="preserve">
+    <value>Posećeno</value>
   </data>
 </root>

@@ -12,10 +12,10 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class TouristListView : Window
     {
-        public TouristListView(TourPoint selectedTourPoint)
+        public TouristListView(TourPoint selectedTourPoint, Tour tour)
         {
             InitializeComponent();
-            DataContext = new TouristListViewModel(selectedTourPoint);
+            DataContext = new TouristListViewModel(selectedTourPoint, tour, this);
             
         }
     }

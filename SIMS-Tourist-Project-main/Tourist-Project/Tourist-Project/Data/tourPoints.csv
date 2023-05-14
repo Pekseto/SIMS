@@ -1,6 +1,6 @@
 1|strand|1|True
 2|centar|1|True
-3|kej|1|True
+3|kej|1|False
 4|centar|2|True
 5|hram|2|True
 6|kalemegdan|2|True
@@ -38,3 +38,6 @@
 38|prvi|22|False
 39|drugi|22|False
 40|treci|22|False
+41|tacka jedan|23|False
+42|tacka dva|23|False
+43||24|False

@@ -95,6 +95,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand LogOutCommand { get; set; }
         public ICommand ConfirmRescheduleCommand { get; set; }
         public ICommand CancelRescheduleCommand { get; set; }
+        public ICommand RenovateCommand { get; set; }
         #endregion
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
@@ -102,7 +103,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             notificationService.HasUnratedGuests();
             notificationService.HasReviews();
             #region CommandInstanting
-            CreateCommand = new RelayCommand(Create, CanCreate);
+            CreateCommand = new RelayCommand(Create);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
             DeleteCommand = new RelayCommand(Delete, CanDelete);
             RateCommand = new RelayCommand(Rate, CanRate);
@@ -110,6 +111,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             LogOutCommand = new RelayCommand(LogOut);
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
+            RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             #endregion
             #region CollectionInstanting
             User = userService.Get(user.Id);
@@ -128,11 +130,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             var createWindow = new CreateAccommodation(User, this);
             createWindow.ShowDialog();
         }
-        public static bool CanCreate()
-        {
-            return true;
-        }
-
         public void Update()
         {
             var updateWindow = new UpdateAccommodation(SelectedAccommodation, this);
@@ -209,6 +206,17 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public bool CanCancelReschedule()
         {
             return SelectedRescheduleRequest != null;
+        }
+
+        public void Renovate()
+        {
+            var scheduleRenovation = new ScheduleRenovation();
+            scheduleRenovation.ShowDialog();
+        }
+
+        public bool CanRenovate()
+        {
+            return SelectedAccommodation != null;
         }
         #endregion
 

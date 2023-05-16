@@ -32,7 +32,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public void Delete(int id)
         {
-            accommodationRepository.Delete(id);
+            renovationRepository.Delete(id);
         }
     }
 

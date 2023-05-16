@@ -8,7 +8,7 @@ namespace Tourist_Project.Repositories
 {
     public class RenovationRepository : IRenovationRepository
     {
-        private const string FilePath = "../../../Data/renovation.csv";
+        private const string FilePath = "../../../Data/renovations.csv";
         private readonly Serializer<Renovation> serializer = new();
         private List<Renovation> renovations;
 

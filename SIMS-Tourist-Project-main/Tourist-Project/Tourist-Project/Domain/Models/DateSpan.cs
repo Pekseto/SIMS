@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class DateSpan
+    public class DateSpan : ISerializable
     {
         public DateTime StartingDate { get; set; }
 
@@ -14,7 +11,6 @@ namespace Tourist_Project.Domain.Models
 
         public DateSpan()
         {
-
         }
 
         public DateSpan(DateTime startingDate, DateTime endingDate)
@@ -23,5 +19,19 @@ namespace Tourist_Project.Domain.Models
             EndingDate = endingDate;
         }
 
+        public string[] ToCSV()
+        {
+            string[] csvValues = {
+                StartingDate.ToString("MM/dd/yyyy"),
+                EndingDate.ToString("MM/dd/yyyy")
+            };
+            return csvValues;
+        }
+
+        public void FromCSV(string[] values)
+        {
+            StartingDate = DateTime.Parse(values[1]);
+            EndingDate = DateTime.Parse(values[2]);
+        }
     }
 }

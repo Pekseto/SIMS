@@ -21,15 +21,6 @@ namespace Tourist_Project.Applications.UseCases
 
         public List<Accommodation> GetAll()
         {
-            /*List<Accommodation> accommodations = new List<Accommodation>(accommodationRepository.GetAll());
-            List<Location> locations = new List<Location>(locationRepository.GetAll());
-            foreach(Accommodation accommodation in accommodations)
-            {
-
-                accommodation.Location = locationRepository.GetById(accommodation.Id);
-                
-                
-            }*/
             return accommodationRepository.GetAll();
         }
 

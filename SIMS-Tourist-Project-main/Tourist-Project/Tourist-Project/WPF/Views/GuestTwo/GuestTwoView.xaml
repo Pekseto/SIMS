@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:views="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
-        xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:GuestTwoViewModel}"
+        xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:GuestTwoViewModel}"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Height="720" Width="1280"
         WindowStyle="None"
@@ -43,6 +44,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:NotificationsViewModel}">
             <views:NotificationsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RequestsStatsViewModel}">
+            <views:RequestsStatsView/>
         </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
@@ -175,7 +179,8 @@
                     <RadioButton Content="Requests/Stats"
                                  Height="50"
                                  FontSize="24"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding RequestsStatsCommand}"/>
                     <RadioButton Content="Complex tours"
                                  Height="50"
                                  FontSize="24"

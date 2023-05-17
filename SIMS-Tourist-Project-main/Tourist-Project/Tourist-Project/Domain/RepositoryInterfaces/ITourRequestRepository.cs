@@ -16,5 +16,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public TourRequest GetById(int id);
         List<TourRequest> GetAllForUser(int userId);
+        List<int> GetAllRequestedLocations(int userId);
+        List<string> GetAllRequestedLanguages(int userId);
     }
 }

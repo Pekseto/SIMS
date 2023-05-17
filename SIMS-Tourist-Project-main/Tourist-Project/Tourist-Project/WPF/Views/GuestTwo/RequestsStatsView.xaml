@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:RequestsStatsViewModel}"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
@@ -99,25 +102,106 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
                 <RowDefinition Height="200"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <Label Content="Requests:" Foreground="White"
                    FontSize="22" Margin="20,25,0,0"/>
 
-            <DataGrid Grid.Row="1" Margin="10,0,10,0"
+            <DataGrid Grid.Row="1" Margin="10,0,10,00"
                       ItemsSource="{Binding Requests, UpdateSourceTrigger=PropertyChanged}"
-                      FontSize="14" AutoGenerateColumns="False" IsReadOnly="True">
+                      FontSize="13" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="auto"/>
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="auto"/>
                     <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="auto"/>
                         <DataGridTextColumn Header="Guests" Binding="{Binding GuestsNumber}" Width="auto"/>
-                    <DataGridTextColumn Header="From" Binding="{Binding FromDate}" Width="auto"/>
-                    <DataGridTextColumn Header="Until" Binding="{Binding UntilDate}" Width="auto"/>
+                    <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="auto"/>
+                    <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="auto"/>
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <Label Content="Select year:" Foreground="White"
+                           VerticalAlignment="Center" FontSize="15"
+                           Margin="10,0,0,0"/>
+                    <ComboBox VerticalAlignment="Center" Width="75"
+                              Margin="0,0,0,0"
+                              ItemsSource="{Binding StatYears}"
+                              SelectedItem="{Binding SelectedStatYear, UpdateSourceTrigger=PropertyChanged}"/>
+
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center"
+                            Margin="0,0,0,0"
+                            VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Foreground="White"
+                                   Text="{Binding AcceptedPercent}" Margin="0,10,0,0"
+                                   FontSize="36" HorizontalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center" Foreground="White"
+                                   Text="%" Margin="0,10,0,0"
+                                   FontSize="36" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <Label Content="Accepted" Foreground="White"
+                           Margin="0,-5,0,0"
+                           HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center"
+                            Margin="0,0,0,0"
+                            VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Foreground="White"
+                                   Text="{Binding DeniedPercent}" Margin="0,10,0,0"
+                                   FontSize="36" HorizontalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center" Foreground="White"
+                                   Text="%" Margin="0,10,0,0"
+                                   FontSize="36" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <Label Content="Denied" Foreground="White"
+                           Margin="0,-5,0,0"
+                           HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center"
+                            Margin="-30,0,0,0"
+                            VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Foreground="White"
+                               Text="{Binding AvgGuests}" Margin="0,10,0,0"
+                               FontSize="36" HorizontalAlignment="Center"/>
+                    <Label Content="Avg. guests" Foreground="White"
+                           Margin="0,-5,0,0"
+                           HorizontalAlignment="Center"/>
+                </StackPanel>
+
+            </Grid>
+
+            <lvc:PieChart Grid.Row="3" Height="175" Width="200"
+                          HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                          Series="{Binding LanguagesChart}"
+                          LegendLocation="Right" Foreground="White"
+                          Margin="30,0,0,0">
+
+            </lvc:PieChart>
+
+            <lvc:PieChart Grid.Row="3" Height="175" Width="200"
+                          HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                          Series="{Binding LocationsChart}"
+                          LegendLocation="Right" Foreground="White"
+                          Margin="0,0,30,0">
+
+            </lvc:PieChart>
+
             
         </Grid>
 

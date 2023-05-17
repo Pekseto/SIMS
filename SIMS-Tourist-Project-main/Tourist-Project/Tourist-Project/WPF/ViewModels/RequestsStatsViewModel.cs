@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Stores;
@@ -17,6 +20,92 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly LocationService locationService = new();
         private string selectedCountry;
         private string selectedCity;
+        private SeriesCollection languagesChart;
+        private SeriesCollection locationsChart;
+        private double acceptedPercent;
+        private double deniedPercent;
+        private string selectedStatYear;
+        private double avgGuests;
+
+
+        public SeriesCollection LanguagesChart
+        {
+            get => languagesChart;
+            set
+            {
+                languagesChart = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SeriesCollection LocationsChart
+        {
+            get => locationsChart;
+            set
+            {
+                locationsChart = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<string> StatYears { get; set; } = new() { "All time", "2023", "2022", "2021", "2020", "2019", "2018" };
+
+        public double AvgGuests
+        {
+            get => Math.Round(avgGuests, 1);
+            set
+            {
+                if (value != avgGuests)
+                {
+                    avgGuests = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string SelectedStatYear
+        {
+            get => selectedStatYear;
+            set
+            {
+                if (value != selectedStatYear)
+                {
+                    selectedStatYear = value;
+                    AcceptedPercent = requestService.GetAcceptedPercentage(LoggedUser.Id, value);
+                    DeniedPercent = requestService.GetDeniedPercentage(LoggedUser.Id, value);
+                    AvgGuests = requestService.GetAverageGuests(LoggedUser.Id, value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public double AcceptedPercent
+        {
+            get => Math.Round(acceptedPercent, 1);
+            set
+            {
+                if (value != acceptedPercent)
+                {
+                    acceptedPercent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double DeniedPercent
+        {
+            get => Math.Round(deniedPercent, 1);
+            set
+            {
+                if (value != deniedPercent)
+                {
+                    deniedPercent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<string> cities;
         public User LoggedUser { get; set; }
 
@@ -76,6 +165,9 @@ namespace Tourist_Project.WPF.ViewModels
         {
             LoggedUser = user;
 
+            LanguagesChart = requestService.GetLanguageSeriesCollection(user.Id);
+            LocationsChart = requestService.GetLocationSeriesCollection(user.Id);
+
             Requests = new ObservableCollection<TourRequest>(GetAllRequests());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             SelectedCountry = Countries.First();
@@ -85,6 +177,8 @@ namespace Tourist_Project.WPF.ViewModels
             Language = string.Empty;
             FromDate = DateTime.Now.AddDays(1).Date;
             UntilDate = DateTime.Now.AddDays(2).Date;
+
+            SelectedStatYear = StatYears.First();
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
         }
@@ -114,6 +208,9 @@ namespace Tourist_Project.WPF.ViewModels
                 };
             requestService.Save(newRequest);
             Requests.Add(newRequest);
+
+            LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
+            LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);
         }
 
     }

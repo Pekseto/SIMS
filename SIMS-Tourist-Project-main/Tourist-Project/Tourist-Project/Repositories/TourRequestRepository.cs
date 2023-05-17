@@ -73,5 +73,26 @@ namespace Tourist_Project.Repositories
         {
             return serializer.FromCSV(filePath).Where(tr => tr.UserId == userId).ToList();
         }
+
+        public List<int> GetAllRequestedLocations(int userId)
+        {
+            var retVal = new List<int>();
+            foreach (var requestedLocationId in GetAll().Where(r => r.UserId == userId).Select(r => r.LocationId).Distinct())
+            {
+                retVal.Add(requestedLocationId);
+            }
+            return retVal;
+        }
+
+        public List<string> GetAllRequestedLanguages(int userId)
+        {
+            var retVal = new List<string>();
+            foreach (var request in GetAll().Where(r => r.UserId == userId))
+            {
+                if (retVal.Contains(request.Language)) continue;
+                retVal.Add(request.Language);
+            }
+            return retVal;
+        }
     }
 }

@@ -22,7 +22,9 @@ namespace Tourist_Project.Domain.Models
         public string Language { get; set; }
         public int GuestsNumber { get; set; }
         public DateTime FromDate { get; set; }
+        public string FromDateStr => FromDate.ToShortDateString();
         public DateTime UntilDate { get; set; }
+        public string UntilDateStr => UntilDate.ToShortDateString();
         public TourRequestStatus Status { get; set; } = TourRequestStatus.Pending;
         public int UserId { get; set; }
 

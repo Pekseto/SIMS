@@ -15,9 +15,9 @@ namespace Tourist_Project.Applications.UseCases
         {
 
         }
-        public User Get(int id)
+        public User GetOne(int id)
         {
-            return repository.Get(id);
+            return repository.GetOne(id);
         }
 
         public User Update(User user)

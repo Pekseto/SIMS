@@ -94,8 +94,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             OwnerMainWindowViewModel = ownerMainWindowViewModel;
             AccommodationRating = accommodationRating;
             Reservation = reservationService.Get(AccommodationRating.ReservationId);
-            Owner = userService.Get(AccommodationRating.UserId);
-            Guest = userService.Get(Reservation.GuestId);
+            Owner = userService.GetOne(AccommodationRating.UserId);
+            Guest = userService.GetOne(Reservation.GuestId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
             Image = imageService.Get(AccommodationRating.ImageId);
             UpdateCommand = new RelayCommand(Update, CanUpdate);

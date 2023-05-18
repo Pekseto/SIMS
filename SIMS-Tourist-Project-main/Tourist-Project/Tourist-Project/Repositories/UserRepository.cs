@@ -47,7 +47,7 @@ namespace Tourist_Project.Repositories
 
         public string GetFullName(int id)
         {
-            return Get(id).FullName;
+            return GetOne(id).FullName;
         }
     }
 }

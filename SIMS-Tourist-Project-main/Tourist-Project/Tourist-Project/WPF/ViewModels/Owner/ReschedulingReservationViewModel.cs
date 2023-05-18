@@ -71,7 +71,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             RescheduleRequest = rescheduleRequest;
             Reservation = reservationService.Get(RescheduleRequest.ReservationId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
-            User = userService.Get(Reservation.GuestId);
+            User = userService.GetOne(Reservation.GuestId);
             OwnerMainWindowViewModel = ownerMainWindowViewModel;
 
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);

@@ -26,7 +26,7 @@ namespace Tourist_Project.Applications.UseCases
         }
         public List<User> GetUsersOnTour(int tourId)
         {
-            return repository.GetAllByTourId(tourId).Select(reservation => userService.Get(reservation.UserId)).ToList();
+            return repository.GetAllByTourId(tourId).Select(reservation => userService.GetOne(reservation.UserId)).ToList();
         }
 
         public int[] CountingTourists(int tourId)

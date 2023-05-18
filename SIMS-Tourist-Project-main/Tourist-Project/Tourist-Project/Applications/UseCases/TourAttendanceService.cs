@@ -34,7 +34,7 @@ namespace Tourist_Project.Applications.UseCases
             }
             foreach (var attendace in tourAttendances)
             {
-                attendace.User = userService.Get(attendace.UserId);
+                attendace.User = userService.GetOne(attendace.UserId);
                 attendace.TourPoint = tourPointService.GetOne(attendace.CheckPointId);
             }
         }

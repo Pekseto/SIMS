@@ -112,7 +112,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             #endregion
             #region CollectionInstanting
-            User = userService.Get(user.Id);
+            User = userService.GetOne(user.Id);
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));

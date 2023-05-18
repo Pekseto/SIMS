@@ -61,6 +61,42 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prisustvo.
+        /// </summary>
+        internal static string Attendance {
+            get {
+                return ResourceManager.GetString("Attendance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Call out.
+        /// </summary>
+        internal static string CallOut {
+            get {
+                return ResourceManager.GetString("CallOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tourist call out.
+        /// </summary>
+        internal static string CallOutTourists {
+            get {
+                return ResourceManager.GetString("CallOutTourists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string Cancel {
@@ -75,6 +111,24 @@ namespace Tourist_Project.Properties {
         internal static string CancelTour {
             get {
                 return ResourceManager.GetString("CancelTour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check checkpoint.
+        /// </summary>
+        internal static string CheckButton {
+            get {
+                return ResourceManager.GetString("CheckButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tačka na kojoj se priključio.
+        /// </summary>
+        internal static string CheckpointName {
+            get {
+                return ResourceManager.GetString("CheckpointName", resourceCulture);
             }
         }
         
@@ -142,11 +196,29 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dismissal.
+        /// </summary>
+        internal static string Dismissal {
+            get {
+                return ResourceManager.GetString("Dismissal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duration.
         /// </summary>
         internal static string Duration {
             get {
                 return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emergency end.
+        /// </summary>
+        internal static string EmergencyEnd {
+            get {
+                return ResourceManager.GetString("EmergencyEnd", resourceCulture);
             }
         }
         
@@ -286,6 +358,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requests.
         /// </summary>
         internal static string Requests {
@@ -367,11 +448,38 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tourists list.
+        /// </summary>
+        internal static string TouristsList {
+            get {
+                return ResourceManager.GetString("TouristsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour live.
+        /// </summary>
+        internal static string TourLive {
+            get {
+                return ResourceManager.GetString("TourLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tour name:.
         /// </summary>
         internal static string TourName {
             get {
                 return ResourceManager.GetString("TourName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visited.
+        /// </summary>
+        internal static string Visited {
+            get {
+                return ResourceManager.GetString("Visited", resourceCulture);
             }
         }
     }

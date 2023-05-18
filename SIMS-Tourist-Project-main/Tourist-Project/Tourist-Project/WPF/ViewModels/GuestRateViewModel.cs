@@ -75,7 +75,7 @@ namespace Tourist_Project.WPF.ViewModels
             GuestRating = guestRateService.Get(notification.TypeId);
             Reservation = reservationService.Get(GuestRating.ReservationId);
             Accommodation = accommodationService.Get(Reservation.AccommodationId);
-            User = userService.GetOne(Reservation.GuestId);
+            User = userService.Get(Reservation.GuestId);
             Notification = notification;
         }
 

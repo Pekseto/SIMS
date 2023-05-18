@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.Repository;
 using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
 using Tourist_Project.WPF.ViewModels;

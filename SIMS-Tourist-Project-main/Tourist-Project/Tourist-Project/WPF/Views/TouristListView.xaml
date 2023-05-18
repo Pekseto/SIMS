@@ -3,37 +3,144 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ns="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
-        Title="Tourist Application" Height="450" Width="500">
+        Title="Tourist Application" Height="500" Width="650"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="CallOutButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="CancelImage"  Source="../../../Images/calloutImage.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc CallOut}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BackButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="CancelImage"  Source="../../../Images/back.png" Margin="5" Height="25"></Image>
+                            <TextBlock Text="{ns:Loc Back}" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LanguageLabel" TargetType="Label">
+            <Setter Property="Width" Value="90" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="20 0,0,0" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="460"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <ToolBar Grid.Row="0" Grid.ColumnSpan="3">
-            <Button Command="{Binding CallOutCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="../Images/add.png" Width="20" Height="25"/>
-                    <TextBlock Text="Call out" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-        </ToolBar>
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding TourAttendances, UpdateSourceTrigger=PropertyChanged}" 
-                 SelectedItem="{Binding SelectedTourAttendance, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False"
-                      IsReadOnly="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <TextBlock Text="{Binding ActiveTour.Name }" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="{Binding CurrentTime}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <xctk:IconButton Width="200" Height="40" Style="{StaticResource HomeButtonGuide}" VerticalAlignment="Top" Command="{Binding HomeCommand}"></xctk:IconButton>
+            <xctk:IconButton Width="200" Height="40" Style="{StaticResource CallOutButton}" VerticalAlignment="Top" Margin="0 60 0 0 " Command="{Binding CallOutCommand}"></xctk:IconButton>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <DataGrid Margin="10 0 20 20"
+                      ItemsSource="{Binding TourAttendances}"
+                      SelectedItem="{Binding SelectedTourAttendance}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Cursor="Hand"
+                      Style="{StaticResource DataGridStyle}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding User.Username}" Width="200"/>
-                    <DataGridTextColumn Header="Checkpoint where they join" Binding="{Binding TourPoint.Name}" Width="auto"/>
+                    <DataGridTextColumn Header="{ns:Loc Name}" Binding="{Binding User.Username}" Width="130"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="{ns:Loc Attendance}" Binding="{Binding Presence}"></DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="{ns:Loc CheckpointName}" Binding="{Binding TourPoint.Name}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <xctk:IconButton Width="200" Height="40" Style="{StaticResource BackButton}" Margin="0 0 20 0" HorizontalAlignment="Right" Command="{Binding BackCommand}"></xctk:IconButton>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}" Margin="30,0,0,0" VerticalAlignment="Center">
+                <Label.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />
+                </Label.InputBindings>
+            </Label>
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBox Text="{ns:Loc CallOutTourists}"></TextBox>
+        </Grid>
     </Grid>
 </Window>

@@ -2,12 +2,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
-using Tourist_Project.Repository;
-using Tourist_Project.View;
-using Tourist_Project.WPF.Views.Guide;
 using Tourist_Project.WPF.Views.GuestTwo;
+using Tourist_Project.WPF.Views.Guide;
 using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.Views
@@ -15,13 +14,26 @@ namespace Tourist_Project.WPF.Views
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class LoginWindow : Window, INotifyPropertyChanged
     {
-        private readonly UserRepository repository;
-        public string Username { get; set; }
+        private readonly UserRepository repository = new();
+        private string username;
+
+        public string Username
+        {
+            get => username;
+            set
+            {
+                if(value == username) return;
+                username = value;
+                OnPropertyChanged("Username");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ICommand SignInCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -30,10 +42,11 @@ namespace Tourist_Project.WPF.Views
         {
             InitializeComponent();
             DataContext = this;
-            repository = new UserRepository();
+            SignInCommand = new RelayCommand(SignIn, CanSignIn);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
-        private void SignIn(object sender, RoutedEventArgs e)
+        private void SignIn()
         {
             var user = repository.GetByUsername(Username);
             if (user != null)
@@ -84,6 +97,16 @@ namespace Tourist_Project.WPF.Views
                 MessageBox.Show("Wrong username!");
             }
 
+        }
+
+        public bool CanSignIn()
+        {
+            return !string.IsNullOrWhiteSpace(Username);
+        }
+
+        public void Cancel()
+        {
+            Close();
         }
     }
 }

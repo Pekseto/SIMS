@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Attendance" xml:space="preserve">
+    <value>Prisustvo</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CallOut" xml:space="preserve">
+    <value>Call out</value>
+  </data>
+  <data name="CallOutTourists" xml:space="preserve">
+    <value>Tourist call out</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="CancelTour" xml:space="preserve">
     <value>Cancel tour</value>
+  </data>
+  <data name="CheckButton" xml:space="preserve">
+    <value>Check checkpoint</value>
+  </data>
+  <data name="CheckpointName" xml:space="preserve">
+    <value>Tačka na kojoj se priključio</value>
   </data>
   <data name="Checkpoints" xml:space="preserve">
     <value>Checkpoints:</value>
@@ -144,8 +162,14 @@
   <data name="DescriptionTable" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Dismissal" xml:space="preserve">
+    <value>Dismissal</value>
+  </data>
   <data name="Duration" xml:space="preserve">
     <value>Duration</value>
+  </data>
+  <data name="EmergencyEnd" xml:space="preserve">
+    <value>Emergency end</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>english</value>
@@ -192,6 +216,9 @@
   <data name="PickedLanguage" xml:space="preserve">
     <value>english</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
   </data>
@@ -219,7 +246,16 @@
   <data name="TourDuration" xml:space="preserve">
     <value>Duration:</value>
   </data>
+  <data name="TouristsList" xml:space="preserve">
+    <value>Tourists list</value>
+  </data>
+  <data name="TourLive" xml:space="preserve">
+    <value>Tour live</value>
+  </data>
   <data name="TourName" xml:space="preserve">
     <value>Tour name:</value>
+  </data>
+  <data name="Visited" xml:space="preserve">
+    <value>Visited</value>
   </data>
 </root>

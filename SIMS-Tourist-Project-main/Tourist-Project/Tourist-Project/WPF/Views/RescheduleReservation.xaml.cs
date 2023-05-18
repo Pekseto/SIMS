@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.Views
 {

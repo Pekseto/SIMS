@@ -57,7 +57,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             TodayTours = new ObservableCollection<Tour>(tourService.GetTodaysTours());
 
-            SelectedTour = new Tour();
+            SelectedTour = null;
             this.window = window;
             Live = false;
             LoggedInUser = loggedInUser;
@@ -173,13 +173,17 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanStartTour()
         {
-            if (Live)
+            if (SelectedTour is null)
             {
-                return SelectedTour.Status == Status.Begin;
+                return false;
+            }
+            if (!Live)
+            {
+                return SelectedTour.Status == Status.NotBegin;
             }
             else
             {
-                return SelectedTour.Status != Status.End && SelectedTour is not null;
+                return SelectedTour.Status == Status.Begin;
             }
         }
         private void StartTour()
@@ -189,6 +193,8 @@ namespace Tourist_Project.WPF.ViewModels
             tourService.Update(SelectedTour);
 
             var tourLiveWindow = new TourLiveView(SelectedTour);
+            tourLiveWindow.Owner = window;
+            tourLiveWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             tourLiveWindow.ShowDialog();
             tourLiveWindow.Close();
 

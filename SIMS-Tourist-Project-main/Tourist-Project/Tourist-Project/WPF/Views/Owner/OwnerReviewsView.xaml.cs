@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.Views.Owner
 {
@@ -7,10 +8,10 @@ namespace Tourist_Project.WPF.Views.Owner
     /// </summary>
     public partial class OwnerReviewsView : Window
     {
-        public OwnerReviewsView()
+        public OwnerReviewsView(OwnerMainWindowViewModel ownerMainWindowViewModel)
         {
             InitializeComponent();
-            DataContext = new OwnerReviewsViewModel();
+            DataContext = new OwnerReviewsViewModel(this, ownerMainWindowViewModel);
         }
     }
 }

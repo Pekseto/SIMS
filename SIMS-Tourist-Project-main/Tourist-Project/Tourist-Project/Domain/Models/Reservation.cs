@@ -1,20 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Tourist_Project.Serializer;
-using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class Reservation : ISerializable
+    public class Reservation : ISerializable,INotifyPropertyChanged
     {
-        public int Id { get; set; }
-        public int GuestId { get; set; }
-        public DateTime CheckIn { get; set; }
-        public DateTime CheckOut { get; set; }
-        public int GuestsNum { get; set; }
-        public int StayingDays { get; set; }
-        public int AccommodationId { get; set; } 
-        public List<Date> AvailableDates { get; set; }
+        private int id;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                if(value == id) return;
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+        private int guestId;
+        public int GuestId
+        {
+            get => guestId;
+            set
+            {
+                if (value == guestId) return;
+                guestId = value;
+                OnPropertyChanged("GuestId");
+            }
+        }
+
+        private DateTime checkIn;
+        public DateTime CheckIn
+        {
+            get => checkIn;
+            set
+            {
+                if(value == checkIn) return;
+                checkIn = value;
+                OnPropertyChanged("CheckIn");
+            }
+        }
+
+        private DateTime checkOut;
+        public DateTime CheckOut
+        {
+            get => checkOut;
+            set
+            {
+                if(value == checkOut) return;
+                checkOut = value;
+                OnPropertyChanged("CheckOut");
+            }
+        }
+        private int guestsNum;
+        public int GuestsNum
+        {
+            get => guestsNum;
+            set
+            {
+                if(value == guestsNum) return;
+                guestsNum = value;
+                OnPropertyChanged("GuestsNum");
+            }
+        }
+        private int stayingDays;
+        public int StayingDays
+        {
+            get => stayingDays;
+            set
+            {
+                if (value == stayingDays) return;
+                stayingDays = value;
+                OnPropertyChanged("StayingDays");
+            }
+        }
+        private int accommodationId;
+        public int AccommodationId
+        {
+            get => accommodationId;
+            set
+            {
+                if (value == accommodationId) return;
+                accommodationId = value;
+                OnPropertyChanged("AccommodationId");
+            }
+        }
+
+        private List<Date> availableDates;
+        public List<Date> AvailableDates
+        {
+            get => availableDates;
+            set
+            {
+                if(value == availableDates) return;
+                availableDates = value;
+                OnPropertyChanged("AvailableDates");
+            }
+        }
         public Accommodation Accommodation { get; set; } 
 
             
@@ -41,7 +125,7 @@ namespace Tourist_Project.Domain.Models
                 CheckOut.ToString(),  
                 GuestsNum.ToString(), 
                 StayingDays.ToString(), 
-                Accommodation.Id.ToString() 
+                AccommodationId.ToString() 
             };
             return csvValues;
         }
@@ -53,7 +137,14 @@ namespace Tourist_Project.Domain.Models
             CheckOut = DateTime.Parse(values[3]);
             GuestsNum = Convert.ToInt32(values[4]);
             StayingDays = Convert.ToInt32(values[5]);
-            Accommodation = new Accommodation() { Id = Convert.ToInt32(values[6]) };
+            AccommodationId = Convert.ToInt32(values[6]);
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

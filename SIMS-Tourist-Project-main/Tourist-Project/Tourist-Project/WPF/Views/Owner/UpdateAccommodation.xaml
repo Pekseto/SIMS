@@ -51,9 +51,42 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="{x:Type RadioButton}" TargetType="RadioButton">
-            <Setter Property="Foreground" Value="#0da2a5"></Setter>
-            <Setter Property="BorderThickness" Value="1"></Setter>
-            <Setter Property="BulletDecorator.Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#03888f"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Ellipse x:Name="RadioEllipse"
+                                     Width="15"
+                                     Height="15"
+                                     Stroke="#03888f"
+                                     StrokeThickness="1"
+                                     Fill="#d9eeef"
+                                     Margin="0,0,0,0"
+                                     HorizontalAlignment="Left"/>
+                            <Ellipse x:Name="RadioDot"
+                                     Width="9"
+                                     Height="9"
+                                     Fill="#03888f"
+                                     Margin="3,0,0,0"
+                                     HorizontalAlignment="Left"
+                                     Visibility="Collapsed"/>
+                            <ContentPresenter Margin="20,0,0,0"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              RecognizesAccessKey="True"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RadioDot" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="Background" Value="#edf6f7"></Setter>
@@ -75,7 +108,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="5">
+                            CornerRadius="10,5,10,5">
                                 <ScrollViewer x:Name="PART_ContentHost" />
                             </Border>
                         </Grid>
@@ -89,7 +122,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <Style x:Key="{x:Type RepeatButton}" TargetType="RepeatButton">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+        </Style>
         <Style x:Key="{x:Type xctk:IntegerUpDown}" TargetType="xctk:IntegerUpDown">
             <Setter Property="Background" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
@@ -118,7 +156,7 @@
                             </Grid.ColumnDefinitions>
                             <Border x:Name="border"
                             Grid.Column="0"
-                            CornerRadius="5"
+                            CornerRadius="10,5,10,5"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -138,7 +176,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Border x:Name="Border" 
                                             Grid.ColumnSpan="2"
-                                            CornerRadius="4"
+                                            CornerRadius="10,5,10,5"
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}" />
@@ -158,7 +196,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Width="104"
-                                CornerRadius="10">
+                                CornerRadius="10,5,10,5">
                                     <ScrollViewer>
                                         <ItemsPresenter />
                                     </ScrollViewer>
@@ -179,8 +217,82 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <Style x:Key="{x:Type Thumb}" TargetType="Thumb">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border CornerRadius="5"
+                                    BorderBrush="#0da2a5"
+                                    BorderThickness="1"
+                                    Background="#0da2a5"></Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#d9eeef" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="18"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border CornerRadius="5"
+                                    BorderThickness="0"></Border>
+                            <RepeatButton Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineUpButton" Command="ScrollBar.LineUpCommand" Height="18" Content="▲" />
+                            <Track x:Name="Track" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Background="#d9eeef" Height="Auto" Width="Auto"/>
+                                </Track.Thumb>
+                            </Track>
+                            <RepeatButton Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1" x:Name="LineDownButton" Command="ScrollBar.LineDownCommand" Height="18" Content="▼" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Orientation" Value="Horizontal">
+                                <Setter Property="Height" Value="10"></Setter>
+                                <Setter TargetName="Track" Property="IsDirectionReversed" Value="False"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="Track" Property="Grid.RowSpan" Value="3"></Setter>
+                                <Setter TargetName="Track" Property="Grid.Column" Value="1"></Setter>
+                                <Setter TargetName="Track" Property="Grid.ColumnSpan" Value="2"></Setter>
+                                <Setter TargetName="Track" Property="Margin" Value="-25,0,2,0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Content" Value="◄" />
+                                <Setter TargetName="LineUpButton" Property="Width" Value="18" />
+                                <Setter TargetName="LineUpButton" Property="Height" Value="18"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Command" Value="ScrollBar.LineLeftCommand"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Column" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineUpButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Row" Value="0"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.RowSpan" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Grid.Column" Value="2"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Command" Value="ScrollBar.LineRightCommand"></Setter>
+                                <Setter TargetName="LineDownButton" Property="Content" Value="►" />
+                                <Setter TargetName="LineDownButton" Property="Width" Value="18" />
+                                <Setter TargetName="Thumb" Property="Width" Value="10" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="C" Modifiers="Shift" Command="{Binding ConfirmCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid Background="#d9eeef">
         <Grid.RowDefinitions>
             <RowDefinition Height="56*"/>
@@ -206,20 +318,13 @@
         </TextBox>
         <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="Country" Margin="49,78,169,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <ComboBox.SelectedItem>
-                <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <val:ComboBoxValidation></val:ComboBoxValidation>
-                    </Binding.ValidationRules>
+                <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                 </Binding>
             </ComboBox.SelectedItem>
         </ComboBox>
         <ComboBox ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="City" Margin="185,78,49,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <ComboBox.SelectedItem>
-                <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
-                    <Binding.ValidationRules>
-                        <val:ComboBoxValidation></val:ComboBoxValidation>
-                    </Binding.ValidationRules>
-                </Binding>
+                <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
             </ComboBox.SelectedItem>
         </ComboBox>
         <RadioButton GroupName="Accommodation Type" IsChecked="{Binding Accommodation.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Apartment}" Content="Apartment" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Left"></RadioButton>
@@ -228,27 +333,18 @@
         <xctk:IntegerUpDown Name="MaxNumGuests" Margin="49,29,49,276" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="Accommodation.MaxGuestNum" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <val:MinValueValidation></val:MinValueValidation>
-                    </Binding.ValidationRules>
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
         <xctk:IntegerUpDown Name="MinStayDay" Margin="49,118,49,216" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="Accommodation.MinStayingDays" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <val:MinValueValidation></val:MinValueValidation>
-                    </Binding.ValidationRules>
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
         <xctk:IntegerUpDown Name="CancelThreshold" Margin="49,187,49,156" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="Accommodation.CancellationThreshold" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <val:MinValueValidation></val:MinValueValidation>
-                    </Binding.ValidationRules>
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
@@ -261,6 +357,6 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Command="{Binding ConfirmCommand}" Content="Confirm(C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1"></Button>
+        <Button Command="{Binding ConfirmCommand}" Content="Confirm(Shift+C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1"></Button>
     </Grid>
 </Window>

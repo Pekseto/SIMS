@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
     /// Interaction logic for GuideProfileView.xaml

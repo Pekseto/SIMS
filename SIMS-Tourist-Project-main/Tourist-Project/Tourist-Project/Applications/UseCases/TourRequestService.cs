@@ -55,9 +55,9 @@ namespace Tourist_Project.Applications.UseCases
 
         public void UpdateInvalidRequests(int loggedUserId)
         {
-            foreach (var request in requestRepository.GetAll().Where(r => r.UserId == loggedUserId).ToList())
+            foreach (var request in requestRepository.GetAll().Where(r => r.UserId == loggedUserId && r.Status == TourRequestStatus.Pending).ToList())
             {
-                if (DateTime.Now < request.FromDate.AddDays(-2).Date) continue;
+                if (DateTime.Now < request.UntilDate.AddDays(-2).Date) continue;
                 request.Status = TourRequestStatus.Denied;
                 requestRepository.Update(request);
             }
@@ -80,14 +80,16 @@ namespace Tourist_Project.Applications.UseCases
                 return acceptedCount > 0 ? acceptedCount / requests.Count * 100 : 0;
             }
 
+            double selectedYearAcceptedCount = 0;
             foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
             {
+                selectedYearAcceptedCount++;
                 if (request.Status == TourRequestStatus.Accepted)
                 {
                     acceptedCount++;
                 }
             }
-            return acceptedCount > 0 ? acceptedCount / requests.Count * 100 : 0;
+            return acceptedCount > 0 ? acceptedCount / selectedYearAcceptedCount * 100 : 0;
 
         }
 
@@ -108,14 +110,16 @@ namespace Tourist_Project.Applications.UseCases
                 return deniedCount > 0 ? deniedCount / requests.Count * 100 : 0;
             }
 
+            double selectedYearDeniedCount = 0;
             foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
             {
+                selectedYearDeniedCount++;
                 if (request.Status == TourRequestStatus.Denied)
                 {
                     deniedCount++;
                 }
             }
-            return deniedCount > 0 ? deniedCount / requests.Count * 100 : 0;
+            return deniedCount > 0 ? deniedCount / selectedYearDeniedCount * 100 : 0;
 
         }
 
@@ -134,11 +138,13 @@ namespace Tourist_Project.Applications.UseCases
                 return guestsCount / requests.Count;
             }
 
+            double selectedYearGuestsCount = 0;
             foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
             {
+                selectedYearGuestsCount++;
                 guestsCount += request.GuestsNumber;
             } 
-            return guestsCount / requests.Count;
+            return guestsCount / selectedYearGuestsCount;
 
         }
 

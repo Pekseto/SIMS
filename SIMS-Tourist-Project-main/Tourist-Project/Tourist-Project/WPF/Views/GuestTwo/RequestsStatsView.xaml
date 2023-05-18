@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
+             xmlns:val="clr-namespace:Tourist_Project.WPF.Validation"
              d:DataContext="{d:DesignInstance Type=viewmodels:RequestsStatsViewModel}"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
@@ -74,11 +75,27 @@
                       HorizontalAlignment="Right" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
             <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10"
-                     TextWrapping="Wrap" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
-                     Cursor="IBeam"/>
+                     TextWrapping="Wrap" Cursor="IBeam" FontSize="17">
+                <TextBox.Text>
+                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15"
-                     Height="30" VerticalAlignment="Top" Cursor="IBeam"
-                     Text="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
+                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="17">
+                <TextBox.Text>
+                    <Binding Path="Language" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:EmptyStringValidation ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+
             <xctk:IntegerUpDown Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Width="80"
                                 HorizontalAlignment="left" Grid.Row="4" Grid.Column="1"
                                 FontSize="15" Margin="20,15"

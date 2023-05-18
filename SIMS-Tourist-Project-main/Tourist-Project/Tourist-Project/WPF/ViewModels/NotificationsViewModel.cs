@@ -25,11 +25,13 @@ namespace Tourist_Project.WPF.ViewModels
             get => selectedNotificationGuestTwo;
             set
             {
-                if (value != selectedNotificationGuestTwo)
+                if (value != null && value != selectedNotificationGuestTwo)
                 {
                     notificationNavigationStore.CurrentViewModel = value.NotificationType switch
                     {
                         NotificationType.ConfirmPresence => new ConfirmPresenceViewModel(value),
+                        NotificationType.TourAccepted => new TourRequestAcceptedViewModel(value, mainNavigationStore, this),
+                        NotificationType.NewTour => new NewTourNotificationViewModel(value, mainNavigationStore, this),
                         _ => notificationNavigationStore.CurrentViewModel
                     };
 

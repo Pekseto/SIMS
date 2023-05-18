@@ -37,6 +37,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand BackCommand {  get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
+
+
         public MyTourPreviewViewModel(TourDTO tour, NavigationStore navigationStore, MyToursViewModel previousViewModel)
         {
             SelectedTour = tour;
@@ -58,6 +60,28 @@ namespace Tourist_Project.WPF.ViewModels
             NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
             PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
         }
+        public MyTourPreviewViewModel(TourDTO tour, NavigationStore navigationStore, NotificationsViewModel previousViewModel)
+        {
+            SelectedTour = tour;
+            Checkpoints = tourPointRepository.GetAllForTourString(tour.Id);
+
+            TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
+            imagesCount = TourImages.Count;
+            if (imagesCount > 0)
+            {
+                CurrentImage = TourImages[0];
+                imageId = 0;
+            }
+            else
+            {
+                CurrentImage = new Image("/Images/No images to show.jpg");
+            }
+
+            BackCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => previousViewModel);
+            NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
+            PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
+        }
+
 
         private void OnPreviousClick()
         {

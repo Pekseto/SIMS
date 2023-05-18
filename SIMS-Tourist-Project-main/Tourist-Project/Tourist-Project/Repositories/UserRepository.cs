@@ -24,6 +24,11 @@ namespace Tourist_Project.Repository
             return users.FirstOrDefault(u => u.Username == username);
         }
 
+        public List<User> GetAll()
+        {
+            return serializer.FromCSV(FilePath);
+        }
+
         public User GetOne(int id)
         {
             return users.Find(user => user.Id == id);

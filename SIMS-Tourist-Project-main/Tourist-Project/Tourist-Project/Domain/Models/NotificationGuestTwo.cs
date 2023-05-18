@@ -22,7 +22,7 @@ namespace Tourist_Project.Domain.Models
 
         public NotificationGuestTwo()
         {
-            
+            Title = string.Empty;
         }
 
         public NotificationGuestTwo(int userId, int tourId, DateTime date, NotificationType notificationType)

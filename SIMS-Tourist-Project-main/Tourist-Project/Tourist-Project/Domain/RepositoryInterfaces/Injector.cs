@@ -24,7 +24,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(IAccommodationRatingRepository), new AccommodationRatingRepository()},
             {typeof(ITourReviewRepository), new TourReviewRepository()},
             {typeof(IRescheduleRequestRepository), new RescheduleRequestRepository()},
-            {typeof(INotificationGuestTwoRepository), new NotificationGuestTwoRepository()}
+            {typeof(INotificationGuestTwoRepository), new NotificationGuestTwoRepository()},
+            {typeof(ITourRequestRepository), new TourRequestRepository()}
         };
 
         public T CreateInstance<T>()

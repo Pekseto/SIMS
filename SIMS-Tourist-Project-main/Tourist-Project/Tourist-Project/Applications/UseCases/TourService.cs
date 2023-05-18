@@ -192,6 +192,7 @@ namespace Tourist_Project.Applications.UseCases
                 
                 var tourDTO = new TourDTO(tour)
                 {
+                    SpotsLeft = GetLeftoverSpots(tour),
                     Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
                 };
                 tours.Add(tourDTO);
@@ -212,6 +213,7 @@ namespace Tourist_Project.Applications.UseCases
                 {
                     var tourDTO = new TourDTO(tour)
                     {
+                        SpotsLeft = GetLeftoverSpots(tour),
                         Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
                     };
                     tours.Add(tourDTO);
@@ -232,6 +234,7 @@ namespace Tourist_Project.Applications.UseCases
                 {
                     var tourDTO = new TourDTO(tour)
                     {
+                        SpotsLeft = GetLeftoverSpots(tour),
                         Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
                     };
                     tours.Add(tourDTO);
@@ -251,6 +254,7 @@ namespace Tourist_Project.Applications.UseCases
                 {
                     var tourDTO = new TourDTO(tour)
                     {
+                        SpotsLeft = GetLeftoverSpots(tour),
                         Location = locationService.GetAll().Find(x => x.Id == locationId)
                     };
                     tours.Add(tourDTO);
@@ -258,6 +262,18 @@ namespace Tourist_Project.Applications.UseCases
             }
 
             return tours;
+        }
+
+        public TourDTO GetOneDTO(int tourId)
+        {
+            var tour = GetOne(tourId);
+            var tourDTO = new TourDTO(tour)
+            {
+                SpotsLeft = GetLeftoverSpots(tour),
+                Location = locationService.GetAll().Find(x => x.Id == tour.Id)
+            };
+
+            return tourDTO;
         }
     }
 }

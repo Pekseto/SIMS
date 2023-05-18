@@ -17,6 +17,12 @@
         <DataTemplate DataType="{x:Type viewmodels:SelectNotificationViewModel}">
             <views:SelectNotificationView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourRequestAcceptedViewModel}">
+            <views:TourRequestAcceptedView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:NewTourNotificationViewModel}">
+            <views:NewTourNotificationView/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>

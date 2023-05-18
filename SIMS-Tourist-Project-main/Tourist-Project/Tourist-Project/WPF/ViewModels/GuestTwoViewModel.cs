@@ -23,9 +23,11 @@ namespace Tourist_Project.WPF.ViewModels
         public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
         private readonly NavigationStore navigationStore;
         private readonly VoucherService voucherService = new();
+        private readonly TourRequestService requestService = new();
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand TourHistoryCommand { get; set; }
+        public ICommand RequestsStatsCommand { get; set; }
         public ICommand VouchersCommand { get; set; }
         public ICommand SignOutCommand { get; set; }
         public ICommand ExitCommand { get; set; }
@@ -41,12 +43,14 @@ namespace Tourist_Project.WPF.ViewModels
             HomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(user, navigationStore));
             MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));
             TourHistoryCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => new TourHistoryViewModel(user, navigationStore));
+            RequestsStatsCommand = new NavigateCommand<RequestsStatsViewModel>(navigationStore, () => new RequestsStatsViewModel(user, navigationStore));
             VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
             NotificationsCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => new NotificationsViewModel(user, navigationStore));
             SignOutCommand = new RelayCommand(OnSignOutClick);
             ExitCommand = new RelayCommand(OnExitClick);
 
             voucherService.DeleteInvalidVouchers(LoggedUser.Id);
+            requestService.UpdateInvalidRequests(LoggedUser.Id);
         }
 
         private void OnExitClick()

@@ -14,6 +14,8 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
         
         private readonly INotificationGuestTwoRepository notificationRepository = injector.CreateInstance<INotificationGuestTwoRepository>();
+        private readonly IUserRepository userRepository = injector.CreateInstance<IUserRepository>();
+        private readonly ITourRequestRepository requestRepository = injector.CreateInstance<ITourRequestRepository>();
 
         public NotificationGuestTwoService()
         {
@@ -40,6 +42,21 @@ namespace Tourist_Project.Applications.UseCases
         public List<NotificationGuestTwo> GetAllForUser(int userId)
         {
             return notificationRepository.GetAllForUser(userId);
+        }
+
+        public void NotifyUsers(Tour tour)
+        {
+            var requests = requestRepository.GetAll();
+            foreach (var user in userRepository.GetAll().Where(u => u.Role == UserRole.guest2))
+            {
+                foreach (var request in requests.Where(r => r.UserId == user.Id && r.Status == TourRequestStatus.Denied))
+                {
+                    if (request.LocationId != tour.LocationId && request.Language != tour.Language) continue;
+                    Save(new NotificationGuestTwo(user.Id, tour.Id, DateTime.Now, NotificationType.NewTour));
+                    break;
+                }
+
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Tourist_Project.WPF.ViewModels
             TourAttendance = attendanceService.GetByTourIdAndUserId(notification.TourId, notification.UserId);
             Tour = tourService.GetOne(notification.TourId);
 
-            Text = "The tour guide has called you out for the tour " + Tour.Name + ".\nPlease confirm if you are present by clicking on the Yes button, or No otherwise!";
+            Text = "The tour guide has called you out for the tour " + Tour.Name + ".\n\nPlease confirm if you are present by clicking on the Yes button, or No otherwise!";
 
 
             YesCommand = new RelayCommand(OnYesClick, () => !Notification.Responded);

@@ -25,8 +25,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(ITourReviewRepository), new TourReviewRepository()},
             {typeof(IRescheduleRequestRepository), new RescheduleRequestRepository()},
             {typeof(INotificationGuestTwoRepository), new NotificationGuestTwoRepository()},
-            {typeof(IRenovationRepository), new RenovationRepository()}
-            {typeof(INotificationGuestTwoRepository), new NotificationGuestTwoRepository()},
+            {typeof(IRenovationRepository), new RenovationRepository()},
             {typeof(ITourRequestRepository), new TourRequestRepository()}
         };
 

@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Tourist_Project.Domain;
+using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 
 namespace Tourist_Project.Applications.UseCases
@@ -9,6 +13,9 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IRenovationRepository renovationRepository = injector.CreateInstance<IRenovationRepository>();
+
+        private readonly IReservationRepository reservationRepository = injector.CreateInstance<IReservationRepository>();
+        private readonly ReservationService reservationService = new();
         public RenovationService() { }
 
         public Renovation Create(Renovation renovation)
@@ -33,6 +40,33 @@ namespace Tourist_Project.Applications.UseCases
         public void Delete(int id)
         {
             renovationRepository.Delete(id);
+        }
+
+        public ObservableCollection<DateSpan> FindDateSpans(DateSpan requestedDateSpan, int length, int accommodationId)
+        {
+            ObservableCollection<DateSpan> possibleDateSpans = new();
+
+            foreach (var reservation in reservationService.GetAllOrderedInDateSpan(requestedDateSpan).Where(reservation => reservation.AccommodationId == accommodationId))
+            {
+                if (requestedDateSpan.StartingDate > requestedDateSpan.EndingDate) return possibleDateSpans;
+                var daysToReservation = reservation.CheckIn - requestedDateSpan.StartingDate;
+                if (daysToReservation.Days < length)
+                {
+                    if(requestedDateSpan.StartingDate < reservation.CheckOut )
+                        requestedDateSpan.StartingDate = reservation.CheckOut;
+                    continue;
+                }
+                possibleDateSpans.Add(new DateSpan(requestedDateSpan.StartingDate, requestedDateSpan.StartingDate.AddDays(length)));
+                requestedDateSpan.StartingDate = requestedDateSpan.StartingDate.AddDays(length);
+            }
+
+            while ((requestedDateSpan.EndingDate - requestedDateSpan.StartingDate).Days > length)
+            {
+                possibleDateSpans.Add(new DateSpan(requestedDateSpan.StartingDate, requestedDateSpan.StartingDate.AddDays(length)));
+                requestedDateSpan.StartingDate = requestedDateSpan.StartingDate.AddDays(length);
+            }
+            
+            return possibleDateSpans;
         }
     }
 

@@ -1,21 +1,38 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
+using Tourist_Project.Domain;
 using Tourist_Project.Domain.Models;
 
-namespace Tourist_Project.WPF.ViewModels.Owner
+namespace Tourist_Project.WPF.ViewModels
 {
-    public class AccommodationViewModel : INotifyPropertyChanged
+    public class RenovationViewModel : INotifyPropertyChanged
     {
         private Accommodation accommodation;
+
         public Accommodation Accommodation
         {
             get => accommodation;
             set
             {
-                if (value == accommodation) return;
+                if(value == accommodation) return;
                 accommodation = value;
-                OnPropertyChanged("Accommodation");
+                OnPropertyChanged();
+            }
+
+        }
+
+        private Renovation renovation;
+        public Renovation Renovation
+        {
+            get => renovation;
+            set
+            {
+                if(value == renovation) return;
+                renovation = value;
+                OnPropertyChanged();
             }
         }
 
@@ -27,18 +44,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             {
                 if(value == location) return;
                 location = value;
-                OnPropertyChanged("Location");
-            }
-        }
-        private Image image;
-        public Image Image
-        {
-            get => image;
-            set
-            {
-                if(value == image) return;
-                image = value;
-                OnPropertyChanged("Image");
+                OnPropertyChanged();
             }
         }
 
@@ -54,19 +60,18 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 OnPropertyChanged();
             }
         }
+
+        private readonly AccommodationService accommodationService = new();
         private readonly LocationService locationService = new();
-        private readonly ImageService imageService = new();
         private readonly UserService userService = new();
-        public AccommodationViewModel() { }
 
-        public AccommodationViewModel(Accommodation accommodation)
+        public RenovationViewModel(Renovation renovation)
         {
-            Accommodation = accommodation;
-            Location = locationService.Get(accommodation.LocationId);
-            Image = imageService.Get(accommodation.ImageId);
-            User = userService.Get(accommodation.UserId);
+            Renovation = renovation;
+            Accommodation = accommodationService.Get(renovation.AccommodationId);
+            Location = locationService.Get(Accommodation.LocationId);
+            User = userService.Get(Accommodation.UserId);
         }
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

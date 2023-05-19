@@ -56,11 +56,14 @@ namespace Tourist_Project.Domain
                 OnPropertyChanged();
             }
         }
-        public Renovation() { }
 
-        public Renovation(int id, int accommodationId, DateSpan renovatingSpan, string description)
+        public Renovation()
         {
-            Id = id;
+            RenovatingSpan = new DateSpan();
+        }
+
+        public Renovation(int accommodationId, DateSpan renovatingSpan, string description)
+        {
             AccommodationId = accommodationId;
             RenovatingSpan = renovatingSpan;
             Description = description;

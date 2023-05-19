@@ -96,7 +96,9 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand ConfirmRescheduleCommand { get; set; }
         public ICommand CancelRescheduleCommand { get; set; }
         public ICommand RenovateCommand { get; set; }
+        public ICommand ShowRenovationsCommand { get; set; }
         #endregion
+
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
             OwnerMainWindow = ownerMainWindow;
@@ -112,6 +114,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             ConfirmRescheduleCommand = new RelayCommand(ConfirmReschedule, CanConfirmReschedule);
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
+            ShowRenovationsCommand = new RelayCommand(ShowRenovations);
             #endregion
             #region CollectionInstanting
             User = userService.Get(user.Id);
@@ -210,13 +213,19 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Renovate()
         {
-            var scheduleRenovation = new ScheduleRenovation();
+            var scheduleRenovation = new ScheduleRenovation(SelectedAccommodation);
             scheduleRenovation.ShowDialog();
         }
 
         public bool CanRenovate()
         {
             return SelectedAccommodation != null;
+        }
+
+        public void ShowRenovations()
+        {
+            var showRenovations = new ShowRenovations();
+            showRenovations.ShowDialog();
         }
         #endregion
 

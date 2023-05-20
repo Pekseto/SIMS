@@ -1,0 +1,16 @@
+﻿<Window x:Class="Tourist_Project.WPF.Views.Owner.YearlyStatistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
+        xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="YearlyStatistics" Height="450" Width="800">
+    <Grid>
+        <DataGrid
+            ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedStatistics}"></DataGrid>
+        <Button Height="100" Width="100" VerticalAlignment="Bottom" Content="Monthly" Command="{Binding SwitchToMonthlyCommand}"></Button>
+    </Grid>
+</Window>

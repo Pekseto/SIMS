@@ -239,7 +239,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void ShowStatistics()
         {
-            var showStatistics = new AccommodationStatistics(SelectedAccommodation);
+            var showStatistics = new YearlyStatistics(SelectedAccommodation);
             showStatistics.ShowDialog();
         }
         #endregion

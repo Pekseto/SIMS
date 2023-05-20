@@ -53,8 +53,8 @@ public class AccommodationStatisticsService
         List<int> years = new();
         foreach (var reservation in reservationService.GetAllByAccommodation(accommodationId))
         {
-            if (years.Contains(reservation.CheckIn.Year)) continue;
-            years.Add(reservation.CheckIn.Year);
+            if (!years.Contains(reservation.CheckIn.Year))
+                years.Add(reservation.CheckIn.Year);
         }
 
         return years;

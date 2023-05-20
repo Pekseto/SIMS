@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using Tourist_Project.WPF.Views;
 using System.ComponentModel;
+using Tourist_Project.WPF.Validation;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -17,11 +18,23 @@ namespace Tourist_Project.WPF.ViewModels
     {
 
         private Window _window;
+        private User _user;
         private ReservationService _reservationService { get; set; }
+        private GuestService _guestService { get; set; }
         public List<Reservation> ReservationsForSelectedAccommodation { get; set; }
 
-        public String Name { get; set;}
-        public int StayingDays { get; set;}
+        public String Name { get; set; }
+
+        private int _stayingDays;
+        public int StayingDays
+        {
+            get { return _stayingDays; }
+            set
+            {
+                _stayingDays = value;
+                OnPropertyChanged(nameof(StayingDays));
+            }
+        }
         public int MinStayingDays { get; set; }
 
         public int GuestNum { get; set; }
@@ -38,35 +51,83 @@ namespace Tourist_Project.WPF.ViewModels
         }
         public String Type { get; set; }
 
-        public DateTime From { get; set; }
-        public DateTime  To { get; set; }
-        public List<DateTime> AvailableDates { get; set; }
+        private DateTime _from;
+        public DateTime From
+        {
+            get { return _from; }
+            set
+            {
+                _from = value;
+                OnPropertyChanged(nameof(From));
+            }
+            
+        }
 
+        private DateTime _to;
+        public DateTime To
+        {
+            get { return _to; }
+
+            set
+            {
+                _to = value;
+                OnPropertyChanged(nameof(To));
+            }
+           
+        }
+        public List<DateTime> AvailableDates { get; set; }
         public ICommand SeeAvailableReservations_Command { get; set; }
 
-        public Accommodation SelectedAccommodation { get; set; }
-        
-        public CreateReservationViewModel(Window _window, Accommodation selectedAccommodation)
+        public ICommand Home_Command { get; set; }
+        public Accommodation SelectedAccommodation { get; set; } = new();
+
+        public bool CanCreateRes { get; set; }
+
+        public bool AreStayingDaysValid { get; set; }
+
+        public bool IsGuestNumValid { get; set; }
+
+        public bool AreDatesValid { get; set; }
+        //[StayingDaysValidation(nameof(MinStayingDays))]
+        public CreateReservationViewModel(Window _window, Accommodation selectedAccommodation, User user)
         {
             this._window = _window;
+            _user = user;
             _reservationService = new ReservationService();
             Name = selectedAccommodation.Name;
             Type = selectedAccommodation.Type.ToString();
             MinStayingDays = selectedAccommodation.MinStayingDays;
+            SelectedAccommodation = selectedAccommodation;
             GuestNum = selectedAccommodation.MaxGuestNum;
+            SetDefaultParameters();
             SeeAvailableReservations_Command = new RelayCommand(ShowAvailableReservations, CanCreate);
+            Home_Command = new RelayCommand(HomeCommand, CanHome);
             //ReservationsForSelectedAccommodation = new List<Reservation>();
             //ReservationsForSelectedAccommodation = _reservationService.FindReservationsForAccommodation(SelectedAccommodation);
-            SetFromAndToDefault();
-            SelectedAccommodation = new Accommodation();
+            
             SelectedAccommodation = selectedAccommodation;
-
         }
 
-        public void SetFromAndToDefault() 
+        private bool CanHome()
+        {
+            return true;
+        }
+
+        private void HomeCommand()
+        {
+            _window.Close();
+        }
+
+        public void SetDefaultParameters()
         {
             From = DateTime.Now;
-            To = DateTime.Now;
+            To = DateTime.Now.AddDays(SelectedAccommodation.MinStayingDays);
+            SearchedGuestNum = SelectedAccommodation.MaxGuestNum;
+            StayingDays = SelectedAccommodation.MinStayingDays;
+            CanCreateRes = true;
+            IsGuestNumValid = true;
+            AreStayingDaysValid = true;
+            AreDatesValid = true;
         }
         public List<DateTime> GenerateFreeDates()
         {
@@ -75,30 +136,89 @@ namespace Tourist_Project.WPF.ViewModels
             AvailableDates.Add(dt);
             return AvailableDates;
         }
-        
-
-        public bool CanCreate()
+        private bool CanCreate()
         {
-            if (CreateConditions()) //ako su uslovi ispunjeni
+            //Treba samo bool da dobije na osnovu logike za validaciju
+            return CanCreateRes;
+        }
+
+        private void GuestNumValidation()
+        {
             {
-                return true;
+                if (SearchedGuestNum > GuestNum)
+                {
+                    //MessageBox.Show("Number of guests for this accommodation is too big");    
+                    IsGuestNumValid = false;
+                    CanCreateRes = false;
+                }
+                else
+                    IsGuestNumValid = true;
             }
-            else 
-                return true;
         }
 
-        public bool CreateConditions()
+        private void StayingDaysValidation()
         {
-            if (From != DateTime.MinValue && To != DateTime.MinValue && From < To && StayingDays >= MinStayingDays && SearchedGuestNum <= GuestNum && SearchedGuestNum != 0)
-                return true;
+            if (StayingDays < MinStayingDays)
+            {
+                //MessageBox.Show("Too small number of staying days");
+                AreStayingDaysValid = false;
+                CanCreateRes = false;
+            }
             else
-                return false;
+                AreStayingDaysValid = true;
+                
         }
-        
+
+        private void DateValidation()
+        {
+            if (To.Date < From.Date)
+            {
+                //MessageBox.Show("Ending date has to be greater than beginnig date");
+                AreDatesValid = false;
+                CanCreateRes = false;
+            }
+            else
+                AreDatesValid = true;
+           
+                
+        }
+
+        private void ResetCanCreateRes()
+        {
+            if (AreStayingDaysValid && IsGuestNumValid && AreDatesValid)
+                CanCreateRes = true;
+            else
+                CanCreateRes = false;
+        }
         public void ShowAvailableReservations()
         {
-            var availableReservationsWindow = new AvailableReservationsWindow(SelectedAccommodation, From, To, StayingDays, SearchedGuestNum);
-            availableReservationsWindow.Show();
+            GuestNumValidation();
+            StayingDaysValidation();
+            DateValidation();
+            ResetCanCreateRes();
+            if (CanCreateRes)
+            {
+                var availableReservationsWindow = new AvailableReservationsWindow(SelectedAccommodation, From, To, StayingDays, SearchedGuestNum, _user);
+                availableReservationsWindow.Show();
+            }
+            else
+            {
+                if(!IsGuestNumValid)
+                {
+                    MessageBox.Show("Number of guests for this accommodation is too big");
+                    CanCreateRes = true;
+                }
+                else if(!AreStayingDaysValid)
+                {
+                    MessageBox.Show("Too small number of staying days");
+                    CanCreateRes = true;
+                }
+                else if(!AreDatesValid)
+                {
+                    MessageBox.Show("Ending date has to be greater than beginnig date");
+                    CanCreateRes = true;
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

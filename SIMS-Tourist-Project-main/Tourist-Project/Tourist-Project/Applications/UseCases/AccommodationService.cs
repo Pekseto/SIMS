@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 
@@ -46,6 +47,8 @@ namespace Tourist_Project.Applications.UseCases
         {
             accommodationRepository.Delete(id);
         }
+
+        
 
     }
 }

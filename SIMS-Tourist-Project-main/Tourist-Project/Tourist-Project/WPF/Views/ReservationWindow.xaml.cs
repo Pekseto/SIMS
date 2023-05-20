@@ -27,10 +27,10 @@ namespace Tourist_Project.View
     {
 
         
-        public ReservationWindow(AccommodationViewModel SelectedAccommodation)
+        public ReservationWindow(Accommodation SelectedAccommodation, User user)
         {
             InitializeComponent();
-            this.DataContext = new CreateReservationViewModel(this, SelectedAccommodation);
+            this.DataContext = new CreateReservationViewModel(this, SelectedAccommodation, user);
 
             //AccommodationName = SelectedAccommodationDTO.Name;
             //Location = SelectedAccommodationDTO.LocationFullName;

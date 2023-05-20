@@ -21,10 +21,10 @@ namespace Tourist_Project.WPF.Views
     /// </summary>
     public partial class UserReservationsWindow : Window
     {
-        public UserReservationsWindow()
+        public UserReservationsWindow(User user)
         {
             InitializeComponent();
-            this.DataContext = new UserReservationsViewModel(this);
+            this.DataContext = new UserReservationsViewModel(this, user);
         }
     }
 }

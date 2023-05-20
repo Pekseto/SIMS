@@ -12,15 +12,17 @@
             <ToolBar DockPanel.Dock="Top" Height="25">
                 <Button Content="Your Reservations" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding UserReservations_Command}"></Button>
                 <Button Content="Reserve Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding CreateReservation_Command}"/>
-                <Button Content="Rate Accommodation" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding RateAccommodation_Command}"></Button>
                 <Button Content ="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Search_Command}" ></Button>
-                
+                <Button Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowAll_Command}"></Button>
+                <Button Content=" View Accommodaion" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ViewAccommodation_Command}"></Button>
+                <Button Content="User Graph" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding UserGraph_Command}"></Button>
+                <Button Content="User Ratings" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ShowUserRatings_Command}"></Button>
             </ToolBar>
 
             <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="2" RenderTransformOrigin="0.501,0.481" Width="800">
                 <DockPanel>
                     <DataGrid ItemsSource="{Binding AccommodationsViewModel,UpdateSourceTrigger=PropertyChanged}" Name="GuestOneDataGrid"
-                        SelectedItem="{Binding SelectedAccommodation, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedItem="{Binding SelectedAccommodationViewModel, UpdateSourceTrigger=PropertyChanged}"
                         IsReadOnly="True" SelectionMode="Single"
                         AutoGenerateColumns="False" HeadersVisibility="Column" FontSize="13" Width="800">
                         <DataGrid.Columns>
@@ -29,12 +31,10 @@
                             <DataGridTextColumn Header="MaxGuestsNum" Binding="{Binding Accommodation.MaxGuestNum}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="MinStayingDays" Binding="{Binding Accommodation.MinStayingDays}" Width="*"></DataGridTextColumn>
                             <DataGridTextColumn Header="DaysBeforeCancel" Binding="{Binding Accommodation.CancellationThreshold}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Image" Binding="{Binding Image.Url}" Width="*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>
             </StackPanel>
         </DockPanel>
-
     </Grid>
 </Window>

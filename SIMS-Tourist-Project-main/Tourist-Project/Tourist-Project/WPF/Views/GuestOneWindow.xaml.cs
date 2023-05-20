@@ -29,7 +29,10 @@ namespace Tourist_Project.WPF.Views
      
         {
             InitializeComponent();
-            this.DataContext = new GuestOneViewModel(this, GuestOneDataGrid);    
+            this.DataContext = new GuestOneViewModel(this, GuestOneDataGrid, user);    
+            
         }
+
+      
     }
 }

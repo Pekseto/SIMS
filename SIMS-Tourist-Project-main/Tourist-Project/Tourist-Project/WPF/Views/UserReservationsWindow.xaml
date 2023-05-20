@@ -21,13 +21,13 @@
                 <DataGridTextColumn Header="Accommodation" Binding="{Binding Accommodation.Name}" Width="*"/>
                 <DataGridTextColumn Header="From" Binding="{Binding CheckIn}" Width="*"/>
                 <DataGridTextColumn Header="To" Binding="{Binding CheckOut}" Width="*"/>
-
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Reschedule Reservation" Command="{Binding RescheduleReservation_Command}" HorizontalAlignment="Left" Margin="597,10,0,30" Grid.Row="1"/>
-        <Button Content="Cancel Reservation" Command="{Binding CancelReservation_Command}" HorizontalAlignment="Left" Margin="459,10,0,30" Grid.Row="1"/>
-        <Button Content="Rate Accommodation" Command="{Binding RateAccommodation_Command}" HorizontalAlignment="Left" Margin="306,8,0,32" Grid.Row="1"/>
-        <Button Content="Show Reschedule Requests" Command="{Binding ShowRescheduleRequests_Command}" HorizontalAlignment="Left" Margin="130,8,0,32" Grid.Row="1"/>
+        <Button Content="Reschedule Reservation" Command="{Binding RescheduleReservation_Command}" HorizontalAlignment="Left" Margin="537,14,0,26" Grid.Row="1"/>
+        <Button Content="Cancel Reservation" Command="{Binding CancelReservation_Command}" HorizontalAlignment="Left" Margin="393,14,0,26" Grid.Row="1"/>
+        <Button Content="Rate Accommodation" Command="{Binding RateAccommodation_Command}" HorizontalAlignment="Left" Margin="230,14,0,26" Grid.Row="1"/>
+        <Button Content="Show Reschedule Requests" Command="{Binding ShowRescheduleRequests_Command}" HorizontalAlignment="Left" Margin="52,16,0,24" Grid.Row="1"/>
+        <Button Content="Home" Command="{Binding Home_Command}" HorizontalAlignment="Left" Margin="708,16,0,24" Grid.Row="1"/>
     </Grid>
 </Window>

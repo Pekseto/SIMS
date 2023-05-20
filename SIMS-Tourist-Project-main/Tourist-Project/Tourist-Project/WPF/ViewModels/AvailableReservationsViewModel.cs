@@ -8,6 +8,7 @@ using Tourist_Project.Domain.Models;
 using System.Windows;
 using Tourist_Project.Applications.UseCases;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -24,51 +25,55 @@ namespace Tourist_Project.WPF.ViewModels
 
 
         private Window _window;
+        private User _user;
         private ReservationService _reservationService;
+        private GuestService _guestService;
         public List<Reservation> ReservationsForAccommodation { get; set; }
         
         public List<DateTime> FreeDates { get; set; }
 
         public DateTime SearchedStartingDate { get; set; }
-        public DateTime SearchedEndingDate { get; set; }  
+        public DateTime SearchedEndingDate { get; set; }
 
-        public Accommodation SelectedAccommodation { get; set; }
+        public Accommodation SelectedAccommodation { get; set; } = new();
 
         public int StayingDays { get; set; }    
 
         public ICommand ConfirmReservation_Command { get; set; }
+        public ICommand Cancel_Command { get; set; }
 
         public String Name { get; set; }
-        public Reservation SelectedReservation { get; set; }    
+        public Reservation SelectedReservation { get; set; } = new();
 
-        public List<Reservation> ReservationsForDisplay { get; set; }
+        public ObservableCollection<Reservation> ReservationsForDisplay { get; set; }
 
         
         public int GuestsNum { get; set; }  
         public List<String> StartingDates { get; set; }
         public List<String> EndingDates { get; set; }   
-        public AvailableReservationsViewModel(Accommodation selectedAccommodation, DateTime from, DateTime to, int stayingDays, int guestsNum)
+        public AvailableReservationsViewModel(Window window, Accommodation selectedAccommodation, DateTime from, DateTime to, int stayingDays, int guestsNum, User user)
         {
+            _window = window;
+            _user = user;
             _reservationService = new ReservationService();
+            _guestService = new GuestService();
             ReservationsForAccommodation = new List<Reservation>();
-            ReservationsForDisplay = new List<Reservation>();
+            ReservationsForDisplay = new ObservableCollection<Reservation>();
             FreeDates = new List<DateTime>();
             ReservationsForAccommodation = _reservationService.FindReservationsForAccommodation(selectedAccommodation);
             SearchedStartingDate = from;
             SearchedEndingDate = to;
             StayingDays = stayingDays;
-            //pravim listu rezervacija gde mi je reservation.CheckIn = startingDate, a reservation.Checkout = endingDate i to cuvam u fajl
             SelectedReservation = new Reservation();
             Name = selectedAccommodation.Name;
-            SelectedAccommodation = new Accommodation();
             SelectedAccommodation = selectedAccommodation;
+            
             GuestsNum = guestsNum;
             CheckFreeDays();
             GenerateRelevantReservations();
             ConfirmReservation_Command = new RelayCommand(SaveReservation, CanReserve);
-            
+            Cancel_Command = new RelayCommand(CloseWindow, CanClose);
         }
-
 
         private void CheckFreeDays()
         {
@@ -97,7 +102,7 @@ namespace Tourist_Project.WPF.ViewModels
             DateTime possibleStartingDate = searchedStartingDate;
             DateTime possibleEndingDate = searchedStartingDate.AddDays(StayingDays);
 
-            while (searchedEndingDate.Date >= possibleEndingDate.Date) // .Date so it doesnt include time
+            while (searchedEndingDate.Date >= possibleEndingDate.Date) 
             {
 
                 bool isDateConflicted = ConflictionExists(possibleStartingDate, possibleEndingDate);
@@ -130,17 +135,13 @@ namespace Tourist_Project.WPF.ViewModels
         }
         private bool ConflictionExists(DateTime possibleStartingDate, DateTime possibleEndingDate)
         {
-           
-
             foreach (var reservation in ReservationsForAccommodation)
             {
                 bool areDatesConflicted = reservation.CheckIn.Date <= possibleEndingDate.Date && possibleStartingDate.Date <= reservation.CheckOut.Date;
 
                 if (areDatesConflicted)
                     return true;
-
             }
-
             return false;
         }
 
@@ -157,16 +158,45 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanReserve()
         {
-            if (SelectedReservation != null)
-                return true;
-            else
-                return false;
+            return SelectedReservation != null;
         }
 
         private void SaveReservation()
         {
+            SelectedReservation.GuestId = _user.Id;
             _reservationService.Create(SelectedReservation);
+            HandleSuperGuest();
+            ReservationsForDisplay.Remove(SelectedReservation);
+            MessageBox.Show("Your reservation has been confirmed");
         }
 
+        private void HandleSuperGuest()
+        {
+            var guestId = _user.Id;
+            var guest = _guestService.GetOne(guestId);
+                if(_guestService.GetRelevantReservations(guest).Count() >= 10)
+                {
+                    _guestService.HandleSuperGuest(guest);
+                    _guestService.DecrementPoints(guest);
+                    _guestService.Update(guest);
+                }
+                else
+                {
+                    guest.IsSuper = false;
+                    guest.Points = 0;
+                    _guestService.Update(guest);
+                }
+            
+        }
+
+        private bool CanClose()
+        {
+            return true;
+        }
+
+        private void CloseWindow()
+        {
+            _window.Close();
+        }
     }
 }

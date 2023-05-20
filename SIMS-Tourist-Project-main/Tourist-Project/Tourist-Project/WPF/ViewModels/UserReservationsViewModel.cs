@@ -20,7 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private ReservationService _reservationService = new(); 
 
         private AccommodationService _accommodationService = new();
-        public UserReservationsWindow UserReservationsWindow { get; set; }
+        //public UserReservationsWindow UserReservationsWindow { get; set; }
 
         public List<Reservation> ReservationsForUser { get; set; } = new();
 
@@ -32,19 +32,23 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CancelReservation_Command { get; set; }
 
         public ICommand ShowRescheduleRequests_Command { get; set; }
+
+        public ICommand Home_Command { get; set; }
         public Accommodation SuitingAccommodation { get; set; } = new();
-        public static User user { get; set; }   
-        public UserReservationsViewModel(UserReservationsWindow userReservationsWindow)
+        public static User User { get; set; }   
+        public UserReservationsViewModel(UserReservationsWindow userReservationsWindow, User user)
         {
-            
-            user = _userService.GetOne(MainWindow.LoggedInUser.Id);
-            UserReservationsWindow = userReservationsWindow;
+
+            User = user;
+            //UserReservationsWindow = userReservationsWindow;
+            _window = userReservationsWindow;
             ReservationsForUser = GetReservationsForUser(user);
             GenerateReservations();
             RescheduleReservation_Command = new RelayCommand(RescheduleSelectedReservation, CanReschedule);
             RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRateAccommodation);
             CancelReservation_Command = new RelayCommand(CancelReservation, CanCancel);
             ShowRescheduleRequests_Command = new RelayCommand(GetRescheduleRequests, CanShowRescheduleRequests);
+            Home_Command = new RelayCommand(HomeCommand, CanHome);
         }
 
         private void GetRescheduleRequests()
@@ -55,31 +59,17 @@ namespace Tourist_Project.WPF.ViewModels
 
         public bool CanRateAccommodation()
         {
-            if (SelectedReservation != null)
-                return true;
-            else
-                return false;
+            return SelectedReservation != null;
         }
 
-        public bool CanShowRescheduleRequests()
+        private bool CanShowRescheduleRequests()
         {
-            if(SelectedReservation != null)
-                return true;
-            else 
-                return false ;
+            return SelectedReservation != null;
         }
 
-        public bool CanCancel()
+        private bool CanCancel()
         {
-            
-            //SuitingAccommodation = FindAccommodationForSelectedReservation(SelectedReservation);
-            //int dateDifference = (SelectedReservation.CheckIn - DateTime.Now).Days;
-            if (SelectedReservation != null/* && dateDifference >= SuitingAccommodation.CancellationThreshold*/)
-            {
-                return true;
-            }
-            else
-                return false;
+            return SelectedReservation != null;
         }
 
         public void CancelReservation()
@@ -92,7 +82,7 @@ namespace Tourist_Project.WPF.ViewModels
         public void RateAccommodation()
         {
             Accommodation SuitngAccommodation = FindAccommodationForSelectedReservation(SelectedReservation);
-            var rateAccommodationWindow = new RateAccommodationWindow(SuitngAccommodation);
+            var rateAccommodationWindow = new RateAccommodationWindow(SuitngAccommodation, User);
             rateAccommodationWindow.Show();
         }
 
@@ -134,12 +124,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public bool CanReschedule()
         {
-            if(SelectedReservation != null)
-            {
-                return true;
-            }
-            else
-                return false;
+           return SelectedReservation != null;
         }
 
         public void RescheduleSelectedReservation()
@@ -148,5 +133,14 @@ namespace Tourist_Project.WPF.ViewModels
             rescheduleReservationWindow.Show();
          }
 
+        private void HomeCommand()
+        {
+            _window.Close();
+        }
+
+        private bool CanHome()
+        {
+            return true;
+        }
     }
 }

@@ -23,8 +23,7 @@
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0" Height="40">
-            <Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
-            <TextBox Text="{Binding Path=Username}" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            
         </DockPanel>
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Label Content="Name" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,20 +12,27 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for AvailableReservationsWindow.xaml
+    /// Interaction logic for GuestOneSearchResultsView.xaml
     /// </summary>
-    public partial class AvailableReservationsWindow : Window
+    public partial class GuestOneSearchResultsView : Window
     {
-        public AvailableReservationsWindow(Accommodation selectedAccommodation, DateTime from, DateTime to, int stayingDays, int guestsNum, User user)
+
+        public ObservableCollection<AccommodationViewModel> searchResults { get; set; } = new();
+
+        
+        public GuestOneSearchResultsView()
         {
             InitializeComponent();
-            this.DataContext = new AvailableReservationsViewModel(this,selectedAccommodation,from, to, stayingDays, guestsNum, user);
+            this.DataContext = new GuestOneSearchResultsViewModel(this, searchResults);
+            
         }
+
+        
     }
 }

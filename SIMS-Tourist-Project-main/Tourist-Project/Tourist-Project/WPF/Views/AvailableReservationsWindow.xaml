@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="AvailableReservationsWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="0,0,0,-6">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -17,12 +17,13 @@
         <DataGrid x:Name="availableReservations" Grid.Row="1"
                   ItemsSource="{Binding ReservationsForDisplay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True">
+                  AutoGenerateColumns="False" IsReadOnly="True" Height="322" VerticalAlignment="Top">
             <DataGrid.Columns>
                 <DataGridTextColumn Header ="From" Width="*" Binding="{Binding CheckIn}"/>
                 <DataGridTextColumn Header="To" Width="*" Binding="{Binding CheckOut}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="589,354,0,0" Grid.RowSpan="2" Command="{Binding ConfirmReservation_Command}"></Button>
+        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="455,349,0,10" Grid.RowSpan="2" Command="{Binding ConfirmReservation_Command}"></Button>
+        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Cancel" Margin="625,349,0,10" Command="{Binding Cancel_Command}" Grid.RowSpan="2"/>
     </Grid>
 </Window>

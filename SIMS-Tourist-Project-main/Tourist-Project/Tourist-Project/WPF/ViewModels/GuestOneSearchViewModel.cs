@@ -10,13 +10,17 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.Applications.UseCases;
+using System.Windows.Controls;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Tourist_Project.WPF.ViewModels
 {
-    public class GuestOneSearchViewModel
+    public class GuestOneSearchViewModel : INotifyPropertyChanged
     {
         private User _user;
         private Window _window;
+        public DataGrid GuestOneDataGrid { get; set; } = new();
         #region SearchDataDisplay
         public ObservableCollection<String> Countries { get; set; } = new ObservableCollection<String>();
         public ObservableCollection<String> Cities { get; set; } = new ObservableCollection<String>();
@@ -27,7 +31,19 @@ namespace Tourist_Project.WPF.ViewModels
         private AccommodationRepository _accommodationRepository = new();
 
         private AccommodationService _accommodationService = new();
-        public ObservableCollection<AccommodationViewModel> AccommodationsViewModel { get; set; } = new ();
+        private ObservableCollection<AccommodationViewModel> _accommodationsViewModel;
+
+        public ObservableCollection<AccommodationViewModel> AccommodationsViewModel
+        {
+            get => _accommodationsViewModel;
+            set
+            {
+                if(value == _accommodationsViewModel) return;
+                _accommodationsViewModel = value;
+                OnPropertyChanged("AccommodationsViewModel");
+                
+            }
+        }
 
         #region SearchParameters
         public String AccommodationName { get; set; }
@@ -51,11 +67,13 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ShowAll_Command { get; set; }
         public ICommand Close_Command { get; set; }
         #endregion
-        public GuestOneSearchViewModel(Window window,User user)
+        public GuestOneSearchViewModel(Window window, DataGrid guestOneDataGrid, ObservableCollection<AccommodationViewModel> accommodationViewModels)
         {
-            _user = user;
+            //_user = user;
             _window = window;
-            AccommodationsViewModel = new ObservableCollection<AccommodationViewModel>(_accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
+            GuestOneDataGrid = guestOneDataGrid;
+            AccommodationsViewModel = accommodationViewModels;
+
             Countries = GetCountries(); 
             Cities = GetCities();
             AccommodationTypes = GetAccommodationTypes();
@@ -164,7 +182,9 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void SearchLogic()
         {
-            var searchedAccommodations = new ObservableCollection<AccommodationViewModel>();
+            //AccommodationsViewModel.Clear();
+
+            ObservableCollection<AccommodationViewModel> searchedViewModels = new ObservableCollection<AccommodationViewModel>();
             HandleEmptyStrings();
             foreach (AccommodationViewModel accommodation in AccommodationsViewModel)
             {
@@ -173,11 +193,15 @@ namespace Tourist_Project.WPF.ViewModels
                     accommodation.Accommodation.Type.ToString().Contains(SelectedType) &&
                 accommodation.Location.ToString().Contains(SelectedCity + ", " + SelectedCountry))
                 {
-                    searchedAccommodations.Add(accommodation);
+                   searchedViewModels.Add(accommodation);
                 }
             }
-            var guestOneWindow = new GuestOneWindow(_user);
-            guestOneWindow.Show();
+
+            //AccommodationsViewModel = searchedViewModels;
+            GuestOneDataGrid.ItemsSource = searchedViewModels;
+            _window.Close();
+            
+            
         }
         #endregion //implementirati do kraja
 
@@ -189,8 +213,8 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void CloseWindow()
         {
-            var guestOneWindow = new GuestOneWindow(_user);
-            guestOneWindow.Show();
+            //var guestOneWindow = new GuestOneWindow(_user);
+            //guestOneWindow.Show();
             _window.Close();
         }
         #endregion
@@ -212,6 +236,12 @@ namespace Tourist_Project.WPF.ViewModels
 
         #endregion
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }

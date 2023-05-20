@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.View"
+        xmlns:val="clr-namespace:Tourist_Project.WPF.Validation"
         mc:Ignorable="d"
         Title="ReservationWindow" Height="450" Width="800">
     <Grid>
@@ -28,20 +29,69 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Height="60" Content="Name:"/>
-            <Label Grid.Row="1" Grid.Column="0" Height="60" Content="Type:"/>
-            <Label Grid.Row="2" Grid.Column="0" Height="60" Content="Staying Days:"/>
-            <Label Grid.Row="3" Grid.Column="0" Height="60" Content="Number of Guests:"/>
-            <Label Grid.Row="4" Grid.Column="0" Height="60" Content="From:"/>
-            <Label Grid.Row="5" Grid.Column="0" Height="60" Content="To:"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= StayingDays, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= SearchedGuestNum, UpdateSourceTrigger=PropertyChanged}"/>
-            <DatePicker Grid.Row="4" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding From}"/>
-            <DatePicker Grid.Row="5" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding To}"/>
-            <Button Content="See Available Reservations" Grid.Row="6" Grid.Column="1" Command="{Binding SeeAvailableReservations_Command}" Width="150" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.RowSpan="2"/>
-            <Button Content="Home" Grid.Row="7" Grid.Column="1" Click ="Home_Click" Width="150" HorizontalAlignment="Center" Grid.RowSpan="3"/>
+            <Label Grid.Row="0" Grid.Column="0" Height="60" Content="Name:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="1" Grid.Column="0" Height="60" Content="Type:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="2" Grid.Column="0" Height="60" Content="Staying Days:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="0" Height="60" Content="Number of Guests:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="4" Grid.Column="0" Height="60" Content="From:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="5" Grid.Column="0" Height="60" Content="To:" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
+                <TextBox.Text>
+                    <Binding Path="StayingDays" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:TypeValidation ValidationStep="RawProposedValue"/>
+
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="10,10,10,10"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
+                <TextBox.Text>
+                    <Binding Path="SearchedGuestNum" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <val:TypeValidation ValidationStep="RawProposedValue"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="109,15,141,15"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <DatePicker Grid.Row="4" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding From}" Margin="109,15,141,15"/>
+            <DatePicker Grid.Row="5" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding To}" Margin="109,15,141,15"/>
+            <Button Content="See Available Reservations" Grid.Row="9" Command="{Binding SeeAvailableReservations_Command}" Width="150" HorizontalAlignment="Left" Margin="390,8,0,-14" Grid.ColumnSpan="2"/>
+            <Button Content="Home" Grid.Row="9" Grid.Column="1" Command ="{Binding Home_Command}" Width="150" HorizontalAlignment="Left" Margin="205,8,0,-17"/>
         </Grid>
 
     </Grid>

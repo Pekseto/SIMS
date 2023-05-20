@@ -64,7 +64,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Accommodation = accommodation;
             Location = locationService.Get(accommodation.LocationId);
             Image = imageService.Get(accommodation.ImageId);
-            User = userService.Get(accommodation.UserId);
+            User = userService.GetOne(accommodation.UserId);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

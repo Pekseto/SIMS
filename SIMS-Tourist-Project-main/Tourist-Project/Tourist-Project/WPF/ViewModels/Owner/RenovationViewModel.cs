@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain;
 using Tourist_Project.Domain.Models;
@@ -70,7 +68,7 @@ namespace Tourist_Project.WPF.ViewModels
             Renovation = renovation;
             Accommodation = accommodationService.Get(renovation.AccommodationId);
             Location = locationService.Get(Accommodation.LocationId);
-            User = userService.Get(Accommodation.UserId);
+            User = userService.GetOne(Accommodation.UserId);
         }
         public event PropertyChangedEventHandler? PropertyChanged;
 

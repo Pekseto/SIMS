@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         xmlns:vm="clr-namespace:Tourist_Project.WPF.ViewModels.Owner"
+        xmlns:pye="clr-namespace:LiveCharts;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Accommodations" Height="740" Width="1250" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>

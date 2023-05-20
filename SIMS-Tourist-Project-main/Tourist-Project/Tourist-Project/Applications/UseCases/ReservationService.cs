@@ -27,6 +27,11 @@ namespace Tourist_Project.Applications.UseCases
             return reservationRepository.GetAll();
         }
 
+        public List<Reservation> GetAllByAccommodation(int accommodationId)
+        {
+            return GetAll().Where(reservation => reservation.AccommodationId == accommodationId).ToList();
+        }
+
         public Reservation Get(int id)
         {
             return reservationRepository.GetById(id);

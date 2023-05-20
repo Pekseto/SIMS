@@ -3,7 +3,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class DateSpan : ISerializable
+    public class DateSpan 
     {
         public DateTime StartingDate { get; set; }
 
@@ -18,7 +18,7 @@ namespace Tourist_Project.Domain.Models
             StartingDate = startingDate;
             EndingDate = endingDate;
         }
-
+/*
         public string[] ToCSV()
         {
             string[] csvValues = {
@@ -32,6 +32,6 @@ namespace Tourist_Project.Domain.Models
         {
             StartingDate = DateTime.Parse(values[1]);
             EndingDate = DateTime.Parse(values[2]);
-        }
+        }*/
     }
 }

@@ -6,6 +6,7 @@ using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
 {
+    public enum ReservationStatus { Regular, Cancelled, Rescheduled }
     public class Reservation : ISerializable,INotifyPropertyChanged
     {
         private int id;
@@ -99,13 +100,22 @@ namespace Tourist_Project.Domain.Models
                 OnPropertyChanged("AvailableDates");
             }
         }
-        public Accommodation Accommodation { get; set; } 
+        public Accommodation Accommodation { get; set; }
 
-            
-        //public List<DateTime> AvailableDates { get; set; }
+        private ReservationStatus status;
+        public ReservationStatus Status
+        {
+            get => status;
+            set
+            {
+                if(value == status) return;
+                status = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Reservation() { }
-        public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, Accommodation accommodation)
+        public Reservation(DateTime checkIn, DateTime checkOut, int guestsNum, int stayingDays, Accommodation accommodation, ReservationStatus status)
         {
             CheckIn = checkIn;
             CheckOut = checkOut;
@@ -114,6 +124,7 @@ namespace Tourist_Project.Domain.Models
             AccommodationId = accommodation.Id;
             AvailableDates = new List<Date>();
             Accommodation = accommodation;
+            Status = status;
             //AvailableDates = new List<DateTime>();
         }
         public string[] ToCSV()
@@ -125,7 +136,8 @@ namespace Tourist_Project.Domain.Models
                 CheckOut.ToString(),  
                 GuestsNum.ToString(), 
                 StayingDays.ToString(), 
-                AccommodationId.ToString() 
+                AccommodationId.ToString(),
+                Status.ToString()
             };
             return csvValues;
         }
@@ -138,6 +150,7 @@ namespace Tourist_Project.Domain.Models
             GuestsNum = Convert.ToInt32(values[4]);
             StayingDays = Convert.ToInt32(values[5]);
             AccommodationId = Convert.ToInt32(values[6]);
+            Status = Enum.Parse<ReservationStatus>(values[7]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

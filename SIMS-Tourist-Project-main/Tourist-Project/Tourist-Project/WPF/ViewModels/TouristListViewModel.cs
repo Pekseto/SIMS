@@ -22,6 +22,7 @@ namespace Tourist_Project.WPF.ViewModels
         public TourAttendance SelectedTourAttendance { get; set; }
         public TourPoint SelectedTourPoint { get; set; }
         public Tour ActiveTour { get; set; }
+        public string CurrentLanguage { get; set; }
 
         private UserService userService = new();
         private TourPointService tourPointService = new();
@@ -50,18 +51,42 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CallOutCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand HomeCommand { get; set; }
+        public ICommand SwitchLanguageCommand { get; set; }
+
         public TouristListViewModel(TourPoint selectedTourPoint, Tour tour, Window window) 
         { 
             this.SelectedTourPoint = selectedTourPoint;
             ActiveTour = tour;
             this.window = window;
+            CurrentLanguage = "en-US";
 
             startClock();
 
             CallOutCommand = new RelayCommand(CallOut, CanCallOut);
             BackCommand = new RelayCommand(Back, CanBack);
             HomeCommand = new RelayCommand(HomeView, CanHomeView);
+            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+
             LoadTourAttendaces();
+        }
+
+        private bool CanSwitchLanguage()
+        {
+            return true;
+        }
+
+        public void SwitchLanguage()
+        {
+            var app = (App)Application.Current;
+            if (CurrentLanguage.Equals("en-US"))
+            {
+                CurrentLanguage = "sr-LATN";
+            }
+            else
+            {
+                CurrentLanguage = "en-US";
+            }
+            app.ChangeLanguage(CurrentLanguage);
         }
 
         private void startClock()

@@ -94,5 +94,15 @@ namespace Tourist_Project.Repositories
             }
             return retVal;
         }
+        public List<TourRequest> GetAllPending()
+        {
+            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending);
+        }
+
+        public List<TourRequest> GetAllLastYear()
+        {
+            return GetAll().FindAll(request => request.CreateDate >= DateTime.Now.AddYears(-1));
+        }
     }
 }
+

@@ -14,17 +14,17 @@ using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for TourReviewsGuideView.xaml
+    /// Interaction logic for RequestsGuideView.xaml
     /// </summary>
-    public partial class TourReviewsGuideView : Window
+    public partial class RequestsGuideView : Window
     {
-        public TourReviewsGuideView(Tour tour)
+        public RequestsGuideView(User user)
         {
             InitializeComponent();
-            DataContext = new TourReviewsGuideViewModel(this, tour);
+            DataContext = new RequestsGuideViewModel(this, user);
         }
     }
 }

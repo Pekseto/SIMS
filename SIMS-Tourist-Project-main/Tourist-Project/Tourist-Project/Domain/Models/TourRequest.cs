@@ -27,13 +27,14 @@ namespace Tourist_Project.Domain.Models
         public string UntilDateStr => UntilDate.ToShortDateString();
         public TourRequestStatus Status { get; set; } = TourRequestStatus.Pending;
         public int UserId { get; set; }
+        public DateTime CreateDate { get; set; }
 
         public TourRequest()
         {
             
         }
 
-        public TourRequest(int locationId, string description, string language, int guestsNumber, DateTime fromDate, DateTime untilDate, int userId)
+        public TourRequest(int locationId, string description, string language, int guestsNumber, DateTime fromDate, DateTime untilDate, int userId, DateTime createDate)
         {
             LocationId = locationId;
             Description = description;
@@ -42,6 +43,7 @@ namespace Tourist_Project.Domain.Models
             FromDate = fromDate;
             UntilDate = untilDate;
             UserId = userId;
+            CreateDate = createDate;
         }
 
         public string[] ToCSV()
@@ -49,7 +51,7 @@ namespace Tourist_Project.Domain.Models
             return new[]
             {
                 Id.ToString(), LocationId.ToString(), Description, Language, GuestsNumber.ToString(),
-                FromDate.ToString(), UntilDate.ToString(), Status.ToString(), UserId.ToString(),
+                FromDate.ToString(), UntilDate.ToString(), Status.ToString(), UserId.ToString(), CreateDate.ToString(),
             };
         }
 
@@ -64,6 +66,7 @@ namespace Tourist_Project.Domain.Models
             UntilDate = DateTime.Parse(values[6]);
             Status = Enum.Parse<TourRequestStatus>(values[7]);
             UserId = int.Parse(values[8]);
+            CreateDate = DateTime.Parse(values[9]);
         }
     }
 }

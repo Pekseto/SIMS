@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcceptTour" xml:space="preserve">
+    <value>Accept tour</value>
+  </data>
+  <data name="AcceptTourPart" xml:space="preserve">
+    <value>Accept part of tour</value>
+  </data>
   <data name="Attendance" xml:space="preserve">
     <value>Prisustvo</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="Birth" xml:space="preserve">
+    <value>Birthday</value>
   </data>
   <data name="CallOut" xml:space="preserve">
     <value>Call out</value>
@@ -156,6 +165,9 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="DatesTable" xml:space="preserve">
+    <value>Date range</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description:</value>
   </data>
@@ -174,6 +186,9 @@
   <data name="English" xml:space="preserve">
     <value>english</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>FromDate</value>
+  </data>
   <data name="FutureTitle" xml:space="preserve">
     <value>Overview of future tours</value>
   </data>
@@ -187,7 +202,7 @@
     <value>History</value>
   </data>
   <data name="HistoryTitle" xml:space="preserve">
-    <value>History of tours</value>
+    <value>Tour History</value>
   </data>
   <data name="HistoryTours" xml:space="preserve">
     <value>History tours</value>
@@ -204,8 +219,14 @@
   <data name="LanguageTable" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="LocationTable" xml:space="preserve">
+    <value>Location</value>
+  </data>
   <data name="MaxGuestsNumber" xml:space="preserve">
     <value>Maximum guests number:</value>
+  </data>
+  <data name="MostRequested" xml:space="preserve">
+    <value>Most requested</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -219,8 +240,14 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="RequestNumber" xml:space="preserve">
+    <value>Request number</value>
+  </data>
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
+  </data>
+  <data name="RequestsStat" xml:space="preserve">
+    <value>Requests statistics</value>
   </data>
   <data name="Reviews" xml:space="preserve">
     <value>Reviews</value>
@@ -233,6 +260,12 @@
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
+  </data>
+  <data name="string" xml:space="preserve">
+    <value>serbian</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="TodayTitle" xml:space="preserve">
     <value>Overview of today tours</value>
@@ -254,6 +287,9 @@
   </data>
   <data name="TourName" xml:space="preserve">
     <value>Tour name:</value>
+  </data>
+  <data name="UntilDate" xml:space="preserve">
+    <value>UntilDate</value>
   </data>
   <data name="Visited" xml:space="preserve">
     <value>Visited</value>

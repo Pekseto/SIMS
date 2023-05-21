@@ -89,5 +89,10 @@ namespace Tourist_Project.Repositories
         {
             return GetAll().FindAll(tour => tour.Name == name && tour.UserId == loggedInUser.Id && tour.Status == Status.End);
         }
+
+        public List<Tour> GetAllNotBegin()
+        {
+            return GetAll().FindAll(t => t.Status == Status.NotBegin);
+        }
     }
 }

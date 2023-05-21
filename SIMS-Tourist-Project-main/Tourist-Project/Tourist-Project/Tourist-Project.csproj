@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Data\loginIcon.png" />
+    <None Remove="Images\acceptIcon.png" />
     <None Remove="Images\add.png" />
     <None Remove="Images\addGuideIcon.png" />
     <None Remove="Images\back.png" />
@@ -26,11 +27,14 @@
     <None Remove="Images\homeGuideIcon.png" />
     <None Remove="Images\No images to show.jpg" />
     <None Remove="Images\listGuideIcon.png" />
+    <None Remove="Images\plus.png" />
     <None Remove="Images\profile.jpg" />
     <None Remove="Images\requestGuideIcon.png" />
     <None Remove="Images\reviewGuideIcon.png" />
+    <None Remove="Images\serbia.png" />
     <None Remove="Images\startGuideIcon.png" />
     <None Remove="Images\statisticsGuideIcon.png" />
+    <None Remove="Images\uk.png" />
     <None Remove="Images\view.png" />
   </ItemGroup>
 
@@ -42,6 +46,7 @@
 
   <ItemGroup>
     <Resource Include="Data\loginIcon.png" />
+    <Resource Include="Images\acceptIcon.png" />
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addGuideIcon.png" />
     <Resource Include="Images\back.png" />
@@ -62,6 +67,7 @@
     <Resource Include="Images\historyGuideIcon.png" />
     <Resource Include="Images\homeGuideIcon.png" />
     <Resource Include="Images\listGuideIcon.png" />
+    <Resource Include="Images\plus.png" />
     <Resource Include="Images\profile.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -69,10 +75,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\reviewGuideIcon.png" />
+    <Resource Include="Images\serbia.png" />
     <Resource Include="Images\startGuideIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\statisticsGuideIcon.png" />
+    <Resource Include="Images\uk.png" />
     <Resource Include="Images\view.png" />
 
   </ItemGroup>

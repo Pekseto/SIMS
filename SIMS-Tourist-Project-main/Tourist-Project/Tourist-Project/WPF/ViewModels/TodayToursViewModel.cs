@@ -127,7 +127,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void Requests()
         {
-            var requestsWindow = new RequestsGuideView();
+            var requestsWindow = new RequestsGuideView(LoggedInUser);
             requestsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             requestsWindow.Show();
             window.Close();

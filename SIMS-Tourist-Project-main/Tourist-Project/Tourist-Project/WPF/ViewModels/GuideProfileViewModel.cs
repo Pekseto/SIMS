@@ -18,11 +18,23 @@ namespace Tourist_Project.WPF.ViewModels
     {
         public ObservableCollection<string> Years { get; set; } = new();
         private readonly TourService tourService = new ();
+        private readonly ImageService imageService = new();
         private readonly Window window;
         public Tour Tour { get; set; }
         public User LoggedInUser { get; set; }
         public string CurrentLanguage { get; set; }
 
+        private string tourImageLink;
+
+        public string TourImageLink
+        {
+            get { return tourImageLink; }
+            set
+            {
+                tourImageLink = value;
+                OnPropertyChanged("TourImageLink");
+            }
+        }
 
         private string selectedYear;
         public string SelectedYear
@@ -58,7 +70,8 @@ namespace Tourist_Project.WPF.ViewModels
             SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
 
             InitializeYears();
-            SelectedYear = "2022";
+            SelectedYear = "2023";
+            TourImageLink = imageService.Get(Tour.ImageId).Url;
         }
         private bool CanSwitchLanguage()
         {

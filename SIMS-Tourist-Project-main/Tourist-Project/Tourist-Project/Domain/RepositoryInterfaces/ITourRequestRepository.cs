@@ -18,5 +18,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         List<TourRequest> GetAllForUser(int userId);
         List<int> GetAllRequestedLocations(int userId);
         List<string> GetAllRequestedLanguages(int userId);
+        public List<TourRequest> GetAllPending();
+        public List<TourRequest> GetAllLastYear();
     }
 }

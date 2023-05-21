@@ -70,7 +70,7 @@ namespace Tourist_Project.WPF.ViewModels
             Renovation = renovation;
             Accommodation = accommodationService.Get(renovation.AccommodationId);
             Location = locationService.Get(Accommodation.LocationId);
-            User = userService.Get(Accommodation.UserId);
+            User = userService.GetOne(Accommodation.UserId);
         }
         public event PropertyChangedEventHandler? PropertyChanged;
 

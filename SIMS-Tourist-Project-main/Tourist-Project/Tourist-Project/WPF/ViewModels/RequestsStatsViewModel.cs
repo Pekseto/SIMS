@@ -202,7 +202,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             var locationId = locationService.GetId(SelectedCity, SelectedCountry);
             TourRequest newRequest =
-                new(locationId, Description, Language, GuestsNumber, FromDate, UntilDate, LoggedUser.Id)
+                new(locationId, Description, Language, GuestsNumber, FromDate, UntilDate, LoggedUser.Id, DateTime.Now)
                 {
                     Location = locationService.Get(locationId)
                 };

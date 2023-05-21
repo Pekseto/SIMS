@@ -259,5 +259,10 @@ namespace Tourist_Project.Applications.UseCases
 
             return tours;
         }
+
+        public List<DateSpan> GetBookedHours()
+        {
+            return repository.GetAllNotBegin().Select(tour => new DateSpan(tour.StartTime, tour.StartTime.AddHours(tour.Duration))).ToList();
+        }
     }
 }

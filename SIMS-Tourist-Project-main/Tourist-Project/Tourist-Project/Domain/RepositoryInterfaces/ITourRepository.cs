@@ -20,7 +20,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<Tour> GetAllByYear(int year, User loggedInUser);
         public List<Tour> GetYearAppointments(string name, int year, User loggedInUser);
         public List<Tour> GetAllTourAppointments(string name, User loggedInUser);
-
+        public List<Tour> GetAllNotBegin();
 
     }
 }

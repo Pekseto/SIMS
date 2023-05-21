@@ -6,6 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ns="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="GuideProfileView" Height="550" Width="800">
     <Window.Resources>
         <Style x:Key="ProfileImage" TargetType="Image">
@@ -124,12 +125,24 @@
         <Grid x:Name="ImageGrid" Grid.Row="0"  Grid.Column="0">
             <Image Height="156" Width="200" Source="/Images/profile.jpg" Style="{StaticResource ProfileImage}"></Image>
         </Grid>
-        <Border x:Name="InfoBorder" Height="156" Width="541" BorderBrush="Black" BorderThickness="3"  Grid.Row="0" Grid.Column="1">
+        <Border x:Name="InfoBorder" Height="156" Width="541" BorderBrush="Black" BorderThickness="3" CornerRadius="20" Grid.Row="0" Grid.Column="1">
             <Grid x:Name="InfoGrid">
-                <Label x:Name="NameOfGuide" Content="{Binding LoggedInUser.FullName}" FontSize="40"/>
-                <Label Content="{Binding LoggedInUser.Role}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="0,15,80,0" Height="75"></Label>
-                <Label Content="{Binding LoggedInUser.BirthDate}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="25" Margin="15 60 0 0"></Label>
-                <ListBox HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,35,0" Height="80" Width="200"></ListBox>
+                <Label x:Name="NameOfGuide" Content="{Binding LoggedInUser.FullName}" FontSize="40" FontWeight="Bold"/>
+                <Label Content="{Binding LoggedInUser.Role}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="0,8,105,0" Height="55"></Label>
+                <Label Content="{ns:Loc Birth}" HorizontalAlignment="Left" FontSize="25" Margin="0 60 0 0"></Label>
+                <Label Content="{Binding LoggedInUser.BirthDate}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="25" Margin="0 60 240 0" Width="120"></Label>
+                <ListBox HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,35,0" Height="80" Width="200">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontSize" Value="15"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.Items>
+                        <ListBoxItem Content="srpski"></ListBoxItem>
+                        <ListBoxItem Content="engleski"></ListBoxItem>
+                    </ListBox.Items>
+                </ListBox>
             </Grid>
         </Border>
         <Grid x:Name="ButtonsGrid" Grid.Row="1" Grid.Column="0">
@@ -141,7 +154,7 @@
                 </Label.InputBindings>
             </Label>
         </Grid>
-        <Border x:Name="StatisticsBorder" Grid.Row="1" Grid.Column="1" Width="541" Height="298" BorderBrush="Black" BorderThickness="3">
+        <Border x:Name="StatisticsBorder" Grid.Row="1" Grid.Column="1" Width="541" Height="298" BorderBrush="Black" BorderThickness="3" CornerRadius="20">
             <Grid x:Name="BestTourGrid" Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -152,16 +165,16 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="TourNameGrid" Grid.Row="0" Grid.Column="0">
-                    <Label x:Name="TourName" Content="{Binding Tour.Name, Mode=TwoWay}" FontSize="30" VerticalAlignment="Center"></Label>
+                    <Label x:Name="TourName" Content="{Binding Tour.Name, Mode=TwoWay}" FontSize="30" VerticalAlignment="Center" FontWeight="Bold"></Label>
                 </Grid>
                 <Grid x:Name="ComboboxGrid" Grid.Row="0" Grid.Column="1">
-                        <ComboBox x:Name="CriteriaOfStatistics" Height="27" Width="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0"
+                        <ComboBox x:Name="CriteriaOfStatistics" Height="27" Width="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0" Cursor="Hand"
                                   ItemsSource="{Binding Years}"
                                   SelectedItem="{Binding SelectedYear, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
                 </Grid>
                 <Grid x:Name="TourImageGrid" Grid.Row="1" Grid.Column="0">
-                    <Image x:Name="TourImage" Source="/Images/profile.jpg" Height="156" Width="200" Margin="20,10,20,76" HorizontalAlignment="Left"></Image>
-                    <xctk:IconButton x:Name="StatisticsButton" Height="40" Width="200" Margin="20,192,20,10" HorizontalAlignment="Left" Command="{Binding StatisticsViewCommand}" Style="{StaticResource StatisticsButton}"></xctk:IconButton>
+                    <Image x:Name="TourImage" Source="{Binding TourImageLink, UpdateSourceTrigger=PropertyChanged}" Height="156" Width="200" Margin="20,10,20,76" HorizontalAlignment="Left"></Image>
+                    <xctk:IconButton x:Name="StatisticsButton" Height="40" Width="200" Margin="20,192,20,10" HorizontalAlignment="Left" Command="{Binding StatisticsViewCommand}" Style="{StaticResource StatisticsButton}" Cursor="Hand"></xctk:IconButton>
                 </Grid>
                 <Grid x:Name="TourInfoGrid" Grid.Row="1" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -185,7 +198,7 @@
             </Grid>
         </Border>
         <StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock x:Name="NameWindowm" Text="{ns:Loc Profile}" Height="25" FontSize="15"></TextBlock>
+            <TextBlock x:Name="NameWindow" Text="{ns:Loc Profile}" Height="25" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>

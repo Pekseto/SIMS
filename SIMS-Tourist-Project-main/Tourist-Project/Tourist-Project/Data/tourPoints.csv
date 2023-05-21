@@ -4,7 +4,7 @@
 4|centar|2|True
 5|hram|2|True
 6|kalemegdan|2|True
-7|kej|3|False
+7|kej|3|True
 8|petrovaradin|3|False
 9|voznja brodom|3|False
 10|rajiceva|4|False
@@ -19,7 +19,7 @@
 19|strand|7|False
 20|vlada|8|True
 21|kalemegdan|8|False
-22|pozoriste|9|False
+22|pozoriste|9|True
 23|centar|9|False
 24|muzej|10|False
 25|najlon|10|False
@@ -41,3 +41,26 @@
 41|tacka jedan|23|False
 42|tacka dva|23|False
 43||24|False
+44|plava fontana|24|False
+45|gradska kuca|24|False
+46|zoo vrt|24|False
+47|plava fontana|25|False
+48|gradska kuca|25|False
+49|prvi|26|False
+50|drugi|26|False
+51|prvi|27|False
+52|drugi|27|False
+53|prvi|27|False
+54|drugi|27|False
+55|prvi|27|False
+56|drugi|27|False
+57|prvi|27|False
+58|drugi|27|False
+59|prvi|27|False
+60|drugi|27|False
+61|plava fontana|27|False
+62|palata|27|False
+63|palic|27|False
+64|kalemegdan|28|False
+65|knez|28|False
+66|beograd na vodi|28|False

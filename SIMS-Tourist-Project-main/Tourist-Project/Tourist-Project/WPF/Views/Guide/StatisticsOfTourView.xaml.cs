@@ -11,17 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for RequestsGuideView.xaml
+    /// Interaction logic for StatisticsOfTourView.xaml
     /// </summary>
-    public partial class RequestsGuideView : Window
+    public partial class StatisticsOfTourView : Window
     {
-        public RequestsGuideView()
+        public StatisticsOfTourView(Tour tour)
         {
             InitializeComponent();
+            DataContext = new StatisticsOfTourViewModel(this, tour);
+            
         }
     }
 }

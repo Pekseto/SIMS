@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
@@ -24,6 +25,19 @@ namespace Tourist_Project.Domain.Models
         public Tour()
         {
             Status = Status.NotBegin;
+            Name = "";
+            Description = "";
+            Language = "";
+            MaxGuestsNumber = 1;
+            Duration = 1;
+        }
+
+        public Tour(int locationId, string description, string language, int guestNumber)
+        {
+            LocationId = locationId;
+            Description = description;
+            Language = language;
+            MaxGuestsNumber = guestNumber;
         }
 
         public Tour(string name, int locationId, string description, string language, int maxGuestsNumber, DateTime startTime, int duration, int imageId, int userId)

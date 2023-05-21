@@ -12,5 +12,7 @@
             ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedStatistics}"></DataGrid>
         <Button Height="100" Width="100" VerticalAlignment="Bottom" Content="Monthly" Command="{Binding SwitchToMonthlyCommand}"></Button>
+        <Label Content="Most occupied year" Margin="100,200"></Label>
+        <Label Content="{Binding MostOccupiedYear}" Margin="250,200,100,200"></Label>
     </Grid>
 </Window>

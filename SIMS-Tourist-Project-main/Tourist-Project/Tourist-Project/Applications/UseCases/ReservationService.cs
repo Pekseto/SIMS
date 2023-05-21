@@ -53,9 +53,9 @@ namespace Tourist_Project.Applications.UseCases
             return reservationsForAccommodation;
         }
 
-        public List<Reservation> GetAllOrderedInDateSpan(DateSpan dateSpan)
+        public List<Reservation> GetAllOrderedInDateSpan(DateSpan dateSpan, int accommodationId)
         {
-            return reservationRepository.GetAll().Where(reservation =>
+            return GetAllByAccommodation(accommodationId).Where(reservation =>
                 (reservation.CheckIn > dateSpan.StartingDate && reservation.CheckIn < dateSpan.EndingDate) ||
                 (reservation.CheckOut > dateSpan.StartingDate && reservation.CheckOut < dateSpan.EndingDate)).OrderBy(o=>o.CheckIn).ToList();
         }

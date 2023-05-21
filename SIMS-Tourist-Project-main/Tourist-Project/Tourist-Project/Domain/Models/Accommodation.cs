@@ -130,8 +130,20 @@ namespace Tourist_Project.Domain.Models
         }
         public List<int> ImageIds { get; set; } = new();
 
+        private bool isRecentlyRenovated;
+        public bool IsRecentlyRenovated
+        {
+            get => isRecentlyRenovated;
+            set
+            {
+                if(value == isRecentlyRenovated) return;
+                isRecentlyRenovated = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Accommodation() { }
-        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes, int userId)
+        public Accommodation(string name, int locationId, AccommodationType type, int maxGuestNum, int minStayingDays, int daysBeforeCancel, int imageId, string imageIdes, int userId, bool isRecentlyRenovated)
         {
             Name = name;
             LocationId = locationId;
@@ -142,6 +154,7 @@ namespace Tourist_Project.Domain.Models
             ImageId = imageId;
             ImageIdsCsv = imageIdes;
             UserId = userId;
+            IsRecentlyRenovated = isRecentlyRenovated;
         }
         public string[] ToCSV()
         {
@@ -156,7 +169,8 @@ namespace Tourist_Project.Domain.Models
                 MinStayingDays.ToString(),
                 CancellationThreshold.ToString(),
                 ImageId.ToString(),
-                ImageIdsCsv
+                ImageIdsCsv,
+                IsRecentlyRenovated.ToString()
             };
             return csvValues;
         }
@@ -172,6 +186,7 @@ namespace Tourist_Project.Domain.Models
             CancellationThreshold = Convert.ToInt32(values[7]);
             ImageId = Convert.ToInt32(values[8]);
             ImageIdsCsv = values[9];
+            IsRecentlyRenovated = Convert.ToBoolean(values[10]);
             ImageIdesFromCsv(ImageIdsCsv);
         }
         public void ImageIdesToCsv()

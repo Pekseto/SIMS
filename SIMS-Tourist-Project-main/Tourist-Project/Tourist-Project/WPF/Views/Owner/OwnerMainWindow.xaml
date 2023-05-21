@@ -25,6 +25,7 @@
                 <Label Content="{Binding Accommodation.Type, UpdateSourceTrigger=PropertyChanged}" FontWeight="DemiBold" FontSize="16" Height="30" Margin="210, 40, 10,0 "></Label>
                 <Button Width="140" Content="Statistics(Alt+S)" Margin="400,-40,10,10"></Button>
                 <Button Width="140" Content="Reservation Report" Margin="400,50,10,10" IsEnabled="False"></Button>
+                <Label Content="{Binding Accommodation.IsRecentlyRenovated, UpdateSourceTrigger=PropertyChanged}" FontWeight="DemiBold" FontSize="16" Height="45" Margin="320, 65, 10,10 "></Label>
                 <Separator Margin="0,115, 0,0" Background="#0da2a5"/>
             </Grid>
         </DataTemplate>

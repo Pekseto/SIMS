@@ -8,5 +8,7 @@
         Title="MonthlyStatistics" Height="450" Width="800">
     <Grid>
         <DataGrid ItemsSource="{Binding AccommodationStatistics}"></DataGrid>
+        <Label Content="Most occupied month" Margin="100,200"></Label>
+        <Label Content="{Binding MostOccupiedMonth}" Margin="250,200,100,200"></Label>
     </Grid>
 </Window>

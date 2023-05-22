@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Tourist_Project.Domain;
@@ -14,7 +13,6 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly IRenovationRepository renovationRepository = injector.CreateInstance<IRenovationRepository>();
 
-        private readonly IReservationRepository reservationRepository = injector.CreateInstance<IReservationRepository>();
         private readonly ReservationService reservationService = new();
         public RenovationService() { }
 
@@ -46,7 +44,7 @@ namespace Tourist_Project.Applications.UseCases
         {
             ObservableCollection<DateSpan> possibleDateSpans = new();
 
-            foreach (var reservation in reservationService.GetAllOrderedInDateSpan(requestedDateSpan).Where(reservation => reservation.AccommodationId == accommodationId))
+            foreach (var reservation in reservationService.GetAllOrderedInDateSpan(requestedDateSpan, accommodationId))
             {
                 if (requestedDateSpan.StartingDate > requestedDateSpan.EndingDate) return possibleDateSpans;
                 var daysToReservation = reservation.CheckIn - requestedDateSpan.StartingDate;
@@ -56,17 +54,26 @@ namespace Tourist_Project.Applications.UseCases
                         requestedDateSpan.StartingDate = reservation.CheckOut;
                     continue;
                 }
-                possibleDateSpans.Add(new DateSpan(requestedDateSpan.StartingDate, requestedDateSpan.StartingDate.AddDays(length)));
-                requestedDateSpan.StartingDate = requestedDateSpan.StartingDate.AddDays(length);
+
+                while ((reservation.CheckIn - requestedDateSpan.StartingDate).Days > length)
+                    AddNewSpan(requestedDateSpan, length, possibleDateSpans);
             }
+
+            requestedDateSpan.StartingDate = reservationService.GetAllOrderedInDateSpan(requestedDateSpan, accommodationId).Last().CheckOut;
 
             while ((requestedDateSpan.EndingDate - requestedDateSpan.StartingDate).Days > length)
             {
-                possibleDateSpans.Add(new DateSpan(requestedDateSpan.StartingDate, requestedDateSpan.StartingDate.AddDays(length)));
-                requestedDateSpan.StartingDate = requestedDateSpan.StartingDate.AddDays(length);
+                AddNewSpan(requestedDateSpan, length, possibleDateSpans);
             }
             
             return possibleDateSpans;
+        }
+
+        private static void AddNewSpan(DateSpan requestedDateSpan, int length, ObservableCollection<DateSpan> possibleDateSpans)
+        {
+
+            possibleDateSpans.Add(new DateSpan(requestedDateSpan.StartingDate, requestedDateSpan.StartingDate.AddDays(length)));
+            requestedDateSpan.StartingDate = requestedDateSpan.StartingDate.AddDays(length);
         }
     }
 

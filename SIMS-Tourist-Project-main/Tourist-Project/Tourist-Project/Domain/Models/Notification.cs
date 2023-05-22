@@ -30,15 +30,15 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
-        private bool notified;
-        public bool Notified
+        private bool isIsNotified;
+        public bool IsNotified
         {
-            get => notified;
+            get => isIsNotified;
             set
             {
-                if(value == notified) return;
-                notified = value;
-                OnPropertyChanged("Notified");
+                if(value == isIsNotified) return;
+                isIsNotified = value;
+                OnPropertyChanged("IsNotified");
             }
         }
 
@@ -54,10 +54,10 @@ namespace Tourist_Project.Domain.Models
             }
         }
         public Notification(){}
-        public Notification(string type, bool notified, int typeId)
+        public Notification(string type, bool isNotified, int typeId)
         {
             Type = type;
-            Notified = notified;
+            IsNotified = isNotified;
             TypeId = typeId;
         }
         public string[] ToCSV()
@@ -66,7 +66,7 @@ namespace Tourist_Project.Domain.Models
             {
                 Id.ToString(),
                 Type,
-                Notified.ToString(),
+                IsNotified.ToString(),
                 TypeId.ToString()
             };
             return csvValues;
@@ -75,7 +75,7 @@ namespace Tourist_Project.Domain.Models
         {
             Id = int.Parse(values[0]);
             Type = values[1];
-            Notified = bool.Parse(values[2]);
+            IsNotified = bool.Parse(values[2]);
             TypeId = int.Parse(values[3]);
         }
         public override string ToString()

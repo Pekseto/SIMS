@@ -97,6 +97,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand CancelRescheduleCommand { get; set; }
         public ICommand RenovateCommand { get; set; }
         public ICommand ShowRenovationsCommand { get; set; }
+        public ICommand ShowStatisticsCommand { get; set; }
         #endregion
 
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
@@ -115,13 +116,14 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             ShowRenovationsCommand = new RelayCommand(ShowRenovations);
+            ShowStatisticsCommand = new RelayCommand(ShowStatistics);
             #endregion
             #region CollectionInstanting
             User = userService.GetOne(user.Id);
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
-            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.Notified == false));
+            ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
             #endregion
             Rating = accommodationRatingService.getRating().ToString("F3");
@@ -170,7 +172,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             var showReviewsWindow = new OwnerReviewsView(this);
             foreach (var notification in ReviewNotifications)
             {
-                notification.Notified = true;
+                notification.IsNotified = true;
                 notificationService.Update(notification);
             }
             ReviewNotifications.Clear();
@@ -189,13 +191,20 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         }
         public void ConfirmReschedule()
         {
-            SelectedRescheduleRequest.Reservation.CheckIn = SelectedRescheduleRequest.RescheduleRequest.NewBeginningDate;
-            SelectedRescheduleRequest.Reservation.CheckOut = SelectedRescheduleRequest.RescheduleRequest.NewEndDate;
-            reservationService.Update(SelectedRescheduleRequest.Reservation);
+            UpdateReservation();
             SelectedRescheduleRequest.RescheduleRequest.Status = RequestStatus.Confirmed;
             rescheduleRequestService.Update(SelectedRescheduleRequest.RescheduleRequest);
             RescheduleRequests.Remove(SelectedRescheduleRequest);
         }
+
+        private static void UpdateReservation()
+        {
+            SelectedRescheduleRequest.Reservation.CheckIn = SelectedRescheduleRequest.RescheduleRequest.NewBeginningDate;
+            SelectedRescheduleRequest.Reservation.CheckOut = SelectedRescheduleRequest.RescheduleRequest.NewEndDate;
+            SelectedRescheduleRequest.Reservation.Status = ReservationStatus.Rescheduled;
+            reservationService.Update(SelectedRescheduleRequest.Reservation);
+        }
+
         public bool CanConfirmReschedule()
         {
             return SelectedRescheduleRequest != null;
@@ -226,6 +235,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             var showRenovations = new ShowRenovations();
             showRenovations.ShowDialog();
+        }
+
+        public void ShowStatistics()
+        {
+            var showStatistics = new YearlyStatistics(SelectedAccommodation);
+            showStatistics.ShowDialog();
         }
         #endregion
 

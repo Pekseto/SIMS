@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain;
 using Tourist_Project.Domain.Models;

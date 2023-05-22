@@ -86,7 +86,7 @@ namespace Tourist_Project.WPF.ViewModels
             
             foreach (DateSpan ds in AvailableDates)
             {
-                Reservation reservation = new Reservation(ds.Start, ds.End, GuestsNum, StayingDays, SelectedAccommodation);
+                Reservation reservation = new Reservation(ds.Start, ds.End, GuestsNum, StayingDays, SelectedAccommodation, ReservationStatus.Regular);
                 ReservationsForDisplay.Add(reservation);
             }
             
@@ -115,7 +115,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             if (areDatesInConflicts)
             {
-                Reservation reservation = new Reservation(possibleStartingDate, possibleEndingDate, StayingDays, GuestsNum, SelectedAccommodation);
+                Reservation reservation = new Reservation(possibleStartingDate, possibleEndingDate, StayingDays, GuestsNum, SelectedAccommodation, ReservationStatus.Regular);
                 DateTime dt = possibleStartingDate;
                 while(dt <= possibleEndingDate)
                 {

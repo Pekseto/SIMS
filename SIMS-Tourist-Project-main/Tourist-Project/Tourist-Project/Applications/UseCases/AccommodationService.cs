@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 
@@ -9,9 +11,11 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IAccommodationRepository accommodationRepository = injector.CreateInstance<IAccommodationRepository>();
+        private readonly RenovationService renovationService = new();
         
         public AccommodationService()
         {
+            IsRecentlyRenovated();
         }
 
         public Accommodation Create(Accommodation accommodation)
@@ -36,6 +40,27 @@ namespace Tourist_Project.Applications.UseCases
         public void Delete(int id)
         {
             accommodationRepository.Delete(id);
+        }
+
+        public void IsRecentlyRenovated()
+        {
+            foreach (var accommodation in GetAll())
+            {
+                foreach (var renovation in renovationService.GetAll()
+                             .Where(renovation => renovation.AccommodationId == accommodation.Id))
+                {
+                    if ((DateTime.Now - renovation.RenovatingSpan.EndingDate).Days is < 365 and > 0)
+                    {
+                        accommodation.IsRecentlyRenovated = true;
+                        Update(accommodation);
+                    }
+                    else
+                    {
+                        accommodation.IsRecentlyRenovated = false;
+                        Update(accommodation);
+                    }
+                }
+            }
         }
 
     }

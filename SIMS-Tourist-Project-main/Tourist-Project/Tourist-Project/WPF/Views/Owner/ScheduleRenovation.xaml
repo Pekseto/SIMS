@@ -197,7 +197,7 @@
         </Style>
     </Window.Resources>
     <Window.DataContext>
-        <viewModels:ScheduleRenovationViewModel/>
+        <vm:ScheduleRenovationViewModel/>
     </Window.DataContext>
     <Grid>
         <Label Content="Renovation" HorizontalAlignment="Center" Margin="10" FontSize="24" FontWeight="Bold"></Label>
@@ -222,7 +222,7 @@
         <DataGrid Margin="30,420,30,183"
                   ItemsSource="{Binding PossibleDateSpans, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedDateSpan, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Starting date:" Width="*" Binding="{Binding StartingDate, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Ending date:" Width="*" Binding="{Binding EndingDate, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>

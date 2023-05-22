@@ -3,15 +3,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.ViewModels.Owner;
 using Tourist_Project.WPF.Views.Owner;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Owner
 {
     public class ScheduleRenovationViewModel : INotifyPropertyChanged
     {

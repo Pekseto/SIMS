@@ -8,14 +8,17 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
 
+
 namespace Tourist_Project.Applications.UseCases
 {
+
     public class TourReviewService
     {
         private static readonly Injector injector = new();
 
         private readonly ITourReviewRepository repository = injector.CreateInstance<ITourReviewRepository>();
         private readonly IUserRepository userRepository = injector.CreateInstance<IUserRepository>();
+        private readonly ITourRepository tourRepository = injector.CreateInstance<ITourRepository>();
         private readonly TourPointService tourPointService = new();
         public TourReviewService()
         {
@@ -58,6 +61,55 @@ namespace Tourist_Project.Applications.UseCases
         public bool DidUserReview(int userId, int tourId)
         {
             return repository.GetAll().Find(tr => tr.UserId == userId && tr.TourId == tourId) != null;
+        }
+
+        public List<string> GetSuperLanguages(int guideId)
+        {
+            var superLanguages = new List<string>();
+
+            foreach (var language in tourRepository.GetTourLanguages())
+            {
+                if (GetLanguageRating(guideId) > 9.0)
+                {
+                    superLanguages.Add(language);
+                }
+            }
+
+            return superLanguages;
+        }
+
+        private double GetAverageRating(int tourId)
+        {
+            var ratingSum = 0;
+            var ratingCounter = 0;
+
+            foreach (var review in repository.GetAllByTourId(tourId))
+            {
+                var averageReviewRating = (review.EntertainmentRating + review.KnowledgeRating + review.LanguageRating) / 3;
+                ratingSum += averageReviewRating;
+                ratingCounter++;
+            }
+
+            if (ratingCounter > 0)
+            {
+                return ratingSum/ratingCounter;
+            }
+
+            return 0.0;
+        }
+
+        private double GetLanguageRating(int guideId)
+        {
+            var ratingSum = 0.0;
+            var tourCounter = 0;
+
+            foreach (var tour in tourRepository.GetEndedToursThisYear(guideId))
+            {
+                ratingSum += GetAverageRating(tour.Id);
+                tourCounter++;
+            }
+
+            return ratingSum / tourCounter;
         }
     }
 }

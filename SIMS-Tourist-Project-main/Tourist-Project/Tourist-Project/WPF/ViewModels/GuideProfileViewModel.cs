@@ -20,6 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourService tourService = new ();
         private readonly ImageService imageService = new();
         private readonly UserService userService = new ();
+        private readonly TourReviewService reviewService = new ();
         private readonly Window window;
         public Tour Tour { get; set; }
         public User LoggedInUser { get; set; }
@@ -46,6 +47,18 @@ namespace Tourist_Project.WPF.ViewModels
                 selectedYear = value;
                 OnPropertyChanged("SelectedYear");
                 BestTourInfo();
+            }
+        }
+
+        private ObservableCollection<string> superLanguages;
+
+        public ObservableCollection<string> SuperLanguages
+        {
+            get { return superLanguages; }
+            set
+            {
+                superLanguages = value;
+                OnPropertyChanged("SuperLanguages");
             }
         }
 
@@ -77,6 +90,7 @@ namespace Tourist_Project.WPF.ViewModels
             InitializeYears();
             SelectedYear = "2023";
             TourImageLink = imageService.Get(Tour.ImageId).Url;
+            SuperLanguages = new ObservableCollection<string>(reviewService.GetSuperLanguages(LoggedInUser.Id));
         }
 
         private bool CanQuitJob()

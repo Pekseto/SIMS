@@ -100,5 +100,15 @@ namespace Tourist_Project.Repositories
         {
             return GetAll().FindAll(t => t.UserId == guideId && t.Status == Status.NotBegin);
         }
+
+        public List<Tour> GetEndedToursThisYear(int guideId)
+        {
+            return GetPastTours().FindAll(t => t.StartTime.Year == DateTime.Now.Year && t.UserId == guideId);
+        }
+
+        public List<string> GetTourLanguages()
+        {
+            return GetAll().Select(tour => tour.Language).Distinct().ToList();
+        }
     }
 }

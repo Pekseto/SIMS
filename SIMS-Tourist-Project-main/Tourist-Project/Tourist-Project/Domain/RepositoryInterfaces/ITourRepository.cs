@@ -22,6 +22,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<Tour> GetAllTourAppointments(string name, User loggedInUser);
         public List<Tour> GetAllNotBegin();
         public List<Tour> GetAllNotBeginByGuide(int guideId);
+        public List<Tour> GetEndedToursThisYear(int guideId);
+        public List<string> GetTourLanguages();
 
     }
 }

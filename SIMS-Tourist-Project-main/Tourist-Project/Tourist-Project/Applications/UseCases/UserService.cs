@@ -10,7 +10,6 @@ namespace Tourist_Project.Applications.UseCases
         private readonly IUserRepository repository = injector.CreateInstance<IUserRepository>();
         private readonly IAccommodationRatingRepository accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
         private readonly AccommodationRatingService accommodationRatingService = new();
-        private readonly TourService tourService = new();
 
         public UserService()
         {
@@ -39,7 +38,6 @@ namespace Tourist_Project.Applications.UseCases
         {
             user.IsEmployed = false;
             Update(user);
-            tourService.CancelAllToursByGuide(user.Id);
         }
     }
 }

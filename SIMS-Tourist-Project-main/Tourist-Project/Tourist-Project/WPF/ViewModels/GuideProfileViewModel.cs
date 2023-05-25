@@ -57,10 +57,12 @@ namespace Tourist_Project.WPF.ViewModels
         }
         #endregion
 
+        #region Commands
         public ICommand HomeViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }
         public ICommand SwitchLanguageCommand { get; set; }
         public ICommand QuitJobCommand { get; set; }
+        #endregion
         public GuideProfileViewModel(Window window, User loggedInUser)
         {
             this.window = window;
@@ -85,6 +87,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void QuitJob()
         {
             userService.QuitJob(LoggedInUser);
+            tourService.CancelAllToursByGuide(LoggedInUser.Id);
         }
 
         private bool CanSwitchLanguage()

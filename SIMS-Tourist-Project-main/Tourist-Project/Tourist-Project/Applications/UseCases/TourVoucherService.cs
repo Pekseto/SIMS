@@ -28,7 +28,7 @@ namespace Tourist_Project.Applications.UseCases
         {
             foreach(var reservation in reservationService.GetAllByTourId(id))
             {
-                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId);
+                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId); //GuideId dodati
                 Create(tourVoucher);
             }
         }
@@ -37,7 +37,7 @@ namespace Tourist_Project.Applications.UseCases
         {
             foreach (var reservation in reservationService.GetAllByTourId(tour.Id))
             {
-                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId, tour.UserId);
+                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId);
                 Create(tourVoucher);
             }
         }

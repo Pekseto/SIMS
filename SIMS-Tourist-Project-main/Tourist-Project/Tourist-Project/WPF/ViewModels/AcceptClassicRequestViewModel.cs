@@ -20,6 +20,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourPointService tourPointService = new();
         private readonly ImageService imageService = new();
         private readonly TourRequestService requestService = new();
+        private readonly NotificationGuestTwoService notificationService = new();
         #endregion
 
         #region collections
@@ -161,6 +162,11 @@ namespace Tourist_Project.WPF.ViewModels
 
             Request.Status = TourRequestStatus.Accepted;
             requestService.Update(Request);
+
+            var notification = new NotificationGuestTwo(Request.UserId, TourForAdd.Id, TourForAdd.StartTime,
+                NotificationType.TourAccepted);
+            notificationService.Save(notification);
+
 
             window.Close();
         }

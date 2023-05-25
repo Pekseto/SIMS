@@ -288,7 +288,7 @@ namespace Tourist_Project.Applications.UseCases
             {
                 tour.Status = Status.Cancel;
                 repository.Update(tour);
-                //tourVoucherService.VoucherDistributionForAnyTour(tour);
+                tourVoucherService.VoucherDistributionForAnyTour(tour);
             }
             
         }

@@ -19,6 +19,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<string> Years { get; set; } = new();
         private readonly TourService tourService = new ();
         private readonly ImageService imageService = new();
+        private readonly UserService userService = new ();
         private readonly Window window;
         public Tour Tour { get; set; }
         public User LoggedInUser { get; set; }
@@ -59,6 +60,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand HomeViewCommand { get; set; }
         public ICommand StatisticsViewCommand { get; set; }
         public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand QuitJobCommand { get; set; }
         public GuideProfileViewModel(Window window, User loggedInUser)
         {
             this.window = window;
@@ -68,11 +70,23 @@ namespace Tourist_Project.WPF.ViewModels
             HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
             SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            QuitJobCommand = new RelayCommand(QuitJob, CanQuitJob);
 
             InitializeYears();
             SelectedYear = "2023";
             TourImageLink = imageService.Get(Tour.ImageId).Url;
         }
+
+        private bool CanQuitJob()
+        {
+            return true;
+        }
+
+        private void QuitJob()
+        {
+            userService.QuitJob(LoggedInUser);
+        }
+
         private bool CanSwitchLanguage()
         {
             return true;

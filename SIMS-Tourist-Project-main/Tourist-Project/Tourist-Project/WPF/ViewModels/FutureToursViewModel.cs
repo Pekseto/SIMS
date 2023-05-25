@@ -148,14 +148,7 @@ namespace Tourist_Project.WPF.ViewModels
             }
             else
             {
-                if ((SelectedTour.StartTime - DateTime.Now).TotalHours >= 48)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return (SelectedTour.StartTime - DateTime.Now).TotalHours >= 48;
             }
         }
 

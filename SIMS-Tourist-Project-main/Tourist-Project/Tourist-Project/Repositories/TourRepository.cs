@@ -4,6 +4,7 @@ using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Serializer;
+using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.Repositories
@@ -93,6 +94,11 @@ namespace Tourist_Project.Repositories
         public List<Tour> GetAllNotBegin()
         {
             return GetAll().FindAll(t => t.Status == Status.NotBegin);
+        }
+
+        public List<Tour> GetAllNotBeginByGuide(int guideId)
+        {
+            return GetAll().FindAll(t => t.UserId == guideId && t.Status == Status.NotBegin);
         }
     }
 }

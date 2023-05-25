@@ -17,7 +17,6 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly ITourPointRepository repository = injector.CreateInstance<ITourPointRepository>();
         private readonly ITourAttendanceRepository tourAttendanceRepository = injector.CreateInstance<ITourAttendanceRepository>();
-        public event EventHandler RequestClose;
 
         public TourPoint GetOne(int id)
         {

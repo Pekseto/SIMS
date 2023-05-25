@@ -147,7 +147,7 @@
         </Border>
         <Grid x:Name="ButtonsGrid" Grid.Row="1" Grid.Column="0">
             <xctk:IconButton x:Name="HomeButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,26,0,238" Command="{Binding HomeViewCommand}" Style="{StaticResource HomeButtonGuide}"></xctk:IconButton>
-            <xctk:IconButton x:Name="DismissalButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,53,0,151" Style="{StaticResource DismissalButton}" IsEnabled="False"></xctk:IconButton>
+            <xctk:IconButton x:Name="DismissalButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,53,0,151" Command="{Binding QuitJobCommand}" Style="{StaticResource DismissalButton}"></xctk:IconButton>
             <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}" Margin="20,0,0,24">
                 <Label.InputBindings>
                     <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />

@@ -91,8 +91,22 @@ namespace Tourist_Project.Domain.Models
                 OnPropertyChanged("IsSuper");
             }
         }
+
+        private bool isEmployed;
+
+        public bool IsEmployed
+        {
+            get => isEmployed;
+            set
+            {
+                if(value ==  isEmployed) return;
+                isEmployed = value;
+                OnPropertyChanged("Employed");
+            }
+        }
+
         public User() { }
-        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate, bool isSuper)
+        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate, bool isSuper, bool isEmployed)
         {
             Id = id;
             Username = username;
@@ -101,10 +115,11 @@ namespace Tourist_Project.Domain.Models
             FullName = fullName;
             BirthDate = birthDate;
             IsSuper = isSuper;
+            IsEmployed = isEmployed;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, Role.ToString(), FullName, BirthDate.ToString(), IsSuper.ToString() };
+            string[] csvValues = { Id.ToString(), Username, Password, Role.ToString(), FullName, BirthDate.ToString(), IsSuper.ToString(), IsEmployed.ToString() };
             return csvValues;
         }
         public void FromCSV(string[] values)
@@ -116,6 +131,7 @@ namespace Tourist_Project.Domain.Models
             FullName = values[4];
             BirthDate = DateTime.Parse(values[5]);
             IsSuper = bool.Parse(values[6]);
+            IsEmployed = bool.Parse(values[7]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

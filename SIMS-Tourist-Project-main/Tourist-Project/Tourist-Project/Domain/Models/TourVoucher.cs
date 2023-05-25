@@ -14,16 +14,18 @@ namespace Tourist_Project.Domain.Models
         public int TouristId { get; set; }
         public int TourId { get; set; }
         public DateTime ExpireDate { get; set; }
+        public int GuideId { get; set; }
 
         public TourVoucher() 
         {
         }
 
-        public TourVoucher(int touristsId, int tourId)
+        public TourVoucher(int touristsId, int tourId, int guideId = -1)
         {
             TouristId = touristsId;
             TourId = tourId;
             ExpireDate = DateTime.Now.AddYears(1);
+            GuideId = guideId;
         }
 
         public string[] ToCSV()
@@ -33,7 +35,8 @@ namespace Tourist_Project.Domain.Models
                 Id.ToString(),
                 TouristId.ToString(),
                 TourId.ToString(),
-                ExpireDate.ToString()
+                ExpireDate.ToString(),
+                GuideId.ToString(),
             };
 
             return cssValues;
@@ -45,6 +48,7 @@ namespace Tourist_Project.Domain.Models
             TouristId = int.Parse(values[1]);
             TourId = int.Parse(values[2]);
             ExpireDate = DateTime.Parse(values[3]);
+            GuideId = int.Parse(values[4]);
         }
     }
 }

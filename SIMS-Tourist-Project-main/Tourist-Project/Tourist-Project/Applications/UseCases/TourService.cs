@@ -21,6 +21,7 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly TourReservationService tourReservationService = new();
         private readonly LocationService locationService = new();
+        private readonly TourVoucherService tourVoucherService = new();
 
         public TourService()
         {
@@ -279,6 +280,17 @@ namespace Tourist_Project.Applications.UseCases
         public List<DateSpan> GetBookedHours()
         {
             return repository.GetAllNotBegin().Select(tour => new DateSpan(tour.StartTime, tour.StartTime.AddHours(tour.Duration))).ToList();
+        }
+
+        public void CancelAllToursByGuide(int userId)
+        {
+            foreach (var tour in repository.GetAllNotBeginByGuide(userId))
+            {
+                tour.Status = Status.Cancel;
+                repository.Update(tour);
+                //tourVoucherService.VoucherDistributionForAnyTour(tour);
+            }
+            
         }
     }
 }

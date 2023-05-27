@@ -131,17 +131,13 @@
                 <Label Content="{Binding LoggedInUser.Role}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="0,8,105,0" Height="55"></Label>
                 <Label Content="{ns:Loc Birth}" HorizontalAlignment="Left" FontSize="25" Margin="0 60 0 0"></Label>
                 <Label Content="{Binding LoggedInUser.BirthDate}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="25" Margin="0 60 240 0" Width="120"></Label>
-                <ListBox HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,35,0" Height="80" Width="200">
+                <ListBox ItemsSource="{Binding SuperLanguages}" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,35,0" Height="80" Width="200">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Left" />
                             <Setter Property="FontSize" Value="15"></Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                    <ListBox.Items>
-                        <ListBoxItem Content="srpski"></ListBoxItem>
-                        <ListBoxItem Content="engleski"></ListBoxItem>
-                    </ListBox.Items>
                 </ListBox>
             </Grid>
         </Border>

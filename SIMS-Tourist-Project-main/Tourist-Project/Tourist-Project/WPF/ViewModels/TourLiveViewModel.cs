@@ -132,14 +132,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanCheck()
         {
-            if(SelectedTourPoint != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return SelectedTourPoint != null;
         }
         private void Check()
         {
@@ -149,6 +142,7 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 SelectedTour.Status = Status.End;
                 tourService.Update(SelectedTour);
+                TodayToursViewModel.Live = false;
                 window.Close();
             }
         }

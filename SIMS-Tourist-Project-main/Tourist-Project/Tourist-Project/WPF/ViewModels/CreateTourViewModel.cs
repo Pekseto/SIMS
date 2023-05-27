@@ -58,6 +58,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly Window window;
         private User user;
         private string currentLanguage;
+        private int imageId;
 
         public string CurrentLanguage
         {
@@ -177,6 +178,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
             TourForAdd.UserId = LoggedInUser.Id;
+            TourForAdd.ImageId = imageId;
             tourService.Save(TourForAdd);
 
             if (TourForAdd.StartTime.Date == DateTime.Today.Date)
@@ -194,8 +196,10 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void AddImage()
         {
+            ImageForAdd.Association = ImageAssociation.Tour;
             Images.Add(ImageForAdd.Url);
             imageService.Save(ImageForAdd);
+            imageId = ImageForAdd.Id;
             ImageForAdd = new Image();
         }
 

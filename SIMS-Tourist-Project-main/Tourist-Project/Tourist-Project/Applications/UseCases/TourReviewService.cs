@@ -51,7 +51,7 @@ namespace Tourist_Project.Applications.UseCases
             foreach (var review in GetAllByTourId(tourId))
             {
 
-                TourReviewDTO dto = new TourReviewDTO(review.Id, userRepository.GetFullName(review.UserId),review.KnowledgeRating, review.LanguageRating, review.EntertainmentRating, review.Comment, tourPointService.GetCheckpointName(review.UserId, tourId), review.Valid);
+                var dto = new TourReviewDTO(review.Id, userRepository.GetFullName(review.UserId),review.KnowledgeRating, review.LanguageRating, review.EntertainmentRating, review.Comment, tourPointService.GetCheckpointName(review.UserId, tourId), review.Valid);
                 dtos.Add(dto);
             }
 
@@ -69,7 +69,7 @@ namespace Tourist_Project.Applications.UseCases
 
             foreach (var language in tourRepository.GetTourLanguages())
             {
-                if (GetLanguageRating(guideId) > 9.0)
+                if (GetLanguageRating(guideId, language) >= 9.0 && tourRepository.GetEndedToursThisYear(guideId).FindAll(t => t.Language == language).Count >= 20)
                 {
                     superLanguages.Add(language);
                 }
@@ -98,13 +98,14 @@ namespace Tourist_Project.Applications.UseCases
             return 0.0;
         }
 
-        private double GetLanguageRating(int guideId)
+        private double GetLanguageRating(int guideId, string language)
         {
             var ratingSum = 0.0;
             var tourCounter = 0;
 
-            foreach (var tour in tourRepository.GetEndedToursThisYear(guideId))
+            foreach (var tour in tourRepository.GetEndedToursThisYear(guideId).FindAll(t => t.Language == language))
             {
+                if(GetAverageRating(tour.Id) == 0.0) continue;
                 ratingSum += GetAverageRating(tour.Id);
                 tourCounter++;
             }

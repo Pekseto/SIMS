@@ -89,7 +89,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             InitializeYears();
             SelectedYear = "2023";
-            TourImageLink = imageService.Get(Tour.ImageId).Url;
+            //TourImageLink = imageService.Get(Tour.ImageId).Url;
             SuperLanguages = new ObservableCollection<string>(reviewService.GetSuperLanguages(LoggedInUser.Id));
         }
 

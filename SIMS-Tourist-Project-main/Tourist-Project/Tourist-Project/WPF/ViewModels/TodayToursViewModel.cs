@@ -181,10 +181,9 @@ namespace Tourist_Project.WPF.ViewModels
             {
                 return SelectedTour.Status == Status.NotBegin;
             }
-            else
-            {
-                return SelectedTour.Status == Status.Begin;
-            }
+            
+            return SelectedTour.Status == Status.Begin;
+            
         }
         private void StartTour()
         {

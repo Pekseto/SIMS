@@ -12,7 +12,7 @@
         <Style x:Key="MessageColor" TargetType="Label">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Message.Type}" Value="True">
-                    <Setter Property="Foreground" Value="Green"/>
+                    <Setter Property="Foreground" Value="GreenYellow"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Message.Type}" Value="False">
                     <Setter Property="Foreground" Value="Red"/>

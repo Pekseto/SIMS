@@ -26,6 +26,7 @@ namespace Tourist_Project.WPF.ViewModels
         private double deniedPercent;
         private string selectedStatYear;
         private double avgGuests;
+        private ObservableCollection<string> cities;
 
 
         public SeriesCollection LanguagesChart
@@ -106,7 +107,6 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        private ObservableCollection<string> cities;
         public User LoggedUser { get; set; }
 
         public ObservableCollection<string> Countries { get; set; }
@@ -157,7 +157,6 @@ namespace Tourist_Project.WPF.ViewModels
         public int GuestsNumber { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime UntilDate { get; set; }
-
         public ICommand PostRequestCommand { get; set; }
 
 

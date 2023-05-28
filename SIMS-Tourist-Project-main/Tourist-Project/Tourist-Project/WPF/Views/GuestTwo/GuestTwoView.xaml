@@ -48,6 +48,12 @@
         <DataTemplate DataType="{x:Type viewmodels:RequestsStatsViewModel}">
             <views:RequestsStatsView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ComplexToursViewModel}">
+            <views:ComplexToursView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RequestComplexTourViewModel}">
+            <views:RequestComplexTourView/>
+        </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="{x:Type RadioButton}"
@@ -184,7 +190,8 @@
                     <RadioButton Content="Complex tours"
                                  Height="50"
                                  FontSize="24"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding ComplexToursCommand}"/>
                     <RadioButton Content="Vouchers"
                                  Height="50"
                                  FontSize="24"

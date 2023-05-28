@@ -37,7 +37,7 @@ namespace Tourist_Project.Domain.Models
             {
                 0 => "Discount 15e",
                 1 => "Free tour",
-                2 => "Discount 30%",
+                _ => "Discount 30%",
             };
         }
 

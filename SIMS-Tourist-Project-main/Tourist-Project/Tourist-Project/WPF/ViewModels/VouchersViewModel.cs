@@ -11,13 +11,12 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class VouchersViewModel : ViewModelBase
     {
-        private readonly VoucherService voucherService;
-        public ObservableCollection<Voucher> Vouchers { get; set; }
+        private readonly TourVoucherService voucherService = new();
+        public ObservableCollection<TourVoucher> Vouchers { get; set; }
 
         public VouchersViewModel(User user)
         {
-            voucherService = new VoucherService();
-            Vouchers = new ObservableCollection<Voucher>(voucherService.GetAllForUser(user.Id));
+            Vouchers = new ObservableCollection<TourVoucher>(voucherService.GetAllForUser(user.Id));
         }
     }
 }

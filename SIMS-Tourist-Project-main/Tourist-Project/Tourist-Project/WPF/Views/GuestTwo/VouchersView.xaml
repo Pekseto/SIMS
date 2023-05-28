@@ -24,7 +24,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="300"/>
                 <DataGridTextColumn Header="Acquired" Binding="{Binding WayAcquired}" Width="300"/>
-                <DataGridTextColumn Header="Valid until" Binding="{Binding LastValidDate}" Width="*"/>
+                <DataGridTextColumn Header="Valid until" Binding="{Binding ExpireDate}" Width="*"/>
             </DataGrid.Columns>
 
         </DataGrid>

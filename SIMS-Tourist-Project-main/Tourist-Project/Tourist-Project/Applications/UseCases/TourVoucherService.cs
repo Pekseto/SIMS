@@ -24,11 +24,16 @@ namespace Tourist_Project.Applications.UseCases
             return voucherRepository.Save(voucher);
         }
 
+        public void Delete(int voucherId)
+        {
+            voucherRepository.Delete(voucherId);
+        }
+
         public void VouchersDistribution(int id)
         {
             foreach(var reservation in reservationService.GetAllByTourId(id))
             {
-                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId); //GuideId dodati
+                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId, "Guide cancellation"); //GuideId dodati
                 Create(tourVoucher);
             }
         }
@@ -37,9 +42,19 @@ namespace Tourist_Project.Applications.UseCases
         {
             foreach (var reservation in reservationService.GetAllByTourId(tour.Id))
             {
-                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId);
+                var tourVoucher = new TourVoucher(reservation.UserId, reservation.TourId, "Guide cancellation");
                 Create(tourVoucher);
             }
+        }
+
+        public List<TourVoucher> GetAllForUser(int userId)
+        {
+            return voucherRepository.GetAllForUser(userId);
+        }
+
+        public void DeleteInvalidVouchers(int userId)
+        {
+            voucherRepository.DeleteInvalidVouchers(userId);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand SignOutCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand NotificationsCommand { get; set; }
+        public ICommand ComplexToursCommand { get; set; }
 
         public GuestTwoViewModel(User user, NavigationStore navigationStore, GuestTwoView guestTwoWindow)
         {
@@ -46,6 +47,7 @@ namespace Tourist_Project.WPF.ViewModels
             RequestsStatsCommand = new NavigateCommand<RequestsStatsViewModel>(navigationStore, () => new RequestsStatsViewModel(user, navigationStore));
             VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
             NotificationsCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => new NotificationsViewModel(user, navigationStore));
+            ComplexToursCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
             SignOutCommand = new RelayCommand(OnSignOutClick);
             ExitCommand = new RelayCommand(OnExitClick);
 

@@ -56,6 +56,16 @@ namespace Tourist_Project.Applications.UseCases
             return requestRepository.GetAllForUser(userId);
         }
 
+        public List<TourRequest> GetAllForComplexTour(int complexTourId, int userId)
+        {
+            var retVal = requestRepository.GetAllForComplexTour(complexTourId, userId);
+            foreach (var request in retVal)
+            {
+                request.Location = locationService.Get(request.LocationId);
+            }
+            return retVal;
+        }
+
         public void UpdateInvalidRequests(int loggedUserId)
         {
             foreach (var request in requestRepository.GetAll().Where(r => r.UserId == loggedUserId && r.Status == TourRequestStatus.Pending).ToList())
@@ -69,12 +79,12 @@ namespace Tourist_Project.Applications.UseCases
 
         public double GetAcceptedPercentage(int userId, string statYear)
         {
-            var requests = requestRepository.GetAll();
+            var requests = requestRepository.GetAllForUser(userId);
             double acceptedCount = 0;
 
             if (statYear == "All time")
             {
-                foreach (var request in requests.Where(r => r.UserId == userId))
+                foreach (var request in requests)
                 {
                     if (request.Status == TourRequestStatus.Accepted)
                     {
@@ -85,7 +95,7 @@ namespace Tourist_Project.Applications.UseCases
             }
 
             double selectedYearAcceptedCount = 0;
-            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
+            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
             {
                 selectedYearAcceptedCount++;
                 if (request.Status == TourRequestStatus.Accepted)
@@ -99,12 +109,12 @@ namespace Tourist_Project.Applications.UseCases
 
         public double GetDeniedPercentage(int userId, string statYear)
         {
-            var requests = requestRepository.GetAll();
+            var requests = requestRepository.GetAllForUser(userId);
             double deniedCount = 0;
 
             if (statYear == "All time")
             {
-                foreach (var request in requests.Where(r => r.UserId == userId))
+                foreach (var request in requests)
                 {
                     if (request.Status == TourRequestStatus.Denied)
                     {
@@ -115,7 +125,7 @@ namespace Tourist_Project.Applications.UseCases
             }
 
             double selectedYearDeniedCount = 0;
-            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
+            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
             {
                 selectedYearDeniedCount++;
                 if (request.Status == TourRequestStatus.Denied)
@@ -129,7 +139,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public double GetAverageGuests(int userId, string statYear)
         {
-            var requests = requestRepository.GetAll().Where(r => r.UserId == userId && r.Status == TourRequestStatus.Accepted).ToList();
+            var requests = requestRepository.GetAllForUser(userId).Where(r => r.Status == TourRequestStatus.Accepted).ToList();
             double guestsCount = 0;
 
             if (statYear == "All time")
@@ -139,16 +149,16 @@ namespace Tourist_Project.Applications.UseCases
                     guestsCount += request.GuestsNumber;
                 }
 
-                return guestsCount / requests.Count;
+                return requests.Count > 0 ? guestsCount / requests.Count : 0;
             }
 
             double selectedYearGuestsCount = 0;
-            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear)))
+            foreach (var request in requests.Where(r => r.FromDate.Year == int.Parse(statYear)))
             {
                 selectedYearGuestsCount++;
                 guestsCount += request.GuestsNumber;
             } 
-            return guestsCount / selectedYearGuestsCount;
+            return selectedYearGuestsCount > 0 ? guestsCount / selectedYearGuestsCount : 0;
 
         }
 
@@ -160,7 +170,7 @@ namespace Tourist_Project.Applications.UseCases
         public int GetLanguageRequestCount(int userId, string language)
         {
             var count = 0;
-            foreach (var request in requestRepository.GetAll().Where(r => r.UserId == userId))
+            foreach (var request in requestRepository.GetAllForUser(userId))
             {
                 if (request.Language == language)
                 {
@@ -197,7 +207,7 @@ namespace Tourist_Project.Applications.UseCases
         public int GetLocationRequestCount(int userId, int locationId)
         {
             var count = 0;
-            foreach (var request in GetAll().Where(r => r.UserId == userId))
+            foreach (var request in GetAllForUser(userId))
             {
                 if (request.LocationId == locationId)
                 {

@@ -50,7 +50,7 @@
                 <DataGridTextColumn Header="Start date" Binding="{Binding StartTime}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="2" Content="Preview" FontSize="18"
+        <Button Grid.Row="2" Content="Preview" FontSize="16"
                 HorizontalAlignment="Center"
                 Height="40" Width="100" Cursor="Hand"
                 VerticalAlignment="Top"

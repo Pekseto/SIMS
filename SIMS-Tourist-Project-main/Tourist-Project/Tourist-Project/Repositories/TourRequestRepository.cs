@@ -71,13 +71,13 @@ namespace Tourist_Project.Repositories
 
         public List<TourRequest> GetAllForUser(int userId)
         {
-            return serializer.FromCSV(filePath).Where(tr => tr.UserId == userId).ToList();
+            return serializer.FromCSV(filePath).Where(tr => tr.UserId == userId && tr.ComplexTourId == -1).ToList();
         }
 
         public List<int> GetAllRequestedLocations(int userId)
         {
             var retVal = new List<int>();
-            foreach (var requestedLocationId in GetAll().Where(r => r.UserId == userId).Select(r => r.LocationId).Distinct())
+            foreach (var requestedLocationId in GetAll().Where(r => r.UserId == userId && r.ComplexTourId == -1).Select(r => r.LocationId).Distinct())
             {
                 retVal.Add(requestedLocationId);
             }
@@ -87,7 +87,7 @@ namespace Tourist_Project.Repositories
         public List<string> GetAllRequestedLanguages(int userId)
         {
             var retVal = new List<string>();
-            foreach (var request in GetAll().Where(r => r.UserId == userId))
+            foreach (var request in GetAll().Where(r => r.UserId == userId && r.ComplexTourId == -1))
             {
                 if (retVal.Contains(request.Language)) continue;
                 retVal.Add(request.Language);
@@ -96,12 +96,17 @@ namespace Tourist_Project.Repositories
         }
         public List<TourRequest> GetAllPending()
         {
-            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending);
+            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending && tr.ComplexTourId == -1);
         }
 
         public List<TourRequest> GetAllLastYear()
         {
-            return GetAll().FindAll(request => request.CreateDate >= DateTime.Now.AddYears(-1));
+            return GetAll().FindAll(request => request.CreateDate >= DateTime.Now.AddYears(-1) && request.ComplexTourId == -1);
+        }
+
+        public List<TourRequest> GetAllForComplexTour(int complexTourId, int userId)
+        {
+            return GetAll().Where(tr => tr.ComplexTourId == complexTourId && tr.UserId == userId).ToList();
         }
     }
 }

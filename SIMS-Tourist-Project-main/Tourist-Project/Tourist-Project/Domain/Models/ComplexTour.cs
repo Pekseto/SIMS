@@ -19,6 +19,13 @@ namespace Tourist_Project.Domain.Models
         public int UserId { get; set; }
         public ComplexTourStatus Status { get; set; } = ComplexTourStatus.Pending;
         public ComplexTour() { }
+
+        public ComplexTour(int complexTourId, int loggedUserId)
+        {
+            Id = complexTourId;
+            UserId = loggedUserId;
+        }
+
         public string[] ToCSV()
         {
             string[] retVal = { Id.ToString(), UserId.ToString(), Status.ToString() };

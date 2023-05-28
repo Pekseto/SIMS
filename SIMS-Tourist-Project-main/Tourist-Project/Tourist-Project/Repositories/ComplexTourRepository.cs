@@ -34,7 +34,6 @@ namespace Tourist_Project.Repositories
         public ComplexTour Save(ComplexTour complexTour)
         {
             Tours = GetAll();
-            complexTour.Id = NextId();
             Tours.Add(complexTour);
             serializer.ToCSV(filePath, Tours);
             return complexTour;

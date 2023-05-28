@@ -31,5 +31,10 @@ namespace Tourist_Project.Applications.UseCases
         {
             return complexTourRepository.Save(complexTour);
         }
+
+        public int GetNextRequestId()
+        {
+            return complexTourRepository.NextId();
+        }
     }
 }

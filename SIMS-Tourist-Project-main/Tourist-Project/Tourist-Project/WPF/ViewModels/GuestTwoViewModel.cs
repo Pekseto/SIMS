@@ -22,7 +22,7 @@ namespace Tourist_Project.WPF.ViewModels
         public User LoggedUser { get; set; }
         public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
         private readonly NavigationStore navigationStore;
-        private readonly VoucherService voucherService = new();
+        private readonly TourVoucherService voucherService = new();
         private readonly TourRequestService requestService = new();
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }

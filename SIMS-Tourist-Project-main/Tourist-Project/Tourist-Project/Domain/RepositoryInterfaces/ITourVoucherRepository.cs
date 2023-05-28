@@ -11,6 +11,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
     {
         public TourVoucher Save(TourVoucher tourVoucher);
         public int NextId();
-
+        List<TourVoucher> GetAllForUser(int userId);
+        void DeleteInvalidVouchers(int userId);
+        void Delete(int voucherId);
     }
 }

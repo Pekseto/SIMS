@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +16,29 @@ namespace Tourist_Project.Domain.Models
         public int TourId { get; set; }
         public DateTime ExpireDate { get; set; }
         public int GuideId { get; set; }
+        public string Name { get; set; }
+        public string WayAcquired { get; set; }
 
         public TourVoucher() 
         {
+            Name = "Without voucher";
         }
 
-        public TourVoucher(int touristsId, int tourId, int guideId = -1)
+        public TourVoucher(int touristsId, int tourId, string wayAcquired, int guideId = -1)
         {
             TouristId = touristsId;
             TourId = tourId;
-            ExpireDate = DateTime.Now.AddYears(1);
+            ExpireDate = DateTime.Now.AddYears(1).Date;
             GuideId = guideId;
+            WayAcquired = wayAcquired;
+
+            var random = new Random();
+            Name = random.Next(3) switch
+            {
+                0 => "Discount 15e",
+                1 => "Free tour",
+                2 => "Discount 30%",
+            };
         }
 
         public string[] ToCSV()
@@ -37,6 +50,8 @@ namespace Tourist_Project.Domain.Models
                 TourId.ToString(),
                 ExpireDate.ToString(),
                 GuideId.ToString(),
+                Name,
+                WayAcquired
             };
 
             return cssValues;
@@ -49,6 +64,13 @@ namespace Tourist_Project.Domain.Models
             TourId = int.Parse(values[2]);
             ExpireDate = DateTime.Parse(values[3]);
             GuideId = int.Parse(values[4]);
+            Name = values[5];
+            WayAcquired = values[6];
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

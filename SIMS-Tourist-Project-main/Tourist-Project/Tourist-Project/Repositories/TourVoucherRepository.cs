@@ -29,6 +29,33 @@ namespace Tourist_Project.Repositories
             return vouchers.Max(v => v.Id) + 1;
         }
 
+        public List<TourVoucher> GetAllForUser(int userId)
+        {
+            vouchers = serializer.FromCSV(filePath);
+            var filteredList = new List<TourVoucher>();
+
+            foreach (var voucher in vouchers)
+            {
+                if (voucher.TouristId == userId)
+                {
+                    filteredList.Add(voucher);
+                }
+            }
+            return filteredList;
+        }
+
+        public void DeleteInvalidVouchers(int userId)
+        {
+            vouchers = serializer.FromCSV(filePath);
+            foreach (var voucher in vouchers)
+            {
+                if (voucher.TouristId == userId && voucher.ExpireDate.Date < DateTime.Today.Date)
+                {
+                    Delete(voucher.Id);
+                }
+            }
+        }
+
         public TourVoucher Save(TourVoucher voucher)
         {
             voucher.Id = NextId();
@@ -36,6 +63,14 @@ namespace Tourist_Project.Repositories
             vouchers.Add(voucher);
             serializer.ToCSV(filePath, vouchers);
             return voucher;
+        }
+
+        public void Delete(int voucherId)
+        {
+            vouchers = serializer.FromCSV(filePath);
+            var voucherToDelete = vouchers.Find(v => v.Id == voucherId);
+            vouchers.Remove(voucherToDelete);
+            serializer.ToCSV(filePath, vouchers);
         }
     }
 }

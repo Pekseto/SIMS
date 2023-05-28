@@ -18,15 +18,15 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class TourReservationViewModel : ViewModelBase
     {
-        private readonly VoucherService voucherService = new();
+        private readonly TourVoucherService voucherService = new();
         private readonly TourReservationService reservationService = new();
         private readonly TourAttendanceService attendanceService = new();
         private readonly TourPointRepository tourPointRepository = new();
         private readonly ImageRepository imageRepository = new();
         public int GuestsNumber { get; set; }
-        public ObservableCollection<Voucher> Vouchers { get; set; }
-        private Voucher selectedVoucher;
-        public Voucher SelectedVoucher
+        public ObservableCollection<TourVoucher> Vouchers { get; set; }
+        private TourVoucher selectedVoucher;
+        public TourVoucher SelectedVoucher
         {
             get => selectedVoucher;
             set
@@ -138,9 +138,9 @@ namespace Tourist_Project.WPF.ViewModels
             CurrentImage = TourImages[imageId];
         }
 
-        private ObservableCollection<Voucher> LoadVouchers()
+        private ObservableCollection<TourVoucher> LoadVouchers()
         {
-            var retVal = new ObservableCollection<Voucher>{ new Voucher() };
+            var retVal = new ObservableCollection<TourVoucher>{ new TourVoucher() };
             foreach (var voucher in voucherService.GetAllForUser(LoggedUser.Id))
             {
                 retVal.Add(voucher);
@@ -195,6 +195,10 @@ namespace Tourist_Project.WPF.ViewModels
                 {
                     voucherService.Delete(SelectedVoucher.Id);
                     Vouchers.Remove(SelectedVoucher);
+                    if (Vouchers.Count > 0)
+                    {
+                        SelectedVoucher = Vouchers.First();
+                    }
                 }
 
                 _ = ShowMessageAndHide(new Message(true, "Successful reservation"));

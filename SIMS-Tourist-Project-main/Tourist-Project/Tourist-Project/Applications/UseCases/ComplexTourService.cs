@@ -13,6 +13,7 @@ namespace Tourist_Project.Applications.UseCases
     {
         private static readonly Injector injector = new();
         private readonly IComplexTourRepository complexTourRepository = injector.CreateInstance<IComplexTourRepository>();
+        private readonly ITourRequestRepository tourRequestRepository = injector.CreateInstance<ITourRequestRepository>();
         public ComplexTourService()
         {
         }
@@ -27,14 +28,52 @@ namespace Tourist_Project.Applications.UseCases
             return complexTourRepository.GetAllForUser(userId);
         }
 
+        public List<ComplexTour> GetAllPendingForUser(int userId)
+        {
+            return complexTourRepository.GetAllPendingForUser(userId);
+        }
+
         public ComplexTour Save(ComplexTour complexTour)
         {
             return complexTourRepository.Save(complexTour);
+        }
+
+        public ComplexTour Update(ComplexTour complexTour)
+        {
+            return complexTourRepository.Update(complexTour);
         }
 
         public int GetNextRequestId()
         {
             return complexTourRepository.NextId();
         }
+
+        public void UpdateComplexTourStatusesForUser(int userId)
+        {
+            var complexTours = GetAllPendingForUser(userId);
+            foreach (var complexTour in complexTours)
+            {
+                var tourRequests = tourRequestRepository.GetAllForComplexTour(complexTour.Id);
+                var firstTour = tourRequests.Find(tr => tr.UntilDate == tourRequests.Min(tr => tr.UntilDate));
+                if (firstTour.UntilDate.Date <= DateTime.Today.AddDays(2).Date)
+                {
+                    var areAllPending = tourRequests.All(tourRequest => tourRequest.Status == TourRequestStatus.Pending);
+
+                    if (areAllPending)
+                    {
+                        complexTour.Status = ComplexTourStatus.Denied;
+                        Update(complexTour);
+                        tourRequestRepository.DenyAllForComplexTour(complexTour.Id);
+                    }
+                }
+
+                var areAllAccepted = tourRequests.All(tourRequest => tourRequest.Status == TourRequestStatus.Accepted);
+
+                if (!areAllAccepted) continue;
+                complexTour.Status = ComplexTourStatus.Accepted;
+                Update(complexTour);
+            }
+        }
+
     }
 }

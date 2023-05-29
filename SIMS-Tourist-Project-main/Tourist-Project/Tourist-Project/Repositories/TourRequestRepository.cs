@@ -104,9 +104,25 @@ namespace Tourist_Project.Repositories
             return GetAll().FindAll(request => request.CreateDate >= DateTime.Now.AddYears(-1) && request.ComplexTourId == -1);
         }
 
-        public List<TourRequest> GetAllForComplexTour(int complexTourId, int userId)
+        public List<TourRequest> GetAllForComplexTour(int complexTourId)
         {
-            return GetAll().Where(tr => tr.ComplexTourId == complexTourId && tr.UserId == userId).ToList();
+            return GetAll().Where(tr => tr.ComplexTourId == complexTourId).ToList();
+        }
+
+        public void DenyAllForComplexTour(int complexTourId)
+        {
+            var requestsFromComplexTour = GetAllForComplexTour(complexTourId);
+            foreach (var request in requestsFromComplexTour)
+            {
+                request.Status = TourRequestStatus.Denied;
+                Update(request);
+            }
+        }
+
+        public List<TourRequest> GetAllPendingForUser(int loggedUserId)
+        {
+            return GetAll().Where(r =>
+                r.UserId == loggedUserId && r.Status == TourRequestStatus.Pending && r.ComplexTourId == -1).ToList();
         }
     }
 }

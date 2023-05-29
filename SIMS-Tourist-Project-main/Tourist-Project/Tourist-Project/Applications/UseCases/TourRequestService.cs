@@ -56,9 +56,9 @@ namespace Tourist_Project.Applications.UseCases
             return requestRepository.GetAllForUser(userId);
         }
 
-        public List<TourRequest> GetAllForComplexTour(int complexTourId, int userId)
+        public List<TourRequest> GetAllForComplexTour(int complexTourId)
         {
-            var retVal = requestRepository.GetAllForComplexTour(complexTourId, userId);
+            var retVal = requestRepository.GetAllForComplexTour(complexTourId);
             foreach (var request in retVal)
             {
                 request.Location = locationService.Get(request.LocationId);
@@ -68,7 +68,8 @@ namespace Tourist_Project.Applications.UseCases
 
         public void UpdateInvalidRequests(int loggedUserId)
         {
-            foreach (var request in requestRepository.GetAll().Where(r => r.UserId == loggedUserId && r.Status == TourRequestStatus.Pending).ToList())
+            var requests = requestRepository.GetAllPendingForUser(loggedUserId);
+            foreach (var request in requests)
             {
                 if (DateTime.Now < request.UntilDate.AddDays(-2).Date) continue;
 

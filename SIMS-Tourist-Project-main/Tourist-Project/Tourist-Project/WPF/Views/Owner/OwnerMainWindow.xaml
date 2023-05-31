@@ -300,7 +300,9 @@
                 </GroupBox>
                 <GroupBox Header="Forums(F3)" Margin="481,0,-49,-20">
                     <StackPanel>
-                        <ListBox Height="119" Width="205"></ListBox>
+                        <ListBox ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
+                                 ItemTemplate="{StaticResource ReviewsDataTemplate}"
+                                Height="119" Width="205"></ListBox>
                         <Button Height="38" Width="auto" Content="Show forums(F)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>

@@ -21,6 +21,7 @@ namespace Tourist_Project.Applications.UseCases
         {
             HasReviews();
             HasUnratedGuests();
+            HasNewForum();
         }
 
         public Notification Create(Notification notification)
@@ -81,8 +82,12 @@ namespace Tourist_Project.Applications.UseCases
             if(forumRepository.GetAll().Count == 0) return;
             foreach (var forum in forumRepository.GetAll())
             {
-                if (GetAll().All(notification => notification.TypeId != forum.Id && accommodationRepository.GetLocationIds(App.LoggedInUser.Id).Contains(forum.LocationId)))
+                if ((notificationRepository.GetAllByType("Forum").Count == 0 || notificationRepository.GetAllByType("Forum").All(c => c.TypeId != forum.Id)) && accommodationRepository.GetLocationIds(App.LoggedInUser.Id).Contains(forum.LocationId))
                     Create(new Notification("Forum", false, forum.Id));
+                
+                /*
+                if (GetAll().All(notification =>  notification.TypeId != forum.Id && accommodationRepository.GetLocationIds(App.LoggedInUser.Id).Contains(forum.LocationId)))
+                */
             }
         }
     }

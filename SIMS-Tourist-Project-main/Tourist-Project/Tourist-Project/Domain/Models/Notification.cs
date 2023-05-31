@@ -83,7 +83,7 @@ namespace Tourist_Project.Domain.Models
             return Type switch
             {
                 "GuestRate" => "You have unrated guest.",
-                "Forum" => "A new forum has opened. Check it out",
+                "Forum" => "A new forum has opened.\n Check it out.",
                 "Recommended" => "You have a new \nrecommendation.",
                 "Reviews" => "NEW!\nGuest has rated your \naccommodation.",
                 _ => string.Empty

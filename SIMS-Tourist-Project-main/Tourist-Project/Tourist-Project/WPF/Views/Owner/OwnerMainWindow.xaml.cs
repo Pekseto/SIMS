@@ -13,7 +13,7 @@ namespace Tourist_Project.WPF.Views.Owner
         public OwnerMainWindow(User user)
         {
             InitializeComponent();
-            DataContext = new OwnerMainWindowViewModel(this, user);
+            DataContext = new OwnerMainWindowViewModel(this);
         }
     }
 }

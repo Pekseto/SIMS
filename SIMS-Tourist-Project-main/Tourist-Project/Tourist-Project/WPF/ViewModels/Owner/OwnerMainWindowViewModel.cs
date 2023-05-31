@@ -112,7 +112,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand ShowStatisticsCommand { get; set; }
         #endregion
 
-        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
+        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
         {
             OwnerMainWindow = ownerMainWindow;
             #region CommandInstanting
@@ -129,12 +129,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             ShowStatisticsCommand = new RelayCommand(ShowStatistics);
             #endregion
             #region CollectionInstanting
-            User = userService.GetOne(user.Id);
+            User = App.LoggedInUser;
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
             GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
+            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false));
             #endregion
             Rating = accommodationRatingService.getRating().ToString("F3");
             showSuper();

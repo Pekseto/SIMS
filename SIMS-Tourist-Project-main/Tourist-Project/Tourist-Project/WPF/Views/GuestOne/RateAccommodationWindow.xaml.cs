@@ -27,10 +27,5 @@ namespace Tourist_Project.WPF.Views
             InitializeComponent();
             this.DataContext = new RateAccommodationViewModel(this, user);
         }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

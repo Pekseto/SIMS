@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project
 {
@@ -7,6 +8,7 @@ namespace Tourist_Project
     /// </summary>
     public partial class App : Application
     {
+        public static User LoggedInUser { get; set; }
         public void ChangeLanguage(string currLang)
         {
             if (currLang.Equals("en-US"))

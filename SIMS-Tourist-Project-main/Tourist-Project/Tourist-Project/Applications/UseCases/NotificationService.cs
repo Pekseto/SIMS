@@ -14,9 +14,13 @@ namespace Tourist_Project.Applications.UseCases
         private readonly IAccommodationRatingRepository accommodationRatingRepository = injector.CreateInstance<IAccommodationRatingRepository>();
         private readonly IGuestRateRepository guestRateRepository = injector.CreateInstance<IGuestRateRepository>();
         private readonly IReservationRepository reservationRepository = injector.CreateInstance<IReservationRepository>();
+        private readonly IForumRepository forumRepository = injector.CreateInstance<IForumRepository>();
+        private readonly IAccommodationRepository accommodationRepository = injector.CreateInstance<IAccommodationRepository>();
         private readonly GuestRateService guestRateService = new();
         public NotificationService()
         {
+            HasReviews();
+            HasUnratedGuests();
         }
 
         public Notification Create(Notification notification)
@@ -69,6 +73,16 @@ namespace Tourist_Project.Applications.UseCases
                 {
                     Create(new Notification("GuestRate", true, guestRate.Id));
                 }
+            }
+        }
+
+        public void HasNewForum()
+        {
+            if(forumRepository.GetAll().Count == 0) return;
+            foreach (var forum in forumRepository.GetAll())
+            {
+                if (GetAll().All(notification => notification.TypeId != forum.Id && accommodationRepository.GetLocationIds(App.LoggedInUser.Id).Contains(forum.LocationId)))
+                    Create(new Notification("Forum", false, forum.Id));
             }
         }
     }

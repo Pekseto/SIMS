@@ -53,6 +53,7 @@ namespace Tourist_Project.WPF.Views
             {
                 if (user.Password == txtPassword.Password)
                 {
+                    Tourist_Project.App.LoggedInUser = user;
                     switch (user.Role)
                     {
                         case UserRole.owner:

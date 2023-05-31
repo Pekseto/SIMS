@@ -64,6 +64,19 @@ namespace Tourist_Project.Repositories
             return accommodations.Find(c => c.Id == id);
         }
 
-        
+        public List<Accommodation> GetByUser(int userId)
+        {
+            return accommodations.FindAll(accommodation => accommodation.UserId == userId);
+        }
+
+        public List<int> GetLocationIds(int userId)
+        {
+            var locations = new List<int>();
+            foreach (var accommodation in GetByUser(userId).Where(accommodation => !locations.Contains(accommodation.LocationId)))
+            {
+                locations.Add(accommodation.LocationId);
+            }
+            return locations;
+        }
     }
 }

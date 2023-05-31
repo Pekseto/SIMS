@@ -48,9 +48,7 @@ namespace Tourist_Project.Domain.Models
 
         public List<int> CommentsIds { get; set; } = new();
 
-        public Forum()
-        {
-        }
+        public Forum() { }
 
         public Forum(int locationId, string commentsIdsCsv)
         {

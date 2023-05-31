@@ -42,6 +42,16 @@ namespace Tourist_Project.Applications.UseCases
             accommodationRepository.Delete(id);
         }
 
+        public List<Accommodation> GetByUser(int userId)
+        {
+            return accommodationRepository.GetByUser(userId);
+        }
+
+        public List<int> GetLocationsIds(int userId)
+        {
+            return accommodationRepository.GetLocationIds(userId);
+        }
+
         public void IsRecentlyRenovated()
         {
             foreach (var accommodation in GetAll())

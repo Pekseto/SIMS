@@ -69,6 +69,18 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 OnPropertyChanged();
             }
         }
+
+        private ObservableCollection<Notification> forums;
+        public ObservableCollection<Notification> Forums
+        {
+            get => forums;
+            set
+            {
+                if(value == forums) return;
+                forums = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #region Services
         private static AccommodationService accommodationService = new();
@@ -103,8 +115,6 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow, User user)
         {
             OwnerMainWindow = ownerMainWindow;
-            notificationService.HasUnratedGuests();
-            notificationService.HasReviews();
             #region CommandInstanting
             CreateCommand = new RelayCommand(Create);
             UpdateCommand = new RelayCommand(Update, CanUpdate);

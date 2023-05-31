@@ -11,5 +11,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public void Delete(int id);
         public Accommodation Update(Accommodation accommodation);
         public Accommodation GetById(int id);
+        public List<Accommodation> GetByUser(int userId);
+        public List<int> GetLocationIds(int userId);
     }
 }

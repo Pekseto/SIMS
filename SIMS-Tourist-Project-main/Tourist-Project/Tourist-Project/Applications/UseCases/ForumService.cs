@@ -9,9 +9,7 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IForumRepository forumRepository = injector.CreateInstance<IForumRepository>();
-        public ForumService()
-        {
-        }
+        public ForumService() { }
 
         public Forum Create(Forum forum)
         {

@@ -281,21 +281,33 @@
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="17,0,475,-20">
+                <GroupBox Header="Guest Ratings(F1)" Margin="17,0,415,-20">
                     <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"
                                  SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"
-                                 Height="119"></ListBox>
+                                 Height="119" Width="205"></ListBox>
                         <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Reviews(F2)" Margin="209,0,282,-20">
+                <GroupBox Header="Reviews(F2)" Margin="247,0,182,-20">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
-                                 Height="119"></ListBox>
+                                 Height="119" Width="205"></ListBox>
                         <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Forums(F3)" Margin="481,0,-49,-20">
+                    <StackPanel>
+                        <ListBox Height="119" Width="205"></ListBox>
+                        <Button Height="38" Width="auto" Content="Show forums(F)" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Recommendations(F4)" Margin="713,0,-284,-20">
+                    <StackPanel>
+                        <ListBox Height="119" Width="205"></ListBox>
+                        <Button Height="38" Width="auto" Content="Show recommendations(M)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

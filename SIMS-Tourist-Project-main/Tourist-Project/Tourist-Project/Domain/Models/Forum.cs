@@ -46,14 +46,42 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
+        private bool isClosed;
+
+        public bool IsClosed
+        {
+            get => isClosed;
+            set
+            {
+                if(value == isClosed) return;
+                isClosed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int userId;
+
+        public int UserId
+        {
+            get => userId;
+            set
+            {
+                if(userId == value) return;
+                userId = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<int> CommentsIds { get; set; } = new();
 
         public Forum() { }
 
-        public Forum(int locationId, string commentsIdsCsv)
+        public Forum(int locationId, string commentsIdsCsv, bool isClosed, int userId)
         {
             LocationId = locationId;
             CommentsIdsCsv = commentsIdsCsv;
+            IsClosed = isClosed;
+            UserId = userId;
         }
 
 
@@ -71,6 +99,8 @@ namespace Tourist_Project.Domain.Models
             {
                 Id.ToString(),
                 LocationId.ToString(),
+                IsClosed.ToString(),
+                UserId.ToString(),
                 CommentsIdsCsv
             };
             return csvValues;
@@ -80,7 +110,9 @@ namespace Tourist_Project.Domain.Models
         {
             Id = Convert.ToInt32(values[0]);
             LocationId = Convert.ToInt32(values[1]);
-            CommentsIdsCsv = values[2];
+            IsClosed = Convert.ToBoolean(values[2]);
+            UserId = Convert.ToInt32(values[3]);
+            CommentsIdsCsv = values[4];
             CommentsIdsFromCsv(CommentsIdsCsv);
         }
 

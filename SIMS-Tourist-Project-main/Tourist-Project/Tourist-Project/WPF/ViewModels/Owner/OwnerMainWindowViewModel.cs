@@ -110,6 +110,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand RenovateCommand { get; set; }
         public ICommand ShowRenovationsCommand { get; set; }
         public ICommand ShowStatisticsCommand { get; set; }
+        public ICommand ShowForumsCommand { get; set; }
         #endregion
 
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
@@ -127,6 +128,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             ShowRenovationsCommand = new RelayCommand(ShowRenovations);
             ShowStatisticsCommand = new RelayCommand(ShowStatistics);
+            ShowForumsCommand = new RelayCommand(ShowForums);
             #endregion
             #region CollectionInstanting
             User = App.LoggedInUser;
@@ -252,6 +254,19 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             var showStatistics = new YearlyStatistics(SelectedAccommodation);
             showStatistics.ShowDialog();
+        }
+
+        public void ShowForums()
+        {
+            var showForums = new Forums();
+            foreach (var notification in Forums)
+            {
+                notification.IsNotified = true;
+                notificationService.Update(notification);
+            }
+            Forums.Clear();
+            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum"));
+            showForums.ShowDialog();
         }
         #endregion
 

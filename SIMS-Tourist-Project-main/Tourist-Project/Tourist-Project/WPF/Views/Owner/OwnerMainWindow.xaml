@@ -237,6 +237,7 @@
         <KeyBinding  Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Shift" Command="{Binding ShowRenovationsCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Alt" Command="{Binding ShowStatisticsCommand}"></KeyBinding>
+        <KeyBinding  Key="M" Command="{Binding ShowForumsCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -303,7 +304,7 @@
                         <ListBox ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
                                 Height="119" Width="205"></ListBox>
-                        <Button Height="38" Width="auto" Content="Show forums(F)" VerticalAlignment="Bottom"/>
+                        <Button Height="38" Width="auto" Content="Show forums(F)" Command="{Binding ShowForumsCommand}" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Recommendations(F4)" Margin="713,0,-284,-20">

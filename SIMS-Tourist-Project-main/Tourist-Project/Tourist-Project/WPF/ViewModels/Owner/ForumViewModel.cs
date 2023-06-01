@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 public class ForumViewModel : INotifyPropertyChanged
 {
@@ -54,9 +55,9 @@ public class ForumViewModel : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<Comment> comments;
+    private ObservableCollection<CommentViewModel> comments;
 
-    public ObservableCollection<Comment> Comments
+    public ObservableCollection<CommentViewModel> Comments
     {
         get => comments;
         set
@@ -66,6 +67,8 @@ public class ForumViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    public CommentViewModel SelectedComment { get; set; }
 
     private readonly AccommodationService accommodationService = new();
     private readonly LocationService locationService = new();
@@ -79,7 +82,7 @@ public class ForumViewModel : INotifyPropertyChanged
         User = userService.GetOne(Forum.UserId);
         Location = locationService.Get(Forum.LocationId);
         Accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll().Where(accommodation => accommodation.LocationId == Forum.LocationId));
-        Comments = new ObservableCollection<Comment>(commentService.GetAll().Where(comment => Forum.CommentsIds.Contains(comment.Id)));
+        Comments = new ObservableCollection<CommentViewModel>(commentService.GetAll().Where(comment => Forum.CommentsIds.Contains(comment.Id)).Select(comment => new CommentViewModel(comment, accommodations.Count != 0, Forum)));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

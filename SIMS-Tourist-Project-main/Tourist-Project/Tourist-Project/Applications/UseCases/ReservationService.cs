@@ -12,6 +12,8 @@ namespace Tourist_Project.Applications.UseCases
         private readonly IReservationRepository reservationRepository =
             injector.CreateInstance<IReservationRepository>();
 
+        private readonly IAccommodationRepository accommodationRepository =
+            injector.CreateInstance<IAccommodationRepository>();
 
         public ReservationService()
         {
@@ -58,6 +60,11 @@ namespace Tourist_Project.Applications.UseCases
             return GetAllByAccommodation(accommodationId).Where(reservation =>
                 (reservation.CheckIn > dateSpan.StartingDate && reservation.CheckIn < dateSpan.EndingDate) ||
                 (reservation.CheckOut > dateSpan.StartingDate && reservation.CheckOut < dateSpan.EndingDate)).OrderBy(o=>o.CheckIn).ToList();
+        }
+
+        public bool WasOnLocation(int userId, int locationId)
+        {
+            return GetAll().Any(reservation => reservation.GuestId == userId && accommodationRepository.GetById(reservation.AccommodationId).LocationId == locationId);
         }
     }
 

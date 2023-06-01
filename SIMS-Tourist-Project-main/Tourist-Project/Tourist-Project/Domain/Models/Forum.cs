@@ -120,9 +120,9 @@ namespace Tourist_Project.Domain.Models
         {
             if (CommentsIds.Count <= 0) return;
             CommentsIdsCsv = string.Empty;
-            foreach (var imageIde in CommentsIds)
+            foreach (var commentIde in CommentsIds)
             {
-                CommentsIdsCsv += imageIde + ",";
+                CommentsIdsCsv += commentIde + ",";
             }
             CommentsIdsCsv = CommentsIdsCsv.Remove(CommentsIdsCsv.Length - 1);
         }

@@ -11,7 +11,7 @@ namespace Tourist_Project.Applications.UseCases
         private static readonly Injector injector = new();
 
         private readonly IAccommodationRepository accommodationRepository = injector.CreateInstance<IAccommodationRepository>();
-        private readonly RenovationService renovationService = new();
+        private readonly IRenovationRepository renovationRepository = injector.CreateInstance<IRenovationRepository>();
         
         public AccommodationService()
         {
@@ -52,11 +52,23 @@ namespace Tourist_Project.Applications.UseCases
             return accommodationRepository.GetLocationIds(userId);
         }
 
+        public List<int> GetAccommodationIds(int locationId)
+        {
+            var accommodationIds = new List<int>();
+            foreach (var accommodation in GetAll())
+            {
+                if (accommodation.LocationId == locationId) ;
+                accommodationIds.Add(accommodation.Id);
+            }
+
+            return accommodationIds;
+        }
+
         public void IsRecentlyRenovated()
         {
             foreach (var accommodation in GetAll())
             {
-                foreach (var renovation in renovationService.GetAll()
+                foreach (var renovation in renovationRepository.GetAll()
                              .Where(renovation => renovation.AccommodationId == accommodation.Id))
                 {
                     if ((DateTime.Now - renovation.RenovatingSpan.EndingDate).Days is < 365 and > 0)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
@@ -9,11 +10,8 @@ namespace Tourist_Project.Applications.UseCases
     {
         private static readonly Injector injector = new();
 
-        private readonly IReservationRepository reservationRepository =
-            injector.CreateInstance<IReservationRepository>();
-
-        private readonly IAccommodationRepository accommodationRepository =
-            injector.CreateInstance<IAccommodationRepository>();
+        private readonly IReservationRepository reservationRepository = injector.CreateInstance<IReservationRepository>();
+        private readonly AccommodationService accommodationService = new();
 
         public ReservationService()
         {
@@ -51,8 +49,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public List<Reservation> FindReservationsForAccommodation(Accommodation selectedAccommodation)
         {
-            List<Reservation> reservationsForAccommodation = reservationRepository.GetByAccommodation(selectedAccommodation);
-            return reservationsForAccommodation;
+            return reservationRepository.GetByAccommodation(selectedAccommodation);
         }
 
         public List<Reservation> GetAllOrderedInDateSpan(DateSpan dateSpan, int accommodationId)
@@ -64,7 +61,19 @@ namespace Tourist_Project.Applications.UseCases
 
         public bool WasOnLocation(int userId, int locationId)
         {
-            return GetAll().Any(reservation => reservation.GuestId == userId && accommodationRepository.GetById(reservation.AccommodationId).LocationId == locationId);
+            return GetAll().Any(reservation => reservation.GuestId == userId && accommodationService.Get(reservation.AccommodationId).LocationId == locationId);
+        }
+        
+        public List<Reservation> GetReservationsOnLocation(int locationId)
+        {
+            return GetAll().Where(reservation => accommodationService.GetAccommodationIds(locationId).Contains(reservation.AccommodationId)).ToList();
+        }
+
+        public int GetOccupancyOnLocation(int locationId)
+        {
+            return GetReservationsOnLocation(locationId)
+                .Where(reservation => (DateTime.Now - reservation.CheckIn).Days < 100)
+                .Sum(reservation => (reservation.CheckOut - reservation.CheckIn).Days);
         }
     }
 

@@ -82,7 +82,7 @@ namespace Tourist_Project.Domain.Models
         {
             return Type switch
             {
-                "GuestRate" => "You have unrated guest.",
+                "GuestRate" => "You have unrated \nguest.",
                 "Forum" => "A new forum has opened.\n Check it out.",
                 "Recommended" => "You have a new \nrecommendation.",
                 "Reviews" => "NEW!\nGuest has rated your \naccommodation.",

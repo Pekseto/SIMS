@@ -81,6 +81,29 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 OnPropertyChanged();
             }
         }
+
+        private ObservableCollection<LocationStatisticsViewModel> recommendationsByReservation;
+        public ObservableCollection<LocationStatisticsViewModel> RecommendationsByReservation
+        {
+            get => recommendationsByReservation;
+            set
+            {
+                if(value == recommendationsByReservation) return;
+                recommendationsByReservation = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<LocationStatisticsViewModel> recommendationsByOccupancy;
+        public ObservableCollection<LocationStatisticsViewModel> RecommendationsByOccupancy
+        {
+            get => recommendationsByOccupancy;
+            set
+            {
+                if(value == recommendationsByOccupancy) return;
+                recommendationsByOccupancy = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #region Services
         private static AccommodationService accommodationService = new();
@@ -97,6 +120,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         #endregion
         public static User User { get; set; }
         public OwnerMainWindow OwnerMainWindow { get; set; }
+        public LocationStatisticsViewModel BestLocationByReservation { get; set; }
+        public LocationStatisticsViewModel BestLocationByOccupancy { get; set; }
+        public LocationStatisticsViewModel WorstLocationByReservation { get; set; }
+        public LocationStatisticsViewModel WorstLocationByOccupancy { get; set; }
         public string Rating { get; set; }
         #region Commands
         public ICommand CreateCommand { get; set; }
@@ -127,7 +154,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             ShowRenovationsCommand = new RelayCommand(ShowRenovations);
-            ShowStatisticsCommand = new RelayCommand(ShowStatistics);
+            ShowStatisticsCommand = new RelayCommand(ShowStatistics, CanShowStatistics);
             ShowForumsCommand = new RelayCommand(ShowForums);
             #endregion
             #region CollectionInstanting
@@ -138,6 +165,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
             Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false));
+            RecommendationsByReservation = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderBy(o => o.ReservationNo));
+            RecommendationsByOccupancy = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderBy(o => o.Occupancy));
             #endregion
             Rating = accommodationRatingService.getRating().ToString("F3");
             showSuper();
@@ -254,6 +283,11 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             var showStatistics = new YearlyStatistics(SelectedAccommodation);
             showStatistics.ShowDialog();
+        }
+
+        public bool CanShowStatistics()
+        {
+            return SelectedAccommodation != null;
         }
 
         public void ShowForums()

@@ -237,7 +237,7 @@
         <KeyBinding  Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Shift" Command="{Binding ShowRenovationsCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Alt" Command="{Binding ShowStatisticsCommand}"></KeyBinding>
-        <KeyBinding  Key="M" Command="{Binding ShowForumsCommand}"></KeyBinding>
+        <KeyBinding  Key="F" Command="{Binding ShowForumsCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -282,35 +282,41 @@
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
-                <GroupBox Header="Guest Ratings(F1)" Margin="17,0,415,-20">
+                <GroupBox Header="Guest Ratings(F1)" Margin="17,0,465,-20" HorizontalAlignment="Left">
                     <StackPanel Margin="0,0,0,0">
                         <ListBox ItemsSource="{Binding GuestRatingNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource GuestRatingDataTemplate}"
                                  SelectedItem="{Binding SelectedRating, UpdateSourceTrigger=PropertyChanged}"
-                                 Height="119" Width="205"></ListBox>
+                                 Height="119" Width="155"></ListBox>
                         <Button Height="38" Width="auto" Content="Rate(R)" Command="{Binding RateCommand}" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Reviews(F2)" Margin="247,0,182,-20">
+                <GroupBox Header="Reviews(F2)" Margin="197,0,252,-20" HorizontalAlignment="Left">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding ReviewNotifications, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
-                                 Height="119" Width="205"></ListBox>
-                        <Button Height="38" Width="auto" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
+                                 Height="119" Width="155"></ListBox>
+                        <Button Height="38" Width="170" Content="Show reviews(S)" VerticalAlignment="Bottom" Command="{Binding ShowReviewsCommand}"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Forums(F3)" Margin="481,0,-49,-20">
+                <GroupBox Header="Forums(F3)" Margin="391,0,59,-20" HorizontalAlignment="Left">
                     <StackPanel>
                         <ListBox ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
                                  ItemTemplate="{StaticResource ReviewsDataTemplate}"
-                                Height="119" Width="205"></ListBox>
-                        <Button Height="38" Width="auto" Content="Show forums(F)" Command="{Binding ShowForumsCommand}" VerticalAlignment="Bottom"/>
+                                Height="119" Width="155"></ListBox>
+                        <Button Height="38" Width="170" Content="Show forums(F)" Command="{Binding ShowForumsCommand}" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Recommendations(F4)" Margin="713,0,-284,-20">
+                <GroupBox Header="Create recommendation(F4)" Margin="583,0,-94,-20">
                     <StackPanel>
-                        <ListBox Height="119" Width="205"></ListBox>
-                        <Button Height="38" Width="auto" Content="Show recommendations(M)" VerticalAlignment="Bottom"/>
+                        <ListBox Height="119" Width="155"></ListBox>
+                        <Button Height="38" Width="auto" Content="Recommendations(M)" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Delete recommendation(F4)" Margin="763,0,-284,-20">
+                    <StackPanel>
+                        <ListBox Height="119" Width="155"></ListBox>
+                        <Button Height="38" Width="auto" Content="Recommendations(Shift+M)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>

@@ -54,10 +54,24 @@ public class ForumViewModel : INotifyPropertyChanged
         }
     }
 
+    private ObservableCollection<Comment> comments;
+
+    public ObservableCollection<Comment> Comments
+    {
+        get => comments;
+        set
+        {
+            if(comments == value) return;
+            comments = value;
+            OnPropertyChanged();
+        }
+    }
+
     private readonly AccommodationService accommodationService = new();
     private readonly LocationService locationService = new();
     private readonly ForumService forumService = new();
     private readonly UserService userService = new();
+    private readonly CommentService commentService = new();
 
     public ForumViewModel(int forumId)
     {
@@ -65,6 +79,7 @@ public class ForumViewModel : INotifyPropertyChanged
         User = userService.GetOne(Forum.UserId);
         Location = locationService.Get(Forum.LocationId);
         Accommodations = new ObservableCollection<Accommodation>(accommodationService.GetAll().Where(accommodation => accommodation.LocationId == Forum.LocationId));
+        Comments = new ObservableCollection<Comment>(commentService.GetAll().Where(comment => Forum.CommentsIds.Contains(comment.Id)));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

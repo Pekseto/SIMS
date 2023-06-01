@@ -20,11 +20,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
-        private readonly NotificationService notificationService = new();
+        private readonly ForumService forumService = new();
 
         public ShowForumsViewModel()
         {
-            Forums = new ObservableCollection<ForumViewModel>(notificationService.GetAllByType("Forum").Select(notification => new ForumViewModel(notification.TypeId)));
+            //Forums = new ObservableCollection<ForumViewModel>(notificationService.GetAllByType("Forum").Select(notification => new ForumViewModel(notification.TypeId)));
+            Forums = new ObservableCollection<ForumViewModel>(forumService.GetAll().Select(forum => new ForumViewModel(forum.Id)));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

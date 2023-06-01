@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
         mc:Ignorable="d"
-        Title="Forums" Height="450" Width="800">
+        Title="Forums" Height="510" Width="600">
     <Window.Resources>
+        <DataTemplate x:Key="CommentDataTemplate">
+            <Grid>
+                <TextBox Text="{Binding CommentText}" Margin="20,10,150,80" IsEnabled="False" TextWrapping="Wrap"></TextBox>
+                <Label Content="No of Reports:" Margin="20,0,20,0" FontSize="16" HorizontalAlignment="Right"></Label>
+                <Label Content="{Binding ReportNo}" Margin="20,30,20,80" HorizontalAlignment="Right"></Label>
+                <Button Content="Report Comment(Shift+C)" VerticalAlignment="Bottom" Margin="260,100,20,10"></Button>
+                <Button Content="Reply(Shift+R)" VerticalAlignment="Bottom" Margin="20,100,260,10"></Button>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ForumDataTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Forum on location:" FontSize="26" FontWeight="Bold" HorizontalAlignment="Left" Margin="20,0,20,0"></Label>
+                <Label Content="{Binding Location}" Margin="280,10,20,20" Foreground="#F76A14"></Label>
+                <Label Content="Opened by:" Margin="20, 40, 20, 20"></Label>
+                <Label Content="{Binding User.FullName}" Margin="280, 40, 10, 10" Foreground="#F76A14"></Label>
+                <Label Content="Your accommodations on this location:"  Margin="20,90,20,20"></Label>
+                <DataGrid ItemsSource="{Binding Accommodations}" Margin="-180,130,20,50" Width="300" Height="auto"
+                          AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Type" Width="*" Binding="{Binding Type}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="MaxGuests" Width="*" Binding="{Binding MaxGuestNum}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label Grid.Row="0" Content="Comments:" Margin="20,210,0,0"></Label>
+                <StackPanel Grid.Row="1" Height="300">
+                    <ListBox ItemsSource="{Binding Comments, UpdateSourceTrigger=PropertyChanged}" Margin="25,0,20,50" Height="150"
+                             ItemTemplate="{StaticResource CommentDataTemplate}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
         <Style x:Key="{x:Type Label}" TargetType="Label">
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
             <Setter Property="FontSize" Value="18"></Setter>
@@ -17,6 +52,7 @@
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Height" Value="38"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -191,6 +227,7 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <ListBox Background="#d9eeef" Height="475" ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+        <ListBox Background="#d9eeef" Width="585" Height="465" ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
+                 ItemTemplate="{StaticResource ForumDataTemplate}"></ListBox>
     </Grid>
 </Window>

@@ -26,7 +26,7 @@ namespace Tourist_Project.Domain.Models
 
         private string commentText;
 
-        private string CommentText
+        public string CommentText
         {
             get => commentText;
             set

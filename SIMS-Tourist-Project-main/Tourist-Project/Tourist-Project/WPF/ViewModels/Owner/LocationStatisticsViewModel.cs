@@ -52,7 +52,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             Location = locationService.Get(locationId);
             AccommodationNo = accommodationService.GetAccommodationIds(Location.Id).Count;
             ReservationNo = reservationService.GetReservationsOnLocation(Location.Id).Count;
-            Occupancy = reservationService.GetOccupancyOnLocation(Location.Id);
+            if (AccommodationNo == 0)
+                Occupancy = 0;
+            else
+                Occupancy = reservationService.GetOccupancyOnLocation(locationId) / accommodationNo;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

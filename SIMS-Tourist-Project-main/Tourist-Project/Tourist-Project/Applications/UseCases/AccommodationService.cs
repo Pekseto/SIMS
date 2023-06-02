@@ -54,14 +54,7 @@ namespace Tourist_Project.Applications.UseCases
 
         public List<int> GetAccommodationIds(int locationId)
         {
-            var accommodationIds = new List<int>();
-            foreach (var accommodation in GetAll())
-            {
-                if (accommodation.LocationId == locationId) ;
-                accommodationIds.Add(accommodation.Id);
-            }
-
-            return accommodationIds;
+            return (from accommodation in GetAll() where accommodation.LocationId == locationId select accommodation.Id).ToList();
         }
 
         public void IsRecentlyRenovated()

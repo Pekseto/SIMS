@@ -309,13 +309,19 @@
                 </GroupBox>
                 <GroupBox Header="Create recommendation(F4)" Margin="583,0,-94,-20">
                     <StackPanel>
-                        <ListBox Height="119" Width="155"></ListBox>
+                        <Label Content="Best by reservation number:"></Label>
+                        <Label Content="{Binding BestLocationByReservation.Location}"></Label>
+                        <Label Content="Best by Occupancy:"></Label>
+                        <Label Content="{Binding BestLocationByOccupancy.Location}"></Label>
                         <Button Height="38" Width="auto" Content="Recommendations(M)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Delete recommendation(F4)" Margin="763,0,-284,-20">
+                <GroupBox Header="Closure recommendation(F5)" Margin="763,0,-284,-20">
                     <StackPanel>
-                        <ListBox Height="119" Width="155"></ListBox>
+                        <Label Content="Worst by reservation number:"></Label>
+                        <Label Content="{Binding WorstLocationByReservation.Location}"></Label>
+                        <Label Content="Worst by Occupancy:"></Label>
+                        <Label Content="{Binding WorstLocationByOccupancy.Location}"></Label>
                         <Button Height="38" Width="auto" Content="Recommendations(Shift+M)" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>

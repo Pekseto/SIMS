@@ -165,8 +165,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
             Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false));
-            RecommendationsByReservation = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderBy(o => o.ReservationNo));
-            RecommendationsByOccupancy = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderBy(o => o.Occupancy));
+            RecommendationsByReservation = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderByDescending(o => o.ReservationNo));
+            BestLocationByReservation = RecommendationsByReservation.First();
+            WorstLocationByReservation = RecommendationsByReservation.Last();
+            RecommendationsByOccupancy = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderByDescending(o => o.Occupancy));
+            BestLocationByOccupancy = RecommendationsByOccupancy.First();
+            WorstLocationByOccupancy = RecommendationsByOccupancy.Last();
             #endregion
             Rating = accommodationRatingService.getRating().ToString("F3");
             showSuper();

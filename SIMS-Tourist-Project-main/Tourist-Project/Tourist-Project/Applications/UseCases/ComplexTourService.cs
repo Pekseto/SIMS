@@ -54,6 +54,15 @@ namespace Tourist_Project.Applications.UseCases
             foreach (var complexTour in complexTours)
             {
                 var tourRequests = tourRequestRepository.GetAllForComplexTour(complexTour.Id);
+                var areAllAccepted = tourRequests.All(tourRequest => tourRequest.Status == TourRequestStatus.Accepted);
+
+                if (areAllAccepted)
+                {
+                    complexTour.Status = ComplexTourStatus.Accepted;
+                    Update(complexTour);
+                    continue;
+                }
+                
                 var firstTour = tourRequests.Find(tr => tr.UntilDate == tourRequests.Min(tr => tr.UntilDate));
                 if (firstTour.UntilDate.Date <= DateTime.Today.AddDays(2).Date)
                 {
@@ -66,12 +75,6 @@ namespace Tourist_Project.Applications.UseCases
                         tourRequestRepository.DenyAllForComplexTour(complexTour.Id);
                     }
                 }
-
-                var areAllAccepted = tourRequests.All(tourRequest => tourRequest.Status == TourRequestStatus.Accepted);
-
-                if (!areAllAccepted) continue;
-                complexTour.Status = ComplexTourStatus.Accepted;
-                Update(complexTour);
             }
         }
 

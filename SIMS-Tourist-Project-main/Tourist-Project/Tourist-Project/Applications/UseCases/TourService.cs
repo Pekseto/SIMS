@@ -292,5 +292,10 @@ namespace Tourist_Project.Applications.UseCases
             }
             
         }
+
+        public List<Tour> GetPastYearTours()
+        {
+            return repository.GetPastYearTours();
+        }
     }
 }

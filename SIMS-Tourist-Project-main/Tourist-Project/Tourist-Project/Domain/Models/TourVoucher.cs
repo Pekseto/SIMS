@@ -41,6 +41,23 @@ namespace Tourist_Project.Domain.Models
             };
         }
 
+        public TourVoucher(int touristsId, string wayAcquired, DateTime expireDate, int guideId = -1, int tourId = -1)
+        {
+            TouristId = touristsId;
+            TourId = tourId;
+            ExpireDate = expireDate;
+            GuideId = guideId;
+            WayAcquired = wayAcquired;
+
+            var random = new Random();
+            Name = random.Next(3) switch
+            {
+                0 => "Discount 15e",
+                1 => "Free tour",
+                _ => "Discount 30%",
+            };
+        }
+
         public string[] ToCSV()
         {
             string[] cssValues =

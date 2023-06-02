@@ -53,6 +53,7 @@ namespace Tourist_Project.WPF.ViewModels
             ExitCommand = new RelayCommand(OnExitClick);
 
             voucherService.DeleteInvalidVouchers(LoggedUser.Id);
+            voucherService.ClaimFiveToursInAYearVoucher(LoggedUser.Id);
             requestService.UpdateInvalidRequests(LoggedUser.Id);
             complexTourService.UpdateComplexTourStatusesForUser(LoggedUser.Id);
         }

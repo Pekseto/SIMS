@@ -27,6 +27,7 @@ namespace Tourist_Project.WPF.ViewModels
         private string selectedStatYear;
         private double avgGuests;
         private ObservableCollection<string> cities;
+        private ObservableCollection<TourRequest> requests;
 
 
         public SeriesCollection LanguagesChart
@@ -72,6 +73,7 @@ namespace Tourist_Project.WPF.ViewModels
                 if (value != selectedStatYear)
                 {
                     selectedStatYear = value;
+                    Requests = new ObservableCollection<TourRequest>(requestService.GetForSelectedYear(LoggedUser.Id, value));
                     AcceptedPercent = requestService.GetAcceptedPercentage(LoggedUser.Id, value);
                     DeniedPercent = requestService.GetDeniedPercentage(LoggedUser.Id, value);
                     AvgGuests = requestService.GetAverageGuests(LoggedUser.Id, value);
@@ -124,7 +126,20 @@ namespace Tourist_Project.WPF.ViewModels
                 }
             }
         }
-        public ObservableCollection<TourRequest> Requests { get; set; }
+
+        public ObservableCollection<TourRequest> Requests
+        {
+            get => requests;
+            set
+            {
+                foreach (var tourRequest in value)
+                {
+                    tourRequest.Location = locationService.Get(tourRequest.LocationId);
+                }
+                requests = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string SelectedCountry
         {
@@ -167,7 +182,7 @@ namespace Tourist_Project.WPF.ViewModels
             LanguagesChart = requestService.GetLanguageSeriesCollection(user.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(user.Id);
 
-            Requests = new ObservableCollection<TourRequest>(GetAllRequests());
+            //Requests = new ObservableCollection<TourRequest>(GetAllRequests());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             SelectedCountry = Countries.First();
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));

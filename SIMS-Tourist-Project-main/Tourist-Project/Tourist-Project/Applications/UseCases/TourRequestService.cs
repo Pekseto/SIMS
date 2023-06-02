@@ -95,16 +95,16 @@ namespace Tourist_Project.Applications.UseCases
                 return acceptedCount > 0 ? acceptedCount / requests.Count * 100 : 0;
             }
 
-            double selectedYearAcceptedCount = 0;
-            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
+            double selectedYearCount = 0;
+            foreach (var request in requests.Where(r =>  r.UntilDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
             {
-                selectedYearAcceptedCount++;
+                selectedYearCount++;
                 if (request.Status == TourRequestStatus.Accepted)
                 {
                     acceptedCount++;
                 }
             }
-            return acceptedCount > 0 ? acceptedCount / selectedYearAcceptedCount * 100 : 0;
+            return acceptedCount > 0 ? acceptedCount / selectedYearCount * 100 : 0;
 
         }
 
@@ -125,16 +125,16 @@ namespace Tourist_Project.Applications.UseCases
                 return deniedCount > 0 ? deniedCount / requests.Count * 100 : 0;
             }
 
-            double selectedYearDeniedCount = 0;
-            foreach (var request in requests.Where(r => r.UserId == userId && r.FromDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
+            double selectedYearCount = 0;
+            foreach (var request in requests.Where(r => r.UntilDate.Year == int.Parse(statYear) && r.ComplexTourId == -1))
             {
-                selectedYearDeniedCount++;
+                selectedYearCount++;
                 if (request.Status == TourRequestStatus.Denied)
                 {
                     deniedCount++;
                 }
             }
-            return deniedCount > 0 ? deniedCount / selectedYearDeniedCount * 100 : 0;
+            return deniedCount > 0 ? deniedCount / selectedYearCount * 100 : 0;
 
         }
 
@@ -417,6 +417,11 @@ namespace Tourist_Project.Applications.UseCases
                 }
             }
             return statistics;
+        }
+
+        public List<TourRequest> GetForSelectedYear(int userId, string year)
+        {
+            return requestRepository.GetForSelectedYear(userId, year);
         }
     }
 }

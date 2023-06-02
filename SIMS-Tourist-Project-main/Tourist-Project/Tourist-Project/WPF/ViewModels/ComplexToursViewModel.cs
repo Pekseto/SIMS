@@ -27,7 +27,7 @@ namespace Tourist_Project.WPF.ViewModels
             set
             {
                 selectedComplexTour = value;
-                TourRequests = new ObservableCollection<TourRequest>(tourRequestService.GetAllForComplexTour(value.Id, LoggedUser.Id));
+                TourRequests = new ObservableCollection<TourRequest>(tourRequestService.GetAllForComplexTour(value.Id));
                 OnPropertyChanged();
             }
         }

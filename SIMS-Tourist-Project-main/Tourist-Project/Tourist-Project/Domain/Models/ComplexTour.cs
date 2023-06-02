@@ -17,13 +17,14 @@ namespace Tourist_Project.Domain.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public ComplexTourStatus Status { get; set; } = ComplexTourStatus.Pending;
+        public ComplexTourStatus Status { get; set; }
         public ComplexTour() { }
 
         public ComplexTour(int complexTourId, int loggedUserId)
         {
             Id = complexTourId;
             UserId = loggedUserId;
+            Status = ComplexTourStatus.Pending;
         }
 
         public string[] ToCSV()

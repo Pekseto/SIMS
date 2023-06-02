@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
 
 namespace Tourist_Project.WPF.Views.GuestOne
 {
@@ -19,9 +21,10 @@ namespace Tourist_Project.WPF.Views.GuestOne
     /// </summary>
     public partial class GuestOneHomeView : Window
     {
-        public GuestOneHomeView()
+        public GuestOneHomeView(User user)
         {
             InitializeComponent();
+            this.DataContext = new GuestOneHomeViewModel(user);
         }
     }
 }

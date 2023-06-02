@@ -53,6 +53,6 @@ namespace Tourist_Project.WPF.ViewModels
             _accommodationRatingService.Create(NewAccommodationRating);
 
         }
-        //sad jos moram da preuzmem podatke od SelectedAccommodation-a za upis u fajlove i to bi trebalo da je to
+        
     }
 }

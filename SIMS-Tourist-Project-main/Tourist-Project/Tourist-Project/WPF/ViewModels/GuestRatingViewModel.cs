@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Applications.UseCases;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Windows;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -17,6 +19,7 @@ namespace Tourist_Project.WPF.ViewModels
         private AccommodationRatingService _accommodationRatingService = new();
         private User _user;
 
+        private Window _window;
         public ObservableCollection<Reservation> ReservationsRatedOneGuest { get; set; } = new();
         public ObservableCollection<AccommodationRating> AccommodationsRatedByGuest { get; set; } = new();
 
@@ -27,16 +30,28 @@ namespace Tourist_Project.WPF.ViewModels
         public Guest LoggedGuest { get; set; } = new();
         
         public GuestRating SelectedGuestRating { get; set; } = new();
-        public GuestRatingViewModel(User user)
-        {
+
+        public ICommand Home_Command { get; set; }
+        public GuestRatingViewModel(Window window,User user)
+        {       
+            _window = window;
             _user = user;
             ReservationsRatedOneGuest = GetReservationsWhichRatedGuest(_user);// rezervacije koje su ocenile mog gosta
             AccommodationsRatedByGuest = _accommodationRatingService.GetGuestGivenRatings(_user);//rezervacije koje je ocenio moj gost                                                           //treba  da nadjem rezervacije koje je ocenio moj gost i onda da mu dam ocene koje su presek skupa rezervacije koje su njega ocenile i onih koje je on ocenio
             AllGuestRatings = GetAllGuestRatings(_user);//sve ocene koje su rezervacije mom dale gostu, ali sada kao objekti GuestRating
             FilteredGuestRatings = GetFilteredGuestRatings(_user);
-
+            Home_Command = new RelayCommand(HomeCommand, CanHome);
         }
 
+        private bool CanHome()
+        {
+            return true;
+        }
+
+        private void HomeCommand()
+        {
+            _window.Close();
+        }
 
         public ObservableCollection<Reservation> GetReservationsWhichRatedGuest(User user)//medju ovim rezervacijama treba da nadjem one koje su ocenile gosta
         {

@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestOne
 {
     /// <summary>
     /// Interaction logic for GuestRatingView.xaml
@@ -24,7 +24,7 @@ namespace Tourist_Project.WPF.Views
         public GuestRatingView(User user)
         {
             InitializeComponent();
-            this.DataContext = new GuestRatingViewModel(user);
+            this.DataContext = new GuestRatingViewModel(this,user);
         }
     }
 }

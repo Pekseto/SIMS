@@ -23,10 +23,23 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Search" FontSize="23" TextAlignment="Center" Width="90" Height="45" Margin="41,11,169,0" VerticalAlignment="Top"></TextBlock>
-            <TextBlock Grid.Row="1" Text="Your Reservations" FontSize="23" TextAlignment="Center" Width="200" Height="45" Margin="39,12,61,0" VerticalAlignment="Top"></TextBlock>
-            <TextBlock Grid.Row="2" Text="Book Accommodation" FontSize="23" TextAlignment="Center" Width="240" Height="45" VerticalAlignment="Center" Margin="42,0,18,0"></TextBlock>
-            <TextBlock Grid.Row="3" Text="Your Grades" FontSize="23" TextAlignment="Center" Width="150" Height="45" VerticalAlignment="Center" Margin="39,0,111,0"></TextBlock>
+            <Button Grid.Row="0" Content="Search" FontSize="23" Height="45"  VerticalAlignment="Top" Background="White" Margin="11,6,18,0" Command="{Binding Search_Command}"/>
+            <Button Grid.Row="1" Content="Your Reservations" FontSize="23" Height="45" Margin="11,12,18,0" VerticalAlignment="Top" Background="White" Command="{Binding UserReservations_Command}"/>
+            <Button Grid.Row="2" Content="Book Accommodation" FontSize="23" Height="45" VerticalAlignment="Center" Margin="11,0,18,0" Background="White" Command="{Binding BookAccommodation_Command}"/>
+            <Button Grid.Row="3" Content="Your Grades" FontSize="23" Height="45" VerticalAlignment="Center" Margin="11,0,18,0" Background="White" Command="{Binding UserRatings_Command}"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Status:" FontSize="23" Width="100" Margin="36,20,364,222" TextAlignment="Center" RenderTransformOrigin="0.566,0.471"/>
+            <TextBlock Text="Points:" FontSize="23" Width="100" Margin="40,140,360,106" TextAlignment="Center"/>
+            <TextBox Width="150" Height="45" Margin="183,18,167,221" BorderThickness="0"></TextBox>
+            <TextBox Width="150" Height="45" Margin="183,136,167,103" BorderThickness="0"></TextBox>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Label Content="Welcome" FontSize="25" Width="150" Height="45" Margin="37,36,313,68"></Label>
+            <TextBox Width="200" Height="45" Margin="154,40,146,64" BorderThickness="0"></TextBox>
+        </Grid>
+        <Grid>
+            <Image Source="https://www.last.fm/music/John+Coltrane/+images/9c2c93bff940b7221e678726d3647c24" Width="230" Visibility="Visible"></Image>
         </Grid>
     </Grid>
 </Window>

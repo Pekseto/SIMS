@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestOne
 {
     /// <summary>
     /// Interaction logic for UserReservationsWindow.xaml

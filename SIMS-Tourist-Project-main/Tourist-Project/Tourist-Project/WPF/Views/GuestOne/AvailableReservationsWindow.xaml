@@ -8,13 +8,16 @@
         Title="AvailableReservationsWindow" Height="450" Width="800">
     <Grid Margin="0,0,0,-6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Content="Accommodation:" ></Label>
-        <TextBox Grid.Column="0" Text="{Binding Path=Name}" Margin="110,0,565,0"></TextBox>
-        <DataGrid x:Name="availableReservations" Grid.Row="1"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="1" Content="Available reservations for accommodation:" FontSize="20" Height="45"></Label>
+        <TextBox Grid.Column="1" Text="{Binding Path=Name}" Margin="380,10,28,14" Height="45"/>
+        <DataGrid x:Name="availableReservations" Grid.Row="1" Grid.Column="1"
                   ItemsSource="{Binding ReservationsForDisplay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True" Height="322" VerticalAlignment="Top">
@@ -23,7 +26,8 @@
                 <DataGridTextColumn Header="To" Width="*" Binding="{Binding CheckOut}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="455,349,0,10" Grid.RowSpan="2" Command="{Binding ConfirmReservation_Command}"></Button>
-        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Cancel" Margin="625,349,0,10" Command="{Binding Cancel_Command}" Grid.RowSpan="2"/>
+        <Button Grid.Row="1" Width="180" Height="45" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="22,205,0,120" Command="{Binding ConfirmReservation_Command}"/>
+        <Button Grid.Row="1" Width="180" Height="45" HorizontalAlignment="Center" Content="Cancel" Margin="0,275,0,50" Command="{Binding Cancel_Command}"/>
+        <Image Width="100" Source="https://www.last.fm/music/John+Coltrane/+images/9c2c93bff940b7221e678726d3647c24" Margin="12,0,128,0"></Image>
     </Grid>
 </Window>

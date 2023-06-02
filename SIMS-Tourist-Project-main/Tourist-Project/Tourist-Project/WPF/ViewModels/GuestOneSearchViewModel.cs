@@ -67,6 +67,10 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ShowAll_Command { get; set; }
         public ICommand Close_Command { get; set; }
         #endregion
+        public GuestOneSearchViewModel()
+        {
+
+        }
         public GuestOneSearchViewModel(Window window, DataGrid guestOneDataGrid, ObservableCollection<AccommodationViewModel> accommodationViewModels)
         {
             //_user = user;

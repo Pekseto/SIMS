@@ -9,7 +9,7 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using System.Windows;
 using System.Windows.Input;
-using Tourist_Project.WPF.Views;
+using Tourist_Project.WPF.Views.GuestOne;
 using Tourist_Project.View;
 using System.Windows.Controls;
 

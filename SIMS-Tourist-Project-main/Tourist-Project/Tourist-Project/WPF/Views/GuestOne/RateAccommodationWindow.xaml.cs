@@ -15,7 +15,7 @@ using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Converters;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestOne
 {
     /// <summary>
     /// Interaction logic for RateAccommodationWindow.xaml

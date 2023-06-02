@@ -15,14 +15,18 @@ using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
 using System.Collections.ObjectModel;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestOne
 {
     /// <summary>
     /// Interaction logic for GuestOneSearchWindow.xaml
     /// </summary>
     public partial class GuestOneSearchWindow : Window
     {
-        
+     
+        public GuestOneSearchWindow()
+        {
+
+        }
         
         public GuestOneSearchWindow(DataGrid guestOneDataGrid, ObservableCollection<AccommodationViewModel> accommodationsViewModel)
         {

@@ -9,6 +9,7 @@ using Tourist_Project.View;
 using Tourist_Project.WPF.Views.Guide;
 using Tourist_Project.WPF.Views.GuestTwo;
 using Tourist_Project.WPF.Views.Owner;
+using Tourist_Project.WPF.Views.GuestOne;
 
 namespace Tourist_Project.WPF.Views
 {

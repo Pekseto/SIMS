@@ -49,6 +49,8 @@ namespace Tourist_Project.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        public DateTime DisplayDateStart { get; set; } = DateTime.Today.AddDays(2).Date;
 
         public ObservableCollection<string> StatYears { get; set; } = new() { "All time", "2023", "2022", "2021", "2020", "2019", "2018" };
 
@@ -182,29 +184,18 @@ namespace Tourist_Project.WPF.ViewModels
             LanguagesChart = requestService.GetLanguageSeriesCollection(user.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(user.Id);
 
-            //Requests = new ObservableCollection<TourRequest>(GetAllRequests());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             SelectedCountry = Countries.First();
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));
             SelectedCity = Cities.First();
             Description = string.Empty;
             Language = string.Empty;
-            FromDate = DateTime.Now.AddDays(1).Date;
-            UntilDate = DateTime.Now.AddDays(2).Date;
+            FromDate = DateTime.Now.AddDays(2).Date;
+            UntilDate = DateTime.Now.AddDays(3).Date;
 
             SelectedStatYear = StatYears.First();
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
-        }
-
-        private List<TourRequest> GetAllRequests()
-        {
-            var retVal = requestService.GetAllForUser(LoggedUser.Id);
-            foreach (var tourRequest in retVal)
-            {
-                tourRequest.Location = locationService.Get(tourRequest.LocationId);
-            }
-            return retVal;
         }
 
         private bool CanPostRequest()

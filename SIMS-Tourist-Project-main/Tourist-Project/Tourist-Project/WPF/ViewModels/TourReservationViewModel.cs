@@ -96,7 +96,7 @@ namespace Tourist_Project.WPF.ViewModels
 
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
-            Vouchers = LoadVouchers();
+            Vouchers = LoadVouchers(); //Prebaciti u servis
             SelectedVoucher = Vouchers.First();
 
             ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);

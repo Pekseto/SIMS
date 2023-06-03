@@ -35,41 +35,50 @@
                FontSize="32" Content="My tours"
                HorizontalAlignment="Left" Foreground="White"
                VerticalAlignment="Center"/>
-        <Label Content="Future tours:" Grid.Row="1" VerticalAlignment="Top"
-               FontSize="20" Margin="0,0,0,0"
-               HorizontalAlignment="Center"
-               Foreground="White"/>
-        <DataGrid Grid.Row="1" Margin="30,40,30,0" FontSize="17"
-                  ItemsSource="{Binding FutureTours}"
-                  SelectedItem="{Binding SelectedFutureTour}"
-                  AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="250"/>
-                <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="300"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="Start date" Binding="{Binding StartTime}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Width="500">
+            <Label Content="Future tours:"
+                   FontSize="20"
+                   HorizontalAlignment="Left"
+                   Foreground="White"/>
+            <DataGrid FontSize="16" Height="230"
+                      ItemsSource="{Binding FutureTours}"
+                      SelectedItem="{Binding SelectedFutureTour}"
+                      AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
+                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="150"/>
+                    <DataGridTextColumn Header="Start date" Binding="{Binding StartTime}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        
         <Button Grid.Row="2" Content="Preview" FontSize="16"
                 HorizontalAlignment="Center"
                 Height="40" Width="100" Cursor="Hand"
                 VerticalAlignment="Top"
                 Margin="5" Command="{Binding PreviewCommand}"/>
-        <Label Grid.Row="3" Content="Todays tours:"
-               VerticalContentAlignment="Top"
-               Foreground="White"
-               FontSize="20" Margin="0,0,0,0"
-               HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <DataGrid Grid.Row="3" Margin="30,40,30,0" FontSize="17"
-                  ItemsSource="{Binding TodaysTours}" SelectedItem="{Binding SelectedTodayTour}"
-                  AutoGenerateColumns="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="250"/>
-                <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="300"/>
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Width="800">
+            <Label Content="Todays tours:"
+                   Foreground="White"
+                   FontSize="20"
+                   HorizontalAlignment="Left"/>
+            <DataGrid FontSize="16" Height="160"
+                      ItemsSource="{Binding TodaysTours}"
+                      SelectedItem="{Binding SelectedTodayTour}"
+                      AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
+                    <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="200"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="250"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        
+        
         <Button Command="{Binding WatchLiveCommand}"
                 Content="Watch live" HorizontalAlignment="Center"
                 Margin="150,11,0,0" Grid.Row="4"

@@ -143,32 +143,11 @@ namespace Tourist_Project.WPF.ViewModels
             ShowAllCommand = new RelayCommand(OnShowAllClick);
             ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore, this), CanReserve);
 
-            ShowNotifications();
         }
 
         private bool CanReserve()
         {
             return SelectedTour != null;
-        }
-
-        private void ShowNotifications()
-        {
-            /*foreach (TourAttendance tourAttendance in attendanceService.GetAll())
-            {
-                if (tourAttendance.UserId == LoggedInUser.Id && tourAttendance.Presence == Presence.Pending)
-                {
-                    if (MessageBox.Show("The guide has called you out for " + tourService.GetAll().Find(t => t.Id == tourAttendance.TourId) + "\nPlease confirm your presence!".ToString(), "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        tourAttendance.Presence = Presence.Yes;
-                        attendanceService.Update(tourAttendance);
-                    }
-                    else
-                    {
-                        tourAttendance.Presence = Presence.No;
-                        attendanceService.Update(tourAttendance);
-                    }
-                }
-            }*/
         }
 
         private void OnShowAllClick()

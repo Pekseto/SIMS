@@ -14,5 +14,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         List<TourVoucher> GetAllForUser(int userId);
         void DeleteInvalidVouchers(int userId);
         void Delete(int voucherId);
+        TourVoucher GetEarliestByNameForUser(string selectedVoucherName, int userId);
     }
 }

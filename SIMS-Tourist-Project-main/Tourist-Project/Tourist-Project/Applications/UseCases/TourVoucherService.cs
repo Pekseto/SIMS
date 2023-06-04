@@ -83,5 +83,10 @@ namespace Tourist_Project.Applications.UseCases
             }
 
         }
+
+        public TourVoucher GetEarliestByNameForUser(string selectedVoucherName, int userId)
+        {
+            return voucherRepository.GetEarliestByNameForUser(selectedVoucherName, userId);
+        }
     }
 }

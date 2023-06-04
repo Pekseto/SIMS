@@ -26,6 +26,7 @@ namespace Tourist_Project.WPF.ViewModels
         private string language;
         private Message message;
 
+        public DateTime DisplayDateStart { get; set; } = DateTime.Today.AddDays(2).Date;
         public Message Message
         {
             get { return message; }
@@ -123,8 +124,8 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedCity = Cities.First();
             Description = string.Empty;
             Language = string.Empty;
-            FromDate = DateTime.Now.AddDays(1).Date;
-            UntilDate = DateTime.Now.AddDays(2).Date;
+            FromDate = DateTime.Now.AddDays(2).Date;
+            UntilDate = DateTime.Now.AddDays(3).Date;
 
 
             AddTourCommand = new RelayCommand(AddTourClick, CanAddTour);

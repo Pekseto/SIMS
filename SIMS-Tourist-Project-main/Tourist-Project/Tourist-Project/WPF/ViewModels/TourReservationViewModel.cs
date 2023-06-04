@@ -23,18 +23,20 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourAttendanceService attendanceService = new();
         private readonly TourPointRepository tourPointRepository = new();
         private readonly ImageRepository imageRepository = new();
+        private bool reservationExists;
+
         public int GuestsNumber { get; set; }
-        public ObservableCollection<TourVoucher> Vouchers { get; set; }
-        private TourVoucher selectedVoucher;
-        public TourVoucher SelectedVoucher
+        public ObservableCollection<string> Vouchers { get; set; }
+        private string selectedVoucherName;
+        public string SelectedVoucherName
         {
-            get => selectedVoucher;
+            get => selectedVoucherName;
             set
             {
-                if(value != selectedVoucher)
+                if(value != selectedVoucherName)
                 {
-                    selectedVoucher = value;
-                    OnPropertyChanged(nameof(SelectedVoucher));
+                    selectedVoucherName = value;
+                    OnPropertyChanged(nameof(SelectedVoucherName));
                 }
             }
         }
@@ -52,6 +54,17 @@ namespace Tourist_Project.WPF.ViewModels
                 if (value == message) return;
                 message = value;
                 OnPropertyChanged(nameof(Message));
+            }
+        }
+
+        private Message undoMessage;
+        public Message UndoMessage
+        {
+            get => undoMessage;
+            set
+            {
+                undoMessage = value;
+                OnPropertyChanged();
             }
         }
 
@@ -75,12 +88,15 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand PreviousCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
         public ICommand BackCommand { get; set; }
+        public ICommand UndoReservationCommand { get; set; }
 
         public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore, HomeViewModel previousViewModel)
         {
             LoggedUser = user;
             SelectedTour = tour;
             this.navigationStore = navigationStore;
+            UndoMessage = new Message();
+            reservationExists = reservationService.GetByUserIdAndTourId(LoggedUser.Id, SelectedTour.Id) != null;
 
             TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
             imagesCount = TourImages.Count;
@@ -97,12 +113,13 @@ namespace Tourist_Project.WPF.ViewModels
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
             Vouchers = LoadVouchers(); //Prebaciti u servis
-            SelectedVoucher = Vouchers.First();
+            SelectedVoucherName = Vouchers.First();
 
             ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
             BackCommand = new NavigateCommand<HomeViewModel>(this.navigationStore, () => previousViewModel);
             NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
             PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
+            UndoReservationCommand = new RelayCommand(OnUndoReservationClick, () => UndoMessage.Type);
         }
 
         public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore, SimilarToursViewModel previousViewModel)
@@ -110,6 +127,8 @@ namespace Tourist_Project.WPF.ViewModels
             LoggedUser = user;
             SelectedTour = tour;
             this.navigationStore = navigationStore;
+            UndoMessage = new Message();
+            reservationExists = reservationService.GetByUserIdAndTourId(LoggedUser.Id, SelectedTour.Id) != null;
 
             TourImages = imageRepository.GetByAssociationAndId(ImageAssociation.Tour, tour.Id);
             CurrentImage = TourImages[0];
@@ -118,12 +137,13 @@ namespace Tourist_Project.WPF.ViewModels
 
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
             Vouchers = LoadVouchers();
-            SelectedVoucher = Vouchers.First();
+            SelectedVoucherName = Vouchers.First();
 
             ReserveCommand = new RelayCommand(OnReserveClick, CanReserve);
             BackCommand = new NavigateCommand<SimilarToursViewModel>(this.navigationStore, () => previousViewModel);
             NextCommand = new RelayCommand(OnNextClick);
             PreviousCommand = new RelayCommand(OnPreviousClick);
+            UndoReservationCommand = new RelayCommand(OnUndoReservationClick, () => UndoMessage.Type);
         }
 
         private void OnPreviousClick()
@@ -138,14 +158,34 @@ namespace Tourist_Project.WPF.ViewModels
             CurrentImage = TourImages[imageId];
         }
 
-        private ObservableCollection<TourVoucher> LoadVouchers()
+        private ObservableCollection<string> LoadVouchers()
         {
-            var retVal = new ObservableCollection<TourVoucher>{ new TourVoucher() };
-            foreach (var voucher in voucherService.GetAllForUser(LoggedUser.Id))
+            var retVal = new ObservableCollection<string>{ "Without voucher" };
+            foreach (var voucher in voucherService.GetAllForUser(LoggedUser.Id).Select(tv => tv.Name).Distinct())
             {
                 retVal.Add(voucher);
             }
             return retVal;
+        }
+
+        private void OnUndoReservationClick()
+        {
+            var undoReservation = reservationService.GetForUndo(LoggedUser.Id, SelectedTour.Id);
+            if (reservationExists)
+            {
+                undoReservation.GuestsNumber -= GuestsNumber;
+                reservationService.Update(undoReservation);
+                SelectedTour.SpotsLeft += GuestsNumber;
+
+                Message = new Message();
+                UndoMessage = new Message();
+                return;
+            }
+            reservationService.Delete(undoReservation.Id);
+            attendanceService.DeleteLastAttendance(LoggedUser.Id, SelectedTour.Id);
+
+            Message = new Message();
+            UndoMessage = new Message();
         }
 
         private bool CanReserve()
@@ -156,8 +196,14 @@ namespace Tourist_Project.WPF.ViewModels
         private async Task ShowMessageAndHide(Message message)
         {
             Message = message;
-            await Task.Delay(5000);
+            if (message.Type)
+            {
+                UndoMessage = new Message(true, "Undo");
+            }
+
+            await Task.Delay(15000);
             Message = new Message();
+            UndoMessage = new Message();
         }
 
         private void OnReserveClick()
@@ -175,29 +221,31 @@ namespace Tourist_Project.WPF.ViewModels
             }
             else
             {
-                var tourReservation = reservationService.GetByUserIdAndTourId(LoggedUser.Id, SelectedTour.Id);
-                if(tourReservation == null)
+                
+                if(!reservationExists)
                 {
-                    var newReservation = new TourReservation(LoggedUser.Id, SelectedTour.Id, GuestsNumber, SelectedVoucher != null ? true : false);
+                    var newReservation = new TourReservation(LoggedUser.Id, SelectedTour.Id, GuestsNumber, SelectedVoucherName != "Without voucher");
                     reservationService.Save(newReservation);
                     var newAttendance = new TourAttendance(LoggedUser.Id, SelectedTour.Id);
                     attendanceService.Save(newAttendance);
                 }
                 else
                 {
+                    var tourReservation = reservationService.GetByUserIdAndTourId(LoggedUser.Id, SelectedTour.Id);
                     tourReservation.GuestsNumber += GuestsNumber;
                     reservationService.Update(tourReservation);
                 }
 
 
                 SelectedTour.SpotsLeft -= GuestsNumber;
-                if (SelectedVoucher.Name != "Without voucher")
+                if (SelectedVoucherName != "Without voucher")
                 {
-                    voucherService.Delete(SelectedVoucher.Id);
-                    Vouchers.Remove(SelectedVoucher);
+                    var voucher = voucherService.GetEarliestByNameForUser(SelectedVoucherName, LoggedUser.Id);
+                    voucherService.Delete(voucher.Id);
+                    Vouchers.Remove(SelectedVoucherName);
                     if (Vouchers.Count > 0)
                     {
-                        SelectedVoucher = Vouchers.First();
+                        SelectedVoucherName = Vouchers.First();
                     }
                 }
 

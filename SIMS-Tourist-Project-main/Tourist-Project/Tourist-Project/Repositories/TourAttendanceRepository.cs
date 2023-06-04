@@ -62,9 +62,23 @@ namespace Tourist_Project.Repositories
             serializer.ToCSV(filePath, tourAttendances);
         }
 
+        public void Delete(int id)
+        {
+            tourAttendances = GetAll();
+            var attendanceFoDelete = tourAttendances.Find(ta => ta.Id == id);
+            tourAttendances.Remove(attendanceFoDelete);
+            serializer.ToCSV(filePath, tourAttendances);
+        }
+
         public List<TourAttendance> GetAllByTourId(int tourId)
         {
             return GetAll().FindAll(reservation => reservation.TourId == tourId);
+        }
+
+        public TourAttendance GetForUndo(int loggedUserId, int selectedTourId)
+        {
+            var undoAttendanceId = GetAll().Where(ta => ta.UserId == loggedUserId && ta.TourId == selectedTourId).Max(ta => ta.Id);
+            return GetAll().Find(ta => ta.Id == undoAttendanceId);
         }
     }
 }

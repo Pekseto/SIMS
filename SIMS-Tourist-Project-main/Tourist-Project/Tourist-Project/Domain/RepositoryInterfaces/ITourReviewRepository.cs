@@ -16,5 +16,7 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public TourReview GetOne(int id);
         public List<TourReview> GetAllByTourId(int id);
         public List<TourReview> GetAll();
+        int GetByUserAndTour(int userId, int tourId);
+        void Delete(int reviewId);
     }
 }

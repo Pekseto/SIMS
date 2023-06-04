@@ -19,7 +19,7 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class TourReviewViewModel : ViewModelBase
     {
-        private readonly TourReviewService ratingService = new();
+        private readonly TourReviewService reviewService = new();
         private readonly ImageService imageService = new();
         private readonly TourAttendanceService attendanceService = new();
         private readonly TourPointRepository tourPointRepository = new();
@@ -94,9 +94,21 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
+        private Message undoMessage;
+        public Message UndoMessage
+        {
+            get => undoMessage;
+            set
+            {
+                undoMessage = value;
+                OnPropertyChanged(nameof(UndoMessage));
+            }
+        }
+
         public ICommand RateCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand BackCommand { get; set; }
+        public ICommand UndoReviewCommand { get; set; }
 
         public TourReviewViewModel(User user, TourDTO tour, NavigationStore navigationStore, TourHistoryViewModel previousViewModel)
         {
@@ -104,6 +116,7 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTour = tour;
             Checkpoints = tourPointRepository.GetAllForTourString(SelectedTour.Id);
             this.navigationStore = navigationStore;
+            UndoMessage = new Message();
 
             Comment = string.Empty;
             ImageURL = string.Empty;
@@ -112,7 +125,15 @@ namespace Tourist_Project.WPF.ViewModels
 
             RateCommand = new RelayCommand(OnRateClick, CanRate);
             AddCommand = new RelayCommand(OnAddClick, CanAdd);
+            UndoReviewCommand = new RelayCommand(OnUndoReviewClick, () => UndoMessage.Type);
             BackCommand = new NavigateCommand<TourHistoryViewModel>(this.navigationStore, () => previousViewModel);
+        }
+
+        private void OnUndoReviewClick()
+        {
+            reviewService.UndoLatestReview(LoggedInUser.Id, SelectedTour.Id);
+            Message = new Message();
+            UndoMessage = new Message();
         }
 
         private bool CanAdd()
@@ -135,22 +156,28 @@ namespace Tourist_Project.WPF.ViewModels
         private async Task ShowMessageAndHide(Message message)
         {
             Message = message;
-            await Task.Delay(5000);
+            if (message.Type)
+            {
+                UndoMessage = new Message(true, "Undo");
+            }
+
+            await Task.Delay(15000);
             Message = new Message();
+            UndoMessage = new Message();
         }
 
         private void OnRateClick()
         {
             if(attendanceService.WasUserPresent(LoggedInUser.Id, SelectedTour.Id))
             {
-                if(ratingService.DidUserReview(LoggedInUser.Id, SelectedTour.Id))
+                if(reviewService.DidUserReview(LoggedInUser.Id, SelectedTour.Id))
                 {
                     _ = ShowMessageAndHide(new Message(false, "You already reviewed this tour"));
                 }
                 else
                 {
                     TourReview tourReview = new(LoggedInUser.Id, SelectedTour.Id, KnowledgeRating, LanguageRating, EntertainmentRating, Comment);
-                    ratingService.Save(tourReview);
+                    reviewService.Save(tourReview);
 
                     foreach (var image in Images)
                     {

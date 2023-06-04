@@ -59,6 +59,11 @@ namespace Tourist_Project.Applications.UseCases
             attendanceRepository.Update(tourAttendance);
         }
 
+        public void Delete(int tourId)
+        {
+            attendanceRepository.Delete(tourId);
+        }
+
         public TourAttendance GetByTourIdAndUserId(int tourId, int userId)
         {
             return GetAll().Find(t => t.TourId == tourId && t.UserId == userId);
@@ -82,6 +87,12 @@ namespace Tourist_Project.Applications.UseCases
                 }
             }
             return retVal;
+        }
+
+        public void DeleteLastAttendance(int loggedUserId, int selectedTourId)
+        {
+            var lastAttendance = attendanceRepository.GetForUndo(loggedUserId, selectedTourId);
+            attendanceRepository.Delete(lastAttendance.Id);
         }
     }
 }

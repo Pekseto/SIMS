@@ -28,6 +28,28 @@ namespace Tourist_Project.WPF.ViewModels
         private double avgGuests;
         private ObservableCollection<string> cities;
         private ObservableCollection<TourRequest> requests;
+        private Message message;
+        private Message undoMessage;
+
+        public Message Message
+        {
+            get => message;
+            set
+            {
+                message = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Message UndoMessage
+        {
+            get => undoMessage;
+            set
+            {
+                undoMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public SeriesCollection LanguagesChart
@@ -49,6 +71,8 @@ namespace Tourist_Project.WPF.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        public DateTime DisplayDateStart { get; set; } = DateTime.Today.AddDays(2).Date;
 
         public ObservableCollection<string> StatYears { get; set; } = new() { "All time", "2023", "2022", "2021", "2020", "2019", "2018" };
 
@@ -173,6 +197,7 @@ namespace Tourist_Project.WPF.ViewModels
         public DateTime FromDate { get; set; }
         public DateTime UntilDate { get; set; }
         public ICommand PostRequestCommand { get; set; }
+        public ICommand UndoRequestCommand { get; set; }
 
 
         public RequestsStatsViewModel(User user, NavigationStore navigationStore)
@@ -182,34 +207,34 @@ namespace Tourist_Project.WPF.ViewModels
             LanguagesChart = requestService.GetLanguageSeriesCollection(user.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(user.Id);
 
-            //Requests = new ObservableCollection<TourRequest>(GetAllRequests());
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
             SelectedCountry = Countries.First();
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));
             SelectedCity = Cities.First();
             Description = string.Empty;
             Language = string.Empty;
-            FromDate = DateTime.Now.AddDays(1).Date;
-            UntilDate = DateTime.Now.AddDays(2).Date;
+            FromDate = DateTime.Now.AddDays(2).Date;
+            UntilDate = DateTime.Now.AddDays(3).Date;
 
             SelectedStatYear = StatYears.First();
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
+            UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
         }
 
-        private List<TourRequest> GetAllRequests()
+        private void UndoRequestClick()
         {
-            var retVal = requestService.GetAllForUser(LoggedUser.Id);
-            foreach (var tourRequest in retVal)
-            {
-                tourRequest.Location = locationService.Get(tourRequest.LocationId);
-            }
-            return retVal;
+            requestService.UndoLatestRequest(LoggedUser.Id);
+            Requests = new ObservableCollection<TourRequest>(requestService.GetAllForUser(LoggedUser.Id));
+            _ = ShowMessageAndHide(new Message(true, "Request undone!"));
+            UndoMessage = new Message();
+            LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
+            LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);
         }
 
         private bool CanPostRequest()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber != 0;
+            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
         }
 
         private void PostRequestClick()
@@ -223,8 +248,23 @@ namespace Tourist_Project.WPF.ViewModels
             requestService.Save(newRequest);
             Requests.Add(newRequest);
 
+            _ = ShowMessageAndHide(new Message(true, "Successfully posted request!"));
+
             LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);
+        }
+
+        private async Task ShowMessageAndHide(Message message)
+        {
+            Message = message;
+            if (message.Type)
+            {
+                UndoMessage = new Message(true, "Undo");
+            }
+
+            await Task.Delay(15000);
+            Message = new Message();
+            UndoMessage = new Message();
         }
 
     }

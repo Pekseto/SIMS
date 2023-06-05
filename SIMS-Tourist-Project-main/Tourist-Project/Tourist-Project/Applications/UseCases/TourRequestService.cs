@@ -423,5 +423,11 @@ namespace Tourist_Project.Applications.UseCases
         {
             return requestRepository.GetForSelectedYear(userId, year);
         }
+
+        public void UndoLatestRequest(int loggedUserId)
+        {
+            var usersLatestRequestId = requestRepository.GetUsersLatestRequestId(loggedUserId);
+            requestRepository.Delete(usersLatestRequestId);
+        }
     }
 }

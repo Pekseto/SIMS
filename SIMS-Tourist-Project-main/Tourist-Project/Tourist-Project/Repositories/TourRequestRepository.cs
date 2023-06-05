@@ -129,6 +129,11 @@ namespace Tourist_Project.Repositories
         {
             return year.Equals("All time") ? GetAllForUser(userId) : GetAll().Where(r => r.UntilDate.Year == int.Parse(year) && r.ComplexTourId == -1).ToList();
         }
+
+        public int GetUsersLatestRequestId(int loggedUserId)
+        {
+            return GetAllForUser(loggedUserId).Max(tr => tr.Id);
+        }
     }
 }
 

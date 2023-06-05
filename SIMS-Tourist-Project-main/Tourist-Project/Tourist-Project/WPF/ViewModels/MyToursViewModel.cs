@@ -19,8 +19,9 @@ namespace Tourist_Project.WPF.ViewModels
     {
         private readonly TourService tourService = new();
         private readonly TourAttendanceService attendanceService = new();
-        public User LoggedInUser { get; set; }
         private readonly NavigationStore navigationStore;
+
+        public User LoggedInUser { get; set; }
         public ObservableCollection<TourDTO> FutureTours { get; set; }
         public ObservableCollection<TourDTO> TodaysTours { get; set; }
         public TourDTO SelectedFutureTour { get; set; }

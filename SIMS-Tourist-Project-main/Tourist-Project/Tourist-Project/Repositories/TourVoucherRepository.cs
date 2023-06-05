@@ -72,5 +72,13 @@ namespace Tourist_Project.Repositories
             vouchers.Remove(voucherToDelete);
             serializer.ToCSV(filePath, vouchers);
         }
+
+        public TourVoucher GetEarliestByNameForUser(string selectedVoucherName, int userId)
+        {
+            var usersVouchers = GetAllForUser(userId);
+            var earliestToExpire = usersVouchers.Where(tv => tv.Name == selectedVoucherName).Min(tv => tv.ExpireDate);
+
+            return usersVouchers.Find(tv => tv.Name == selectedVoucherName && tv.ExpireDate == earliestToExpire);
+        }
     }
 }

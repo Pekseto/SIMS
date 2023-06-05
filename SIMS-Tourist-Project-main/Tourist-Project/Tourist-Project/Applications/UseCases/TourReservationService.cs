@@ -99,5 +99,10 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.GetById(id);
         }
+
+        public TourReservation GetForUndo(int userId, int tourId)
+        {
+            return repository.GetForUndo(userId, tourId);
+        }
     }
 }

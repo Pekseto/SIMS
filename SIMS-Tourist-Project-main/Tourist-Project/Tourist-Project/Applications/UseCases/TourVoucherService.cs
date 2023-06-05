@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,21 @@ namespace Tourist_Project.Applications.UseCases
                 userService.Update(user);
             }
 
+        }
+
+        public TourVoucher GetEarliestByNameForUser(string selectedVoucherName, int userId)
+        {
+            return voucherRepository.GetEarliestByNameForUser(selectedVoucherName, userId);
+        }
+
+        public ObservableCollection<string> LoadVouchers(int userId)
+        {
+            var retVal = new ObservableCollection<string> { "Without voucher" };
+            foreach (var voucher in GetAllForUser(userId).Select(tv => tv.Name).Distinct())
+            {
+                retVal.Add(voucher);
+            }
+            return retVal;
         }
     }
 }

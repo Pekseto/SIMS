@@ -146,15 +146,26 @@
                 <Button Command="{Binding RateCommand}"
                         Grid.Row="6" Grid.ColumnSpan="2" Height="40" Width="100"
                         Content="Post review" FontSize="17" Cursor="Hand"
-                        Margin="0,15,0,0"/>
+                        Margin="0,0,0,0"/>
             </Grid>
         </Border>
 
-
-        <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
-               Style="{StaticResource MessageColor}" FontSize="14"
-               HorizontalAlignment="Center" VerticalAlignment="Top"
-               Grid.Row="3" Grid.Column="1" Margin="0,-10"/>
+        <StackPanel Grid.Row="3" Grid.Column="1">
+            <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+                   Style="{StaticResource MessageColor}" FontSize="14"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,-10"/>
+            <TextBlock Text="{Binding UndoMessage.Content, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="YellowGreen"
+                       Cursor="Hand" TextDecorations="Underline"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,5">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding UndoReviewCommand}" MouseAction="LeftClick"/>
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -202,7 +213,7 @@
                    HorizontalAlignment="Left" Foreground="White"
                    VerticalAlignment="Center" FontSize="17"
                    Margin="75,0,0,0"/>
-            <Label Grid.Row="9" Content="Spots left:"
+            <Label Grid.Row="9" Content="Date and time:"
                    HorizontalAlignment="Left" Foreground="White"
                    VerticalAlignment="Center" FontSize="17" 
                    Margin="75,0,0,0"/>
@@ -232,7 +243,7 @@
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
-            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding SelectedTour.Duration}"
+            <TextBox Grid.Column="1" Grid.Row="7" Text="{Binding SelectedTour.DurationStr, Mode=OneWay}"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
@@ -240,7 +251,7 @@
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
-            <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding SelectedTour.SpotsLeft}"
+            <TextBox Grid.Column="1" Grid.Row="9" Text="{Binding SelectedTour.StartTime}"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/></Grid>

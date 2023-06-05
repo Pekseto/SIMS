@@ -19,5 +19,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public int NumberWithVoucher(int tourId);
         public int NumberWithoutVoucher(int tourId);
 
+        TourReservation GetForUndo(int userId, int tourId);
     }
 }

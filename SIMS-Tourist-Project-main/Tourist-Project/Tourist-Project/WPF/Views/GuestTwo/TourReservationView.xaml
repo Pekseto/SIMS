@@ -97,7 +97,7 @@
                            Margin="0,20,0,10">
                         Optionally, select one of your vouchers:</Label>
                     <ComboBox ItemsSource="{Binding Vouchers, UpdateSourceTrigger=PropertyChanged}"
-                              SelectedItem="{Binding SelectedVoucher}"
+                              SelectedItem="{Binding SelectedVoucherName}"
                               Height="25" Width="150" FontSize="14" Cursor="Hand"
                               HorizontalAlignment="Center"/>
                     <Button Content="Reserve" Command="{Binding ReserveCommand}"
@@ -109,12 +109,23 @@
             </Border>
         </Grid>
 
-        <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
-               Style="{StaticResource MessageColor}"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               Margin="0,-10"
-               Grid.Row="3" Grid.Column="1"/>
+        <StackPanel Grid.Row="3" Grid.Column="1">
+            <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+                   Style="{StaticResource MessageColor}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,-10"/>
+            <TextBlock Text="{Binding UndoMessage.Content, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="YellowGreen"
+                       Cursor="Hand" TextDecorations="Underline"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,5">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding UndoReservationCommand}" MouseAction="LeftClick"/>
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.RowDefinitions>
@@ -158,13 +169,13 @@
                    HorizontalAlignment="Left" Foreground="White"
                    VerticalAlignment="Center" FontSize="17"
                    Margin="75,0,0,0"/>
-            <Label Grid.Row="8" Content="Maximum guests:"
-                   HorizontalAlignment="Left" Foreground="White"
-                   VerticalAlignment="Center" FontSize="17"
-                   Margin="75,0,0,0"/>
-            <Label Grid.Row="9" Content="Spots left:"
+            <Label Grid.Row="8" Content="Spots left:"
                    HorizontalAlignment="Left" Foreground="White"
                    VerticalAlignment="Center" FontSize="17" 
+                   Margin="75,0,0,0"/>
+            <Label Grid.Row="9" Content="Date and time:"
+                   HorizontalAlignment="Left" Foreground="White"
+                   VerticalAlignment="Center" FontSize="17"
                    Margin="75,0,0,0"/>
 
             <TextBox Grid.Column="1" Grid.Row="0"
@@ -196,17 +207,17 @@
                      FontSize="17" Margin="0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
             <TextBox Grid.Column="1" Grid.Row="7"
-                     Text="{Binding SelectedTour.Duration}"
+                     Text="{Binding SelectedTour.DurationStr, Mode=OneWay}"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
             <TextBox Grid.Column="1" Grid.Row="8"
-                     Text="{Binding SelectedTour.MaxGuestsNumber}"
+                     Text="{Binding SelectedTour.SpotsLeft}"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>
             <TextBox Grid.Column="1" Grid.Row="9"
-                     Text="{Binding SelectedTour.SpotsLeft}"
+                     Text="{Binding SelectedTour.StartTime}"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/>

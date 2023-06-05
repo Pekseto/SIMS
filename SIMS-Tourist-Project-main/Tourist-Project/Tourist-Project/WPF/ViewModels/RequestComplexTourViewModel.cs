@@ -25,7 +25,10 @@ namespace Tourist_Project.WPF.ViewModels
         private string description;
         private string language;
         private Message message;
+        private Message undoMessage;
 
+
+        public DateTime DisplayDateStart { get; set; } = DateTime.Today.AddDays(2).Date;
         public Message Message
         {
             get { return message; }
@@ -36,6 +39,15 @@ namespace Tourist_Project.WPF.ViewModels
                     message = value;
                     OnPropertyChanged(nameof(Message));
                 }
+            }
+        }
+        public Message UndoMessage
+        {
+            get => undoMessage;
+            set
+            {
+                undoMessage = value;
+                OnPropertyChanged(nameof(UndoMessage));
             }
         }
 
@@ -111,10 +123,12 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand RemoveTourCommand { get; set; }
         public ICommand PostRequestCommand { get; set; }
         public ICommand BackCommand { get; set; }
+        public ICommand UndoRequestCommand { get; set; }
         public RequestComplexTourViewModel(User user, NavigationStore navigationStore)
         {
             LoggedUser = user;
             complexTourId = complexTourService.GetNextRequestId();
+            UndoMessage = new Message();
 
             TourRequests = new ObservableCollection<TourRequest>();
             Countries = new ObservableCollection<string>(locationService.GetAllCountries());
@@ -123,14 +137,23 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedCity = Cities.First();
             Description = string.Empty;
             Language = string.Empty;
-            FromDate = DateTime.Now.AddDays(1).Date;
-            UntilDate = DateTime.Now.AddDays(2).Date;
+            FromDate = DateTime.Now.AddDays(2).Date;
+            UntilDate = DateTime.Now.AddDays(3).Date;
 
 
             AddTourCommand = new RelayCommand(AddTourClick, CanAddTour);
             RemoveTourCommand = new RelayCommand(RemoveTourClick, () => SelectedTourRequest != null);
             PostRequestCommand = new RelayCommand(PostRequestClick, () => TourRequests.Count > 1);
+            UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
             BackCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
+        }
+
+        private void UndoRequestClick()
+        {
+            complexTourService.UndoLatestRequest(LoggedUser.Id);
+            complexTourId = complexTourService.GetNextRequestId();
+            _ = ShowMessageAndHide(new Message(true, "Request undone!"));
+            UndoMessage = new Message();
         }
 
         private void PostRequestClick()
@@ -143,6 +166,7 @@ namespace Tourist_Project.WPF.ViewModels
             TourRequests.Clear();
 
             _ = ShowMessageAndHide(new Message(true, "You have successfully posted a complex tour request!"));
+            complexTourId = complexTourService.GetNextRequestId();
         }
 
         private void RemoveTourClick()
@@ -152,7 +176,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanAddTour()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber != 0;
+            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
         }
 
         private void AddTourClick()
@@ -172,8 +196,14 @@ namespace Tourist_Project.WPF.ViewModels
         private async Task ShowMessageAndHide(Message message)
         {
             Message = message;
-            await Task.Delay(5000);
+            if (message.Type)
+            {
+                UndoMessage = new Message(true, "Undo");
+            }
+
+            await Task.Delay(15000);
             Message = new Message();
+            UndoMessage = new Message();
         }
     }
 }

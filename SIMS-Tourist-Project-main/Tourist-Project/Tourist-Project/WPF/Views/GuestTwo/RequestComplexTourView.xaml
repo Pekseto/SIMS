@@ -107,13 +107,15 @@
                    Content="from:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Top" HorizontalAlignment="Left"
-                        Text="{Binding FromDate}" Width="120"/>
+                        Text="{Binding FromDate}" Width="120"
+                        DisplayDateStart="{Binding DisplayDateStart}"/>
             <Label Grid.Row="5" Grid.Column="1" Margin="20,10"
                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
                    Content="until:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                        Text="{Binding UntilDate}" Width="120"/>
+                        Text="{Binding UntilDate}" Width="120"
+                        DisplayDateStart="{Binding DisplayDateStart}"/>
 
         </Grid>
 
@@ -121,7 +123,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" Width="480">
@@ -134,7 +136,7 @@
                           Height="200">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="auto"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="auto"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                         <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="auto"/>
                         <DataGridTextColumn Header="Guests" Binding="{Binding GuestsNumber}" Width="auto"/>
                         <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="auto"/>
@@ -149,16 +151,22 @@
                             FontSize="15" Margin="75,0,0,0"
                             Command="{Binding PostRequestCommand}"/>
                 </StackPanel>
-                <Label Margin="0,10"
+                <Label Margin="0,10,0,0"
                        Content="{Binding Message.Content}"
                        HorizontalAlignment="Center"
                        Foreground="GreenYellow"/>
+                <TextBlock Text="{Binding UndoMessage.Content, UpdateSourceTrigger=PropertyChanged}"
+                           Foreground="YellowGreen"
+                           Cursor="Hand" TextDecorations="Underline"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top">
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding UndoRequestCommand}" MouseAction="LeftClick"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
             </StackPanel>
 
-            
-
         </Grid>
-
 
     </Grid>
 </UserControl>

@@ -34,6 +34,7 @@ namespace Tourist_Project.DTO
         }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
+        public string DurationStr => Duration + " hours";
         public Status Status { get; set; }
 
         public TourDTO()

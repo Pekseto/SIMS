@@ -132,7 +132,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void OnUndoReviewClick()
         {
             reviewService.UndoLatestReview(LoggedInUser.Id, SelectedTour.Id);
-            Message = new Message();
+            _ = ShowMessageAndHide(new Message(true, "Review undone!"));
             UndoMessage = new Message();
         }
 

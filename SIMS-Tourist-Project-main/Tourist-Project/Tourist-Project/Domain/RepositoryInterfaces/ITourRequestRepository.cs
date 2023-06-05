@@ -24,5 +24,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         void DenyAllForComplexTour(int complexTourId);
         List<TourRequest> GetAllPendingForUser(int loggedUserId);
         List<TourRequest> GetForSelectedYear(int userId, string year);
+        int GetUsersLatestRequestId(int loggedUserId);
     }
 }

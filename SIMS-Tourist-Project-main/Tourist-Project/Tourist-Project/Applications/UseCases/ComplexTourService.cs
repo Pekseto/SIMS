@@ -78,5 +78,15 @@ namespace Tourist_Project.Applications.UseCases
             }
         }
 
+        public void UndoLatestRequest(int loggedUserId)
+        {
+            var complexTourForDeleteId = complexTourRepository.GetUsersLatestRequestId(loggedUserId);
+            var tourRequests = tourRequestRepository.GetAllForComplexTour(complexTourForDeleteId);
+            foreach (var request in tourRequests)
+            {
+                tourRequestRepository.Delete(request.Id);
+            }
+            complexTourRepository.Delete(complexTourForDeleteId);
+        }
     }
 }

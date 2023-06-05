@@ -61,9 +61,6 @@
             <Label Content="Date range:" Foreground="White"
                    FontSize="18" Margin="50,10,0,0"
                    Grid.Row="5"/>
-            <Button Grid.Row="6" Content="Post request"
-                    Grid.ColumnSpan="2" Height="40" Width="100"
-                    FontSize="15" Command="{Binding PostRequestCommand}"/>
 
             <ComboBox Grid.Row="1" Grid.Column="1"
                       ItemsSource="{Binding Countries}"
@@ -115,8 +112,27 @@
                         VerticalAlignment="Bottom" HorizontalAlignment="Left"
                         Text="{Binding UntilDate}" Width="120"
                         DisplayDateStart="{Binding DisplayDateStart}"/>
-
+            <Button Grid.Row="6" Content="Post request"
+                    Grid.ColumnSpan="2" Height="40" Width="100"
+                    FontSize="15" Command="{Binding PostRequestCommand}"/>
         </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="GreenYellow"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,-10"/>
+            <TextBlock Text="{Binding UndoMessage.Content, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="YellowGreen"
+                       Cursor="Hand" TextDecorations="Underline"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,5">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding UndoRequestCommand}" MouseAction="LeftClick"/>
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
 
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>

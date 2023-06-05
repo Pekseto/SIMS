@@ -28,6 +28,28 @@ namespace Tourist_Project.WPF.ViewModels
         private double avgGuests;
         private ObservableCollection<string> cities;
         private ObservableCollection<TourRequest> requests;
+        private Message message;
+        private Message undoMessage;
+
+        public Message Message
+        {
+            get => message;
+            set
+            {
+                message = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Message UndoMessage
+        {
+            get => undoMessage;
+            set
+            {
+                undoMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public SeriesCollection LanguagesChart
@@ -175,6 +197,7 @@ namespace Tourist_Project.WPF.ViewModels
         public DateTime FromDate { get; set; }
         public DateTime UntilDate { get; set; }
         public ICommand PostRequestCommand { get; set; }
+        public ICommand UndoRequestCommand { get; set; }
 
 
         public RequestsStatsViewModel(User user, NavigationStore navigationStore)
@@ -196,11 +219,22 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedStatYear = StatYears.First();
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
+            UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
+        }
+
+        private void UndoRequestClick()
+        {
+            requestService.UndoLatestRequest(LoggedUser.Id);
+            Requests = new ObservableCollection<TourRequest>(requestService.GetAllForUser(LoggedUser.Id));
+            _ = ShowMessageAndHide(new Message(true, "Request undone!"));
+            UndoMessage = new Message();
+            LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
+            LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);
         }
 
         private bool CanPostRequest()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber != 0;
+            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
         }
 
         private void PostRequestClick()
@@ -214,8 +248,23 @@ namespace Tourist_Project.WPF.ViewModels
             requestService.Save(newRequest);
             Requests.Add(newRequest);
 
+            _ = ShowMessageAndHide(new Message(true, "Successfully posted request!"));
+
             LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);
+        }
+
+        private async Task ShowMessageAndHide(Message message)
+        {
+            Message = message;
+            if (message.Type)
+            {
+                UndoMessage = new Message(true, "Undo");
+            }
+
+            await Task.Delay(15000);
+            Message = new Message();
+            UndoMessage = new Message();
         }
 
     }

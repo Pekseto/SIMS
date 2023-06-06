@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using LiveCharts;
+using LiveCharts.Wpf;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels.Owner;
 
@@ -20,8 +23,23 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    private SeriesCollection statsChart;
+
+    public SeriesCollection StatsChart
+    {
+        get => statsChart;
+        set
+        {
+            if (statsChart == value) return;
+            statsChart = value;
+            OnPropertyChanged();
+        }
+    }
+
     private readonly AccommodationStatisticsService accommodationStatisticsService = new();
     public int MostOccupiedMonth { get; set; }
+    public string[] Labels { get; set; }
+    public Func<double, string> Formatter { get; set; }
 
     public ICommand SwitchToYearlyCommand { get; set; }
     public MonthlyStatisticsViewModel(AccommodationViewModel accommodationViewModel, int year)
@@ -38,6 +56,51 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
                             i.ToString()));
         }
         MostOccupiedMonth = accommodationStatisticsService.GetMostOccupiedMonth(AccommodationViewModel.Accommodation.Id, year);
+        ChartInitialization();
+    }
+    private void ChartInitialization()
+    {
+        StatsChart = new SeriesCollection();
+
+        foreach (var accommodationStatistic in AccommodationStatistics)
+        {
+            StatsChart.Add(new ColumnSeries
+            {
+                Title = ConvertToMonth(accommodationStatistic.Period),
+                Values = new ChartValues<int>
+                {
+                    accommodationStatistic.TotalReservations,
+                    accommodationStatistic.CancelledReservations,
+                    accommodationStatistic.RescheduledReservations,
+                    accommodationStatistic.RescheduledReservations,
+                    accommodationStatistic.Occupancy
+                }
+            });
+        }
+        Labels = new[]
+        {
+            "Reservations", "Cancelled \nReservations", "Rescheduled \nReservations", "Renovation \nRecommendations", "Occupancy"
+        };
+        Formatter = value => value.ToString("N");
+    }
+
+    private static string ConvertToMonth(string period)
+    {
+        return period switch
+        {
+            "1" => "January",
+            "2" => "February",
+            "3" => "March",
+            "4" => "April",
+            "5" => "May",
+            "6" => "June",
+            "7" => "July",
+            "8" => "August",
+            "9" => "September",
+            "10" => "October",
+            "11" => "November",
+            "12" => "December"
+        };
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

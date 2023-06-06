@@ -4,11 +4,64 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
+        xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MonthlyStatistics" Height="450" Width="800">
+        Title="MonthlyStatistics" Height="650" Width="770">
+    <Window.Resources>
+        <Style x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="Height" Value="38"></Setter>
+            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Foreground" Value="#d9eeef"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#0fbdc6"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#376f72"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type Grid}" TargetType="Grid">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Label}" TargetType="Label">
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <DataGrid ItemsSource="{Binding AccommodationStatistics}"></DataGrid>
-        <Label Content="Most occupied month" Margin="100,200"></Label>
-        <Label Content="{Binding MostOccupiedMonth}" Margin="250,200,100,200"></Label>
+        <DataGrid Height="100" Margin="10,300,10,0" Width="686" IsReadOnly="True"
+            ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
+        <Button Width="100" Margin="10,500,10,10" Content="Monthly" Command="{Binding SwitchToYearlyCommand}"></Button>
+        <Label Content="Most occupied month:" FontWeight="DemiBold" FontSize="15" Margin="20,150,50,50"></Label>
+        <Label Content="{Binding MostOccupiedMonth}" Margin="328,150,50,50" FontSize="15" FontWeight="Bold" Foreground="#F76A14"></Label>
+        <Label Content="Accommodation Name:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,10"></Label>
+        <Label Content="{Binding AccommodationViewModel.Accommodation.Name}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="40,10"></Label>
+        <Label Content="Location:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,50,10,10"></Label>
+        <Label Content="{Binding AccommodationViewModel.Location}" HorizontalAlignment="Center" Foreground="#F76A14" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="118,50,10,10"></Label>
+        <Label Content="Owner:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,95,40,40"></Label>
+        <Label Content="{Binding AccommodationViewModel.User.FullName}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="50, 95,10,10"></Label>
+        <wpf:CartesianChart Series="{Binding StatsChart}" LegendLocation="Right" Height="220" Width="680" Margin="25,0,10,40" HorizontalAlignment="Left">
+            <wpf:CartesianChart.AxisX>
+                <wpf:Axis Labels="{Binding Labels}" Foreground="#03888f" FontSize="12" FontWeight="DemiBold"></wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+            <wpf:CartesianChart.AxisY>
+                <wpf:Axis LabelFormatter="{Binding Formatter}" Foreground="#03888f"></wpf:Axis>
+            </wpf:CartesianChart.AxisY>
+        </wpf:CartesianChart>
+
     </Grid>
 </Window>

@@ -28,7 +28,7 @@
                 <Label Content="{Binding User.FullName}" Margin="280, 40, 10, 10" Foreground="#F76A14"></Label>
                 <Label Content="Your accommodations on this location:"  Margin="20,90,20,20"></Label>
                 <DataGrid ItemsSource="{Binding Accommodations}" Margin="-180,130,20,50" Width="300" Height="auto"
-                          AutoGenerateColumns="False" IsReadOnly="True">
+                          AutoGenerateColumns="False" IsReadOnly="True" Focusable="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Type" Width="*" Binding="{Binding Type}"></DataGridTextColumn>
@@ -230,7 +230,7 @@
     <Window.InputBindings>
         <KeyBinding Key="C" Modifiers="Shift" Command="{Binding SelectedComment.ReportCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid>
+    <Grid Background="#d9eeef">
         <ListBox Background="#d9eeef" Width="585" Height="465" ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ForumDataTemplate}"></ListBox>
     </Grid>

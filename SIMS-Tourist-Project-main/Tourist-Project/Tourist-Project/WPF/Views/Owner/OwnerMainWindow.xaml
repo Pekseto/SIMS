@@ -55,12 +55,12 @@
                     </Grid>
                 </Border>
                 <Label Content="CheckIn         CheckOut" FontWeight="Bold" Margin="100,65,0,0"></Label>
-                <Label Content="Old dates:" Margin="5,90,0,0" Foreground="#ea0e07"></Label>
-                <Label Content="{Binding RescheduleRequest.OldBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#ea0e07" Margin="100,90,0,0"></Label>
-                <Label Content="{Binding RescheduleRequest.OldEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#ea0e07" Margin="173,90,0,0"></Label>
-                <Label Content="New dates:" Margin="5,120,0,0" Foreground="Green"></Label>
-                <Label Content="{Binding RescheduleRequest.NewBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Green" Margin="100, 120,0,0"></Label>
-                <Label Content="{Binding RescheduleRequest.NewEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="Green" Margin="173, 120, 0, 0"></Label>
+                <Label Content="Old dates:" Margin="5,90,0,0" Foreground="#D94332"></Label>
+                <Label Content="{Binding RescheduleRequest.OldBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#D94332" Margin="100,90,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.OldEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#D94332" Margin="173,90,0,0"></Label>
+                <Label Content="New dates:" Margin="5,120,0,0" Foreground="#0EB35E"></Label>
+                <Label Content="{Binding RescheduleRequest.NewBeginningDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#0EB35E" Margin="100, 120,0,0"></Label>
+                <Label Content="{Binding RescheduleRequest.NewEndDate, UpdateSourceTrigger=PropertyChanged}" Foreground="#0EB35E" Margin="173, 120, 0, 0"></Label>
                 <Button Content="Confirm(Alt+C)" Command="{Binding ConfirmRescheduleCommand, UpdateSourceTrigger=PropertyChanged}" Height="38" Margin="5,100,10,0"></Button>
                 <Button Content="Cancel(Alt+D)" Command="{Binding CancelRescheduleCommand, UpdateSourceTrigger=PropertyChanged}" Height="38" Margin="5,190,10,0"></Button>
                 <Separator Margin="0,250,0,10"></Separator>
@@ -70,6 +70,23 @@
             <Setter Property="Background" Value="#d9eeef"></Setter>
             <Setter Property="Foreground" Value="#03888f"></Setter>
             <Setter Property="BorderThickness" Value="0"></Setter>
+        </Style>
+        <Style x:Key="GroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+            <Setter Property="Foreground" Value="#03888f"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupBox}">
+                        <Border CornerRadius="20,10,20,10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style x:Key="{x:Type Label}" TargetType="Label">
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
@@ -307,24 +324,26 @@
                         <Button Height="38" Width="170" Content="Show forums(F)" Command="{Binding ShowForumsCommand}" VerticalAlignment="Bottom"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Create recommendation(F4)" Margin="583,0,-94,-20">
+                <Label Content="Create recommendation(F4)" Margin="580,-6,-500,10" Foreground="#03888f"></Label>
+                <GroupBox Margin="583,14,-94,27" Style="{StaticResource GroupBoxStyle}" Background="#0EB35E">
                     <StackPanel>
-                        <Label Content="Best by reservation number:"></Label>
-                        <Label Content="{Binding BestLocationByReservation.Location}"></Label>
-                        <Label Content="Best by Occupancy:"></Label>
-                        <Label Content="{Binding BestLocationByOccupancy.Location}"></Label>
-                        <Button Height="38" Width="auto" Content="Recommendations(M)" VerticalAlignment="Bottom"/>
+                        <Label Content="Best by reservation number:" Foreground="#d9eeef"></Label>
+                        <Label Content="{Binding BestLocationByReservation.Location}" Foreground="#d9eeef" FontWeight="ExtraBlack" FontStyle="Italic"></Label>
+                        <Label Content="Best by Occupancy:" Foreground="#d9eeef"></Label>
+                        <Label Content="{Binding BestLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBlack" FontStyle="Italic"></Label>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Closure recommendation(F5)" Margin="763,0,-284,-20">
+                <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-175,-12"/>
+                <Label Content="Closure recommendation(F5)" Margin="760,-6,-500,10" Foreground="#03888f"></Label>
+                <GroupBox Margin="763,14,-284,27" Background="#D94332" Style="{StaticResource GroupBoxStyle}">
                     <StackPanel>
-                        <Label Content="Worst by reservation number:"></Label>
-                        <Label Content="{Binding WorstLocationByReservation.Location}"></Label>
-                        <Label Content="Worst by Occupancy:"></Label>
-                        <Label Content="{Binding WorstLocationByOccupancy.Location}"></Label>
-                        <Button Height="38" Width="auto" Content="Recommendations(Shift+M)" VerticalAlignment="Bottom"/>
+                        <Label Content="Worst by reservation number:" Foreground="#d9eeef"></Label>
+                        <Label Content="{Binding WorstLocationByReservation.Location}" Foreground="#d9eeef" FontWeight="ExtraBold" FontStyle="Italic"></Label>
+                        <Label Content="Worst by Occupancy:" Foreground="#d9eeef"></Label>
+                        <Label Content="{Binding WorstLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBold" FontStyle="Italic"></Label>
                     </StackPanel>
                 </GroupBox>
+                <Button Height="38" Width="180" Content="Recommendations(Shift+M)" VerticalAlignment="Bottom" Margin="500,2,-545,-12"/>
             </Grid>
             <GroupBox Header="My accommodations(M)" Margin="20,20" Grid.Row="1">
                 <ListBox x:Name="AccommodationListBox"

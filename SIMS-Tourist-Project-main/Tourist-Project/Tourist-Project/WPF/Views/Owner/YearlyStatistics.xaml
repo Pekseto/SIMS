@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
         xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="YearlyStatistics" Height="450" Width="850">
+        Title="YearlyStatistics" Height="650" Width="770" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="{x:Type Button}" TargetType="Button">
             <Setter Property="Height" Value="38"></Setter>
@@ -42,19 +42,28 @@
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding SwitchToMonthlyCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid>
-        <DataGrid Height="100" VerticalAlignment="Top" Width="700"
+        <DataGrid Height="100" Margin="10,300,10,0" Width="686" IsReadOnly="True"
             ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedStatistics}"></DataGrid>
-        <Button Height="100" Width="100" VerticalAlignment="Bottom" Content="Monthly" Command="{Binding SwitchToMonthlyCommand}"></Button>
-        <Label Content="Most occupied year" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Label>
-        <Label Content="{Binding MostOccupiedYear}" VerticalAlignment="Bottom" HorizontalAlignment="Right"></Label>
-        <wpf:CartesianChart Series="{Binding StatsChart}" LegendLocation="Right" Height="200" Width="800">
+        <Button Width="150" Margin="10,500,10,10" Content="Monthly(Space)" Command="{Binding SwitchToMonthlyCommand}"></Button>
+        <Label Content="Most occupied year:" FontWeight="DemiBold" FontSize="15" Margin="20,150,50,50"></Label>
+        <Label Content="{Binding MostOccupiedYear}" Margin="328,150,50,50" FontSize="15" FontWeight="Bold" Foreground="#F76A14"></Label>
+        <Label Content="Accommodation Name:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,10"></Label>
+        <Label Content="{Binding AccommodationViewModel.Accommodation.Name}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="40,10"></Label>
+        <Label Content="Location:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,50,10,10"></Label>
+        <Label Content="{Binding AccommodationViewModel.Location}" HorizontalAlignment="Center" Foreground="#F76A14" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="118,50,10,10"></Label>
+        <Label Content="Owner:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="20,95,40,40"></Label>
+        <Label Content="{Binding AccommodationViewModel.User.FullName}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="50, 95,10,10"></Label>
+        <wpf:CartesianChart Series="{Binding StatsChart}" LegendLocation="Right" Height="220" Width="680" Margin="25,0,10,40" HorizontalAlignment="Left">
             <wpf:CartesianChart.AxisX>
-                <wpf:Axis Labels="{Binding Labels}"></wpf:Axis>
+                <wpf:Axis Labels="{Binding Labels}" Foreground="#03888f" FontSize="12" FontWeight="DemiBold"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis LabelFormatter="{Binding Formatter}"></wpf:Axis>
+                <wpf:Axis LabelFormatter="{Binding Formatter}" Foreground="#03888f"></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
     </Grid>

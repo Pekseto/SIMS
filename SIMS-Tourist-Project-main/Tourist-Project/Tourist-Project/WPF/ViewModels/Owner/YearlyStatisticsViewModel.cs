@@ -104,7 +104,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public bool CanSwitch()
         {
-            return SelectedStatistics != null;
+            return true;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

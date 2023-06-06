@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using LiveCharts;
+using LiveCharts.Wpf;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views.Owner;
 
@@ -24,12 +26,28 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 OnPropertyChanged();
             }
         }
+
+        private SeriesCollection statsChart;
+
+        public SeriesCollection StatsChart
+        {
+            get => statsChart;
+            set
+            {
+                if(statsChart == value) return;
+                statsChart = value;
+                OnPropertyChanged();
+            }
+        }
+
         private readonly AccommodationStatisticsService accommodationStatisticsService = new();
         public List<int> Years { get; set; }
         public int MostOccupiedYear { get; set; }
 
-        public AccommodationStatistics SelectedStatistics { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
+        public AccommodationStatistics SelectedStatistics { get; set; }
         public ICommand SwitchToMonthlyCommand { get; set; }
 
         public YearlyStatisticsViewModel(AccommodationViewModel accommodationViewModel)
@@ -47,8 +65,35 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                     year.ToString()));
             }
             MostOccupiedYear = accommodationStatisticsService.GetMostOccupiedYear(AccommodationViewModel.Accommodation.Id);
-
             SwitchToMonthlyCommand = new RelayCommand(SwitchToMonthly, CanSwitch);
+
+            ChartInitialization();
+        }
+
+        private void ChartInitialization()
+        {
+            StatsChart = new SeriesCollection();
+
+            foreach (var accommodationStatistic in AccommodationStatistics)
+            {
+                StatsChart.Add(new ColumnSeries
+                {
+                    Title = accommodationStatistic.Period,
+                    Values = new ChartValues<int>
+                    {
+                        accommodationStatistic.TotalReservations,
+                        accommodationStatistic.CancelledReservations,
+                        accommodationStatistic.RescheduledReservations,
+                        accommodationStatistic.RescheduledReservations,
+                        accommodationStatistic.Occupancy
+                    }
+                });
+            }
+            Labels = new []
+            {
+                "Reservations", "Cancelled \nReservations", "Rescheduled \nReservations", "Renovation \nRecommendations", "Occupancy"
+            };
+            Formatter = value => value.ToString("N");
         }
 
         public void SwitchToMonthly()

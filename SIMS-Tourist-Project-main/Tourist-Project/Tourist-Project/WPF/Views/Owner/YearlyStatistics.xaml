@@ -6,13 +6,56 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
         xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="YearlyStatistics" Height="450" Width="800">
+        Title="YearlyStatistics" Height="450" Width="850">
+    <Window.Resources>
+        <Style x:Key="{x:Type Button}" TargetType="Button">
+            <Setter Property="Height" Value="38"></Setter>
+            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Foreground" Value="#d9eeef"></Setter>
+            <Setter Property="BorderThickness" Value="2"></Setter>
+            <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#0fbdc6"></Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#376f72"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="{x:Type Grid}" TargetType="Grid">
+            <Setter Property="Background" Value="#d9eeef"></Setter>
+        </Style>
+        <Style x:Key="{x:Type Label}" TargetType="Label">
+            <Setter Property="Foreground" Value="#0da2a5"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <DataGrid
+        <DataGrid Height="100" VerticalAlignment="Top" Width="700"
             ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedStatistics}"></DataGrid>
         <Button Height="100" Width="100" VerticalAlignment="Bottom" Content="Monthly" Command="{Binding SwitchToMonthlyCommand}"></Button>
-        <Label Content="Most occupied year" Margin="100,200"></Label>
-        <Label Content="{Binding MostOccupiedYear}" Margin="250,200,100,200"></Label>
+        <Label Content="Most occupied year" VerticalAlignment="Bottom" HorizontalAlignment="Left"></Label>
+        <Label Content="{Binding MostOccupiedYear}" VerticalAlignment="Bottom" HorizontalAlignment="Right"></Label>
+        <wpf:CartesianChart Series="{Binding StatsChart}" LegendLocation="Right" Height="200" Width="800">
+            <wpf:CartesianChart.AxisX>
+                <wpf:Axis Labels="{Binding Labels}"></wpf:Axis>
+            </wpf:CartesianChart.AxisX>
+            <wpf:CartesianChart.AxisY>
+                <wpf:Axis LabelFormatter="{Binding Formatter}"></wpf:Axis>
+            </wpf:CartesianChart.AxisY>
+        </wpf:CartesianChart>
     </Grid>
 </Window>

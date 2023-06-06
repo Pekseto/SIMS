@@ -25,5 +25,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         public List<Tour> GetEndedToursThisYear(int guideId);
         public List<string> GetTourLanguages();
 
+        List<Tour> GetPastYearTours();
     }
 }

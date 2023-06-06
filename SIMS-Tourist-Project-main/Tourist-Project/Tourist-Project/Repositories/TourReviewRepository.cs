@@ -43,6 +43,19 @@ namespace Tourist_Project.Repositories
             return serializer.FromCSV(filePath);
         }
 
+        public int GetByUserAndTour(int userId, int tourId)
+        {
+            return GetAll().Find(tr => tr.UserId == userId && tr.TourId == tourId).Id;
+        }
+
+        public void Delete(int reviewId)
+        {
+            tourReviews = GetAll();
+            var reviewToDelete = tourReviews.Find(tr => tr.Id == reviewId);
+            tourReviews.Remove(reviewToDelete);
+            serializer.ToCSV(filePath, tourReviews);
+        }
+
         public TourReview GetOne(int id)
         {
             return tourReviews.Find(t => t.Id == id);

@@ -24,6 +24,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly NavigationStore navigationStore;
         private readonly TourVoucherService voucherService = new();
         private readonly TourRequestService requestService = new();
+        private readonly ComplexTourService complexTourService = new();
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand TourHistoryCommand { get; set; }
@@ -52,7 +53,9 @@ namespace Tourist_Project.WPF.ViewModels
             ExitCommand = new RelayCommand(OnExitClick);
 
             voucherService.DeleteInvalidVouchers(LoggedUser.Id);
+            voucherService.ClaimFiveToursInAYearVoucher(LoggedUser.Id);
             requestService.UpdateInvalidRequests(LoggedUser.Id);
+            complexTourService.UpdateComplexTourStatusesForUser(LoggedUser.Id);
         }
 
         private void OnExitClick()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Tourist_Project.Applications.UseCases
         private readonly ITourVoucherRepository voucherRepository = injector.CreateInstance<ITourVoucherRepository>();
 
         private readonly TourReservationService reservationService = new();
+        private readonly TourAttendanceService attendanceService = new();
+        private readonly UserService userService = new();
 
         public TourVoucherService() 
         {
@@ -55,6 +58,46 @@ namespace Tourist_Project.Applications.UseCases
         public void DeleteInvalidVouchers(int userId)
         {
             voucherRepository.DeleteInvalidVouchers(userId);
+        }
+
+        public void ClaimFiveToursInAYearVoucher(int userId)
+        {
+            var user = userService.GetOne(userId);
+
+            if (user.VoucherAcquiredDate.AddYears(1) < DateTime.Now)
+            {
+                user.AcquiredYearlyVoucher = false;
+                userService.Update(user);
+            }
+
+            if (user.AcquiredYearlyVoucher) return;
+            
+            var pastYearAttendancesCount = attendanceService.GetUsersPastYearAttendancesCount(userId);
+            if (pastYearAttendancesCount >= 5)
+            {
+                var voucher = new TourVoucher(userId, "5 tours in 1 year", DateTime.Now.AddMonths(6));
+                Create(voucher);
+
+                user.VoucherAcquiredDate = DateTime.Now;
+                user.AcquiredYearlyVoucher = true;
+                userService.Update(user);
+            }
+
+        }
+
+        public TourVoucher GetEarliestByNameForUser(string selectedVoucherName, int userId)
+        {
+            return voucherRepository.GetEarliestByNameForUser(selectedVoucherName, userId);
+        }
+
+        public ObservableCollection<string> LoadVouchers(int userId)
+        {
+            var retVal = new ObservableCollection<string> { "Without voucher" };
+            foreach (var voucher in GetAllForUser(userId).Select(tv => tv.Name).Distinct())
+            {
+                retVal.Add(voucher);
+            }
+            return retVal;
         }
     }
 }

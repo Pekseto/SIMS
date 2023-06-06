@@ -9,6 +9,7 @@
              xmlns:val="clr-namespace:Tourist_Project.WPF.Validation"
              d:DataContext="{d:DesignInstance Type=viewmodels:RequestsStatsViewModel}"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
@@ -60,9 +61,6 @@
             <Label Content="Date range:" Foreground="White"
                    FontSize="18" Margin="50,10,0,0"
                    Grid.Row="5"/>
-            <Button Grid.Row="6" Content="Post request"
-                    Grid.ColumnSpan="2" Height="40" Width="100"
-                    FontSize="15" Command="{Binding PostRequestCommand}"/>
 
             <ComboBox Grid.Row="1" Grid.Column="1"
                       ItemsSource="{Binding Countries}"
@@ -105,15 +103,36 @@
                    Content="from:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Top" HorizontalAlignment="Left"
-                        Text="{Binding FromDate}" Width="120"/>
+                        Text="{Binding FromDate}" Width="120"
+                        DisplayDateStart="{Binding DisplayDateStart}"/>
             <Label Grid.Row="5" Grid.Column="1" Margin="20,10"
                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
                    Content="until:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                        Text="{Binding UntilDate}" Width="120"/>
-
+                        Text="{Binding UntilDate}" Width="120"
+                        DisplayDateStart="{Binding DisplayDateStart}"/>
+            <Button Grid.Row="6" Content="Post request"
+                    Grid.ColumnSpan="2" Height="40" Width="100"
+                    FontSize="15" Command="{Binding PostRequestCommand}"/>
         </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="GreenYellow"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,-10"/>
+            <TextBlock Text="{Binding UndoMessage.Content, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="YellowGreen"
+                       Cursor="Hand" TextDecorations="Underline"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,5">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding UndoRequestCommand}" MouseAction="LeftClick"/>
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
 
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -126,17 +145,17 @@
             <Label Content="Requests:" Foreground="White"
                    FontSize="22" Margin="20,25,0,0"/>
 
-            <DataGrid Grid.Row="1" Margin="10,0,10,00"
+            <DataGrid Grid.Row="1" Margin="10,0,10,0"
                       ItemsSource="{Binding Requests, UpdateSourceTrigger=PropertyChanged}"
                       FontSize="13" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="auto"/>
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="auto"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                     <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="auto"/>
                         <DataGridTextColumn Header="Guests" Binding="{Binding GuestsNumber}" Width="auto"/>
                     <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="auto"/>
                     <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="auto"/>
-                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
 

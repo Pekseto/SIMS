@@ -160,11 +160,11 @@ namespace Tourist_Project.Applications.UseCases
             var tourDTOs = new List<TourDTO>();
             foreach (var tour in GetAll())
             {
-                if (tour.StartTime < DateTime.Today || tour.Status != Status.NotBegin) continue;
+                if (tour.StartTime.Date < DateTime.Today.Date || tour.Status != Status.NotBegin) continue;
                 var tourDTO = new TourDTO(tour)
                 {
                     SpotsLeft = GetLeftoverSpots(tour),
-                    Location = locationService.GetLocation(tour)
+                    Location = locationService.Get(tour.LocationId)
                 };
                 tourDTOs.Add(tourDTO);
             }
@@ -207,10 +207,10 @@ namespace Tourist_Project.Applications.UseCases
         {
             var tours = new List<TourDTO>();
 
-            foreach (TourReservation t in tourReservationService.GetAll())
+            foreach (TourReservation t in tourReservationService.GetAll().Where(tr => tr.UserId == userId))
             {
                 Tour tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId == userId && tour.StartTime >= DateTime.Today)
+                if (tour.StartTime.Date >= DateTime.Today.Date)
                 {
                     var tourDTO = new TourDTO(tour)
                     {
@@ -228,15 +228,15 @@ namespace Tourist_Project.Applications.UseCases
         {
             var tours = new List<TourDTO>();
 
-            foreach (TourReservation t in tourReservationService.GetAll())
+            foreach (TourReservation tourReservation in tourReservationService.GetAll().Where(tr => tr.UserId == userId))
             {
-                Tour tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId == userId && tour.StartTime == DateTime.Today)
+                Tour tour = GetAll().Find(x => x.Id == tourReservation.TourId);
+                if (tour.StartTime.Date == DateTime.Today.Date)
                 {
                     var tourDTO = new TourDTO(tour)
                     {
                         SpotsLeft = GetLeftoverSpots(tour),
-                        Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
+                        Location = locationService.Get(tour.LocationId)
                     };
                     tours.Add(tourDTO);
                 }
@@ -291,6 +291,11 @@ namespace Tourist_Project.Applications.UseCases
                 tourVoucherService.VoucherDistributionForAnyTour(tour);
             }
             
+        }
+
+        public List<Tour> GetPastYearTours()
+        {
+            return repository.GetPastYearTours();
         }
     }
 }

@@ -112,5 +112,11 @@ namespace Tourist_Project.Applications.UseCases
 
             return ratingSum / tourCounter;
         }
+
+        public void UndoLatestReview(int userId, int tourId)
+        {
+            var reviewId = repository.GetByUserAndTour(userId, tourId);
+            repository.Delete(reviewId);
+        }
     }
 }

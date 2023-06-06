@@ -20,6 +20,10 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         List<string> GetAllRequestedLanguages(int userId);
         public List<TourRequest> GetAllPending();
         public List<TourRequest> GetAllLastYear();
-        List<TourRequest> GetAllForComplexTour(int complexTourId, int userId);
+        List<TourRequest> GetAllForComplexTour(int complexTourId);
+        void DenyAllForComplexTour(int complexTourId);
+        List<TourRequest> GetAllPendingForUser(int loggedUserId);
+        List<TourRequest> GetForSelectedYear(int userId, string year);
+        int GetUsersLatestRequestId(int loggedUserId);
     }
 }

@@ -77,7 +77,11 @@ namespace Tourist_Project.Repositories
             return GetAllByTourId(tourId).FindAll(reservation => !reservation.Voucher).Count;
         }
 
-
+        public TourReservation GetForUndo(int userId, int tourId)
+        {
+            var reservationId = GetAll().Where(tr => tr.UserId == userId && tr.TourId == tourId).Max(tr => tr.Id);
+            return GetById(reservationId);
+        }
     }
 }
 

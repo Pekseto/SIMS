@@ -110,5 +110,10 @@ namespace Tourist_Project.Repositories
         {
             return GetAll().Select(tour => tour.Language).Distinct().ToList();
         }
+
+        public List<Tour> GetPastYearTours()
+        {
+            return GetAll().Where(t => t.StartTime <= DateTime.Now && t.StartTime >= DateTime.Now.AddYears(-1)).ToList();
+        }
     }
 }

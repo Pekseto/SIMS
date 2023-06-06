@@ -12,6 +12,10 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         List<ComplexTour> GetAll();
         List<ComplexTour> GetAllForUser(int userId);
         ComplexTour Save(ComplexTour complexTour);
+        ComplexTour Update(ComplexTour complexTour);
+        void Delete(int complexTourId);
         int NextId();
+        List<ComplexTour> GetAllPendingForUser(int userId);
+        int GetUsersLatestRequestId(int loggedUserId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using Tourist_Project.Serializer;
 
 namespace Tourist_Project.Domain.Models
@@ -105,8 +106,34 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
+        private bool acquiredYearlyVoucher;
+
+        public bool AcquiredYearlyVoucher
+        {
+            get => acquiredYearlyVoucher;
+            set
+            {
+                if(value ==  acquiredYearlyVoucher) return;
+                acquiredYearlyVoucher = value;
+                OnPropertyChanged(nameof(AcquiredYearlyVoucher));
+            }
+        }
+
+        private DateTime voucherAcquiredDate;
+
+        public DateTime VoucherAcquiredDate
+        {
+            get => voucherAcquiredDate;
+            set
+            {
+                if(value ==  voucherAcquiredDate) return;
+                voucherAcquiredDate = value;
+                OnPropertyChanged(nameof(VoucherAcquiredDate));
+            }
+        }
+
         public User() { }
-        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate, bool isSuper, bool isEmployed)
+        public User(int id, string username, string password, UserRole role, string fullName, DateTime birthDate, bool isSuper, bool isEmployed, bool acquiredYearlyVoucher, DateTime voucherAcquiredDate)
         {
             Id = id;
             Username = username;
@@ -116,10 +143,12 @@ namespace Tourist_Project.Domain.Models
             BirthDate = birthDate;
             IsSuper = isSuper;
             IsEmployed = isEmployed;
+            AcquiredYearlyVoucher = acquiredYearlyVoucher;
+            VoucherAcquiredDate = voucherAcquiredDate;
         }
         public string[] ToCSV()
         {
-            string[] csvValues = { Id.ToString(), Username, Password, Role.ToString(), FullName, BirthDate.ToString(), IsSuper.ToString(), IsEmployed.ToString() };
+            string[] csvValues = { Id.ToString(), Username, Password, Role.ToString(), FullName, BirthDate.ToString(), IsSuper.ToString(), IsEmployed.ToString(), AcquiredYearlyVoucher.ToString(), VoucherAcquiredDate.ToString() };
             return csvValues;
         }
         public void FromCSV(string[] values)
@@ -132,6 +161,8 @@ namespace Tourist_Project.Domain.Models
             BirthDate = DateTime.Parse(values[5]);
             IsSuper = bool.Parse(values[6]);
             IsEmployed = bool.Parse(values[7]);
+            AcquiredYearlyVoucher = bool.Parse(values[8]);
+            VoucherAcquiredDate = DateTime.Parse(values[9]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -7,10 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
-    <Grid>
+
+    <UserControl.Resources>
+        <Style x:Key="MessageColor" TargetType="Label">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Message.Type}" Value="True">
+                    <Setter Property="Foreground" Value="GreenYellow"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Message.Type}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
-            <RowDefinition Height="600"/>
+            <RowDefinition Height="550"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -18,16 +32,32 @@
                FontSize="32" Content="Vouchers"
                HorizontalAlignment="Left" Foreground="White"
                VerticalAlignment="Center"/>
-        <DataGrid Grid.Row="1" Margin="50" FontSize="16"
+        <DataGrid Grid.Row="1" Margin="50,50,50,0" FontSize="16"
                   ItemsSource="{Binding Vouchers}"
                   AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="300"/>
                 <DataGridTextColumn Header="Acquired" Binding="{Binding WayAcquired}" Width="300"/>
-                <DataGridTextColumn Header="Valid until" Binding="{Binding ExpireDate}" Width="*"/>
+                <DataGridTextColumn Header="Valid until" Binding="{Binding ExpireDateStr}" Width="*"/>
             </DataGrid.Columns>
 
         </DataGrid>
+
+        <TextBlock Grid.Row="2" Margin="55,0,0,0"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="Download PDF report about vouchers"
+                   Foreground="CornflowerBlue" Cursor="Hand"
+                   FontSize="16" TextDecorations="Underline">
+            <TextBlock.InputBindings>
+                <MouseBinding Command="{Binding DownloadPDFCommand}" MouseAction="LeftClick"/>
+            </TextBlock.InputBindings>
+        </TextBlock>
+
+        <Label Content="{Binding Message.Content, UpdateSourceTrigger=PropertyChanged}"
+               Style="{StaticResource MessageColor}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Grid.Row="2"/>
 
     </Grid>
 </UserControl>

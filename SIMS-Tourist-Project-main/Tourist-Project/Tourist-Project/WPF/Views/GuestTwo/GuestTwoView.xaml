@@ -133,6 +133,14 @@
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
 
+        <Style TargetType="ToolTip">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding TooltipVisibility}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
         </Style>
@@ -160,49 +168,63 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            Foreground="White"
-                           Cursor="Hand">
+                           Cursor="Hand"
+                           ToolTip="Guest 2 Home">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding HomeCommand}" MouseAction="LeftClick"/>
                     </TextBlock.InputBindings>
                 </TextBlock>
 
-                <StackPanel Grid.Row="1">
+                <StackPanel Grid.Row="1" Height="350" VerticalAlignment="Top">
                     <RadioButton Content="Home" IsChecked="True"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to Home page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding HomeCommand}"/>
                     <RadioButton Content="My Tours"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to My Tours page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding MyToursCommand}"/>
                     <RadioButton Content="History"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to History page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding TourHistoryCommand}"/>
                     <RadioButton Content="Requests/Stats"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to Requests/Stats page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding RequestsStatsCommand}"/>
                     <RadioButton Content="Complex tours"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go too Complex Tours page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding ComplexToursCommand}"/>
                     <RadioButton Content="Vouchers"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to Vouchers page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding VouchersCommand}"/>
                     <RadioButton Content="Notifications"
                                  Height="50"
                                  FontSize="24"
+                                 ToolTip="Go to Notifications page"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding NotificationsCommand}"/>
                 </StackPanel>
+
+                <ToggleButton Content="Show ToolTips" Grid.Row="1"
+                              VerticalAlignment="Bottom"
+                              HorizontalAlignment="Center"
+                              Height="40" FontSize="15" Cursor="Hand"
+                              IsChecked="{Binding Path=TooltipVisibility}"/>
 
                 <GroupBox Grid.Row="2" Header="Profile"
                           Foreground="White"
@@ -245,12 +267,14 @@
                         Content="Sign out" Grid.Row="3" Cursor="Hand"
                         Height="35" Width="90" FontSize="17"
                         Margin="20,0,0,20"
-                        Command="{Binding SignOutCommand}"/>
+                        Command="{Binding SignOutCommand}"
+                        ToolTip="Sign out"/>
                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Right"
                         Content="Exit" Grid.Row="3" Cursor="Hand"
                         Height="35" Width="90" FontSize="17"
                         Margin="0,0,20,20"
-                        Command="{Binding ExitCommand}"/>
+                        Command="{Binding ExitCommand}"
+                        ToolTip="Exit"/>
             </Grid>
 
             <ContentControl Grid.Column="1"

@@ -41,11 +41,11 @@
                 <ComboBox ItemsSource="{Binding Countries}"
                       SelectedItem="{Binding SelectedCountry}"                  
                       Width="80" Height="25" HorizontalAlignment="Left"
-                      Margin="0,0,0,0" FontSize="13"/>
+                      ToolTip="Select country" FontSize="13"/>
                 <ComboBox ItemsSource="{Binding Cities}"
                           SelectedItem="{Binding SelectedCity}"
                           Width="100" Height="25"
-                          HorizontalAlignment="Left"
+                          HorizontalAlignment="Left" ToolTip="Select city"
                           Margin="10,0,0,0" FontSize="13"/>
             </StackPanel>
 
@@ -75,7 +75,7 @@
                           SelectedItem="{Binding SelectedLanguage}"
                           Width="80" FontSize="13"
                           HorizontalAlignment="Left"
-                          VerticalAlignment="Center"
+                          VerticalAlignment="Center" ToolTip="Select language"
                           Margin="0,0,0,0"/>
             </StackPanel>
 
@@ -92,14 +92,14 @@
             </StackPanel>
 
             <StackPanel Grid.Column="4" Orientation="Horizontal">
-                <Button Content="Search" Cursor="Hand"
+                <Button Content="Search" Cursor="Hand" ToolTip="Search tours"
                         Command="{Binding SearchCommand}"
                         Width="70" Height="30" FontSize="15"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                         Margin="20,0,0,0"/>
                 <Button Content="Show all" Command="{Binding ShowAllCommand}" 
                         Width="70" Height="30" FontSize="15"
-                        HorizontalAlignment="Right" 
+                        HorizontalAlignment="Right" ToolTip="Show all tours" 
                         VerticalAlignment="Center" Cursor="Hand"
                         Margin="20,0,0,0"/>
 
@@ -130,7 +130,7 @@
                 Grid.Row="3" Width="80" Height="40"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top" Cursor="Hand"
-                Margin="0,0,0,0"/>
+                ToolTip="Go to reservation page"/>
 
 
     </Grid>

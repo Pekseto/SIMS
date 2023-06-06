@@ -43,7 +43,7 @@
 
         </DataGrid>
 
-        <TextBlock Grid.Row="2" Margin="55,0,0,0"
+        <TextBlock Grid.Row="2" Margin="55,0,0,0" ToolTip="Click to download report"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="Download PDF report about vouchers"
                    Foreground="CornflowerBlue" Cursor="Hand"

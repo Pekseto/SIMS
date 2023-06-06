@@ -18,13 +18,24 @@ namespace Tourist_Project.WPF.ViewModels
 {
     public class GuestTwoViewModel : ViewModelBase
     {
-        private GuestTwoView guestTwoWindow;
-        public User LoggedUser { get; set; }
-        public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
         private readonly NavigationStore navigationStore;
         private readonly TourVoucherService voucherService = new();
         private readonly TourRequestService requestService = new();
         private readonly ComplexTourService complexTourService = new();
+        private GuestTwoView guestTwoWindow;
+        private bool tooltipVisibility;
+
+        public bool TooltipVisibility
+        {
+            get => tooltipVisibility;
+            set
+            {
+                tooltipVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+        public ViewModelBase CurrentViewModel => navigationStore.CurrentViewModel;
+        public User LoggedUser { get; set; }
         public ICommand HomeCommand { get; set; }
         public ICommand MyToursCommand { get; set; }
         public ICommand TourHistoryCommand { get; set; }
@@ -41,6 +52,7 @@ namespace Tourist_Project.WPF.ViewModels
             this.navigationStore = navigationStore;
             this.guestTwoWindow = guestTwoWindow;
             this.navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            TooltipVisibility = true;
 
             HomeCommand = new NavigateCommand<HomeViewModel>(navigationStore, () => new HomeViewModel(user, navigationStore));
             MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));

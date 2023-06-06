@@ -27,7 +27,8 @@
                 Width="60" FontSize="14"
                 Margin="37,2"
                 Height="25" Cursor="Hand"
-                Command="{Binding BackCommand}"/>
+                Command="{Binding BackCommand}"
+                ToolTip="Go to previous page"/>
 
         <Label Grid.Row="1" FontSize="14"
                VerticalAlignment="Top"
@@ -57,7 +58,7 @@
                 Command="{Binding ReserveCommand}"
                 Grid.Row="3" Width="80" Height="40"
                 HorizontalAlignment="Center" Cursor="Hand"
-                VerticalAlignment="Top"/>
+                VerticalAlignment="Top" ToolTip="Go to reservation page"/>
         
     </Grid>
 </UserControl>

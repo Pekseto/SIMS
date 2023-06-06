@@ -15,11 +15,21 @@ using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TourLiveViewModel : INotifyPropertyChanged
     {
-        public static ObservableCollection<TourPoint> TourPoints { get; set; }
+        private ObservableCollection<TourPoint> tourPoints;
+
+        public ObservableCollection<TourPoint> TourPoints
+        {
+            get { return tourPoints; }
+            set
+            {
+                tourPoints = value; 
+                OnPropertyChanged("TourPoint");
+            }
+        }
 
         public TourPoint SelectedTourPoint { get; set; }
         public Tour SelectedTour { get; set; }
@@ -52,7 +62,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CheckCommand { get; set; }
         public ICommand OpenTouristListCommand { get; set; }
         public ICommand HomePageCommand { get; set; }
-        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
         #endregion
 
         public TourLiveViewModel(Tour selectedTour, Window window) 
@@ -69,17 +80,18 @@ namespace Tourist_Project.WPF.ViewModels
             SelectedTourPoint = null;
 
 
-            EarlyEndCommand = new RelayCommand(EarlyEnd, CanEarlyEnd);
+            EarlyEndCommand = new RelayCommand(EarlyEnd);
             CheckCommand = new RelayCommand(Check, CanCheck);
             OpenTouristListCommand = new RelayCommand(OpenToruistList, CanOpenTouristList);
-            HomePageCommand = new RelayCommand(HomeView, CanHomeView);
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            HomePageCommand = new RelayCommand(HomeView);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
         }
 
         private void startClock()
         {
             CurrentTime = DateTime.Now;
-            DispatcherTimer timer = new DispatcherTimer();
+            var timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += tickevent;
             timer.Start();
@@ -89,29 +101,29 @@ namespace Tourist_Project.WPF.ViewModels
         {
             CurrentTime = DateTime.Now;
         }
-        private bool CanSwitchLanguage()
-        {
-            return true;
-        }
 
-        public void SwitchLanguage()
+        private void ToSerbian()
         {
             var app = (App)Application.Current;
-            if (CurrentLanguage.Equals("en-US"))
-            {
-                CurrentLanguage = "sr-LATN";
-            }
-            else
-            {
-                CurrentLanguage = "en-US";
-            }
+            CurrentLanguage = "sr-LATN";
             app.ChangeLanguage(CurrentLanguage);
         }
 
-
-        private bool CanHomeView()
+        private bool CanToSerbian()
         {
-            return true;
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private void HomeView()
@@ -119,10 +131,6 @@ namespace Tourist_Project.WPF.ViewModels
             window.Close();
         }
 
-        private bool CanEarlyEnd()
-        {
-            return true;
-        }
         private void EarlyEnd()
         {
             SelectedTour.Status = Status.End;
@@ -137,8 +145,9 @@ namespace Tourist_Project.WPF.ViewModels
         private void Check()
         {
             SelectedTourPoint.Visited = true;
-            tourPointService.UpdateCollection(SelectedTourPoint, SelectedTour);
-            if (tourPointService.EndTour())
+            tourPointService.Update(SelectedTourPoint);
+            UpdateCollection();
+            if (tourPointService.EndTour(TourPoints))
             {
                 SelectedTour.Status = Status.End;
                 tourService.Update(SelectedTour);
@@ -157,6 +166,15 @@ namespace Tourist_Project.WPF.ViewModels
             var touristListWindow = new TouristListView(SelectedTourPoint, SelectedTour);
             touristListWindow.Show();
             window.Close();
+        }
+
+        private void UpdateCollection()
+        {
+            TourPoints.Clear();
+            foreach (var point in tourPointService.GetAllForTour(SelectedTour.Id))
+            {
+                TourPoints.Add(point);
+            }
         }
     }
 }

@@ -9,8 +9,11 @@ using LiveCharts.Wpf;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using SharpDX.Mathematics.Interop;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
+using System.Globalization;
+using Tourist_Project.WPF.Converters;
 
 namespace Tourist_Project.Applications.UseCases
 {
@@ -21,6 +24,8 @@ namespace Tourist_Project.Applications.UseCases
 
         private readonly TourService tourService = new();
         private readonly LocationService locationService = new();
+
+        private readonly MonthConverter monthConverter = new();
 
         public TourRequestService()
         {
@@ -348,7 +353,7 @@ namespace Tourist_Project.Applications.UseCases
                     }
                 }
 
-                statistics.Add(new(i.ToString(), requestCounter));
+                statistics.Add(new(monthConverter.Convert(i.ToString(), typeof(string), null, CultureInfo.CurrentCulture) as string, requestCounter));
                 requestCounter = 0;
             }
 
@@ -376,36 +381,116 @@ namespace Tourist_Project.Applications.UseCases
 
         private List<RequestStatistics> GetStatisticsForLanguage(string search, string selectedYear)
         {
+            return  selectedYear == "Overall" ? GetStatisticsForYearsByLanguage(search) : GetStatisticsForMonthsByLanguage(selectedYear, search);
+        }
+
+        private List<RequestStatistics> GetStatisticsForMonthsByLanguage(string selectedYear, string search)
+        {
+            var requestCounter = 0;
+            var statistics = new List<RequestStatistics>();
+
+            var year = int.Parse(selectedYear);
+            for (var i = 1; i <= 12; i++)
+            {
+                foreach (var request in requestRepository.GetAll().Where(request => request.CreateDate.Year == year && request.Language == search))
+                {
+                    if (request.CreateDate.Month == i)
+                    {
+                        requestCounter++;
+
+                    }
+                }
+                statistics.Add(new(monthConverter.Convert(i.ToString(), typeof(string), null, CultureInfo.CurrentCulture) as string, requestCounter));
+                requestCounter = 0;
+            }
+
+            return statistics;
+        }
+
+        private List<RequestStatistics> GetStatisticsForYearsByLanguage(string search)
+        {
             var requestCounter = 0;
             List<RequestStatistics> statistics = new();
 
-            if (selectedYear == "Overall")
+            for (var i = DateTime.Now; i >= DateTime.Now.AddYears(-4); i = i.AddYears(-1))
             {
-                for (var i = DateTime.Now; i >= DateTime.Now.AddYears(-4); i = i.AddYears(-1))
-                {
-                    requestCounter += requestRepository.GetAll().Count(request => request.Language == search && request.CreateDate.Year == i.Year);
-                    statistics.Add(new(i.Year.ToString(), requestCounter));
-                    requestCounter = 0;
-                }
+                requestCounter += requestRepository.GetAll().Count(request => request.Language == search && request.CreateDate.Year == i.Year);
+                statistics.Add(new(i.Year.ToString(), requestCounter));
+                requestCounter = 0;
             }
-            else
-            {
-                var year = int.Parse(selectedYear);
-                for (var i = 1; i <= 12; i++)
-                {
-                    foreach (var request in requestRepository.GetAll().Where(request => request.CreateDate.Year == year && request.Language == search))
-                    {
-                        if (request.CreateDate.Month == i)
-                        {
-                            requestCounter++;
 
-                        }
-                    }
-                    statistics.Add(new(i.ToString(), requestCounter));
-                    requestCounter = 0;
-                }
-            }
             return statistics;
+        }
+
+        public SeriesCollection GetLocationOverallCollection(string search)
+        {
+            var retVal = new SeriesCollection();
+
+            var location = search.Split(",");
+            var city = location[0];
+            var country = location[1];
+            var locationId = locationService.GetId(city, country);
+
+            foreach (var request in GetStatisticsForYearsByLocation(locationId))
+            {
+                if(request.Statistics == 0) continue;
+
+                retVal.Add(new PieSeries { Title = request.Time, Values = new ChartValues<int> { request.Statistics } });
+            }
+            
+            return retVal;
+        }
+
+        public SeriesCollection GenerateLocationYearCollection(string search, string selectedYear)
+        {
+            var retVal = new SeriesCollection();
+
+            var location = search.Split(",");
+            var city = location[0];
+            var country = location[1];
+            var locationId = locationService.GetId(city, country);
+
+            foreach (var request in GetStatisticsForMonthsByLocation(selectedYear, locationId))
+            {
+                if(request.Statistics == 0) continue;
+
+                retVal.Add(new PieSeries { Title = request.Time, Values = new ChartValues<int> { request.Statistics } });
+            }
+
+            return retVal;
+        }
+
+        public SeriesCollection GenerateLanguageOverallCollection(string search)
+        {
+            var retVal = new SeriesCollection();
+
+            foreach (var request in GetStatisticsForYearsByLanguage(search))
+            {
+                if(request.Statistics == 0) continue;
+
+                retVal.Add(new PieSeries { Title = request.Time, Values = new ChartValues<int> { request.Statistics } });
+            }
+
+            return retVal;
+        }
+
+        public SeriesCollection GenerateLanguageYearCollection(string search, string selectedYear)
+        {
+            var retVal = new SeriesCollection();
+
+            foreach (var request in GetStatisticsForMonthsByLanguage(selectedYear, search))
+            {
+                if(request.Statistics == 0) continue;
+
+                retVal.Add(new PieSeries { Title = request.Time, Values = new ChartValues<int> { request.Statistics } });   
+            }
+
+            return retVal;
+        }
+
+        public List<string> GetAllYears(int userId)
+        {
+            return requestRepository.GetAllYears(userId);
         }
     }
 }

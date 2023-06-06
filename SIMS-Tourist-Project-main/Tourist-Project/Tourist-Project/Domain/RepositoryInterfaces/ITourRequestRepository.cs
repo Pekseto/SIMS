@@ -20,5 +20,6 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
         List<string> GetAllRequestedLanguages(int userId);
         public List<TourRequest> GetAllPending();
         public List<TourRequest> GetAllLastYear();
+        public List<string> GetAllYears(int userId);
     }
 }

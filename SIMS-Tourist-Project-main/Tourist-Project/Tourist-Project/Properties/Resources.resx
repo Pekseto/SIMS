@@ -123,6 +123,9 @@
   <data name="AcceptTourPart" xml:space="preserve">
     <value>Accept part of tour</value>
   </data>
+  <data name="AgeStructure" xml:space="preserve">
+    <value>Age structure</value>
+  </data>
   <data name="Attendance" xml:space="preserve">
     <value>Prisustvo</value>
   </data>
@@ -161,6 +164,15 @@
   </data>
   <data name="CreateTour" xml:space="preserve">
     <value>Create new tour</value>
+  </data>
+  <data name="CreateTourForLanguage" xml:space="preserve">
+    <value>Create tour for popular language</value>
+  </data>
+  <data name="CreateTourForLocation" xml:space="preserve">
+    <value>Create tour for popular location</value>
+  </data>
+  <data name="CreateTourFromRequest" xml:space="preserve">
+    <value>Create tour from request</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -234,6 +246,9 @@
   <data name="NumberOfTourists" xml:space="preserve">
     <value>Number of tourists</value>
   </data>
+  <data name="PDFReport" xml:space="preserve">
+    <value>PDF Report</value>
+  </data>
   <data name="PickedLanguage" xml:space="preserve">
     <value>english</value>
   </data>
@@ -279,8 +294,23 @@
   <data name="TourDuration" xml:space="preserve">
     <value>Duration:</value>
   </data>
+  <data name="TouristsBetween" xml:space="preserve">
+    <value>Tourists between 18 and 50</value>
+  </data>
   <data name="TouristsList" xml:space="preserve">
     <value>Tourists list</value>
+  </data>
+  <data name="TouristsOlder" xml:space="preserve">
+    <value>Tourists older than 18</value>
+  </data>
+  <data name="TouristsUnder" xml:space="preserve">
+    <value>Tourists under 18</value>
+  </data>
+  <data name="TouristsWithoutVoucher" xml:space="preserve">
+    <value>Tourists without voucher(%)</value>
+  </data>
+  <data name="TouristsWithVoucher" xml:space="preserve">
+    <value>Tourists with voucher(%)</value>
   </data>
   <data name="TourLive" xml:space="preserve">
     <value>Tour live</value>
@@ -290,6 +320,9 @@
   </data>
   <data name="UntilDate" xml:space="preserve">
     <value>UntilDate</value>
+  </data>
+  <data name="UsingVoucherStructure" xml:space="preserve">
+    <value>Using voucher structure</value>
   </data>
   <data name="Visited" xml:space="preserve">
     <value>Visited</value>

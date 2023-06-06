@@ -14,7 +14,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TodayToursViewModel : INotifyPropertyChanged
     {
@@ -51,7 +51,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand HistoryCommand { get; set; }
         public ICommand RequestsCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
-        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
         #endregion
         public TodayToursViewModel(Window window, User loggedInUser)
         {
@@ -61,7 +62,7 @@ namespace Tourist_Project.WPF.ViewModels
             this.window = window;
             Live = false;
             LoggedInUser = loggedInUser;
-            CurrentLanguage = "en - US";
+            CurrentLanguage = "en-US";
 
             startClock();
 
@@ -71,7 +72,32 @@ namespace Tourist_Project.WPF.ViewModels
             HistoryCommand = new RelayCommand(History, CanHistory);
             RequestsCommand = new RelayCommand(Requests, CanRequests);
             ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+        }
+
+        private void ToSerbian()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private void startClock()

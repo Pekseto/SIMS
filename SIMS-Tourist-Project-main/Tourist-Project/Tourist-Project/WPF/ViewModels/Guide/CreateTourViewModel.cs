@@ -17,7 +17,7 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Views;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class CreateTourViewModel : INotifyPropertyChanged
     {

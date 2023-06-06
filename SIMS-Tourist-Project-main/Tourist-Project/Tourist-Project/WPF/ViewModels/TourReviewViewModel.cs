@@ -13,6 +13,7 @@ using Tourist_Project.DTO;
 using Tourist_Project.Repositories;
 using Tourist_Project.WPF.Commands;
 using Tourist_Project.WPF.Stores;
+using Tourist_Project.WPF.ViewModels.Guide;
 using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels

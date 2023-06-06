@@ -14,7 +14,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class FutureToursViewModel : INotifyPropertyChanged
     {
@@ -62,7 +62,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand CancelTourCommand { get; set; }
         public ICommand HomePageCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
-        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
         public ICommand RequestsViewCommand { get; set; }
         #endregion
 
@@ -79,7 +80,8 @@ namespace Tourist_Project.WPF.ViewModels
             CancelTourCommand = new RelayCommand(CancelTour, CanCancelTour);
             ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
             RequestsViewCommand = new RelayCommand(RequestsView, CanRequestsView);
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
         }
 
         private void startClock()
@@ -109,23 +111,28 @@ namespace Tourist_Project.WPF.ViewModels
             window.Close();
         }
 
-        private bool CanSwitchLanguage()
-        {
-            return true;
-        }
-
-        public void SwitchLanguage()
+        private void ToSerbian()
         {
             var app = (App)Application.Current;
-            if (CurrentLanguage.Equals("en-US"))
-            {
-                CurrentLanguage = "sr-LATN";
-            }
-            else
-            {
-                CurrentLanguage = "en-US";
-            }
+            CurrentLanguage = "sr-LATN";
             app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private bool CanHomePage()

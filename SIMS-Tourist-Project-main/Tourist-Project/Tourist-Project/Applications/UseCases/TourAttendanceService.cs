@@ -7,6 +7,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Repositories;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.WPF.ViewModels.Guide;
 
 namespace Tourist_Project.Applications.UseCases
 {

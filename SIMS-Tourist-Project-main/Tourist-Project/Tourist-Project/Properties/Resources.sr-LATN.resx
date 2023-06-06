@@ -123,6 +123,9 @@
   <data name="AcceptTourPart" xml:space="preserve">
     <value>Prihvati deo ture</value>
   </data>
+  <data name="AgeStructure" xml:space="preserve">
+    <value>Starosna struktura</value>
+  </data>
   <data name="Attendance" xml:space="preserve">
     <value>Attendance</value>
   </data>
@@ -161,6 +164,15 @@
   </data>
   <data name="CreateTour" xml:space="preserve">
     <value>Napravi novu turu</value>
+  </data>
+  <data name="CreateTourForLanguage" xml:space="preserve">
+    <value>Kreiranje ture za traženi jezik</value>
+  </data>
+  <data name="CreateTourForLocation" xml:space="preserve">
+    <value>Kreiranje ture za traženu lokaciju</value>
+  </data>
+  <data name="CreateTourFromRequest" xml:space="preserve">
+    <value>Kreiranje ture po zahtevu</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Datum</value>
@@ -234,6 +246,9 @@
   <data name="NumberOfTourists" xml:space="preserve">
     <value>Broj gostiju</value>
   </data>
+  <data name="PDFReport" xml:space="preserve">
+    <value>PDF izveštaj</value>
+  </data>
   <data name="PickedLanguage" xml:space="preserve">
     <value>srpski</value>
   </data>
@@ -276,8 +291,20 @@
   <data name="TourDuration" xml:space="preserve">
     <value>Trajanje ture:</value>
   </data>
+  <data name="TouristsBetween" xml:space="preserve">
+    <value>Broj turista između 18 i 50</value>
+  </data>
   <data name="TouristsList" xml:space="preserve">
     <value>Lista turista</value>
+  </data>
+  <data name="TouristsUnder" xml:space="preserve">
+    <value>Broj turista ispod 18</value>
+  </data>
+  <data name="TouristsWithoutVoucher" xml:space="preserve">
+    <value>Procenat bez vaučera</value>
+  </data>
+  <data name="TouristsWithVoucher" xml:space="preserve">
+    <value>Procenat sa vaučerom</value>
   </data>
   <data name="TourLive" xml:space="preserve">
     <value>Praćenje ture uživo</value>
@@ -285,8 +312,14 @@
   <data name="TourName" xml:space="preserve">
     <value>Naziv ture:</value>
   </data>
+  <data name="TuristsOlder" xml:space="preserve">
+    <value>Broj turista starijih od 50</value>
+  </data>
   <data name="UntilDate" xml:space="preserve">
     <value>Do</value>
+  </data>
+  <data name="UsingVoucherStructure" xml:space="preserve">
+    <value>Iskorišenost vaučera</value>
   </data>
   <data name="Visited" xml:space="preserve">
     <value>Posećeno</value>

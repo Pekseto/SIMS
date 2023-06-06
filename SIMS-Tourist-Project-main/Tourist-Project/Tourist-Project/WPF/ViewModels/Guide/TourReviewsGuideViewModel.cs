@@ -17,7 +17,7 @@ using Tourist_Project.DTO;
 using Tourist_Project.Serializer;
 using Tourist_Project.WPF.Views;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TourReviewsGuideViewModel
     {

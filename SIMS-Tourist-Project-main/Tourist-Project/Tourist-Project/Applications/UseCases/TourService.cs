@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LiveCharts;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
@@ -290,7 +291,19 @@ namespace Tourist_Project.Applications.UseCases
                 repository.Update(tour);
                 tourVoucherService.VoucherDistributionForAnyTour(tour);
             }
-            
+        }
+
+        public List<string> GetAllYears(int guideId)
+        {
+            var years = new List<string>();
+            years.Add("Overall");
+
+            foreach (var tour in GetAll().FindAll(t => t.UserId == guideId))
+            {
+                years.Add(tour.StartTime.Year.ToString());
+            }
+
+            return years.Distinct().ToList();
         }
     }
 }

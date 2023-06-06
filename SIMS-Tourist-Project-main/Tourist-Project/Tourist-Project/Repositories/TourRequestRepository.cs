@@ -103,6 +103,13 @@ namespace Tourist_Project.Repositories
         {
             return GetAll().FindAll(request => request.CreateDate >= DateTime.Now.AddYears(-1));
         }
+
+        public List<string> GetAllYears(int userId)
+        {
+            var years = GetAllForUser(userId).Select(request => request.CreateDate.Year.ToString()).ToList();
+            years.Add("Overall");
+            return years.Distinct().ToList();
+        }
     }
 }
 

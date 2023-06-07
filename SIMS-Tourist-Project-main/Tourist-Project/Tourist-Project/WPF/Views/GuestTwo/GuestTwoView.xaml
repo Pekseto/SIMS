@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:views="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
+        xmlns:properties="clr-namespace:Tourist_Project.Properties"
         d:DataContext="{d:DesignInstance Type=viewmodels:GuestTwoViewModel}"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Height="720" Width="1280"
@@ -133,9 +134,9 @@
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
 
-        <Style TargetType="ToolTip">
+        <Style TargetType="{x:Type ToolTip}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding TooltipVisibility}" Value="False">
+                <DataTrigger Binding="{Binding Source={x:Static properties:Settings.Default}, Path=ShowTooltips}" Value="False">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -144,6 +145,55 @@
         <Style TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
         </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal">
+                            <Grid >
+                                <Border Width="30" Height="15" Background="LightGray" CornerRadius="10" Margin="5,0"></Border>
+                                <Border x:Name="button" Height="18" Width="18" CornerRadius="12.5" HorizontalAlignment="Right"  ></Border>
+                            </Grid>
+                            <ContentPresenter x:Name="content" Margin="10,0,0,0" Content="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="right">
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" Storyboard.TargetName="button" Duration="0:0:0.4" From="0,0,20,0" To="0,0,0,0" >
+                                    <ThicknessAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </ThicknessAnimation.EasingFunction>
+                                </ThicknessAnimation>
+                            </Storyboard>
+                            <Storyboard x:Key="left">
+                                <ThicknessAnimation Storyboard.TargetProperty="Margin" Storyboard.TargetName="button" Duration="0:0:0.4" From="0,0,0,0" To="0,0,20,0" >
+                                    <ThicknessAnimation.EasingFunction>
+                                        <CircleEase EasingMode="EaseOut"/>
+                                    </ThicknessAnimation.EasingFunction>
+                                </ThicknessAnimation>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Trigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="leftt"></RemoveStoryboard>
+                                    <BeginStoryboard Storyboard="{StaticResource right}" x:Name="rightt" ></BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="button" Property="Background" Value="#757575"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Trigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="rightt"></RemoveStoryboard>
+                                    <BeginStoryboard Storyboard="{StaticResource left}" x:Name="leftt" ></BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="button" Property="Background" Value="#20BF55"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Border Background="#272540">
@@ -158,17 +208,17 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="370"/>
                     <RowDefinition/>
-                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Guest 2" FontSize="48"
                            Grid.Row="0" FontWeight="Bold"
-                           VerticalAlignment="Center"
+                           VerticalAlignment="Top"
                            HorizontalAlignment="Center"
                            Foreground="White"
-                           Cursor="Hand"
+                           Cursor="Hand" Margin="0,20,0,0"
                            ToolTip="Guest 2 Home">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding HomeCommand}" MouseAction="LeftClick"/>
@@ -220,12 +270,6 @@
                                  Command="{Binding NotificationsCommand}"/>
                 </StackPanel>
 
-                <ToggleButton Content="Show ToolTips" Grid.Row="1"
-                              VerticalAlignment="Bottom"
-                              HorizontalAlignment="Center"
-                              Height="40" FontSize="15" Cursor="Hand"
-                              IsChecked="{Binding Path=TooltipVisibility}"/>
-
                 <GroupBox Grid.Row="2" Header="Profile"
                           Foreground="White"
                           BorderThickness="0.8"
@@ -262,6 +306,14 @@
                     </Grid>
                 </GroupBox>
 
+                <StackPanel Grid.Row="3" VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                    <Label Content="Tooltips:" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                    <CheckBox VerticalAlignment="Bottom" ToolTip="Turn tooltips on/off"
+                              HorizontalAlignment="Center"
+                              Height="40" FontSize="15" Cursor="Hand"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ShowTooltips}"/>
+                </StackPanel>
 
                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Left"
                         Content="Sign out" Grid.Row="3" Cursor="Hand"

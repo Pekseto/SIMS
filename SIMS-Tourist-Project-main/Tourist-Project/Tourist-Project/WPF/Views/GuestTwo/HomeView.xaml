@@ -9,6 +9,50 @@
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
 
+    <UserControl.Resources>
+        <Style TargetType="DataGrid">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource columnHeader}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="RowStyle" Value="{DynamicResource row}" />
+            <Setter Property="CellStyle" Value="{DynamicResource cell}" />
+            <Setter Property="Background" Value="White" />
+            
+        </Style>
+
+
+        <Style x:Key="columnHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#222240" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="10,0,0,0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Border
+                        x:Name="HeaderBorder"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="10,10,0,0"
+                        SnapsToDevicePixels="True">
+                            <ContentPresenter
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+    </UserControl.Resources>
+
     
 
     <Grid>

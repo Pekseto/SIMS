@@ -19,9 +19,19 @@ using Tourist_Project.WPF.Views;
 
 namespace Tourist_Project.WPF.ViewModels.Guide
 {
-    public class TourReviewsGuideViewModel
+    public class TourReviewsGuideViewModel : INotifyPropertyChanged
     {
-        public static ObservableCollection<TourReviewDTO> TourReviews { get; set; }
+        private ObservableCollection<TourReviewDTO> tourReview;
+
+        public ObservableCollection<TourReviewDTO> TourReviews
+        {
+            get { return tourReview; }
+            set
+            {
+                tourReview = value;
+                OnPropertyChanged("TourReviews");
+            }
+        }
         private readonly TourReviewService tourReviewService = new();
 
         private Window window;
@@ -29,9 +39,18 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public TourReviewDTO SelectedReview { get; set; }
         public TourReview TourReview { get; set; }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #region Command
         public ICommand AcceptCommand { get; set; }
         public ICommand DeclineCommand { get; set; }
         public ICommand BackCommand { get; set; }
+
+        #endregion
 
         public TourReviewsGuideViewModel(Window window, Tour tour)
         {
@@ -40,7 +59,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
             AcceptCommand = new RelayCommand(Accept, CanAccept);
             DeclineCommand = new RelayCommand(Decline, CanDecline);
-            BackCommand = new RelayCommand(Back, CanBack);
+            BackCommand = new RelayCommand(Back);
 
             TourReviews = new ObservableCollection<TourReviewDTO>(tourReviewService.GetAllReviewDtos(tour.Id));
             
@@ -70,11 +89,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             UpdateData();
         }
 
-        private bool CanBack()
-        {
-            return true;
-        }
-
         private void Back()
         {
             window.Close();
@@ -84,7 +98,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         {
             tourReviewService.Update(TourReview);
             TourReviews.Clear();
-            foreach (TourReviewDTO review in tourReviewService.GetAllReviewDtos(Tour.Id))
+            foreach (var review in tourReviewService.GetAllReviewDtos(Tour.Id))
             {
                 TourReviews.Add(review);
             }

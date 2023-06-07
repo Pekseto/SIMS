@@ -70,6 +70,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept review.
+        /// </summary>
+        internal static string AcceptReview {
+            get {
+                return ResourceManager.GetString("AcceptReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept tour.
         /// </summary>
         internal static string AcceptTour {
@@ -255,6 +264,15 @@ namespace Tourist_Project.Properties {
         internal static string DatesTable {
             get {
                 return ResourceManager.GetString("DatesTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline review.
+        /// </summary>
+        internal static string DeclineReview {
+            get {
+                return ResourceManager.GetString("DeclineReview", resourceCulture);
             }
         }
         
@@ -520,6 +538,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Review text.
+        /// </summary>
+        internal static string ReviewText {
+            get {
+                return ResourceManager.GetString("ReviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to serbian.
         /// </summary>
         internal static string Serbian {
@@ -660,6 +687,15 @@ namespace Tourist_Project.Properties {
         internal static string TourName {
             get {
                 return ResourceManager.GetString("TourName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour reviews.
+        /// </summary>
+        internal static string TourReviews {
+            get {
+                return ResourceManager.GetString("TourReviews", resourceCulture);
             }
         }
         

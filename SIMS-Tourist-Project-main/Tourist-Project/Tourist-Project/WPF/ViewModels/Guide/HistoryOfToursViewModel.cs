@@ -14,7 +14,7 @@ using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class HistoryOfToursViewModel : INotifyPropertyChanged
     {
@@ -52,8 +52,10 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ReviewViewCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
         public ICommand RequestsViewCommand { get; set; }
-        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
         #endregion
+
         public HistoryOfToursViewModel(Window window, User loggedInUser) 
         {
             LoggedInUser = loggedInUser;
@@ -70,26 +72,32 @@ namespace Tourist_Project.WPF.ViewModels
             ReviewViewCommand = new RelayCommand(ReviewView, CanReviewView);
             ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
             RequestsViewCommand = new RelayCommand(RequestsView, CanRequestsView);
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
         }
 
-        private bool CanSwitchLanguage()
-        {
-            return true;
-        }
-
-        public void SwitchLanguage()
+        private void ToSerbian()
         {
             var app = (App)Application.Current;
-            if (CurrentLanguage.Equals("en-US"))
-            {
-                CurrentLanguage = "sr-LATN";
-            }
-            else
-            {
-                CurrentLanguage = "en-US";
-            }
+            CurrentLanguage = "sr-LATN";
             app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private void startClock()
@@ -172,7 +180,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void StatisticsView()
         {
-            var statisticsWindow = new StatisticsOfTourView(SelectedTour);
+            var statisticsWindow = new StatisticsOfTourView(SelectedTour, LoggedInUser);
             statisticsWindow.Owner = window;
             statisticsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             statisticsWindow.Show();

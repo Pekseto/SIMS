@@ -134,6 +134,13 @@ namespace Tourist_Project.Repositories
         {
             return GetAllForUser(loggedUserId).Max(tr => tr.Id);
         }
+
+        public List<string> GetAllYears(int userId)
+        {
+            var years = GetAllForUser(userId).Select(request => request.CreateDate.Year.ToString()).ToList();
+            years.Add("Overall");
+            return years.Distinct().ToList();
+        }
     }
 }
 

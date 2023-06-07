@@ -27,10 +27,12 @@
     <None Remove="Images\homeGuideIcon.png" />
     <None Remove="Images\No images to show.jpg" />
     <None Remove="Images\listGuideIcon.png" />
+    <None Remove="Images\pdf.png" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\profile.jpg" />
     <None Remove="Images\requestGuideIcon.png" />
     <None Remove="Images\reviewGuideIcon.png" />
+    <None Remove="Images\search.png" />
     <None Remove="Images\serbia.png" />
     <None Remove="Images\startGuideIcon.png" />
     <None Remove="Images\statisticsGuideIcon.png" />
@@ -40,8 +42,12 @@
 
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="LightningChart" Version="10.4.1.1" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+    <PackageReference Include="Syncfusion.DocToPDFConverter.Wpf" Version="21.2.8" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="21.2.8" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
 
@@ -68,6 +74,9 @@
     <Resource Include="Images\historyGuideIcon.png" />
     <Resource Include="Images\homeGuideIcon.png" />
     <Resource Include="Images\listGuideIcon.png" />
+    <Resource Include="Images\pdf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\plus.png" />
     <Resource Include="Images\profile.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -76,6 +85,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\reviewGuideIcon.png" />
+    <Resource Include="Images\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\serbia.png" />
     <Resource Include="Images\startGuideIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

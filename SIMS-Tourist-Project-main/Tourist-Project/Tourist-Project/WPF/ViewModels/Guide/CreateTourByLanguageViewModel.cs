@@ -10,7 +10,7 @@ using System.Windows;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class CreateTourByLanguageViewModel : INotifyPropertyChanged
     {

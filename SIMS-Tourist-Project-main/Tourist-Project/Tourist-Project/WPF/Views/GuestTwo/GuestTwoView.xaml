@@ -7,6 +7,7 @@
         xmlns:views="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
         xmlns:properties="clr-namespace:Tourist_Project.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         d:DataContext="{d:DesignInstance Type=viewmodels:GuestTwoViewModel}"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Height="720" Width="1280"
@@ -14,6 +15,16 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ShowWizardCommand}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding SaveSettingsCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
@@ -313,6 +324,12 @@
                               HorizontalAlignment="Center"
                               Height="40" FontSize="15" Cursor="Hand"
                               IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ShowTooltips}"/>
+                    <Label Content="Wizard:" VerticalAlignment="Center" Margin="25,0,0,0"/>
+
+                    <CheckBox VerticalAlignment="Bottom" ToolTip="Show wizard on next application startup"
+                              HorizontalAlignment="Center"
+                              Height="40" FontSize="15" Cursor="Hand"
+                              IsChecked="{Binding Source={x:Static properties:Settings.Default}, Path=ShowWizard}"/>
                 </StackPanel>
 
                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Left"

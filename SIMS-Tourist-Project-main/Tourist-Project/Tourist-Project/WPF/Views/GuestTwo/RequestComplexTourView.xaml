@@ -82,7 +82,7 @@
                       HorizontalAlignment="Right" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
             <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10" ToolTip="Write a description"
-                     TextWrapping="Wrap" Cursor="IBeam" FontSize="17">
+                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15">
                 <TextBox.Text>
                     <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -92,7 +92,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15" ToolTip="Write a language"
-                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="17">
+                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="15">
                 <TextBox.Text>
                     <Binding Path="Language" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -144,8 +144,8 @@
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                         <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="auto"/>
                         <DataGridTextColumn Header="Guests" Binding="{Binding GuestsNumber}" Width="auto"/>
-                        <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="auto"/>
-                        <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="auto"/>
+                        <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="75"/>
+                        <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="75"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" Margin="0,10">

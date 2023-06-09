@@ -122,7 +122,7 @@ namespace Tourist_Project.Domain.Models
             GuestsNum = guestsNum;
             StayingDays = stayingDays;
             AccommodationId = accommodation.Id;
-            AvailableDates = new List<Date>();
+            //AvailableDates = new List<Date>();
             Accommodation = accommodation;
             Status = status;
             //AvailableDates = new List<DateTime>();

@@ -13,19 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.Converters;
 
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for RateAccommodationWindow.xaml
+    /// Interaction logic for AvailableReservationsWindow.xaml
     /// </summary>
-    public partial class RateAccommodationWindow : Window
+    public partial class AvailableReservationsWindow : Window
     {
-        public RateAccommodationWindow(Accommodation SelectedAccommodation)
+        public AvailableReservationsWindow(Accommodation selectedAccommodation, DateTime from, DateTime to, int stayingDays, int guestsNum, User user)
         {
             InitializeComponent();
-            this.DataContext = new RateAccommodationViewModel(this);
+            this.DataContext = new AvailableReservationsViewModel(this,selectedAccommodation,from, to, stayingDays, guestsNum, user);
         }
     }
 }

@@ -28,10 +28,10 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                             <Image x:Name="CancelImage"  Source="../../../Images/listGuideIcon.png" Margin="5" Height="25"></Image>
                             <TextBlock Text="{ns:Loc TouristsList}" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
+                </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>
             </Setter>
@@ -65,10 +65,10 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                             <Image x:Name="CancelImage"  Source="../../../Images/checkGuideIcon.png" Margin="5" Height="25"></Image>
                             <TextBlock Text="{ns:Loc CheckButton}" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
+                </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>
             </Setter>
@@ -102,10 +102,10 @@
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                             <Image x:Name="CancelImage"  Source="../../../Images/exitGuideIcon.jpg" Margin="5" Height="25"></Image>
                             <TextBlock Text="{ns:Loc EmergencyEnd}" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
+                </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>
             </Setter>

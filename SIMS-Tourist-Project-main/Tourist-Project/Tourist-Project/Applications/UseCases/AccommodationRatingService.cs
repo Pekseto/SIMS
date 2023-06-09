@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
@@ -42,5 +43,20 @@ namespace Tourist_Project.Applications.UseCases
         {
             return (double)_accommodationRatingRepository.GetAll().Sum(accommodationRating => accommodationRating.AccommodationGrade + accommodationRating.Cleanness + accommodationRating.OwnerRating) / (_accommodationRatingRepository.GetAll().Count * 3);
         }
+
+        public ObservableCollection<AccommodationRating> GetGuestGivenRatings(User user)
+        {
+            var guestGivenRatings = new ObservableCollection<AccommodationRating>();
+            foreach(AccommodationRating accommodationRating in _accommodationRatingRepository.GetAll())
+            {
+                if(accommodationRating.UserId == user.Id)
+                {
+                    guestGivenRatings.Add(accommodationRating);
+                }
+            }
+            return guestGivenRatings;
+        }
+
+       
     }
 }

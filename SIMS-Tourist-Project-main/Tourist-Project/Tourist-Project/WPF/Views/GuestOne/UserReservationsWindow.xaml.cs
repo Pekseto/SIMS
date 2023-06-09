@@ -17,14 +17,14 @@ using Tourist_Project.Domain.Models;
 namespace Tourist_Project.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for AvailableReservationsWindow.xaml
+    /// Interaction logic for UserReservationsWindow.xaml
     /// </summary>
-    public partial class AvailableReservationsWindow : Window
+    public partial class UserReservationsWindow : Window
     {
-        public AvailableReservationsWindow(Accommodation selectedAccommodation, DateTime from, DateTime to, int stayingDays, int guestsNum)
+        public UserReservationsWindow(User user)
         {
             InitializeComponent();
-            this.DataContext = new AvailableReservationsViewModel(selectedAccommodation,from, to, stayingDays, guestsNum);
+            this.DataContext = new UserReservationsViewModel(this, user);
         }
     }
 }

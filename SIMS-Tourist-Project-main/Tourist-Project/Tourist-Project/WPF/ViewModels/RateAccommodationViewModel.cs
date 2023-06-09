@@ -17,6 +17,8 @@ namespace Tourist_Project.WPF.ViewModels
         private AccommodationRatingService _accommodationRatingService = new AccommodationRatingService();
         private AccommodationService _accommodationService = new AccommodationService();
         //sad samo treba da prihvatim parametre i da ih upisem u fajlove
+
+        private User _user;
         public int AccommodationGrade { get; set; }
 
         public String Comment { get; set; }
@@ -29,14 +31,15 @@ namespace Tourist_Project.WPF.ViewModels
         //treba da sacuvam AccommodationRating
 
         public Accommodation SelectedAccommodation { get; set; }
-        public AccommodationRating AccommodationRating { get; set; }    
+        public AccommodationRating NewAccommodationRating { get; set; } = new();    
 
         public ICommand Confirm_Command { get; set; }
 
-        public RateAccommodationViewModel(Window window)
+        public RateAccommodationViewModel(Window window, User user)
         {
             this._window = window;
-            AccommodationRating = new AccommodationRating();
+            _user = user;
+            NewAccommodationRating.UserId = _user.Id;
             Confirm_Command = new RelayCommand(RateAccommodation, CanCreate);
         }
 
@@ -47,7 +50,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void RateAccommodation()
         {
-            _accommodationRatingService.Create(AccommodationRating);
+            _accommodationRatingService.Create(NewAccommodationRating);
 
         }
         //sad jos moram da preuzmem podatke od SelectedAccommodation-a za upis u fajlove i to bi trebalo da je to

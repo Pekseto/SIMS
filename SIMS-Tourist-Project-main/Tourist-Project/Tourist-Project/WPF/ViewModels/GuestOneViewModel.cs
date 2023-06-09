@@ -10,6 +10,8 @@ using Tourist_Project.Domain.Models;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.WPF.Views;
+using Tourist_Project.View;
+using System.Windows.Controls;
 
 namespace Tourist_Project.WPF.ViewModels;
 
@@ -22,8 +24,8 @@ public class GuestOneViewModel
     private AccommodationService _accommodationService = new AccommodationService();
 
     #region SearchParameters
-    public ObservableCollection<String> Countries { get; set; }
-    public ObservableCollection<String> Cities { get; set; }
+    public List<String> Countries { get; set; }
+    public List<String> Cities { get; set; }
 
     public List<String> AccommodationsType { get; set; }
 
@@ -35,169 +37,149 @@ public class GuestOneViewModel
     public int SearchedCancelationThreshold { get; set; }
     public String SelectedCountry { get; set; }
     public String SelectedCity { get; set; }
-    public Accommodation SelectedAccommodation { get; set; }
+    public String Username { get; set; }
+    public AccommodationViewModel SelectedAccommodationViewModel { get; set; }
 
+    public Accommodation SelectedAccommodation { get; set; }
     public String AccommodationName { get; set; }
     #endregion
 
     #region Presentation
-    public static ObservableCollection<String> LocationsFullName = new();
-    
 
-    public ObservableCollection<Accommodation> Accommodations { get; set; }
+    public ObservableCollection<AccommodationViewModel> AccommodationsViewModel { get; set; } = new();
 
-    public List<Accommodation> SearchResults = new();
-
-    public List<Location> Locations { get; set; }
 
     #endregion
     private Window _window;
 
     public ICommand RateAccommodation_Command { get; set; }
     public ICommand CreateReservation_Command { get; set; }
+    public ICommand UserReservations_Command { get; set; }
+    public ICommand Search_Command { get; set; }
+    public ICommand ShowAll_Command { get; set; }
+    public ICommand ViewAccommodation_Command { get; set; }
+    public ICommand UserGraph_Command { get; set; }
 
-    public GuestOneViewModel(Window window)
+    public ICommand ShowUserRatings_Command { get; set; }
+
+    public DataGrid GuestOneDataGrid;
+
+    public User User { get; set; }
+    public GuestOneViewModel(Window window, DataGrid dataGrid, User user)
     {
         this._window = window;
-        Locations = new List<Location>();
-        Locations = GetLocationsForAccommodations();
-        Countries = new ObservableCollection<String>(_locationService.GetAllCountries());
-        Cities = new ObservableCollection<String>(_locationService.GetAllCities());
-        AccommodationsType = new List<String>();
-        AccommodationsType = GetAccommodationsType();
-        Accommodations = new ObservableCollection<Accommodation>(_accommodationService.GetAll());
-        GenerateLocations();
+        this.GuestOneDataGrid = dataGrid;
+
+        AccommodationsViewModel = new ObservableCollection<AccommodationViewModel>(_accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
+        User = user;
+        Username = user.Username;
         RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRate);
-        CreateReservation_Command = new RelayCommand(CreateReservation,CanCreateReservation);
-
+        CreateReservation_Command = new RelayCommand(CreateReservation, CanCreateReservation);
+        UserReservations_Command = new RelayCommand(ShowReservations, CanShowReservations);
+        Search_Command = new RelayCommand(ShowSearchWindow, CanSearch);
+        ShowAll_Command = new RelayCommand(ShowAll, CanShowAll);
+        ViewAccommodation_Command = new RelayCommand(ViewAccommodation, CanView);
+        UserGraph_Command = new RelayCommand(ShowUserGraph, CanShowUserGraph);
+        ShowUserRatings_Command = new RelayCommand(ShowRatings, CanShowRatings);
     }
 
-
-    #region LoadingObjectsForDisplay
-   
-    public void GenerateLocations()
-    {   
-        foreach(Accommodation accommodation in Accommodations)
-        {
-            //accommodation.Location = _locationService.Get(accommodation.LocationId);
-        }
-    }
-
-
-    public List<String> GetAccommodationsType()
+    #region Search
+    private bool CanSearch()
     {
-        foreach (Accommodation accommodation in _accommodationService.GetAll())
-        {
-            if (!AccommodationsType.Contains(accommodation.Type.ToString()))
-            {
-                AccommodationsType.Add(accommodation.Type.ToString());
-            }
-        }
-        AccommodationsType.Add("Any");
-        return AccommodationsType;
+        return true;
     }
-
-    public List<Location> GetLocationsForAccommodations()
+    private void ShowSearchWindow()
     {
-        foreach(Accommodation accommodation in _accommodationService.GetAll())
-        {
-            var temp = _locationService.Get(accommodation.LocationId);
-            temp.ToString();
-            //moram da pristupam preko id-a
-        }
-        return Locations;
-    }
-
-    public void LocationsToString()
-    {
-        foreach(Location location in Locations)
-        {
-            location.ToString();
-        }
+        var searchWindow = new GuestOneSearchWindow(GuestOneDataGrid, AccommodationsViewModel);
+        searchWindow.Show();
     }
     #endregion
 
-    #region SearchLogic
-
-    public void HandleEmptyStrings()
+    #region ShowReservations
+    private bool CanShowReservations()
     {
-        if (AccommodationName == null)
-        {
-            AccommodationName = string.Empty;
-        }
-
-        if (SelectedCountry == null)
-        {
-            SelectedCountry = string.Empty;
-        }
-
-        if (SelectedCity == null)
-        {
-            SelectedCity = string.Empty;
-        }
-
-        if (MaxGuestNum == 0)
-        {
-            MaxGuestNum = 1;
-        }
-
-        if (MinStayingDays == 0)
-        {
-            foreach (Accommodation accommodation in Accommodations)
-            {
-                MinStayingDays = accommodation.CancellationThreshold;
-            }
-        }
-
-        if (SelectedType == null || SelectedType == "Any")
-        {
-            SelectedType = string.Empty;
-        }
+        return true;
     }
-    public void SearchLogic()
+    private void ShowReservations()
     {
-        SearchResults.Clear();
-        HandleEmptyStrings();
-        foreach (Accommodation accommodation in Accommodations)
-        {
-            if (accommodation.Name.ToLower().Contains(AccommodationName.ToLower()) && accommodation.MaxGuestNum >= MaxGuestNum
-                && accommodation.MinStayingDays >= MinStayingDays &&
-                accommodation.Type.ToString().Contains(SelectedType) &&
-                LocationsFullName.Contains(SelectedCountry + ", " + SelectedCity))
-            {
-                SearchResults.Add(accommodation);
-            }
-        }
+        var userReservationWindow = new UserReservationsWindow(User);
+        userReservationWindow.Show();
     }
     #endregion
 
-
+    #region RateAccommodation
     private bool CanRate()
     {
-        if (SelectedAccommodation != null)
+        if (SelectedAccommodationViewModel == null)
             return true;
-        return false;
+        else
+            return false;
     }
-
-    public bool CanCreateReservation()
-    {
-        if (SelectedAccommodation != null)
-            return true;
-        return false;
-    }
-
     private void RateAccommodation()
     {
-        var rateAccommodationWindow = new RateAccommodationWindow(SelectedAccommodation);
+        var rateAccommodationWindow = new RateAccommodationWindow(SelectedAccommodation, User);
         rateAccommodationWindow.Show();
     }
+    #endregion
 
-    private void CreateReservation()
+    #region ShowAll
+    private bool CanShowAll()
     {
-        var createReservation = new ReservationWindow(SelectedAccommodation);
-        createReservation.Show();
+        return true;
     }
 
+    private void ShowAll()
+    {
+        GuestOneDataGrid.ItemsSource = AccommodationsViewModel;
+    }
+    #endregion
+    #region CreateReservation
+    private bool CanCreateReservation()
+    {
+        return SelectedAccommodationViewModel != null;
+    }
+    private void CreateReservation()
+    {
+        SelectedAccommodation = SelectedAccommodationViewModel.Accommodation;
+        var createReservation = new ReservationWindow(SelectedAccommodation, User);
+        createReservation.Show();
+    }
+    #endregion
+    #region ViewAccommodation
+    private bool CanView()
+    {
+        return SelectedAccommodationViewModel != null;
+    }
+    private void ViewAccommodation()
+    {
 
+    }
+    #endregion
+    #region UserGraph
+    private bool CanShowUserGraph()
+    {
+        return true;
+    }
 
+    private void ShowUserGraph()
+    {
+        
+    }
+    #endregion
+
+    #region Show User Reservations
+    private bool CanShowRatings()
+    {
+        return true;
+    }
+
+    private void ShowRatings()
+    {
+        var userRatings = new GuestRatingView(User);
+        userRatings.Show();
+    }
+        #endregion
+    #region Shortcuts
+
+    #endregion
 }

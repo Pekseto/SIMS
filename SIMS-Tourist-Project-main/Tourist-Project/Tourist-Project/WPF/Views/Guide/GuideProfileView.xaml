@@ -139,8 +139,12 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
-            </Grid>
-        </Border>
+        </Grid>
+        <Grid x:Name="InfoGrid" Grid.Row="0" Grid.Column="1">
+            <Border x:Name="InfoBorder" Height="156" Width="541" BorderBrush="Black" BorderThickness="3">
+                <Label x:Name="NameOfGuide" Content="Name of guide" FontSize="40"/>
+            </Border>
+        </Grid>
         <Grid x:Name="ButtonsGrid" Grid.Row="1" Grid.Column="0">
             <xctk:IconButton x:Name="HomeButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,26,0,238" Command="{Binding HomeViewCommand}" Style="{StaticResource HomeButtonGuide}"></xctk:IconButton>
             <xctk:IconButton x:Name="DismissalButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,53,0,151" Command="{Binding QuitJobCommand}" Style="{StaticResource DismissalButton}"></xctk:IconButton>

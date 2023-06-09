@@ -38,6 +38,16 @@
     <None Remove="Images\statisticsGuideIcon.png" />
     <None Remove="Images\uk.png" />
     <None Remove="Images\view.png" />
+    <None Remove="Images\Wizard Images\ComplexToursPage.png" />
+    <None Remove="Images\Wizard Images\HistoryPage.png" />
+    <None Remove="Images\Wizard Images\HomePage.png" />
+    <None Remove="Images\Wizard Images\MyToursPage.png" />
+    <None Remove="Images\Wizard Images\NotificationsPage.png" />
+    <None Remove="Images\Wizard Images\RequestComplexTourPage.png" />
+    <None Remove="Images\Wizard Images\RequestsStatsPage.png" />
+    <None Remove="Images\Wizard Images\ReservationPage.png" />
+    <None Remove="Images\Wizard Images\ReviewPage.png" />
+    <None Remove="Images\Wizard Images\VouchersPage.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -95,6 +105,36 @@
     <Resource Include="Images\statisticsGuideIcon.png" />
     <Resource Include="Images\uk.png" />
     <Resource Include="Images\view.png" />
+    <Resource Include="Images\Wizard Images\ComplexToursPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\HistoryPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\HomePage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\MyToursPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\NotificationsPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\RequestComplexTourPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\RequestsStatsPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\ReservationPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\ReviewPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Wizard Images\VouchersPage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
 
   </ItemGroup>
 

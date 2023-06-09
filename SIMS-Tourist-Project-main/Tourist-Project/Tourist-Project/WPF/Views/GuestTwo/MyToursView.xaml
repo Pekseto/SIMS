@@ -57,7 +57,7 @@
         <Button Grid.Row="2" Content="Preview" FontSize="16"
                 HorizontalAlignment="Center"
                 Height="40" Width="100" Cursor="Hand"
-                VerticalAlignment="Top"
+                VerticalAlignment="Top" ToolTip="Preview selected tour"
                 Margin="5" Command="{Binding PreviewCommand}"/>
 
         <StackPanel Grid.Row="3" HorizontalAlignment="Center" Width="800">
@@ -79,12 +79,12 @@
         </StackPanel>
         
         
-        <Button Command="{Binding WatchLiveCommand}"
+        <Button Command="{Binding WatchLiveCommand}" ToolTip="Watch live selected tour"
                 Content="Watch live" HorizontalAlignment="Center"
                 Margin="150,11,0,0" Grid.Row="4"
                 VerticalAlignment="Top" Height="40"
                 Width="100" FontSize="16" Cursor="Hand"/>
-        <Button Command="{Binding JoinCommand}"
+        <Button Command="{Binding JoinCommand}" ToolTip="Join selected tour"
                 Content="Join" HorizontalAlignment="Center"
                 Margin="0,11,150,0" Grid.Row="4"
                 VerticalAlignment="Top" Height="40"

@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Margin="30,15,0,0"
-               FontSize="32" Content="Tour review"
+               FontSize="32" Content="Requests/Statistics"
                HorizontalAlignment="Left" Foreground="White"
                VerticalAlignment="Center"/>
 
@@ -62,18 +62,18 @@
                    FontSize="18" Margin="50,10,0,0"
                    Grid.Row="5"/>
 
-            <ComboBox Grid.Row="1" Grid.Column="1"
+            <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select country"
                       ItemsSource="{Binding Countries}"
                       SelectedItem="{Binding SelectedCountry, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Left" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
-            <ComboBox Grid.Row="1" Grid.Column="1"
+            <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select city"
                       ItemsSource="{Binding Cities}"
                       SelectedItem="{Binding SelectedCity, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Right" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10"
-                     TextWrapping="Wrap" Cursor="IBeam" FontSize="17">
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10" ToolTip="Write a description"
+                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15">
                 <TextBox.Text>
                     <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -82,8 +82,8 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15"
-                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="17">
+            <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15" ToolTip="Write a language"
+                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="15">
                 <TextBox.Text>
                     <Binding Path="Language" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -103,16 +103,16 @@
                    Content="from:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Top" HorizontalAlignment="Left"
-                        Text="{Binding FromDate}" Width="120"
+                        Text="{Binding FromDate}" Width="120" ToolTip="Pick a starting date"
                         DisplayDateStart="{Binding DisplayDateStart}"/>
             <Label Grid.Row="5" Grid.Column="1" Margin="20,10"
                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
                    Content="until:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                        Text="{Binding UntilDate}" Width="120"
+                        Text="{Binding UntilDate}" Width="120" ToolTip="Pick an ending date"
                         DisplayDateStart="{Binding DisplayDateStart}"/>
-            <Button Grid.Row="6" Content="Post request"
+            <Button Grid.Row="6" Content="Post request" ToolTip="Post request"
                     Grid.ColumnSpan="2" Height="40" Width="100"
                     FontSize="15" Command="{Binding PostRequestCommand}"/>
         </Grid>
@@ -153,8 +153,8 @@
                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
                     <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="auto"/>
                         <DataGridTextColumn Header="Guests" Binding="{Binding GuestsNumber}" Width="auto"/>
-                    <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="auto"/>
-                    <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="auto"/>
+                    <DataGridTextColumn Header="From" Binding="{Binding FromDateStr}" Width="75"/>
+                    <DataGridTextColumn Header="Until" Binding="{Binding UntilDateStr}" Width="75"/>
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
@@ -172,7 +172,7 @@
                            VerticalAlignment="Center" FontSize="15"
                            Margin="10,0,0,0"/>
                     <ComboBox VerticalAlignment="Center" Width="75"
-                              Margin="0,0,0,0"
+                              ToolTip="Select year"
                               ItemsSource="{Binding StatYears}"
                               SelectedItem="{Binding SelectedStatYear, UpdateSourceTrigger=PropertyChanged}"/>
 

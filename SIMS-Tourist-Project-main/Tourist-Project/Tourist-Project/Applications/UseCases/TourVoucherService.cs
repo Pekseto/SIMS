@@ -1,11 +1,16 @@
-﻿using System;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
+using Microsoft.Win32;
 
 namespace Tourist_Project.Applications.UseCases
 {
@@ -98,6 +103,62 @@ namespace Tourist_Project.Applications.UseCases
                 retVal.Add(voucher);
             }
             return retVal;
+        }
+
+        private string OpenFilePicker()
+        {
+            SaveFileDialog saveFileDialog = new();
+            saveFileDialog.Filter = "PDF Files (*.pdf)|*.pdf";
+            saveFileDialog.DefaultExt = "pdf";
+            if (saveFileDialog.ShowDialog() == true)
+                return saveFileDialog.FileName;
+            throw new Exception("Save file dialog returned error!");
+        }
+
+        public bool GeneratePDFReport(int userId)
+        {
+            try
+            {
+                string filePath = OpenFilePicker();
+
+                Document document = new();
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(filePath, FileMode.Create));
+                writer.SetPdfVersion(PdfWriter.PDF_VERSION_1_7);
+                writer.SetFullCompression();
+
+                document.Open();
+
+                Paragraph heading = new(
+                    "Report of all your currently valid vouchers",
+                    new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD))
+                {
+                    SpacingAfter = 15f,
+                    Alignment = Element.ALIGN_CENTER
+                };
+                document.Add(heading);
+
+                PdfPTable table = new(3);
+                table.AddCell("Name");
+                table.AddCell("Acquired");
+                table.AddCell("Valid until");
+
+                foreach (var voucher in GetAllForUser(userId))
+                {
+                    table.AddCell(voucher.Name);
+                    table.AddCell(voucher.WayAcquired);
+                    table.AddCell(voucher.ExpireDate.ToShortDateString());
+                }
+
+                document.Add(table);
+                document.Close();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

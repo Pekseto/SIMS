@@ -22,5 +22,35 @@ namespace Tourist_Project.Properties {
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowTooltips
+        {
+            get
+            {
+                return ((bool)(this["ShowTooltips"]));
+            }
+            set
+            {
+                this["ShowTooltips"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowWizard
+        {
+            get
+            {
+                return ((bool)(this["ShowWizard"]));
+            }
+            set
+            {
+                this["ShowWizard"] = value;
+            }
+        }
     }
 }

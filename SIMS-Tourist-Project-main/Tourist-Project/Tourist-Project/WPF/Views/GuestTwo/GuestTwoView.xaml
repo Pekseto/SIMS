@@ -66,6 +66,9 @@
         <DataTemplate DataType="{x:Type viewmodels:RequestComplexTourViewModel}">
             <views:RequestComplexTourView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:HomeHelpViewModel}">
+            <views:HomeHelpView/>
+        </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="{x:Type RadioButton}"

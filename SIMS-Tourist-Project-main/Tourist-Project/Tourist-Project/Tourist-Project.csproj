@@ -38,6 +38,7 @@
     <None Remove="Images\statisticsGuideIcon.png" />
     <None Remove="Images\uk.png" />
     <None Remove="Images\view.png" />
+    <None Remove="Images\White question mark.png" />
     <None Remove="Images\Wizard Images\ComplexToursPage.png" />
     <None Remove="Images\Wizard Images\HistoryPage.png" />
     <None Remove="Images\Wizard Images\HomePage.png" />
@@ -105,6 +106,7 @@
     <Resource Include="Images\statisticsGuideIcon.png" />
     <Resource Include="Images\uk.png" />
     <Resource Include="Images\view.png" />
+    <Resource Include="Images\White question mark.png" />
     <Resource Include="Images\Wizard Images\ComplexToursPage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

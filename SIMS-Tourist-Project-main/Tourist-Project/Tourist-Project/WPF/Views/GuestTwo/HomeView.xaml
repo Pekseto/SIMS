@@ -12,7 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="500"/>
+            <RowDefinition Height="510"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -122,12 +122,26 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Reserve" FontSize="15"
+        <Button Content="Reserve" FontSize="15" Margin="0,15"
                 Command="{Binding ReserveCommand}"
                 Grid.Row="3" Width="80" Height="40"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Top" Cursor="Hand"
+                VerticalAlignment="Bottom" Cursor="Hand"
                 ToolTip="Go to reservation page"/>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Grid.Row="3" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                   FontSize="13" Margin="0,0,0,15"/>
+        </StackPanel>
+        
+
 
 
     </Grid>

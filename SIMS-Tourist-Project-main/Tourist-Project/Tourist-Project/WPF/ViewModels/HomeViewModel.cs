@@ -128,6 +128,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand ShowAllCommand { get; set; }
         public ICommand ReserveCommand { get; set; }
+        public ICommand HelpCommand { get; set; }
+
 
         public HomeViewModel(User user, NavigationStore navigationStore)
         {
@@ -142,6 +144,7 @@ namespace Tourist_Project.WPF.ViewModels
             SearchCommand = new RelayCommand(OnSearchClick);
             ShowAllCommand = new RelayCommand(OnShowAllClick);
             ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, this.navigationStore, this), CanReserve);
+            HelpCommand = new NavigateCommand<HomeHelpViewModel>(navigationStore, () => new HomeHelpViewModel(navigationStore, this));
 
         }
 
@@ -168,6 +171,11 @@ namespace Tourist_Project.WPF.ViewModels
                 filteredList.Add(tourDto);
             }
             Tours = filteredList;
+        }
+
+        private void HelpClick()
+        {
+
         }
     }
 }

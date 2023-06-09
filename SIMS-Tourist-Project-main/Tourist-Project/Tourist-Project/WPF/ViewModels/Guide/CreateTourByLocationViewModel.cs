@@ -5,14 +5,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
+using System.Windows;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
-    public class AcceptClassicRequestViewModel : INotifyPropertyChanged
+    public class CreateTourByLocationViewModel : INotifyPropertyChanged
     {
         #region services
         private readonly LocationService locationService = new();
@@ -20,7 +20,6 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourPointService tourPointService = new();
         private readonly ImageService imageService = new();
         private readonly TourRequestService requestService = new();
-        private readonly NotificationGuestTwoService notificationService = new();
         #endregion
 
         #region collections
@@ -32,7 +31,7 @@ namespace Tourist_Project.WPF.ViewModels
             get { return checkpoints; }
             set
             {
-                checkpoints = value; 
+                checkpoints = value;
                 OnPropertyChanged("Checkpoints");
             }
         }
@@ -63,7 +62,6 @@ namespace Tourist_Project.WPF.ViewModels
         private int numberOfPoints = 0;
 
         public User LoggedInUser;
-        public TourRequest Request;
 
         private Tour tourForAdd;
 
@@ -119,10 +117,9 @@ namespace Tourist_Project.WPF.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public AcceptClassicRequestViewModel(User loggedInUser, TourRequest request, Window window)
+        public CreateTourByLocationViewModel(User loggedInUser, Window window, Location location)
         {
             LoggedInUser = loggedInUser;
-            Request = request;
             this.window = window;
 
             Images = new ObservableCollection<string>();
@@ -130,8 +127,8 @@ namespace Tourist_Project.WPF.ViewModels
 
             ImageForAdd = new();
             PointForAdd = new();
-            TourForAdd = new(Request.LocationId, Request.Description, Request.Language, Request.GuestsNumber);
-            Location = new(Request.Location.City, Request.Location.Country);
+            TourForAdd = new();
+            Location = new(location.City, location.Country);
 
             AddCheckpointCommand = new RelayCommand(AddCheckpoint, CanAddCheckpoint);
             AddImageCommand = new RelayCommand(AddImage, CanAddImage);
@@ -151,7 +148,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanCreate()
         {
-            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration) ;
+            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration);
         }
 
         private void Create()
@@ -159,14 +156,6 @@ namespace Tourist_Project.WPF.ViewModels
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
             TourForAdd.UserId = LoggedInUser.Id;
             tourService.Save(TourForAdd);
-
-            Request.Status = TourRequestStatus.Accepted;
-            requestService.Update(Request);
-
-            var notification = new NotificationGuestTwo(Request.UserId, TourForAdd.Id, TourForAdd.StartTime,
-                NotificationType.TourAccepted);
-            notificationService.Save(notification);
-
 
             window.Close();
         }

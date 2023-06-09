@@ -12,7 +12,7 @@ using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class RequestsGuideViewModel : INotifyPropertyChanged
     {
@@ -98,14 +98,13 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         #region Commands
-
-        public ICommand SwitchLanguageCommand { get; set; }
         public ICommand ProfileViewCommand { get; set; }
         public ICommand HomeCommand { get; set; }
         public ICommand AcceptCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand StatisticsCommand { get; set; }
-
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
         #endregion
 
         public RequestsGuideViewModel(Window window, User user)
@@ -118,28 +117,43 @@ namespace Tourist_Project.WPF.ViewModels
 
             startClock();
 
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
-            ProfileViewCommand = new RelayCommand(ProfileWindow, CanProfileWindow);
-            HomeCommand = new RelayCommand(HomeWindow, CanHomeWindow);
+            ProfileViewCommand = new RelayCommand(ProfileWindow);
+            HomeCommand = new RelayCommand(HomeWindow);
             AcceptCommand = new RelayCommand(AcceptWindow, CanAccept);
-            SearchCommand = new RelayCommand(Search, CanSearch);
-            StatisticsCommand = new RelayCommand(StatisticsWindow, CanStatistics);
+            SearchCommand = new RelayCommand(Search);
+            StatisticsCommand = new RelayCommand(StatisticsWindow);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
         }
 
-        private bool CanStatistics()
+        private void ToSerbian()
         {
-            return true;
+            var app = (App)Application.Current;
+            CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private void StatisticsWindow()
         {
             var statisticsWindow = new RequestsStatisticsView(LoggedInUser);
             statisticsWindow.Show();
-        }
-
-        private bool CanSearch()
-        {
-            return true;
         }
 
         private void Search()
@@ -159,21 +173,11 @@ namespace Tourist_Project.WPF.ViewModels
             acceptWindow.Show();
         }
 
-        private bool CanHomeWindow()
-        {
-            return true;
-        }
-
         private void HomeWindow()
         {
             var homeWindow = new TodayToursView(LoggedInUser);
             homeWindow.Show();
             window.Close();
-        }
-
-        private bool CanProfileWindow()
-        {
-            return true;
         }
 
         private void ProfileWindow()
@@ -185,7 +189,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void startClock()
         {
             CurrentTime = DateTime.Now;
-            DispatcherTimer timer = new DispatcherTimer();
+            var timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += tickevent;
             timer.Start();
@@ -194,25 +198,6 @@ namespace Tourist_Project.WPF.ViewModels
         private void tickevent(object sender, EventArgs e)
         {
             CurrentTime = DateTime.Now;
-        }
-
-        private bool CanSwitchLanguage()
-        {
-            return true;
-        }
-
-        public void SwitchLanguage()
-        {
-            var app = (App)Application.Current;
-            if (CurrentLanguage.Equals("en-US"))
-            {
-                CurrentLanguage = "sr-LATN";
-            }
-            else
-            {
-                CurrentLanguage = "en-US";
-            }
-            app.ChangeLanguage(CurrentLanguage);
         }
 
         public void LoadRequests()

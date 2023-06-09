@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using LiveCharts;
 using Microsoft.VisualBasic.FileIO;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class RequestsStatisticsViewModel : INotifyPropertyChanged
     {
@@ -20,8 +21,30 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly Window window;
         public User LoggedInUser { get; set; }
 
-        private string filter;
+        private SeriesCollection statisticsCollection;
+        public SeriesCollection StatisticsCollection
+        {
+            get { return statisticsCollection; }
+            set
+            {
+                statisticsCollection = value;
+                OnPropertyChanged("StatisticsCollection");
+            }
+        }
 
+
+        private string currentLanguage;
+        public string CurrentLanguage
+        {
+            get { return currentLanguage; }
+            set
+            {
+                currentLanguage = value;
+                OnPropertyChanged("CurrentLanguage");
+            }
+        }
+
+        private string filter;
         public string Filter
         {
             get { return filter; }
@@ -33,7 +56,6 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         private string year;
-
         public string Year
         {
             get {return year; }
@@ -45,7 +67,6 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         private string searchBox;
-
         public string SearchBox
         {
             get { return searchBox; }
@@ -57,7 +78,6 @@ namespace Tourist_Project.WPF.ViewModels
         }
 
         private RequestStatistics requestStatistics;
-
         public RequestStatistics RequestStatistics
         {
             get { return requestStatistics; }
@@ -68,20 +88,13 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        public List<string> Filters { get; set; } = new List<string>()
+        public List<string> Filters { get; set; } = new()
         {
             "Location",
             "Language"
         };
 
-        public List<string> Years { get; set; } = new List<string>()
-        {
-            "Overall",
-            "2023",
-            "2022",
-            "2021",
-            "2020"
-        };
+        public List<string> Years { get; set; } 
 
         #region ObservableCollection
 
@@ -98,12 +111,14 @@ namespace Tourist_Project.WPF.ViewModels
         }
         #endregion
 
-
+        #region Command
         public ICommand BackCommand { get; set; }
         public ICommand CreateByLocationCommand { get; set; }
         public ICommand CreateByLanguageCommand { get; set; }
         public ICommand SearchCommand { get; set; }
-
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -115,11 +130,53 @@ namespace Tourist_Project.WPF.ViewModels
         {
             this.window = window;
             LoggedInUser = loggedInUser;
+            CurrentLanguage = "en-US";
+
+            Years = tourRequestService.GetAllYears(loggedInUser.Id);
 
             BackCommand = new RelayCommand(Back, CanBack);
             CreateByLocationCommand = new RelayCommand(CreateByLocation, CanCreate);
             CreateByLanguageCommand = new RelayCommand(CreateByLanguage, CanCreate);
             SearchCommand = new RelayCommand(Search, CanSearch);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+
+        }
+
+        private void GenerateCollection()
+        {
+            if (Filter.Equals("Location"))
+            {
+                StatisticsCollection = Year.Equals("Overall") ? tourRequestService.GetLocationOverallCollection(SearchBox) : tourRequestService.GenerateLocationYearCollection(SearchBox, Year);
+            }
+            else
+            {
+                StatisticsCollection = Year.Equals("Overall") ? tourRequestService.GenerateLanguageOverallCollection(SearchBox) : tourRequestService.GenerateLanguageYearCollection(SearchBox, Year);
+            }
+        }
+
+        private void ToSerbian()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private bool CanSearch()
@@ -130,6 +187,7 @@ namespace Tourist_Project.WPF.ViewModels
         private void Search()
         {
             RequestsStatistics = new ObservableCollection<RequestStatistics>(tourRequestService.GetRequestStatistics(Filter, SearchBox, Year));
+            GenerateCollection();
         }
 
         private bool CanCreate()

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.WPF.ViewModels.Guide;
 
 namespace Tourist_Project.WPF.Views.Guide
 {
@@ -21,10 +22,10 @@ namespace Tourist_Project.WPF.Views.Guide
     /// </summary>
     public partial class StatisticsOfTourView : Window
     {
-        public StatisticsOfTourView(Tour tour)
+        public StatisticsOfTourView(Tour tour, User user)
         {
             InitializeComponent();
-            DataContext = new StatisticsOfTourViewModel(this, tour);
+            DataContext = new StatisticsOfTourViewModel(this, tour, user);
             
         }
     }

@@ -24,7 +24,7 @@
             </Grid>
         </ControlTemplate>
         <Style x:Key="CreateButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -60,7 +60,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="CancelButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -97,7 +97,7 @@
         </Style>
 
         <Style x:Key="PlusButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -116,7 +116,7 @@
                 <Setter.Value>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+" VerticalAlignment="Center"></TextBlock>
+                            <Image Source="../../../Images/plus.png" VerticalAlignment="Center" Margin="7"></Image>
                         </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>
@@ -130,44 +130,6 @@
                     <Setter Property="Opacity" Value="0.5" />
                 </Trigger>
             </Style.Triggers>
-        </Style>
-        <Style x:Key="TextBoxStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="White"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="1"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Grid>
-                            <Border CornerRadius="20"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="IntegerStyle" TargetType="xctk:IntegerUpDown">
-            <Setter Property="Background" Value="White"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="1"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type xctk:IntegerUpDown}">
-                        <Grid>
-                            <Border CornerRadius="20"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <Style x:Key="ComboStyle" TargetType="ComboBox">
@@ -264,7 +226,7 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid x:Name="LeftGrid" Grid.Column="0" Grid.Row="0">
+        <Grid x:Name="LeftGrid" Grid.Column="0" Grid.Row="0" Style="{StaticResource MainGrid}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="300"></ColumnDefinition>
@@ -295,13 +257,13 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" >
+            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" BorderThickness="3" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" >
                 <ComboBox.SelectedItem>
                     <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged">
                     </Binding>
                 </ComboBox.SelectedItem>
             </ComboBox>
-            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" BorderThickness="3" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}">
                 <ComboBox.SelectedItem>
                     <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged">
                     </Binding>
@@ -352,7 +314,7 @@
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
         </Grid>
-        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0">
+        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0" Style="{StaticResource MainGrid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -392,14 +354,15 @@
             </ListBox>
                 <ListBox x:Name="ImagesBox" Grid.Column="1" Grid.Row="3" Width="270" HorizontalAlignment="Left" Margin="10 10 0 10 " ItemsSource="{Binding Images, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
-        <Grid x:Name="ButtonGrid" Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="ButtonGrid" Grid.Column="1" Grid.Row="1" Style="{StaticResource LeftGrid}">
             <xctk:IconButton x:Name="CreateButton" Command="{Binding CreateCommand}" Width="200" Height="40" HorizontalAlignment="Left" Margin="20 0 0 0" Style="{StaticResource CreateButton}">
             </xctk:IconButton>
             <xctk:IconButton x:Name="CancelButton" Command="{Binding CancelCommand}" Width="200" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0" Style="{StaticResource CancelButton}">
             </xctk:IconButton>
         </Grid>
+        <Grid Grid.Column="0" Grid.Row="1" Style="{StaticResource LeftGrid}"></Grid>
         <StatusBar x:Name="BottomGrid" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
-            <TextBlock Text="{ns:Loc CreateTour}" FontSize="15" Height="25" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="{ns:Loc CreateTour}" FontSize="15" Height="25" VerticalAlignment="Center" Margin="20 0 0 0"></TextBlock>
         </StatusBar>
     </Grid>
 </Window>

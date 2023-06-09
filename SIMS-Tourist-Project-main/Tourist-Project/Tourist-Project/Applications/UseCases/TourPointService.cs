@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.WPF.ViewModels.Guide;
 
 namespace Tourist_Project.Applications.UseCases
 {
@@ -38,24 +39,14 @@ namespace Tourist_Project.Applications.UseCases
             repository.Save(tourPoint);
         }
 
-        public void UpdateCollection(TourPoint selectedTourPoint, Tour selectedTour)
-        {
-            repository.Update(selectedTourPoint);
-            TourLiveViewModel.TourPoints.Clear();
-            foreach (TourPoint point in repository.GetAllForTour(selectedTour.Id))
-            {
-                TourLiveViewModel.TourPoints.Add(point);
-            }
-        }
-
         public List<TourPoint> GetAllForTour(int tourId)
         {
             return repository.GetAllForTour(tourId);
         }
 
-        public bool EndTour()
+        public bool EndTour(ObservableCollection<TourPoint> tourPoints)
         {
-            return TourLiveViewModel.TourPoints.ToList().Find(tourPoint => tourPoint.Visited == false) == null;
+            return tourPoints.ToList().Find(tourPoint => tourPoint.Visited == false) == null;
         }
 
         public string GetCheckpointName(int userId, int tourId)

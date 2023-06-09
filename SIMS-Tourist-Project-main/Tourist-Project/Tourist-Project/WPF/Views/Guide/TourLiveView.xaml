@@ -10,7 +10,7 @@
         Title="Tourists Application" Height="500" Width="650">
     <Window.Resources>
         <Style x:Key="TouristsListButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -47,7 +47,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="CheckpointButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -84,7 +84,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="EmergencyEndButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -140,29 +140,25 @@
             <ColumnDefinition Width="240"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource LeftGrid}">
             <TextBlock Text="{Binding SelectedTour.Name}" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0 0 0"/>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource LeftGrid}">
             <xctk:IconButton Width="200" Height="40" Margin="20,10,20,320" Style="{StaticResource HomeButtonGuide}" Command="{Binding HomePageCommand}"></xctk:IconButton>
             <xctk:IconButton Width="200" Height="40" Margin="20,65,20,254" Style="{StaticResource TouristsListButton}" Command="{Binding OpenTouristListCommand}"></xctk:IconButton>
             <xctk:IconButton Width="200" Height="40" Margin="20,127,20,197" Style="{StaticResource CheckpointButton}" Command="{Binding CheckCommand}"></xctk:IconButton>
             <xctk:IconButton Width="200" Height="40" Margin="20,182,20,132" Style="{StaticResource EmergencyEndButton}" Command="{Binding EarlyEndCommand}"></xctk:IconButton>
 
-            <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}" Margin="20,325,0,0" Width="90">
-                <Label.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />
-                </Label.InputBindings>
-            </Label>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 50"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 20"></xctk:IconButton>
         </Grid>
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="0" Grid.Column="1" Style="{StaticResource MainGrid}">
             <TextBlock Text="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Right" Margin="0 0 20 0"></TextBlock>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Style="{StaticResource MainGrid}">
             <DataGrid Margin="10 0 20 20"
                       ItemsSource="{Binding TourPoints}"
                       SelectedItem="{Binding SelectedTourPoint}"
-                      AutoGenerateColumns="False" IsReadOnly="True"
                       Cursor="Hand"
                       Style="{StaticResource DataGridStyle}">
                 <DataGrid.Columns>

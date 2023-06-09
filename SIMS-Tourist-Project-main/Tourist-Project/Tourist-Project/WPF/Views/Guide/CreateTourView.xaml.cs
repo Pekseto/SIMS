@@ -11,6 +11,7 @@ using Tourist_Project.Repositories;
 using Image = Tourist_Project.Domain.Models.Image;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Applications.UseCases;
+using Tourist_Project.WPF.ViewModels.Guide;
 
 namespace Tourist_Project.WPF.Views.Guide
 {

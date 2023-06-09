@@ -14,7 +14,7 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.WPF.Views.Guide;
 
-namespace Tourist_Project.WPF.ViewModels
+namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TouristListViewModel : INotifyPropertyChanged
     {
@@ -24,11 +24,11 @@ namespace Tourist_Project.WPF.ViewModels
         public Tour ActiveTour { get; set; }
         public string CurrentLanguage { get; set; }
 
-        private UserService userService = new();
-        private TourPointService tourPointService = new();
-        private TourAttendanceService tourAttendanceService = new();
-        private NotificationGuestTwoService notificationService = new();
-        private Window window;
+        private readonly UserService userService = new();
+        private readonly TourPointService tourPointService = new();
+        private readonly TourAttendanceService tourAttendanceService = new();
+        private readonly NotificationGuestTwoService notificationService = new();
+        private readonly Window window;
 
         private DateTime currentTime;
 
@@ -38,7 +38,7 @@ namespace Tourist_Project.WPF.ViewModels
             set
             {
                 currentTime = value;
-                OnPropertyChanged();
+                OnPropertyChanged("CurrentTime");
             }
         }
 
@@ -48,10 +48,13 @@ namespace Tourist_Project.WPF.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        #region Command
         public ICommand CallOutCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand HomeCommand { get; set; }
-        public ICommand SwitchLanguageCommand { get; set; }
+        public ICommand ToSerbianCommand { get; set; }
+        public ICommand ToEnglishCommand { get; set; }
+        #endregion
 
         public TouristListViewModel(TourPoint selectedTourPoint, Tour tour, Window window) 
         { 
@@ -63,36 +66,42 @@ namespace Tourist_Project.WPF.ViewModels
             startClock();
 
             CallOutCommand = new RelayCommand(CallOut, CanCallOut);
-            BackCommand = new RelayCommand(Back, CanBack);
-            HomeCommand = new RelayCommand(HomeView, CanHomeView);
-            SwitchLanguageCommand = new RelayCommand(SwitchLanguage, CanSwitchLanguage);
+            BackCommand = new RelayCommand(Back);
+            HomeCommand = new RelayCommand(HomeView);
+            ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
+            ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
 
             LoadTourAttendaces();
         }
 
-        private bool CanSwitchLanguage()
-        {
-            return true;
-        }
-
-        public void SwitchLanguage()
+        private void ToSerbian()
         {
             var app = (App)Application.Current;
-            if (CurrentLanguage.Equals("en-US"))
-            {
-                CurrentLanguage = "sr-LATN";
-            }
-            else
-            {
-                CurrentLanguage = "en-US";
-            }
+            CurrentLanguage = "sr-LATN";
             app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToSerbian()
+        {
+            return CurrentLanguage.Equals("en-US");
+        }
+
+        private void ToEnglish()
+        {
+            var app = (App)Application.Current;
+            CurrentLanguage = "en-US";
+            app.ChangeLanguage(CurrentLanguage);
+        }
+
+        private bool CanToEnglish()
+        {
+            return CurrentLanguage.Equals("sr-LATN");
         }
 
         private void startClock()
         {
             CurrentTime = DateTime.Now;
-            DispatcherTimer timer = new DispatcherTimer();
+            var timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += tickevent;
             timer.Start();
@@ -103,21 +112,11 @@ namespace Tourist_Project.WPF.ViewModels
             CurrentTime = DateTime.Now;
         }
 
-        private bool CanBack()
-        {
-            return true;
-        }
-
         private void Back()
         {
             var tourLiveWindow = new TourLiveView(ActiveTour);
             tourLiveWindow.Show();
             window.Close();
-        }
-
-        private bool CanHomeView()
-        {
-            return true;
         }
 
         private void HomeView()
@@ -127,11 +126,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanCallOut()
         {
-            if (SelectedTourAttendance == null)
-            {
-                return false;
-            }
-            return true;
+            return SelectedTourAttendance != null;
         }
 
         private void CallOut()

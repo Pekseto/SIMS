@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Tourist_Project.Repository;
 using Tourist_Project.DTO;
 using System.Collections.Generic;
 using System;

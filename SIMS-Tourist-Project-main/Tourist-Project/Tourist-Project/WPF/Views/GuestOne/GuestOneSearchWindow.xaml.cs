@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
 using System.Collections.ObjectModel;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.Views
 {

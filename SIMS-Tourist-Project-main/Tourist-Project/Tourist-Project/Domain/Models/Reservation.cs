@@ -89,7 +89,7 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
-        private List<Date> availableDates;
+        /*private List<Date> availableDates;
         public List<Date> AvailableDates
         {
             get => availableDates;
@@ -99,7 +99,7 @@ namespace Tourist_Project.Domain.Models
                 availableDates = value;
                 OnPropertyChanged("AvailableDates");
             }
-        }
+        }*/
         public Accommodation Accommodation { get; set; }
 
         private ReservationStatus status;

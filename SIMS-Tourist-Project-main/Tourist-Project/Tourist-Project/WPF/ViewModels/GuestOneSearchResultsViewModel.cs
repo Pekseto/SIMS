@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.ViewModels
 {

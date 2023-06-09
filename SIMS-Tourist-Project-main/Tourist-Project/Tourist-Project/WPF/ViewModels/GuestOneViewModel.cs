@@ -12,6 +12,7 @@ using System.Windows.Input;
 using Tourist_Project.WPF.Views;
 using Tourist_Project.View;
 using System.Windows.Controls;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.ViewModels;
 
@@ -110,10 +111,7 @@ public class GuestOneViewModel
     #region RateAccommodation
     private bool CanRate()
     {
-        if (SelectedAccommodationViewModel == null)
-            return true;
-        else
-            return false;
+        return SelectedAccommodation != null;
     }
     private void RateAccommodation()
     {

@@ -8,11 +8,11 @@
         Title="UserReservationsWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="userReservationsDataGrid" Grid.Row="0" Margin="10"
+        <DataGrid x:Name="userReservationsDataGrid" Grid.Row="1" Margin="10"
                   ItemsSource="{Binding ReservationsForUser, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -24,10 +24,13 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Content="Reschedule Reservation" Command="{Binding RescheduleReservation_Command}" HorizontalAlignment="Left" Margin="537,14,0,26" Grid.Row="1"/>
-        <Button Content="Cancel Reservation" Command="{Binding CancelReservation_Command}" HorizontalAlignment="Left" Margin="393,14,0,26" Grid.Row="1"/>
-        <Button Content="Rate Accommodation" Command="{Binding RateAccommodation_Command}" HorizontalAlignment="Left" Margin="230,14,0,26" Grid.Row="1"/>
-        <Button Content="Show Reschedule Requests" Command="{Binding ShowRescheduleRequests_Command}" HorizontalAlignment="Left" Margin="52,16,0,24" Grid.Row="1"/>
-        <Button Content="Home" Command="{Binding Home_Command}" HorizontalAlignment="Left" Margin="708,16,0,24" Grid.Row="1"/>
+        <Menu>
+            <MenuItem Header="Home" Height="45" Width="125" Command="{Binding Home_Command}"></MenuItem>
+            <MenuItem Header="Reschedule Requests" Width="125" Command="{Binding ShowRescheduleRequests_Command}"></MenuItem>
+            <MenuItem Header="Rate Accommodation" Width="125" Command="{Binding RateAccommodation_Command}"></MenuItem>
+            <MenuItem Header="Cancel Reservation" Width="125" Command="{Binding CancelReservation_Command}"></MenuItem>
+            <MenuItem Header="Reschedule Reservation" Width="135" Command="{Binding RescheduleReservation_Command}"></MenuItem>
+        </Menu>
+        
     </Grid>
 </Window>

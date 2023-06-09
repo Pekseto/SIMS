@@ -8,40 +8,48 @@
         Title="GuestOneSearchWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60">
+            <RowDefinition Height="25">
             </RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition>
             </RowDefinition>
-            <RowDefinition Height="80">
+            <RowDefinition Height="60">
             </RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition>
             </ColumnDefinition>
             <ColumnDefinition>
-                
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0" Height="40">
-            
         </DockPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0">
-            <Label Content="Name" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>
-            <Label Content="Type" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>
-            <Label Content="Country" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>
-            <Label Content="City" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center" />
-            <Label Content="Cancelation Threshold" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>
-            <Label Content="Number Of Guests" HorizontalAlignment="Left" Margin="80,10" Width="130" VerticalAlignment="Center"/>
+        <Menu Grid.Column="0">
+            <MenuItem Header="Search" Command="{Binding Search_Command}">
+            </MenuItem>
+            <MenuItem Header="Show All" Command="{Binding ShowAll_Command}"></MenuItem>
+            <MenuItem Header="Home" Command="{Binding Close_Command}"></MenuItem>
+        </Menu>
+        <Menu Grid.Column="1"></Menu>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Label Content="Name" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
+            <Label Content="Type" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
+            <Label Content="Country" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
+            <Label Content="City" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center" />
+            <Label Content="Staying Days" HorizontalAlignment="Left" Margin="80,8" Width="130"/>
+            <Label Content="Cancelation Threshold" HorizontalAlignment="Left" Margin="80,8" Width="130"/>
+            <Label Content="Number Of Guests" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBox TextWrapping="Wrap" Text="{Binding AccommodationName}" Width ="130" HorizontalAlignment="Center" Grid.Column="1" Margin="80,12"/>
-            <ComboBox ItemsSource ="{Binding AccommodationTypes}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Center" Width="130" Margin="80,12"/>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <TextBox TextWrapping="Wrap" Text="{Binding AccommodationName}" Width ="130" HorizontalAlignment="Center" Grid.Column="1" Margin="80,8"/>
+            <ComboBox ItemsSource ="{Binding AccommodationTypes}" SelectedItem ="{Binding SelectedType}" HorizontalAlignment="Center" Width="130" Margin="80,10"/>
             <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="130" VerticalAlignment="Center" Margin="80,12" Grid.Column="1"/>
             <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Margin="80,12" Width="130" VerticalAlignment="Top"/>
-            <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SearchedCancelationThreshold}" Width="130" VerticalAlignment="Center" Grid.Column="1" Margin="80,12"/>
+            <TextBox Text="{Binding SearchedStayingDays}" Width="130" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="80,14"></TextBox>
+             <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SearchedCancelationThreshold}" Width="130" VerticalAlignment="Center" Grid.Column="1" Margin="80,13"/>
             <TextBox TextWrapping="Wrap" Text="{Binding SearchedGuestNum}" Width="130" Margin="80,12" HorizontalAlignment="Center" Grid.Column="1"/>
         </StackPanel>
-        <DockPanel Grid.Column="1" Grid.Row="2">
+        <DockPanel Grid.Column="1" Grid.Row="3">
             <Button Content="Search" Width="60" Command="{Binding Search_Command}" Height="20"  Margin="20,10" HorizontalAlignment="Left"></Button>
             <Button Content="Show All" Width="60" Command="{Binding ShowAll_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"/>
             <Button Content="Close" Width="60" Command="{Binding Close_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"></Button>

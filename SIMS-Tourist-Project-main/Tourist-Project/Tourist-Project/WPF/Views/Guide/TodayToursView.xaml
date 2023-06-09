@@ -30,7 +30,7 @@
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../../../Images/addGuideIcon.png" Margin="5" Height="25"></Image>
-                            <TextBlock Text="{ns:Loc CreateTour}" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{ns:LocExtension CreateTour}" VerticalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>

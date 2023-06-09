@@ -13,6 +13,7 @@ using Tourist_Project.Applications.UseCases;
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Tourist_Project.WPF.ViewModels.Owner;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -55,6 +56,7 @@ namespace Tourist_Project.WPF.ViewModels
         public int SearchedCancelationThreshold { get; set; }
         public int SearchedGuestNum { get; set; }
 
+        public int SearchedStayingDays { get; set; }
         public String SelectedTypeChanged { get; set; }
         public String SelectedCityChanged { get; set; }
         public String SelectedCountryChanged { get; set; }
@@ -168,15 +170,17 @@ namespace Tourist_Project.WPF.ViewModels
 
             if (SearchedCancelationThreshold == 0)
             {
-                foreach (Accommodation accommodation in _accommodationRepository.GetAll())
-                {
-                    SearchedCancelationThreshold = accommodation.CancellationThreshold;
-                }
+                SearchedCancelationThreshold = 0;    
             }
 
             if (SelectedType == null || SelectedType == "Any")
             {
                 SelectedType = string.Empty;
+            }
+
+            if(SearchedStayingDays == 0)
+            {
+                SearchedStayingDays = 1;
             }
         }
 
@@ -189,9 +193,9 @@ namespace Tourist_Project.WPF.ViewModels
             foreach (AccommodationViewModel accommodation in AccommodationsViewModel)
             {
                 if (accommodation.Accommodation.Name.ToLower().Contains(AccommodationName.ToLower()) && accommodation.Accommodation.MaxGuestNum >= SearchedGuestNum
-                    && accommodation.Accommodation.MinStayingDays >= SearchedCancelationThreshold &&
+                    && accommodation.Accommodation.CancellationThreshold >= SearchedCancelationThreshold &&
                     accommodation.Accommodation.Type.ToString().Contains(SelectedType) &&
-                accommodation.Location.ToString().Contains(SelectedCity + ", " + SelectedCountry))
+                accommodation.Location.ToString().Contains(SelectedCity + ", " + SelectedCountry) && accommodation.Accommodation.MinStayingDays >= SearchedStayingDays)
                 {
                    searchedViewModels.Add(accommodation);
                 }
@@ -228,8 +232,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private void ShowAll()
         {
-            var guestOneWindow = new GuestOneWindow(_user);
-            guestOneWindow.Show();
+            GuestOneDataGrid.ItemsSource = AccommodationsViewModel;
             _window.Close();
         }
 

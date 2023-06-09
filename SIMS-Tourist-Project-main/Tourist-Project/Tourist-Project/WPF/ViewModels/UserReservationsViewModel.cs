@@ -43,7 +43,7 @@ namespace Tourist_Project.WPF.ViewModels
             //UserReservationsWindow = userReservationsWindow;
             _window = userReservationsWindow;
             ReservationsForUser = GetReservationsForUser(user);
-            GenerateReservations();
+            //GenerateReservations();
             RescheduleReservation_Command = new RelayCommand(RescheduleSelectedReservation, CanReschedule);
             RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRateAccommodation);
             CancelReservation_Command = new RelayCommand(CancelReservation, CanCancel);
@@ -116,6 +116,7 @@ namespace Tourist_Project.WPF.ViewModels
                 if(reservation.GuestId == loggedUser.Id)
                 {
                     ReservationsForUser.Add(reservation);
+                    reservation.Accommodation = _accommodationService.Get(reservation.AccommodationId);
                 }
             }
             return ReservationsForUser;

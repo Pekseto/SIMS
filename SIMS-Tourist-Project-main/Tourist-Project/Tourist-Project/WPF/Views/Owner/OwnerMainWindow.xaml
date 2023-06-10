@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         xmlns:vm="clr-namespace:Tourist_Project.WPF.ViewModels.Owner"
-        xmlns:pye="clr-namespace:LiveCharts;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Accommodations" Height="740" Width="1250" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -24,7 +23,7 @@
                 <Label Content="{Binding Location.City, UpdateSourceTrigger=PropertyChanged}" FontWeight="DemiBold" FontSize="16" Height="45" Margin="280, 0, 10,10 "></Label>
                 <Label Content="{Binding Accommodation.Type, UpdateSourceTrigger=PropertyChanged}" FontWeight="DemiBold" FontSize="16" Height="30" Margin="210, 40, 10,0 "></Label>
                 <Button Width="140" Content="Statistics(Alt+S)" Margin="400,-40,10,10"></Button>
-                <Button Width="140" Content="Reservation Report" Margin="400,50,10,10" IsEnabled="False"></Button>
+                <Button Width="140" Content="Res. Report(Alt+R)" Margin="400,50,10,10"></Button>
                 <Label Content="{Binding Accommodation.IsRecentlyRenovated, UpdateSourceTrigger=PropertyChanged}" FontWeight="DemiBold" FontSize="16" Height="45" Margin="320, 65, 10,10 "></Label>
                 <Separator Margin="0,115, 0,0" Background="#0da2a5"/>
             </Grid>
@@ -254,6 +253,7 @@
         <KeyBinding  Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Shift" Command="{Binding ShowRenovationsCommand}"></KeyBinding>
         <KeyBinding  Key="S" Modifiers="Alt" Command="{Binding ShowStatisticsCommand}"></KeyBinding>
+        <KeyBinding  Key="R" Modifiers="Alt" Command="{Binding CreatePDFReport}"></KeyBinding>
         <KeyBinding  Key="F" Command="{Binding ShowForumsCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
@@ -333,7 +333,7 @@
                         <Label Content="{Binding BestLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBlack" FontStyle="Italic"></Label>
                     </StackPanel>
                 </GroupBox>
-                <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-175,-12"/>
+                <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-175,-12" Command="{Binding CreateRecommendationCommand}"/>
                 <Label Content="Closure recommendation(F5)" Margin="760,-6,-500,10" Foreground="#03888f"></Label>
                 <GroupBox Margin="763,14,-284,27" Background="#D94332" Style="{StaticResource GroupBoxStyle}">
                     <StackPanel>
@@ -343,7 +343,7 @@
                         <Label Content="{Binding WorstLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBold" FontStyle="Italic"></Label>
                     </StackPanel>
                 </GroupBox>
-                <Button Height="38" Width="180" Content="Recommendations(Shift+M)" VerticalAlignment="Bottom" Margin="500,2,-545,-12"/>
+                <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-545,-12"/>
             </Grid>
             <GroupBox Header="My accommodations(M)" Margin="20,20" Grid.Row="1">
                 <ListBox x:Name="AccommodationListBox"

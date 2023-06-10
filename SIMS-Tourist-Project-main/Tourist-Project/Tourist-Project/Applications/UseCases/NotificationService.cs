@@ -74,7 +74,13 @@ namespace Tourist_Project.Applications.UseCases
                 {
                     Create(new Notification("GuestRate", true, guestRate.Id));
                 }
+                foreach (var notification in GetAllByType("GuestRate"))
+                {
+                    if (notificationRepository.GetAllByType("GuestRate").Any(c => c.TypeId == guestRate.Id) && Math.Abs(daysSinceCheckOut.Days) >= 5)
+                        Delete(notification.Id);
+                }
             }
+
         }
 
         public void HasNewForum()

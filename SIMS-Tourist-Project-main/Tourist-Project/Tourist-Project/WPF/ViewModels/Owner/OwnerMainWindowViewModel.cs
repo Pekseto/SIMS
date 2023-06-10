@@ -14,8 +14,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
     public class OwnerMainWindowViewModel 
     {
         #region Collections
-        private ObservableCollection<Notification> guestRatingNotifications;
-        public ObservableCollection<Notification> GuestRatingNotifications
+        private ObservableCollection<NotificationViewModel> guestRatingNotifications;
+        public ObservableCollection<NotificationViewModel> GuestRatingNotifications
         {
             get => guestRatingNotifications;
             set
@@ -70,8 +70,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
-        private ObservableCollection<Notification> forums;
-        public ObservableCollection<Notification> Forums
+        private ObservableCollection<NotificationViewModel> forums;
+        public ObservableCollection<NotificationViewModel> Forums
         {
             get => forums;
             set
@@ -115,7 +115,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         #endregion
         #region SelectedProperties
         public static AccommodationViewModel SelectedAccommodation { get; set; }
-        public static Notification SelectedRating { get; set; }
+        public static NotificationViewModel SelectedRating { get; set; }
         public static ReschedulingReservationViewModel SelectedRescheduleRequest { get; set; } 
         #endregion
         public static User User { get; set; }
@@ -138,6 +138,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand ShowRenovationsCommand { get; set; }
         public ICommand ShowStatisticsCommand { get; set; }
         public ICommand ShowForumsCommand { get; set; }
+        public ICommand CreateRecommendationCommand { get; set; }
+        public ICommand CreatePDFReport { get; set; }
         #endregion
 
         public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
@@ -156,15 +158,17 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             ShowRenovationsCommand = new RelayCommand(ShowRenovations);
             ShowStatisticsCommand = new RelayCommand(ShowStatistics, CanShowStatistics);
             ShowForumsCommand = new RelayCommand(ShowForums);
+            CreateRecommendationCommand = new RelayCommand(CreateRecommendation);
+            CreatePDFReport = new RelayCommand(PdfReport, CanUpdate);
             #endregion
             #region CollectionInstanting
             User = App.LoggedInUser;
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
-            GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
+            GuestRatingNotifications = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("GuestRate").Select(notification => new NotificationViewModel(notification)));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
             AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
-            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false));
+            Forums = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false).Select(notification => new NotificationViewModel(notification)));
             RecommendationsByReservation = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderByDescending(o => o.ReservationNo));
             BestLocationByReservation = RecommendationsByReservation.First();
             WorstLocationByReservation = RecommendationsByReservation.Last();
@@ -205,7 +209,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Rate()
         {
-            var rateWindow = new RateGuestWindow(SelectedRating, this);
+            var rateWindow = new RateGuestWindow(SelectedRating.Notification, this);
             rateWindow.ShowDialog();
         }
         public static bool CanRate()
@@ -299,12 +303,24 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             var showForums = new Forums();
             foreach (var notification in Forums)
             {
-                notification.IsNotified = true;
-                notificationService.Update(notification);
+                notification.Notification.IsNotified = true;
+                notificationService.Update(notification.Notification);
             }
             Forums.Clear();
-            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum"));
+            Forums = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("Forum").Select(notification => new NotificationViewModel(notification)));
             showForums.ShowDialog();
+        }
+
+        public void CreateRecommendation()
+        {
+            var createRecommendation = new Recommendations(RecommendationsByReservation, RecommendationsByOccupancy);
+            createRecommendation.ShowDialog();
+        }
+
+        public static void PdfReport()
+        {
+            var createReport = new GeneratePDF(SelectedAccommodation);
+            createReport.ShowDialog();
         }
         #endregion
 
@@ -315,7 +331,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void GuestRateUpdate(Notification notification)
         {
-            GuestRatingNotifications.Remove(notification);
+            foreach (var guestRatingNotification in GuestRatingNotifications)
+            {
+                if (guestRatingNotification.Notification != notification) continue;
+                GuestRatingNotifications.Remove(guestRatingNotification);
+                return;
+            }
         }
 
         public void RescheduleRequestUpdate(ReschedulingReservationViewModel reschedulingReservationViewModel)

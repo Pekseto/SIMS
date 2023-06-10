@@ -10,7 +10,7 @@
         Title="Tourists Application" Height="500" Width="650">
     <Window.Resources>
         <Style x:Key="TouristsListButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -47,7 +47,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="CheckpointButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -84,7 +84,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="EmergencyEndButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -151,6 +151,9 @@
 
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 50"></xctk:IconButton>
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 20"></xctk:IconButton>
+
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 50"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 20"></xctk:IconButton>
         </Grid>
         <Grid Grid.Row="0" Grid.Column="1" Style="{StaticResource MainGrid}">
             <TextBlock Text="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Right" Margin="0 0 20 0"></TextBlock>

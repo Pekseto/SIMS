@@ -182,6 +182,9 @@
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="50 0 0 0"></xctk:IconButton>
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 0"></xctk:IconButton>
 
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 0 50 0"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 0"></xctk:IconButton>
+
             <xctk:IconButton x:Name="PdfStatisticsButton" Grid.Column="1" Width="200" Height="40" HorizontalAlignment="Center" Command="{Binding PDFReportCommand}" Style="{StaticResource PDFButton}"></xctk:IconButton>
             <xctk:IconButton x:Name="BackButton" Grid.Column="2" Width="200" Height="40" HorizontalAlignment="Center" Command="{Binding BackCommand}" Style="{StaticResource BackButton}"></xctk:IconButton>
         </Grid>

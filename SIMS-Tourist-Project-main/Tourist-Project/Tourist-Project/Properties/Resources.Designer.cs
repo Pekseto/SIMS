@@ -250,11 +250,38 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create part of complex tour.
+        /// </summary>
+        internal static string CreateTourPart {
+            get {
+                return ResourceManager.GetString("CreateTourPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DarkTheme.
+        /// </summary>
+        internal static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick tour date:.
+        /// </summary>
+        internal static string DatePick {
+            get {
+                return ResourceManager.GetString("DatePick", resourceCulture);
             }
         }
         
@@ -552,6 +579,15 @@ namespace Tourist_Project.Properties {
         internal static string Serbian {
             get {
                 return ResourceManager.GetString("Serbian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour start at:.
+        /// </summary>
+        internal static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
         

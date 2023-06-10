@@ -177,8 +177,17 @@
   <data name="CreateTourFromRequest" xml:space="preserve">
     <value>Create tour from request</value>
   </data>
+  <data name="CreateTourPart" xml:space="preserve">
+    <value>Create part of complex tour</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>DarkTheme</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="DatePick" xml:space="preserve">
+    <value>Pick tour date:</value>
   </data>
   <data name="DatesTable" xml:space="preserve">
     <value>Date range</value>
@@ -278,6 +287,9 @@
   </data>
   <data name="Serbian" xml:space="preserve">
     <value>serbian</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Tour start at:</value>
   </data>
   <data name="StartTour" xml:space="preserve">
     <value>Start tour</value>

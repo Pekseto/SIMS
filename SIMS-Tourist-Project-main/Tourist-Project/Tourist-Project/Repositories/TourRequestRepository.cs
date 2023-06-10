@@ -96,7 +96,7 @@ namespace Tourist_Project.Repositories
         }
         public List<TourRequest> GetAllPending()
         {
-            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending && tr.ComplexTourId == -1);
+            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending);
         }
 
         public List<TourRequest> GetAllLastYear()

@@ -177,8 +177,17 @@
   <data name="CreateTourFromRequest" xml:space="preserve">
     <value>Kreiranje ture po zahtevu</value>
   </data>
+  <data name="CreateTourPart" xml:space="preserve">
+    <value>Kreiranje dela kompleksne ture</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Tamna pozadina</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Datum</value>
+  </data>
+  <data name="DatePick" xml:space="preserve">
+    <value>Datum održavanja ture:</value>
   </data>
   <data name="DatesTable" xml:space="preserve">
     <value>Opseg datuma</value>
@@ -278,6 +287,9 @@
   </data>
   <data name="Serbian" xml:space="preserve">
     <value>srpski</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Vreme početka ture:</value>
   </data>
   <data name="StartTour" xml:space="preserve">
     <value>Započni turu</value>

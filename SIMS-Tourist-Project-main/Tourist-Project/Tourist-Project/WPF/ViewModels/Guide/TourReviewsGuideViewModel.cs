@@ -21,8 +21,9 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TourReviewsGuideViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<TourReviewDTO> tourReview;
+        private readonly TourReviewService tourReviewService = new();
 
+        private ObservableCollection<TourReviewDTO> tourReview;
         public ObservableCollection<TourReviewDTO> TourReviews
         {
             get { return tourReview; }
@@ -32,11 +33,20 @@ namespace Tourist_Project.WPF.ViewModels.Guide
                 OnPropertyChanged("TourReviews");
             }
         }
-        private readonly TourReviewService tourReviewService = new();
 
         private Window window;
         public Tour Tour { get; set; }
-        public TourReviewDTO SelectedReview { get; set; }
+        private TourReviewDTO selectedReview;
+
+        public TourReviewDTO SelectedReview
+        {
+            get { return selectedReview; }
+            set
+            {
+                selectedReview = value;
+                OnPropertyChanged("SelectedReview");
+            }
+        }
         public TourReview TourReview { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -62,12 +72,11 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             BackCommand = new RelayCommand(Back);
 
             TourReviews = new ObservableCollection<TourReviewDTO>(tourReviewService.GetAllReviewDtos(tour.Id));
-            
         }
 
         private bool CanAccept()
         {
-            return SelectedReview != null;
+            return SelectedReview != null && SelectedReview.Valid != ValidStatus.Valid;
         }
 
         private void Accept()
@@ -79,7 +88,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanDecline()
         {
-            return SelectedReview != null;
+            return SelectedReview != null && SelectedReview.Valid != ValidStatus.NotValid;
         }
 
         private void Decline()

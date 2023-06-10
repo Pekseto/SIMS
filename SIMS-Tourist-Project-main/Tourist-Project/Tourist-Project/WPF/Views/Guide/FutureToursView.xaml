@@ -9,7 +9,7 @@
         Title="Tourist application" Height="800" Width="1100">
     <Window.Resources>
         <Style x:Key="CancelButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -81,6 +81,9 @@
 
                 <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 50"></xctk:IconButton>
                 <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 20"></xctk:IconButton>
+
+                <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 50"></xctk:IconButton>
+                <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 20"></xctk:IconButton>
             </Grid>
         </Grid>
         <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0" Style="{StaticResource MainGrid}">

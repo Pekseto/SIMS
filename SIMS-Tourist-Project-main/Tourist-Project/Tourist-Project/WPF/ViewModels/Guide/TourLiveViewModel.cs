@@ -33,9 +33,9 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         public TourPoint SelectedTourPoint { get; set; }
         public Tour SelectedTour { get; set; }
-        public string CurrentLanguage { get; set; }
 
         private Window window;
+        private App app = (App)System.Windows.Application.Current;
         private readonly TourPointService tourPointService = new();
         private readonly TourService tourService = new();
 
@@ -64,6 +64,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand HomePageCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public TourLiveViewModel(Tour selectedTour, Window window) 
@@ -76,7 +78,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             tourPointService.Update(TourPoints[0]);
 
             startClock();
-            CurrentLanguage = "en - US";
             SelectedTourPoint = null;
 
 
@@ -86,6 +87,32 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             HomePageCommand = new RelayCommand(HomeView);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
+        }
+
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
         }
 
         private void startClock()
@@ -105,25 +132,25 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void HomeView()

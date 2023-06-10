@@ -5,12 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
              xmlns:converters="clr-namespace:Tourist_Project.WPF.Converters"
+             xmlns:validation="clr-namespace:Tourist_Project.WPF.Validation"
              d:DataContext="{d:DesignInstance Type=viewmodels:TourReviewViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
 
     <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"/>
+            </Grid>
+        </ControlTemplate>
+
         <Style x:Key="MessageColor" TargetType="Label">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Message.Type}" Value="True">
@@ -134,9 +150,18 @@
                     <RadioButton Margin="15,0,0,0" GroupName="EntertainmentRating" Foreground="White" Content="5" IsChecked="{Binding EntertainmentRating, ConverterParameter=5, Converter={StaticResource TourRatingConverter}}" />
                 </StackPanel>
 
-                <TextBox Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"
+                <TextBox Grid.Row="4" Grid.Column="1"
                          Width="190" HorizontalAlignment="Left" FontSize="15"
-                         TextWrapping="Wrap" Cursor="IBeam" ToolTip="Write a comment"/>
+                         TextWrapping="Wrap" Cursor="IBeam" ToolTip="Write a comment"
+                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                    <TextBox.Text>
+                        <Binding Path="Comment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validation:EmptyStringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox Text="{Binding ImageURL, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="5" Grid.Column="1" Height="25" Width="140"
                          HorizontalAlignment="Left" FontSize="15" Cursor="IBeam"/>

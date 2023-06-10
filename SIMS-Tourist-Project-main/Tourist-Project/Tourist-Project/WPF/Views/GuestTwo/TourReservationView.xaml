@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourReservationViewModel}"
+             xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
+             xmlns:validation="clr-namespace:Tourist_Project.WPF.Validation"
+             d:DataContext="{d:DesignInstance Type=viewmodels:TourReservationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
@@ -20,9 +22,20 @@
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </Grid>
+        </ControlTemplate>
     </UserControl.Resources>
     
     <Grid>
@@ -90,9 +103,17 @@
                            FontSize="15" Foreground="White"
                            Margin="0,20,0,10">                   
                     How many spots you wish to reserve:</Label>
-                    <xctk:IntegerUpDown Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Width="80"
+                    <xctk:IntegerUpDown Width="80" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                                         HorizontalAlignment="Center"
-                                        FontSize="15"/>
+                                        FontSize="15">
+                        <xctk:IntegerUpDown.Text>
+                            <Binding Path="GuestsNumber" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                                <Binding.ValidationRules>
+                                    <validation:PositiveIntegerValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </xctk:IntegerUpDown.Text>
+                    </xctk:IntegerUpDown>
                     <Label HorizontalAlignment="Center"
                            FontSize="15" Foreground="White"
                            Margin="0,20,0,10">

@@ -59,7 +59,7 @@
         </StackPanel>
         <Button Grid.Row="3" Content="Request complex tour"
                 HorizontalAlignment="Center"
-                FontSize="16" Width="200" ToolTip="Go to request complex tour page"
+                FontSize="16" Width="165" Height="45" ToolTip="Go to request complex tour page"
                 Command="{Binding RequestComplexTourCommand}"/>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom">

@@ -125,6 +125,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand BackCommand { get; set; }
         public ICommand UndoRequestCommand { get; set; }
         public ICommand HelpCommand { get; }
+        public ObservableCollection<string> Languages { get; } = new() { "srpski", "engleski", "mađarski", "češki", "slovački", "norveški", "francuski" };
 
         public RequestComplexTourViewModel(User user, NavigationStore navigationStore)
         {
@@ -138,7 +139,7 @@ namespace Tourist_Project.WPF.ViewModels
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));
             SelectedCity = Cities.First();
             Description = string.Empty;
-            Language = string.Empty;
+            Language = Languages.First();
             FromDate = DateTime.Now.AddDays(2).Date;
             UntilDate = DateTime.Now.AddDays(3).Date;
 

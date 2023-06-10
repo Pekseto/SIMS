@@ -9,6 +9,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
@@ -72,41 +90,43 @@
                     FontSize="15" Command="{Binding AddTourCommand}"/>
 
             <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select country"
-                      ItemsSource="{Binding Countries}"
+                      ItemsSource="{Binding Countries}" FontSize="13"
                       SelectedItem="{Binding SelectedCountry, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Left" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
             <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select city"
-                      ItemsSource="{Binding Cities}"
+                      ItemsSource="{Binding Cities}" FontSize="13"
                       SelectedItem="{Binding SelectedCity, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Right" VerticalAlignment="Top"
                       Height="30" Width="100" Margin="20,10"/>
             <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10" ToolTip="Write a description"
-                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15">
+                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <TextBox.Text>
-                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <validation:EmptyStringValidation ValidationStep="RawProposedValue"/>
+                            <validation:EmptyStringValidation/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15" ToolTip="Write a language"
-                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="15">
-                <TextBox.Text>
-                    <Binding Path="Language" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validation:EmptyStringValidation ValidationStep="RawProposedValue"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="20,15" ToolTip="Select a language"
+                      Height="30" VerticalAlignment="Top" Width="110" FontSize="13"
+                      HorizontalAlignment="Left" ItemsSource="{Binding Languages}"
+                      SelectedItem="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-            <xctk:IntegerUpDown Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Width="80"
+            <xctk:IntegerUpDown Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                                 HorizontalAlignment="left" Grid.Row="4" Grid.Column="1"
-                                FontSize="15" Margin="20,15"
-                                VerticalAlignment="Top"/>
+                                FontSize="15" Margin="20,15" Width="110"
+                                VerticalAlignment="Top">
+                <xctk:IntegerUpDown.Text>
+                    <Binding Path="GuestsNumber" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <validation:PositiveIntegerValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </xctk:IntegerUpDown.Text>
+            </xctk:IntegerUpDown>
             <Label Grid.Row="5" Grid.Column="1" Margin="20,10"
                    VerticalAlignment="Top" HorizontalAlignment="Left"
                    Content="from:" Foreground="White"/>

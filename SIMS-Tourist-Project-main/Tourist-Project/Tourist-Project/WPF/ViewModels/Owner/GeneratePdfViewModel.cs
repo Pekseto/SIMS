@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -16,9 +18,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private readonly ReservationService reservationService = new();
         private readonly UserService userService = new();
         public ICommand GenerateCommand { get; set; }
+        public List<Reservation> Reservations { get; set; }
+        public List<DateTime> BlackoutDates { get; set; }
         public GeneratePdfViewModel(AccommodationViewModel accommodationViewModel)
         {
-            DateSpan = new DateSpan(DateTime.Now, DateTime.Now);
+            Reservations = reservationService.GetAllByAccommodation(accommodationViewModel.Accommodation.Id).OrderBy(o => o.CheckIn).ToList();
+            DateSpan = Reservations.Count != 0 ? new DateSpan(Reservations.First().CheckIn, Reservations.Last().CheckOut) : new DateSpan(DateTime.Now, DateTime.Now);
             AccommodationViewModel = accommodationViewModel;
             GenerateCommand = new RelayCommand(Generate, CanGenerate);
         }

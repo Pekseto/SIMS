@@ -41,17 +41,28 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ReservationDataTemplate">
-            <Grid>
-                <Border Background="#acdcdc" 
-                        CornerRadius="20,10,20,10"
+            <Grid Margin="2">
+                <Border CornerRadius="20,10,20,10"
                         Height="67"
                         VerticalAlignment="Top">
                     <Grid>
                         <Label Content="Accommodation name:" FontWeight="DemiBold" Margin="5,0,0,0"></Label>
-                        <Label Content="{Binding Accommodation.Name, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,0,0,0"></Label>
+                        <Label Content="{Binding Accommodation.Name, UpdateSourceTrigger=PropertyChanged}"  FontStyle="Italic" FontWeight="DemiBold" Margin="140,0,0,0" Foreground="#F76A14"></Label>
                         <Label Content="Guest name:" FontWeight="DemiBold" Margin="5,30,0,0"></Label>
-                        <Label Content="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,30,0,0"></Label>
+                        <Label Content="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}" FontStyle="Italic" FontWeight="DemiBold" Margin="140,30,0,0" Foreground="#F76A14"></Label>
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                                <GradientStop Color="#d9eeef"></GradientStop>
+                            </LinearGradientBrush>
+                        </Grid.Background>
                     </Grid>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                            <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                            <GradientStop Color="#d9eeef"></GradientStop>
+                        </LinearGradientBrush>
+                    </Border.Background>
                 </Border>
                 <Label Content="CheckIn         CheckOut" FontWeight="Bold" Margin="100,65,0,0"></Label>
                 <Label Content="Old dates:" Margin="5,90,0,0" Foreground="#D94332"></Label>
@@ -92,7 +103,14 @@
         </Style>
         <Style x:Key="{x:Type Button}" TargetType="Button">
             <Setter Property="Height" Value="38"></Setter>
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#026D73" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -263,7 +281,7 @@
         </Grid.ColumnDefinitions>
         <Grid>
             <GroupBox Margin="-5, 0,-1, -5">
-                <Grid Background="#03888f">
+                <Grid>
                     <Border Height="160"
                             Width="110"
                             Margin="-105,-520,10,10"
@@ -286,6 +304,12 @@
                     <Button Height="38" Margin="10,403,20,70" Content="Renovate(Shift+R)" Command="{Binding RenovateCommand}"/>
                     <Button Height="38" Margin="10,449,20,10" Content="Show Renovations(Shift+S)" Command="{Binding ShowRenovationsCommand}"/>
                     <Button Height="38" Margin="10,613,20,0" Content="Demo(Q)" IsEnabled="False"/>
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                            <GradientStop Color="#026D73" Offset="0.7"></GradientStop>
+                            <GradientStop Color="#0da2a5"></GradientStop>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                 </Grid>
             </GroupBox>
         </Grid>
@@ -325,23 +349,35 @@
                     </StackPanel>
                 </GroupBox>
                 <Label Content="Create recommendation(F4)" Margin="580,-6,-500,10" Foreground="#03888f"></Label>
-                <GroupBox Margin="583,14,-94,27" Style="{StaticResource GroupBoxStyle}" Background="#0EB35E">
+                <GroupBox Margin="583,14,-94,27" Style="{StaticResource GroupBoxStyle}">
                     <StackPanel>
                         <Label Content="Best by reservation number:" Foreground="#d9eeef"></Label>
                         <Label Content="{Binding BestLocationByReservation.Location}" Foreground="#d9eeef" FontWeight="ExtraBlack" FontStyle="Italic"></Label>
                         <Label Content="Best by Occupancy:" Foreground="#d9eeef"></Label>
                         <Label Content="{Binding BestLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBlack" FontStyle="Italic"></Label>
                     </StackPanel>
+                    <GroupBox.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                            <GradientStop Color="#008A39" Offset="0.8"></GradientStop>
+                            <GradientStop Color="#11D662"></GradientStop>
+                        </LinearGradientBrush>
+                    </GroupBox.Background>
                 </GroupBox>
                 <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-175,-12" Command="{Binding CreateRecommendationCommand}"/>
                 <Label Content="Closure recommendation(F5)" Margin="760,-6,-500,10" Foreground="#03888f"></Label>
-                <GroupBox Margin="763,14,-284,27" Background="#D94332" Style="{StaticResource GroupBoxStyle}">
+                <GroupBox Margin="763,14,-284,27" Style="{StaticResource GroupBoxStyle}">
                     <StackPanel>
                         <Label Content="Worst by reservation number:" Foreground="#d9eeef"></Label>
                         <Label Content="{Binding WorstLocationByReservation.Location}" Foreground="#d9eeef" FontWeight="ExtraBold" FontStyle="Italic"></Label>
                         <Label Content="Worst by Occupancy:" Foreground="#d9eeef"></Label>
                         <Label Content="{Binding WorstLocationByOccupancy.Location}" Foreground="#d9eeef" FontWeight="ExtraBold" FontStyle="Italic"></Label>
                     </StackPanel>
+                    <GroupBox.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                            <GradientStop Color="#C70011" Offset="0.8"></GradientStop>
+                            <GradientStop Color="#FF382B"></GradientStop>
+                        </LinearGradientBrush>
+                    </GroupBox.Background>
                 </GroupBox>
                 <Button Height="38" Width="180" Content="Recommendations(M)" VerticalAlignment="Bottom" Margin="500,2,-545,-12"/>
             </Grid>

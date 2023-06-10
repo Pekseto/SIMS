@@ -6,14 +6,16 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
         xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="Recommendations" Height="650" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Recommendations" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <DataTemplate x:Key="GaugeDataTemplate">
             <Grid>
-                <Label Content="{Binding Location}"></Label>
-                <wpf:Gauge Height="100" Width="100"  Uses360Mode="True"
+                <Label Content="{Binding Location}" FontSize="14" FontWeight="DemiBold"></Label>
+                <wpf:Gauge Height="100" Width="100" Uses360Mode="True"
                            From="0" To="100"
-                           Value="{Binding Occupancy}"></wpf:Gauge>
+                           Value="{Binding Occupancy}"
+                           Margin="10,30,10,10"></wpf:Gauge>
+                <Separator Margin="0,140,0,0" Background="#acbcbc"></Separator>
             </Grid>
         </DataTemplate>
         <Style x:Key="{x:Type Label}" TargetType="Label">
@@ -21,7 +23,14 @@
         </Style>
         <Style x:Key="{x:Type Button}" TargetType="Button">
             <Setter Property="Height" Value="38"></Setter>
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -171,7 +180,10 @@
         </Style>
     </Window.Resources>
     <Grid Background="#d9eeef">
-        <wpf:CartesianChart Series="{Binding ReservationChart}" Foreground="#03888f" LegendLocation="Right" Height="220" Width="680" Margin="25,0,10,40" HorizontalAlignment="Left">
+        <Label Content="Percentage of occupancy" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="650,10,0,10"></Label>
+        <Label Content="by location:" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="650,35,0,10"></Label>
+        <Label Content="No of reservations by location:" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="20,10,0,10"></Label>
+        <wpf:CartesianChart Series="{Binding ReservationChart}" Foreground="#03888f" LegendLocation="Right" Height="400" Width="610" Margin="25,0,10,40" HorizontalAlignment="Left">
             <wpf:CartesianChart.AxisX>
                 <wpf:Axis Labels="{Binding Labels}" Foreground="#03888f" FontSize="12" FontWeight="DemiBold"></wpf:Axis>
             </wpf:CartesianChart.AxisX>
@@ -179,7 +191,7 @@
                 <wpf:Axis Foreground="#03888f"></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
-        <ListBox ItemsSource="{Binding LocationStatisticsByOccupancy}" HorizontalAlignment="Right" Margin="20" Height="500" Width="200"
+        <ListBox ItemsSource="{Binding LocationStatisticsByOccupancy}" HorizontalAlignment="Right" Margin="20,0,20,10" Height="400" Width="220"
                  ItemTemplate="{StaticResource GaugeDataTemplate}"></ListBox>
     </Grid>
 </Window>

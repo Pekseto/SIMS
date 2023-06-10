@@ -12,7 +12,14 @@
         </Style>
         <Style x:Key="{x:Type Button}" TargetType="Button">
             <Setter Property="Height" Value="38"></Setter>
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -44,13 +51,25 @@
     </Window.InputBindings>
     <Grid Background="#d9eeef">
         <Label Content="Enter date span for report:" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="20,130,20,20"></Label>
-        <Border BorderThickness="1" CornerRadius="20,10,20,10" BorderBrush="#03888f" Margin="10,20,10,190" Background="#acdcdc">
-            <Grid Margin="10" Background="#acdcdc">
+        <Border BorderThickness="1" CornerRadius="20,10,20,10" BorderBrush="#03888f" Margin="10,20,10,190">
+            <Grid Margin="10">
                 <Label Content="Accommodation name:" FontWeight="DemiBold" FontSize="16" Margin="0,0,20,20"></Label>
                 <Label Content="Location:" FontSize="16" FontWeight="DemiBold" Margin="0,40,20,0"></Label>
                 <Label Content="{Binding AccommodationViewModel.Accommodation.Name}" FontSize="16" FontStyle="Italic" Foreground="#F76A14" Margin="200,0,0,20"></Label>
                 <Label Content="{Binding AccommodationViewModel.Location}" FontSize="16" Foreground="#F76A14" FontStyle="Italic" Margin="200,40,0,0"></Label>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#d9eeef"></GradientStop>
+                    </LinearGradientBrush>
+                </Grid.Background>
             </Grid>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                    <GradientStop Color="#d9eeef"></GradientStop>
+                </LinearGradientBrush>
+            </Border.Background>
         </Border>
         <DatePicker Margin="20,90,10,10" Height="30" Width="150" HorizontalAlignment="Left" SelectedDate="{Binding DateSpan.StartingDate}"></DatePicker>
         <DatePicker Margin="100,90,20,10" Height="30" Width="150" HorizontalAlignment="Right" SelectedDate="{Binding DateSpan.EndingDate}"></DatePicker>

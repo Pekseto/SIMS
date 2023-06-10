@@ -6,9 +6,25 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.Owner"
         xmlns:vm="clr-namespace:Tourist_Project.WPF.ViewModels.Owner"
         xmlns:viewModels="clr-namespace:Tourist_Project.WPF.ViewModels"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        xmlns:validation="clr-namespace:Tourist_Project.WPF.Validation"
         mc:Ignorable="d"
         Title="ScheduleRenovation" Height="730" Width="380" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </Grid>
+        </ControlTemplate>
         <Style x:Key="{x:Type GroupBox}" TargetType="GroupBox">
             <Setter Property="Background" Value="#d9eeef"></Setter>
             <Setter Property="Foreground" Value="#03888f"></Setter>
@@ -19,7 +35,14 @@
         </Style>
         <Style x:Key="{x:Type Button}" TargetType="Button">
             <Setter Property="Height" Value="38"></Setter>
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -195,7 +218,125 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Foreground" Value="#03888f" />
+            <Setter Property="BorderBrush" Value="#03888f"/>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+            <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Border x:Name="border" SnapsToDevicePixels="True"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                Background="#d9eeef"
+                                CornerRadius="10,5,10,5">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0"
+                                                    Value="{DynamicResource ControlLightColor}" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal" />
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false" Background="#03888f">
+                                <ScrollViewer.Template>
+                                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Button Focusable="false"
+                          Command="{x:Static DataGrid.SelectAllCommand}"
+                          Style="{DynamicResource {ComponentResourceKey 
+                      ResourceId=DataGridSelectAllButtonStyle, 
+                      TypeInTargetAssembly={x:Type DataGrid}}}"
+                          Visibility="{Binding HeadersVisibility, 
+                      ConverterParameter={x:Static DataGridHeadersVisibility.All}, 
+                      Converter={x:Static DataGrid.HeadersVisibilityConverter}, 
+                      RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                          Width="{Binding CellsPanelHorizontalOffset, 
+                      RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+
+                                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
+                                                  Grid.Column="1"
+                                                  Visibility="{Binding HeadersVisibility, 
+                      ConverterParameter={x:Static DataGridHeadersVisibility.Column}, 
+                      Converter={x:Static DataGrid.HeadersVisibilityConverter}, 
+                      RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                          Grid.ColumnSpan="2"
+                                          Grid.Row="1"
+                                          CanContentScroll="{TemplateBinding CanContentScroll}" />
+
+                                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                             Grid.Column="2"
+                             Grid.Row="1"
+                             Orientation="Vertical"
+                             ViewportSize="{TemplateBinding ViewportHeight}"
+                             Maximum="{TemplateBinding ScrollableHeight}"
+                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                             Value="{Binding VerticalOffset, Mode=OneWay, 
+                      RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                            <Grid Grid.Column="1"
+                        Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, 
+                          RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <ScrollBar x:Name="PART_HorizontalScrollBar"
+                               Grid.Column="1"
+                               Orientation="Horizontal"
+                               ViewportSize="{TemplateBinding ViewportWidth}"
+                               Maximum="{TemplateBinding ScrollableWidth}"
+                               Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                               Value="{Binding HorizontalOffset, Mode=OneWay, 
+                        RelativeSource={RelativeSource TemplatedParent}}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ScrollViewer.Template>
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsGrouping"
+             Value="true">
+                    <Setter Property="ScrollViewer.CanContentScroll"
+              Value="false" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F" Modifiers="Shift" Command="{Binding FindCommand}"></KeyBinding>
+        <KeyBinding Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Window.DataContext>
         <vm:ScheduleRenovationViewModel/>
     </Window.DataContext>
@@ -203,9 +344,12 @@
         <Label Content="Renovation" HorizontalAlignment="Center" Margin="10" FontSize="24" FontWeight="Bold"></Label>
         <DataGrid Margin="30,70,30,565" Height="55"
                   AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Focusable="False"
                   ItemsSource="{Binding AccommodationViewModel}"
                   VerticalScrollBarVisibility="Hidden"
-                  RowHeight="31">
+                  RowHeight="31"
+                  Background="Transparent">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Accommodation name" Width="*" Binding="{Binding Accommodation.Name, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Owner" Width="*" Binding="{Binding User.FullName, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
@@ -213,23 +357,31 @@
         </DataGrid>
         <Label Content="Enter earliest date:" Margin="25,132,10,328"></Label>
         <Label Content="Enter furthest date:" Margin="195,132,30,328"></Label>
-        <DatePicker IsTodayHighlighted="True" DisplayDateStart="{Binding Today}" SelectedDate="{Binding RequestedDateSpan.StartingDate}" Width="134" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,160,0,0"></DatePicker>
-        <DatePicker IsTodayHighlighted="True" DisplayDateStart="{Binding Today}" SelectedDate="{Binding RequestedDateSpan.EndingDate}" Width="134" Height="50"  VerticalAlignment="Top" Margin="199,160,30,0"/>
-        <Label Content="Enter length of renovation:" Margin="25,225,30,285"></Label>
-        <TextBox Text="{Binding RenovationLength}" Margin="30,208,30,348" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
-        <Button Content="Find(Shift+F)" Command="{Binding FindCommand}" Margin="30,188,30,228"></Button>
-        <Label Content="Possible dates:" Margin="25,385,10,185"></Label>
-        <DataGrid Margin="30,420,30,183"
+        <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.StartingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="30,160,0,0"></DatePicker>
+        <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.EndingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50"  VerticalAlignment="Top" Margin="199,160,30,0"/>
+        <Label Content="Enter length of renovation:" Margin="25,245,30,285"></Label>
+        <TextBox Margin="30,228,30,348" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <TextBox.Text>
+                <Binding Path="RenovationLength" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <validation:EmptyStringValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button Content="Find(Shift+F)" Command="{Binding FindCommand}" Margin="30,198,30,28"></Button>
+        <Label Content="Possible dates:" Margin="25,455,10,165"></Label>
+        <DataGrid Margin="30,490,30,103"
                   ItemsSource="{Binding PossibleDateSpans, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedDateSpan, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True">
+                  AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Starting date:" Width="*" Binding="{Binding StartingDate, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Ending date:" Width="*" Binding="{Binding EndingDate, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Renovation description:" Margin="25,530,30,136"></Label>
-        <TextBox Text="{Binding Description}" Margin="0,535,0,66" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
-        <Button Content="Renovate(Enter)" Command="{Binding RenovateCommand}" Margin="30,620,30,20"></Button>
+        <Label Content="Renovation description:" Margin="25,320,30,136"></Label>
+        <TextBox Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="0,105,0,66" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
+        <Button Content="Renovate(Shift+R)" Command="{Binding RenovateCommand}" Margin="30,620,30,20"></Button>
     </Grid>
 </Window>

@@ -37,7 +37,7 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
     }
 
     private readonly AccommodationStatisticsService accommodationStatisticsService = new();
-    public int MostOccupiedMonth { get; set; }
+    public string MostOccupiedMonth { get; set; }
     public string[] Labels { get; set; }
     public Func<double, string> Formatter { get; set; }
 
@@ -55,7 +55,7 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
                             accommodationStatisticsService.GetOccupancy(AccommodationViewModel.Accommodation.Id, year, i),
                             i.ToString()));
         }
-        MostOccupiedMonth = accommodationStatisticsService.GetMostOccupiedMonth(AccommodationViewModel.Accommodation.Id, year);
+        MostOccupiedMonth = ConvertToMonth(accommodationStatisticsService.GetMostOccupiedMonth(AccommodationViewModel.Accommodation.Id, year).ToString());
         ChartInitialization();
     }
     private void ChartInitialization()

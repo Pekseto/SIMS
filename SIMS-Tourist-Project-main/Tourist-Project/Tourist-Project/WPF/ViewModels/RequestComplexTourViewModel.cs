@@ -124,6 +124,8 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand PostRequestCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand UndoRequestCommand { get; set; }
+        public ICommand HelpCommand { get; }
+
         public RequestComplexTourViewModel(User user, NavigationStore navigationStore)
         {
             LoggedUser = user;
@@ -146,6 +148,7 @@ namespace Tourist_Project.WPF.ViewModels
             PostRequestCommand = new RelayCommand(PostRequestClick, () => TourRequests.Count > 1);
             UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
             BackCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
+            HelpCommand = new NavigateCommand<RequestComplexTourHelpViewModel>(navigationStore, () => new RequestComplexTourHelpViewModel(navigationStore, this));
         }
 
         private void UndoRequestClick()

@@ -43,6 +43,8 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
         public ICommand RequestComplexTourCommand { get; set; }
+        public ICommand HelpCommand { get; }
+
         public ComplexToursViewModel(User user, NavigationStore navigationStore)
         {
             LoggedUser = user;
@@ -56,6 +58,9 @@ namespace Tourist_Project.WPF.ViewModels
 
             RequestComplexTourCommand = new NavigateCommand<RequestComplexTourViewModel>(navigationStore,
                 () => new RequestComplexTourViewModel(user, navigationStore));
+
+            HelpCommand = new NavigateCommand<ComplexToursHelpViewModel>(navigationStore, () => new ComplexToursHelpViewModel(navigationStore, this));
+
         }
 
     }

@@ -23,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels
         private readonly TourPointRepository tourPointRepository = new();
         private readonly NavigationStore navigationStore;
         public ICommand BackCommand { get; set; }
+        public ICommand HelpCommand { get; }
 
         public TourLiveGuestViewModel(TourDTO tour, NavigationStore navigationStore, MyToursViewModel previousViewModel)
         {
@@ -32,6 +33,7 @@ namespace Tourist_Project.WPF.ViewModels
             TourPoints = new ObservableCollection<TourPoint>(tourPointRepository.GetAllForTour(SelectedTour.Id));
 
             BackCommand = new NavigateCommand<MyToursViewModel>(this.navigationStore, () => previousViewModel);
+            HelpCommand = new NavigateCommand<MyToursHelpViewModel>(navigationStore, () => new MyToursHelpViewModel(navigationStore, this));
         }
     }
 }

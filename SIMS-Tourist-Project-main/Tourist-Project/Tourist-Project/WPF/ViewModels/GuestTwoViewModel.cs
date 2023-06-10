@@ -60,7 +60,7 @@ namespace Tourist_Project.WPF.ViewModels
             MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));
             TourHistoryCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => new TourHistoryViewModel(user, navigationStore));
             RequestsStatsCommand = new NavigateCommand<RequestsStatsViewModel>(navigationStore, () => new RequestsStatsViewModel(user, navigationStore));
-            VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
+            VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user, navigationStore));
             NotificationsCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => new NotificationsViewModel(user, navigationStore));
             ComplexToursCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
             SignOutCommand = new RelayCommand(SignOutClick);

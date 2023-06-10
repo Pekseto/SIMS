@@ -5,8 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Commands;
 using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
@@ -25,7 +27,7 @@ namespace Tourist_Project.WPF.ViewModels
             get => selectedNotificationGuestTwo;
             set
             {
-                if (value != null && value != selectedNotificationGuestTwo)
+                if (value != selectedNotificationGuestTwo)
                 {
                     notificationNavigationStore.CurrentViewModel = value.NotificationType switch
                     {
@@ -34,12 +36,12 @@ namespace Tourist_Project.WPF.ViewModels
                         NotificationType.NewTour => new NewTourNotificationViewModel(value, mainNavigationStore, this),
                         _ => notificationNavigationStore.CurrentViewModel
                     };
-
-                    value.Opened = true;
-                    notificationService.Update(value);
+                    OnPropertyChanged();
                 }
             }
         }
+
+        public ICommand HelpCommand { get; }
 
         public NotificationsViewModel(User user, NavigationStore navigationStore)
         {
@@ -50,6 +52,8 @@ namespace Tourist_Project.WPF.ViewModels
             notificationNavigationStore.CurrentViewModel = new SelectNotificationViewModel();
 
             notificationNavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
+            HelpCommand = new NavigateCommand<NotificationsHelpViewModel>(navigationStore, () => new NotificationsHelpViewModel(navigationStore, this));
         }
 
         private void OnCurrentViewModelChanged()

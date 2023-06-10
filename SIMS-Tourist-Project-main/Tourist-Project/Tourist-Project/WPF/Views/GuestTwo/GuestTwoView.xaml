@@ -69,6 +69,33 @@
         <DataTemplate DataType="{x:Type viewmodels:HomeHelpViewModel}">
             <views:HomeHelpView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourReservationHelpViewModel}">
+            <views:TourReservationHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:MyToursHelpViewModel}">
+            <views:MyToursHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourHistoryHelpViewModel}">
+            <views:TourHistoryHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:TourReviewHelpViewModel}">
+            <views:TourReviewHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RequestsStatsHelpViewModel}">
+            <views:RequestsStatsHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ComplexToursHelpViewModel}">
+            <views:ComplexToursHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RequestComplexTourHelpViewModel}">
+            <views:RequestComplexTourHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:VouchersHelpViewModel}">
+            <views:VouchersHelpView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:NotificationsHelpViewModel}">
+            <views:NotificationsHelpView/>
+        </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="{x:Type RadioButton}"

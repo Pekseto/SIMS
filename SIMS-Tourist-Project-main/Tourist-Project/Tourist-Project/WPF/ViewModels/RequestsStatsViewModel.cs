@@ -10,6 +10,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Commands;
 using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
@@ -198,6 +199,7 @@ namespace Tourist_Project.WPF.ViewModels
         public DateTime UntilDate { get; set; }
         public ICommand PostRequestCommand { get; set; }
         public ICommand UndoRequestCommand { get; set; }
+        public ICommand HelpCommand { get; }
 
 
         public RequestsStatsViewModel(User user, NavigationStore navigationStore)
@@ -220,6 +222,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
             UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
+            HelpCommand = new NavigateCommand<RequestsStatsHelpViewModel>(navigationStore, () => new RequestsStatsHelpViewModel(navigationStore, this));
         }
 
         private void UndoRequestClick()

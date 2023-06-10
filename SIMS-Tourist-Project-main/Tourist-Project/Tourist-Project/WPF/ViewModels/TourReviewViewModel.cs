@@ -110,6 +110,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand AddCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand UndoReviewCommand { get; set; }
+        public ICommand HelpCommand { get; }
 
         public TourReviewViewModel(User user, TourDTO tour, NavigationStore navigationStore, TourHistoryViewModel previousViewModel)
         {
@@ -128,6 +129,7 @@ namespace Tourist_Project.WPF.ViewModels
             AddCommand = new RelayCommand(OnAddClick, CanAdd);
             UndoReviewCommand = new RelayCommand(OnUndoReviewClick, () => UndoMessage.Type);
             BackCommand = new NavigateCommand<TourHistoryViewModel>(this.navigationStore, () => previousViewModel);
+            HelpCommand = new NavigateCommand<TourReviewHelpViewModel>(navigationStore, () => new TourReviewHelpViewModel(navigationStore, this));
         }
 
         private void OnUndoReviewClick()

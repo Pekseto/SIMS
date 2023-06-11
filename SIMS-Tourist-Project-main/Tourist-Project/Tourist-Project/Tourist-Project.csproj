@@ -16,6 +16,7 @@
     <None Remove="Images\back.png" />
     <None Remove="Images\calloutImage.png" />
     <None Remove="Images\cancelGuideIcon.png" />
+    <None Remove="Images\ComplexTours.png" />
     <None Remove="Images\Darth Vader.jpg" />
     <None Remove="Images\checkGuideIcon.png" />
     <None Remove="Images\delete.png" />
@@ -23,14 +24,19 @@
     <None Remove="Images\edit.png" />
     <None Remove="Images\exitGuideIcon.jpg" />
     <None Remove="Images\futureGuideIcon.png" />
+    <None Remove="Images\History.png" />
     <None Remove="Images\historyGuideIcon.png" />
+    <None Remove="Images\Home.png" />
     <None Remove="Images\homeGuideIcon.png" />
+    <None Remove="Images\MyTours.png" />
     <None Remove="Images\No images to show.jpg" />
     <None Remove="Images\listGuideIcon.png" />
+    <None Remove="Images\Notifications.png" />
     <None Remove="Images\pdf.png" />
     <None Remove="Images\plus.png" />
     <None Remove="Images\profile.jpg" />
     <None Remove="Images\requestGuideIcon.png" />
+    <None Remove="Images\Requests.png" />
     <None Remove="Images\reviewGuideIcon.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\serbia.png" />
@@ -38,6 +44,8 @@
     <None Remove="Images\statisticsGuideIcon.png" />
     <None Remove="Images\uk.png" />
     <None Remove="Images\view.png" />
+    <None Remove="Images\Vouchers.png" />
+    <None Remove="Images\White question mark.png" />
     <None Remove="Images\Wizard Images\ComplexToursPage.png" />
     <None Remove="Images\Wizard Images\HistoryPage.png" />
     <None Remove="Images\Wizard Images\HomePage.png" />
@@ -76,14 +84,19 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\checkGuideIcon.png" />
+    <Resource Include="Images\ComplexTours.png" />
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\dismissalGuideIcon.png" />
     <Resource Include="Images\edit.png" />
     <Resource Include="Images\exitGuideIcon.jpg" />
     <Resource Include="Images\futureGuideIcon.png" />
+    <Resource Include="Images\History.png" />
     <Resource Include="Images\historyGuideIcon.png" />
+    <Resource Include="Images\Home.png" />
     <Resource Include="Images\homeGuideIcon.png" />
     <Resource Include="Images\listGuideIcon.png" />
+    <Resource Include="Images\MyTours.png" />
+    <Resource Include="Images\Notifications.png" />
     <Resource Include="Images\pdf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -94,6 +107,7 @@
     <Resource Include="Images\requestGuideIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\Requests.png" />
     <Resource Include="Images\reviewGuideIcon.png" />
     <Resource Include="Images\search.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -105,6 +119,8 @@
     <Resource Include="Images\statisticsGuideIcon.png" />
     <Resource Include="Images\uk.png" />
     <Resource Include="Images\view.png" />
+    <Resource Include="Images\Vouchers.png" />
+    <Resource Include="Images\White question mark.png" />
     <Resource Include="Images\Wizard Images\ComplexToursPage.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

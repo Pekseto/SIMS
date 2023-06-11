@@ -10,6 +10,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Commands;
 using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
@@ -30,6 +31,7 @@ namespace Tourist_Project.WPF.ViewModels
         private ObservableCollection<TourRequest> requests;
         private Message message;
         private Message undoMessage;
+        private string description;
 
         public Message Message
         {
@@ -191,13 +193,24 @@ namespace Tourist_Project.WPF.ViewModels
                 }
             }
         }
-        public string Description { get; set; }
+
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
+        }
         public string Language { get; set; }
         public int GuestsNumber { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime UntilDate { get; set; }
         public ICommand PostRequestCommand { get; set; }
         public ICommand UndoRequestCommand { get; set; }
+        public ICommand HelpCommand { get; }
+        public ObservableCollection<string> Languages { get; } = new() { "srpski", "engleski", "mađarski", "češki", "slovački", "norveški", "francuski" };
 
 
         public RequestsStatsViewModel(User user, NavigationStore navigationStore)
@@ -212,7 +225,7 @@ namespace Tourist_Project.WPF.ViewModels
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));
             SelectedCity = Cities.First();
             Description = string.Empty;
-            Language = string.Empty;
+            Language = Languages.First();
             FromDate = DateTime.Now.AddDays(2).Date;
             UntilDate = DateTime.Now.AddDays(3).Date;
 
@@ -220,6 +233,7 @@ namespace Tourist_Project.WPF.ViewModels
 
             PostRequestCommand = new RelayCommand(PostRequestClick, CanPostRequest);
             UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
+            HelpCommand = new NavigateCommand<RequestsStatsHelpViewModel>(navigationStore, () => new RequestsStatsHelpViewModel(navigationStore, this));
         }
 
         private void UndoRequestClick()
@@ -234,7 +248,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanPostRequest()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
+            return Description != string.Empty && Description.Length >= 15 && Language != string.Empty && GuestsNumber > 0;
         }
 
         private void PostRequestClick()
@@ -249,6 +263,7 @@ namespace Tourist_Project.WPF.ViewModels
             Requests.Add(newRequest);
 
             _ = ShowMessageAndHide(new Message(true, "Successfully posted request!"));
+            Description = string.Empty;
 
             LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);

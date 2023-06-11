@@ -47,6 +47,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ComplexToursCommand { get; set; }
         public ICommand ShowWizardCommand => new RelayCommand(ShowWizard);
         public ICommand SaveSettingsCommand => new RelayCommand(SaveSettings);
+        public ICommand UpdateDataCommand => new RelayCommand(UpdateData);
 
         public GuestTwoViewModel(User user, NavigationStore navigationStore, GuestTwoView guestTwoWindow)
         {
@@ -60,12 +61,16 @@ namespace Tourist_Project.WPF.ViewModels
             MyToursCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => new MyToursViewModel(user, navigationStore));
             TourHistoryCommand = new NavigateCommand<TourHistoryViewModel>(navigationStore, () => new TourHistoryViewModel(user, navigationStore));
             RequestsStatsCommand = new NavigateCommand<RequestsStatsViewModel>(navigationStore, () => new RequestsStatsViewModel(user, navigationStore));
-            VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user));
+            VouchersCommand = new NavigateCommand<VouchersViewModel>(navigationStore, () => new VouchersViewModel(user, navigationStore));
             NotificationsCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => new NotificationsViewModel(user, navigationStore));
             ComplexToursCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
-            SignOutCommand = new RelayCommand(OnSignOutClick);
-            ExitCommand = new RelayCommand(OnExitClick);
+            SignOutCommand = new RelayCommand(SignOutClick);
+            ExitCommand = new RelayCommand(ExitClick);
 
+        }
+
+        private void UpdateData()
+        {
             voucherService.DeleteInvalidVouchers(LoggedUser.Id);
             voucherService.ClaimFiveToursInAYearVoucher(LoggedUser.Id);
             requestService.UpdateInvalidRequests(LoggedUser.Id);
@@ -76,7 +81,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             if (Properties.Settings.Default.ShowWizard)
             {
-                WizardWindow wizardWindow = new WizardWindow();
+                WizardWindow wizardWindow = new();
                 wizardWindow.ShowDialog();
             }
         }
@@ -86,12 +91,12 @@ namespace Tourist_Project.WPF.ViewModels
             Properties.Settings.Default.Save();
         }
 
-        private void OnExitClick()
+        private void ExitClick()
         {
             guestTwoWindow.Close();
         }
 
-        private void OnSignOutClick()
+        private void SignOutClick()
         {
             var LoginWindow = new LoginWindow();
             LoginWindow.Show();

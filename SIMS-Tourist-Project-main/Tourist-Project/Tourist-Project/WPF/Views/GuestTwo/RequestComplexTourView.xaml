@@ -9,12 +9,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="550"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="475"/>
@@ -37,8 +55,8 @@
 
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="80"/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -50,63 +68,70 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Add tour:" Foreground="White"
-                   FontSize="22" Margin="40,0,0,0"/>
+            <TextBlock Text="Add tour:" Foreground="White"
+                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                       FontSize="22" Margin="40,10,0,0"
+                       TextDecorations="Underline"/>
+
             <Label Content="Location:" Foreground="White"
                    FontSize="18" Margin="50,10,0,0"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
                    Grid.Row="1"/>
             <Label Content="Description:" Foreground="White"
                    FontSize="18" Margin="50,10,0,0"
                    Grid.Row="2"/>
             <Label Content="Language:" Foreground="White"
-                   FontSize="18" Margin="50,10,0,0"
+                   FontSize="18" Margin="50,30,0,0"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
                    Grid.Row="3"/>
             <Label Content="Number of guests:" Foreground="White"
-                   FontSize="18" Margin="50,10,0,0"
+                   FontSize="18" Margin="50,20,0,0"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
                    Grid.Row="4"/>
             <Label Content="Date range:" Foreground="White"
                    FontSize="18" Margin="50,10,0,0"
                    Grid.Row="5"/>
-            <Button Grid.Row="6" Content="Add tour" ToolTip="Add tour to list"
-                    Grid.ColumnSpan="2" Height="40" Width="100"
-                    FontSize="15" Command="{Binding AddTourCommand}"/>
 
             <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select country"
-                      ItemsSource="{Binding Countries}"
+                      ItemsSource="{Binding Countries}" FontSize="13"
                       SelectedItem="{Binding SelectedCountry, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Left" VerticalAlignment="Top"
-                      Height="30" Width="100" Margin="20,10"/>
+                      Height="27" Width="100" Margin="20,14"/>
             <ComboBox Grid.Row="1" Grid.Column="1" ToolTip="Select city"
-                      ItemsSource="{Binding Cities}"
+                      ItemsSource="{Binding Cities}" FontSize="13"
                       SelectedItem="{Binding SelectedCity, UpdateSourceTrigger=PropertyChanged}"
                       HorizontalAlignment="Right" VerticalAlignment="Top"
-                      Height="30" Width="100" Margin="20,10"/>
+                      Height="27" Width="100" Margin="20,14"/>
             <TextBox Grid.Row="2" Grid.Column="1" Margin="20,10" ToolTip="Write a description"
-                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15">
+                     TextWrapping="Wrap" Cursor="IBeam" FontSize="15" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
                 <TextBox.Text>
-                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Description" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <validation:EmptyStringValidation ValidationStep="RawProposedValue"/>
+                            <validation:EmptyStringValidation/>
+                            <validation:StringLengthValidation/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Margin="20,15" ToolTip="Write a language"
-                     Height="30" VerticalAlignment="Top" Cursor="IBeam" FontSize="15">
-                <TextBox.Text>
-                    <Binding Path="Language" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validation:EmptyStringValidation ValidationStep="RawProposedValue"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <ComboBox Grid.Row="3" Grid.Column="1" Margin="20,34,0,0"
+                      ToolTip="Select a language"
+                     Height="27" VerticalAlignment="Top" Width="110" FontSize="13"
+                     HorizontalAlignment="Left" ItemsSource="{Binding Languages}"
+                     SelectedItem="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
 
 
-            <xctk:IntegerUpDown Text="{Binding GuestsNumber, UpdateSourceTrigger=PropertyChanged}" Width="80"
+            <xctk:IntegerUpDown Width="110" Validation.ErrorTemplate="{StaticResource ValidationTemplate}"
                                 HorizontalAlignment="left" Grid.Row="4" Grid.Column="1"
-                                FontSize="15" Margin="20,15"
-                                VerticalAlignment="Top"/>
+                                FontSize="15" Margin="20,26"
+                                VerticalAlignment="Top">
+                <xctk:IntegerUpDown.Text>
+                    <Binding Path="GuestsNumber" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                        <Binding.ValidationRules>
+                            <validation:PositiveIntegerValidation/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </xctk:IntegerUpDown.Text>
+            </xctk:IntegerUpDown>
             <Label Grid.Row="5" Grid.Column="1" Margin="20,10"
                    VerticalAlignment="Top" HorizontalAlignment="Left"
                    Content="from:" Foreground="White"/>
@@ -119,8 +144,12 @@
                    Content="until:" Foreground="White"/>
             <DatePicker Grid.Row="5" Grid.Column="1" Margin="60,10"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                        Text="{Binding UntilDate}" Width="120" ToolTip="Pick an end date"
+                        Text="{Binding UntilDate}" Width="120" ToolTip="Pick an ending date"
                         DisplayDateStart="{Binding DisplayDateStart}"/>
+
+            <Button Grid.Row="6" Content="Add tour" ToolTip="Add tour to list"
+                    Grid.ColumnSpan="2" Height="40" Width="100" Margin="0,0,40,0"
+                    FontSize="15" Command="{Binding AddTourCommand}"/>
 
         </Grid>
 
@@ -132,8 +161,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" Width="480">
-                <Label Content="Tours:" Foreground="White"
-                       FontSize="22"/>
+                <TextBlock Text="Tours:" Foreground="White"
+                       FontSize="22" TextDecorations="Underline" Margin="0,10"/>
 
                 <DataGrid ItemsSource="{Binding TourRequests, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedTourRequest, UpdateSourceTrigger=PropertyChanged}"
@@ -174,6 +203,16 @@
             </StackPanel>
 
         </Grid>
-
+        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                       FontSize="13" Margin="0,0,0,15"/>
+        </StackPanel>
     </Grid>
 </UserControl>

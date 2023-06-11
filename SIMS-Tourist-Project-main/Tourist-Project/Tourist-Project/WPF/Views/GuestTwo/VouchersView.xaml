@@ -43,7 +43,7 @@
 
         </DataGrid>
 
-        <TextBlock Grid.Row="2" Margin="55,0,0,0" ToolTip="Click to download report"
+        <TextBlock Grid.Row="2" Margin="55,15,0,0" ToolTip="Click to download report"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="Download PDF report about vouchers"
                    Foreground="CornflowerBlue" Cursor="Hand"
@@ -57,7 +57,19 @@
                Style="{StaticResource MessageColor}"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Grid.Row="2"/>
+               Grid.Row="2" Margin="0,15,0,0"/>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                       FontSize="13" Margin="0,0,0,15"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

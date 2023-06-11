@@ -101,6 +101,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ReserveCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand UndoReservationCommand { get; set; }
+        public ICommand HelpCommand { get; set; }
 
         public TourReservationViewModel(User user, TourDTO tour, NavigationStore navigationStore, HomeViewModel previousViewModel)
         {
@@ -127,8 +128,9 @@ namespace Tourist_Project.WPF.ViewModels
             Vouchers = voucherService.LoadVouchers(user.Id);
             SelectedVoucherName = Vouchers.First();
 
-            ReserveCommand = new RelayCommand(OnReserveClick, () => GuestsNumber > 0);
             BackCommand = new NavigateCommand<HomeViewModel>(this.navigationStore, () => previousViewModel);
+            HelpCommand = new NavigateCommand<TourReservationHelpViewModel>(navigationStore, () => new TourReservationHelpViewModel(navigationStore, this));
+            ReserveCommand = new RelayCommand(OnReserveClick, () => GuestsNumber > 0);
             NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
             PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
             UndoReservationCommand = new RelayCommand(OnUndoReservationClick, () => UndoMessage.Type);

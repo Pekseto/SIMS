@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -124,6 +125,9 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand PostRequestCommand { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand UndoRequestCommand { get; set; }
+        public ICommand HelpCommand { get; }
+        public ObservableCollection<string> Languages { get; } = new() { "srpski", "engleski", "mađarski", "češki", "slovački", "norveški", "francuski" };
+
         public RequestComplexTourViewModel(User user, NavigationStore navigationStore)
         {
             LoggedUser = user;
@@ -136,7 +140,7 @@ namespace Tourist_Project.WPF.ViewModels
             Cities = new ObservableCollection<string>(locationService.GetCitiesFromCountry(SelectedCountry));
             SelectedCity = Cities.First();
             Description = string.Empty;
-            Language = string.Empty;
+            Language = Languages.First();
             FromDate = DateTime.Now.AddDays(2).Date;
             UntilDate = DateTime.Now.AddDays(3).Date;
 
@@ -146,6 +150,7 @@ namespace Tourist_Project.WPF.ViewModels
             PostRequestCommand = new RelayCommand(PostRequestClick, () => TourRequests.Count > 1);
             UndoRequestCommand = new RelayCommand(UndoRequestClick, () => UndoMessage.Type);
             BackCommand = new NavigateCommand<ComplexToursViewModel>(navigationStore, () => new ComplexToursViewModel(user, navigationStore));
+            HelpCommand = new NavigateCommand<RequestComplexTourHelpViewModel>(navigationStore, () => new RequestComplexTourHelpViewModel(navigationStore, this));
         }
 
         private void UndoRequestClick()
@@ -176,7 +181,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanAddTour()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
+            return Description != string.Empty && Description.Length >= 15 && GuestsNumber > 0;
         }
 
         private void AddTourClick()
@@ -190,7 +195,6 @@ namespace Tourist_Project.WPF.ViewModels
             TourRequests.Add(newRequest);
 
             Description = string.Empty;
-            Language = string.Empty;
         }
 
         private async Task ShowMessageAndHide(Message message)

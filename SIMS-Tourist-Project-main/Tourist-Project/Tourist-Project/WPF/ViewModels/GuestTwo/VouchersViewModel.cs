@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.Commands;
+using Tourist_Project.WPF.Stores;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -29,11 +31,14 @@ namespace Tourist_Project.WPF.ViewModels
             }
         }
 
-        public VouchersViewModel(User user)
+        public ICommand HelpCommand { get; }
+
+        public VouchersViewModel(User user, NavigationStore navigationStore)
         {
             userId = user.Id;
             Vouchers = new ObservableCollection<TourVoucher>(voucherService.GetAllForUser(user.Id));
             DownloadPDFCommand = new RelayCommand(DownloadPDFClick, () => true);
+            HelpCommand = new NavigateCommand<VouchersHelpViewModel>(navigationStore, () => new VouchersHelpViewModel(navigationStore, this));
         }
 
         private void DownloadPDFClick()

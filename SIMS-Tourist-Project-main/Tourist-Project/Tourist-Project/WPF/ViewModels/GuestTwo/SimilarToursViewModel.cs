@@ -20,12 +20,15 @@ namespace Tourist_Project.WPF.ViewModels
         public TourDTO SelectedTour { get; set; }
         public ICommand ReserveCommand { get; set; }
         public ICommand BackCommand { get; set; }
+        public ICommand HelpCommand { get; }
+
         public SimilarToursViewModel(User user, int locationId, int tourId, NavigationStore navigationStore, TourReservationViewModel previousViewModel)
         {            
             Tours = new ObservableCollection<TourDTO>(tourService.GetSimilarTours(locationId, tourId));
 
             ReserveCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => new TourReservationViewModel(user, SelectedTour, navigationStore, this), CanReserve);
             BackCommand = new NavigateCommand<TourReservationViewModel>(navigationStore, () => previousViewModel);
+            HelpCommand = new NavigateCommand<SimilarToursHelpViewModel>(navigationStore, () => new SimilarToursHelpViewModel(navigationStore, this));
         }
 
         private bool CanReserve()

@@ -44,6 +44,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand PreviewCommand { get; set; }
         public ICommand JoinCommand { get; set; }
         public ICommand WatchLiveCommand { get; set; }
+        public ICommand HelpCommand { get; set; }
 
         public MyToursViewModel(User user, NavigationStore navigationStore) 
         {
@@ -57,6 +58,7 @@ namespace Tourist_Project.WPF.ViewModels
             PreviewCommand = new NavigateCommand<MyTourPreviewViewModel>(this.navigationStore, () => new MyTourPreviewViewModel(SelectedFutureTour, this.navigationStore, this), CanPreview);
             JoinCommand = new RelayCommand(OnJoinClick, CanJoin);
             WatchLiveCommand = new NavigateCommand<TourLiveGuestViewModel>(this.navigationStore, () => new TourLiveGuestViewModel(SelectedTodayTour, navigationStore, this), CanWatchLive);
+            HelpCommand = new NavigateCommand<MyToursHelpViewModel>(navigationStore, () => new MyToursHelpViewModel(navigationStore, this));
         }
 
         private bool CanPreview()
@@ -67,19 +69,6 @@ namespace Tourist_Project.WPF.ViewModels
         private bool CanJoin()
         {
             return SelectedTodayTour != null && SelectedTodayTour.Status == Status.Begin && TourAttendance.Presence == Presence.No;
-
-                /*else if (SelectedTodayTour.Status != Status.Begin)
-                {
-                    MessageBox.Show("The tour hasn't begun yet");
-                }
-                else if (tourAttendance.Presence == Presence.Joined)
-                {
-                    MessageBox.Show("You have already joined the tour, wait for the guide to call you out");
-                }
-                else if (tourAttendance.Presence == Presence.Yes)
-                {
-                    MessageBox.Show("You are already present on the tour, click the Watch live button the follow your progress");
-                }*/ //OVO CE TREBATI U HELPU DA ISPISE ZASTO NE MOZE DA SE JOINUJE 
         }
 
         private bool CanWatchLive()

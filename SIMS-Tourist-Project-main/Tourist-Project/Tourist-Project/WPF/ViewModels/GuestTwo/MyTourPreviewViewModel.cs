@@ -37,6 +37,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand BackCommand {  get; set; }
         public ICommand NextCommand { get; set; }
         public ICommand PreviousCommand { get; set; }
+        public ICommand HelpCommand { get; set; }
 
 
         public MyTourPreviewViewModel(TourDTO tour, NavigationStore navigationStore, MyToursViewModel previousViewModel)
@@ -59,6 +60,7 @@ namespace Tourist_Project.WPF.ViewModels
             BackCommand = new NavigateCommand<MyToursViewModel>(navigationStore, () => previousViewModel);
             NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
             PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
+            HelpCommand = new NavigateCommand<MyToursHelpViewModel>(navigationStore, () => new MyToursHelpViewModel(navigationStore, this));
         }
         public MyTourPreviewViewModel(TourDTO tour, NavigationStore navigationStore, NotificationsViewModel previousViewModel)
         {
@@ -80,6 +82,7 @@ namespace Tourist_Project.WPF.ViewModels
             BackCommand = new NavigateCommand<NotificationsViewModel>(navigationStore, () => previousViewModel);
             NextCommand = new RelayCommand(OnNextClick, () => imagesCount > 0);
             PreviousCommand = new RelayCommand(OnPreviousClick, () => imagesCount > 0);
+            HelpCommand = new NavigateCommand<MyToursHelpViewModel>(navigationStore, () => new MyToursHelpViewModel(navigationStore, this));
         }
 
 

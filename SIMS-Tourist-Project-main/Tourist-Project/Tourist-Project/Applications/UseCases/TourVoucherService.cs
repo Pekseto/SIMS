@@ -129,15 +129,33 @@ namespace Tourist_Project.Applications.UseCases
                 document.Open();
 
                 Paragraph heading = new(
-                    "Report of all your currently valid vouchers",
-                    new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD))
+                    "Intergalactic Travel Agency\n5711 Darth Vader Road\n10016 New York, USA\n",
+                    new Font(Font.FontFamily.TIMES_ROMAN, 15))
+                {
+                    SpacingAfter = 15f
+                };
+                document.Add(heading);
+
+                Paragraph date = new(
+                    DateTime.Now + "\n\n",
+                    new Font(Font.FontFamily.TIMES_ROMAN, 15))
+                {
+                    SpacingAfter = 15f,
+                    Alignment = Element.ALIGN_RIGHT
+                };
+                document.Add(date);
+
+                Paragraph title = new(
+                    "A report of all your currently valid vouchers",
+                    new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD))
                 {
                     SpacingAfter = 15f,
                     Alignment = Element.ALIGN_CENTER
                 };
-                document.Add(heading);
+                document.Add(title);
 
                 PdfPTable table = new(3);
+                table.DefaultCell.Phrase = new Phrase { Font = new Font(Font.FontFamily.TIMES_ROMAN, 14) };
                 table.AddCell("Name");
                 table.AddCell("Acquired");
                 table.AddCell("Valid until");
@@ -150,12 +168,22 @@ namespace Tourist_Project.Applications.UseCases
                 }
 
                 document.Add(table);
+
+                Paragraph conclusion = new(
+                    $"\n\nThe report was created by the request of\n{userService.GetOne(userId).FullName}",
+                    new Font(Font.FontFamily.TIMES_ROMAN, 15))
+                {
+                    SpacingAfter = 15f,
+                    Alignment = Element.ALIGN_LEFT
+                };
+                document.Add(conclusion);
+
                 document.Close();
 
                 return true;
 
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }

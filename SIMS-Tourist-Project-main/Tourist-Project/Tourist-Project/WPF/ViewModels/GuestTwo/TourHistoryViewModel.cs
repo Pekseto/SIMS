@@ -22,6 +22,7 @@ namespace Tourist_Project.WPF.ViewModels
         public User LoggedInUser { get; set; }
         private readonly NavigationStore navigationStore;
         public ICommand ReviewCommand { get; set; }
+        public ICommand HelpCommand { get; }
 
         public TourHistoryViewModel(User user, NavigationStore navigationStore)
         {
@@ -31,6 +32,7 @@ namespace Tourist_Project.WPF.ViewModels
             Tours = new ObservableCollection<TourDTO>(tourService.GetAllPastTours(LoggedInUser.Id));
 
             ReviewCommand = new NavigateCommand<TourReviewViewModel>(this.navigationStore, () => new TourReviewViewModel(user, SelectedTour, this.navigationStore, this), CanReview);
+            HelpCommand = new NavigateCommand<TourHistoryHelpViewModel>(navigationStore, () => new TourHistoryHelpViewModel(navigationStore, this));
         }
 
         private bool CanReview()

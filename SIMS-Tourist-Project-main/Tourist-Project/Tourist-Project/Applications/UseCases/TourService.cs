@@ -186,15 +186,13 @@ namespace Tourist_Project.Applications.UseCases
         {
             var tours = new List<TourDTO>();
 
-            foreach (var t in tourReservationService.GetAll())
+            foreach (var t in tourReservationService.GetAll().Where(tr => tr.UserId == userId))
             {
                 var tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId != userId || tour.StartTime >= DateTime.Now ||
-                    (tour.Status != Status.End && tour.Status != Status.Cancel)) continue;
+                if (tour.StartTime >= DateTime.Now || tour.Status != Status.End) continue;
                 
                 var tourDTO = new TourDTO(tour)
                 {
-                    SpotsLeft = GetLeftoverSpots(tour),
                     Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
                 };
                 tours.Add(tourDTO);

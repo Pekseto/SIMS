@@ -30,14 +30,14 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
-        private bool isIsNotified;
+        private bool isNotified;
         public bool IsNotified
         {
-            get => isIsNotified;
+            get => isNotified;
             set
             {
-                if(value == isIsNotified) return;
-                isIsNotified = value;
+                if(value == isNotified) return;
+                isNotified = value;
                 OnPropertyChanged("IsNotified");
             }
         }
@@ -82,7 +82,7 @@ namespace Tourist_Project.Domain.Models
         {
             return Type switch
             {
-                "GuestRate" => "You have unrated guest.",
+                "GuestRate" => "You have unrated \nguest.",
                 "Forum" => "A new forum has opened.\n Check it out.",
                 "Recommended" => "You have a new \nrecommendation.",
                 "Reviews" => "NEW!\nGuest has rated your \naccommodation.",

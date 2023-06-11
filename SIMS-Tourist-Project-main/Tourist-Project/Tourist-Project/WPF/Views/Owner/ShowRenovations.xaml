@@ -170,15 +170,14 @@
         <DataTemplate x:Key="RenovationTemplate">
             <Grid>
                 <Label Content="Accommodation name:" FontWeight="DemiBold" Margin="10,10,10,10"></Label>
-                <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" Margin="20,45,20,20"></Label>
+                <Label Content="{Binding Accommodation.Name}" Foreground="#F76A14" FontStyle="Italic" Margin="20,45,20,20"></Label>
                 <Label Content="Location:" FontWeight="DemiBold" Margin="10,80,10,10"></Label>
-                <Label Content="{Binding Location.City}" FontStyle="Italic" Margin="20,115,50,50"></Label>
-                <Label Content="{Binding Location.Country}" FontStyle="Italic" Margin="90,115,50,50"></Label>
+                <Label Content="{Binding Location}" Foreground="#F76A14" FontStyle="Italic" Margin="20,115,50,50"></Label>
                 <Label Content="Renovation span:" FontWeight="DemiBold" Margin="200,10,10,10"></Label>
-                <Label Content="{Binding Renovation.RenovatingSpan.StartingDate}" FontStyle="Italic" Margin="210,40,10,10"></Label>
-                <Label Content="{Binding Renovation.RenovatingSpan.EndingDate}" FontStyle="Italic" Margin="210,70,10,10"></Label>
+                <Label Content="{Binding Renovation.RenovatingSpan.StartingDate}" Foreground="#F76A14" FontStyle="Italic" Margin="210,40,10,10"></Label>
+                <Label Content="{Binding Renovation.RenovatingSpan.EndingDate}" Foreground="#F76A14" FontStyle="Italic" Margin="210,70,10,10"></Label>
                 <Label Content="Owner:" FontWeight="DemiBold" Margin="10,150,10,10"></Label>
-                <Label Content="{Binding User.FullName}" FontStyle="Italic" Margin="20,185,20,40"></Label>
+                <Label Content="{Binding User.FullName}" FontStyle="Italic" Foreground="#F76A14" Margin="20,185,20,40"></Label>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -198,11 +197,16 @@
                   ItemTemplate="{StaticResource RenovationTemplate}"
                   SelectedItem="{Binding SelectedRenovation}">
         </ListBox>
-        <Button Grid.Row="0" Content="Cancel(C)" Command="{Binding CancelCommand}" Margin="230,100,50,10"></Button>
-        <Button Grid.Row="0" Content="SomeControl(Some)" Margin="230,160,50,-40"></Button>
+        <Button Grid.Row="0" Content="Cancel(C)" Command="{Binding CancelCommand}" Margin="230,210,50,10"></Button>
         <ListBox Grid.Row="1" Height="230" Width="390" Margin="20" VerticalAlignment="Bottom"
                  ItemsSource="{Binding PreviousRenovations, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource RenovationTemplate}">
         </ListBox>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

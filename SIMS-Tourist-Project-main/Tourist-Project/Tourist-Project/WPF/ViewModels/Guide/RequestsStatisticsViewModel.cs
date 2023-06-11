@@ -19,6 +19,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
     {
         private readonly TourRequestService tourRequestService = new();
         private readonly Window window;
+        private App app = (App)System.Windows.Application.Current;
         public User LoggedInUser { get; set; }
 
         private SeriesCollection statisticsCollection;
@@ -29,18 +30,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             {
                 statisticsCollection = value;
                 OnPropertyChanged("StatisticsCollection");
-            }
-        }
-
-
-        private string currentLanguage;
-        public string CurrentLanguage
-        {
-            get { return currentLanguage; }
-            set
-            {
-                currentLanguage = value;
-                OnPropertyChanged("CurrentLanguage");
             }
         }
 
@@ -118,6 +107,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand SearchCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -130,17 +121,17 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         {
             this.window = window;
             LoggedInUser = loggedInUser;
-            CurrentLanguage = "en-US";
 
             Years = tourRequestService.GetAllYears(loggedInUser.Id);
 
-            BackCommand = new RelayCommand(Back, CanBack);
-            CreateByLocationCommand = new RelayCommand(CreateByLocation, CanCreate);
-            CreateByLanguageCommand = new RelayCommand(CreateByLanguage, CanCreate);
-            SearchCommand = new RelayCommand(Search, CanSearch);
+            BackCommand = new RelayCommand(Back);
+            CreateByLocationCommand = new RelayCommand(CreateByLocation);
+            CreateByLanguageCommand = new RelayCommand(CreateByLanguage);
+            SearchCommand = new RelayCommand(Search);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
-
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
         }
 
         private void GenerateCollection()
@@ -155,44 +146,58 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
+        }
+
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
-        }
-
-        private bool CanSearch()
-        {
-            return true;
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void Search()
         {
             RequestsStatistics = new ObservableCollection<RequestStatistics>(tourRequestService.GetRequestStatistics(Filter, SearchBox, Year));
             GenerateCollection();
-        }
-
-        private bool CanCreate()
-        {
-            return true;
         }
 
         private void CreateByLocation()
@@ -207,11 +212,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             var createWindow = new CreateTourByLanguageView(LoggedInUser, tourRequestService.FindMOstRequestedLanguage());
             createWindow.Show();
             window.Close();
-        }
-
-        private bool CanBack()
-        {
-            return true;
         }
 
         private void Back()

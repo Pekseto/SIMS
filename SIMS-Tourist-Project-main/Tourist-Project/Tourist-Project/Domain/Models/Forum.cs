@@ -47,7 +47,6 @@ namespace Tourist_Project.Domain.Models
         }
 
         private bool isClosed;
-
         public bool IsClosed
         {
             get => isClosed;
@@ -60,7 +59,6 @@ namespace Tourist_Project.Domain.Models
         }
 
         private int userId;
-
         public int UserId
         {
             get => userId;

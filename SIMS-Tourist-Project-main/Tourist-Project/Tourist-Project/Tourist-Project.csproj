@@ -17,6 +17,7 @@
     <None Remove="Images\calloutImage.png" />
     <None Remove="Images\cancelGuideIcon.png" />
     <None Remove="Images\ComplexTours.png" />
+    <None Remove="Images\darkThemeIcon.png" />
     <None Remove="Images\Darth Vader.jpg" />
     <None Remove="Images\checkGuideIcon.png" />
     <None Remove="Images\delete.png" />
@@ -29,6 +30,8 @@
     <None Remove="Images\Home.png" />
     <None Remove="Images\homeGuideIcon.png" />
     <None Remove="Images\MyTours.png" />
+    <None Remove="Images\lightThemeIcon.png" />
+    <None Remove="Images\minusIcon.png" />
     <None Remove="Images\No images to show.jpg" />
     <None Remove="Images\listGuideIcon.png" />
     <None Remove="Images\Notifications.png" />
@@ -85,6 +88,7 @@
     </Content>
     <Resource Include="Images\checkGuideIcon.png" />
     <Resource Include="Images\ComplexTours.png" />
+    <Resource Include="Images\darkThemeIcon.png" />
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\dismissalGuideIcon.png" />
     <Resource Include="Images\edit.png" />
@@ -94,9 +98,11 @@
     <Resource Include="Images\historyGuideIcon.png" />
     <Resource Include="Images\Home.png" />
     <Resource Include="Images\homeGuideIcon.png" />
+    <Resource Include="Images\lightThemeIcon.png" />
     <Resource Include="Images\listGuideIcon.png" />
     <Resource Include="Images\MyTours.png" />
     <Resource Include="Images\Notifications.png" />
+    <Resource Include="Images\minusIcon.png" />
     <Resource Include="Images\pdf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

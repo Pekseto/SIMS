@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Resources;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
@@ -21,10 +22,11 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private readonly ImageService imageService = new();
         private readonly UserService userService = new ();
         private readonly TourReviewService reviewService = new ();
+        private readonly MessageService messageService = new ();
         private readonly Window window;
+        private App app = (App)System.Windows.Application.Current;
         public Tour Tour { get; set; }
         public User LoggedInUser { get; set; }
-        public string CurrentLanguage { get; set; }
 
         private string role;
 
@@ -88,18 +90,21 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
         public ICommand QuitJobCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
         public GuideProfileViewModel(Window window, User loggedInUser)
         {
             this.window = window;
             LoggedInUser = loggedInUser;
-            CurrentLanguage = "en-US";
 
-            HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
-            StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
+            HomeViewCommand = new RelayCommand(HomeView);
+            StatisticsViewCommand = new RelayCommand(StatisticsView);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
-            QuitJobCommand = new RelayCommand(QuitJob, CanQuitJob);
+            QuitJobCommand = new RelayCommand(QuitJob);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
 
             Years = new ObservableCollection<string>(tourService.GetAllYears(loggedInUser.Id));
             SelectedYear = "2023";
@@ -108,13 +113,34 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             Role = userService.SetRole(loggedInUser, SuperLanguages.Count);
         }
 
-        private bool CanQuitJob()
+        private void ToDarkTheme()
         {
-            return true;
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
         }
 
         private void QuitJob()
         {
+            if (!messageService.ShowMessageBox("QuitJobText", "QuitJob")) return;
+
             userService.QuitJob(LoggedInUser);
             tourService.CancelAllToursByGuide(LoggedInUser.Id);
         }
@@ -122,40 +148,30 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
-        }
-
-        private bool CanHomeView()
-        {
-            return true;
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void HomeView()
         {
             window.Close();
-        }
-
-        private bool CanStatisticsView()
-        {
-            return true;
         }
 
         private void StatisticsView()

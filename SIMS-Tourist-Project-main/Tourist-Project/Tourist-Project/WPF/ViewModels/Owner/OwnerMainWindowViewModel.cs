@@ -14,8 +14,8 @@ namespace Tourist_Project.WPF.ViewModels.Owner
     public class OwnerMainWindowViewModel 
     {
         #region Collections
-        private ObservableCollection<Notification> guestRatingNotifications;
-        public ObservableCollection<Notification> GuestRatingNotifications
+        private ObservableCollection<NotificationViewModel> guestRatingNotifications;
+        public ObservableCollection<NotificationViewModel> GuestRatingNotifications
         {
             get => guestRatingNotifications;
             set
@@ -70,14 +70,37 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
-        private ObservableCollection<Notification> forums;
-        public ObservableCollection<Notification> Forums
+        private ObservableCollection<NotificationViewModel> forums;
+        public ObservableCollection<NotificationViewModel> Forums
         {
             get => forums;
             set
             {
                 if(value == forums) return;
                 forums = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<LocationStatisticsViewModel> recommendationsByReservation;
+        public ObservableCollection<LocationStatisticsViewModel> RecommendationsByReservation
+        {
+            get => recommendationsByReservation;
+            set
+            {
+                if(value == recommendationsByReservation) return;
+                recommendationsByReservation = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<LocationStatisticsViewModel> recommendationsByOccupancy;
+        public ObservableCollection<LocationStatisticsViewModel> RecommendationsByOccupancy
+        {
+            get => recommendationsByOccupancy;
+            set
+            {
+                if(value == recommendationsByOccupancy) return;
+                recommendationsByOccupancy = value;
                 OnPropertyChanged();
             }
         }
@@ -89,14 +112,20 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private static AccommodationRatingService accommodationRatingService = new();
         private static UserService userService = new();
         private static RescheduleRequestService rescheduleRequestService = new();
+        private static MessageService messageService = new();
         #endregion
         #region SelectedProperties
         public static AccommodationViewModel SelectedAccommodation { get; set; }
-        public static Notification SelectedRating { get; set; }
+        public static NotificationViewModel SelectedRating { get; set; }
         public static ReschedulingReservationViewModel SelectedRescheduleRequest { get; set; } 
         #endregion
         public static User User { get; set; }
+        private readonly IBindableBase bindableBase;
         public OwnerMainWindow OwnerMainWindow { get; set; }
+        public LocationStatisticsViewModel BestLocationByReservation { get; set; }
+        public LocationStatisticsViewModel BestLocationByOccupancy { get; set; }
+        public LocationStatisticsViewModel WorstLocationByReservation { get; set; }
+        public LocationStatisticsViewModel WorstLocationByOccupancy { get; set; }
         public string Rating { get; set; }
         #region Commands
         public ICommand CreateCommand { get; set; }
@@ -111,11 +140,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand ShowRenovationsCommand { get; set; }
         public ICommand ShowStatisticsCommand { get; set; }
         public ICommand ShowForumsCommand { get; set; }
+        public ICommand CreateRecommendationCommand { get; set; }
+        public ICommand CreatePDFReport { get; set; }
         #endregion
 
-        public OwnerMainWindowViewModel(OwnerMainWindow ownerMainWindow)
+        public OwnerMainWindowViewModel(IBindableBase bindableBase)
         {
-            OwnerMainWindow = ownerMainWindow;
+            this.bindableBase = bindableBase;
             #region CommandInstanting
             CreateCommand = new RelayCommand(Create);
             UpdateCommand = new RelayCommand(Update, CanUpdate);
@@ -127,20 +158,27 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             CancelRescheduleCommand = new RelayCommand(CancelReschedule, CanCancelReschedule);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             ShowRenovationsCommand = new RelayCommand(ShowRenovations);
-            ShowStatisticsCommand = new RelayCommand(ShowStatistics);
+            ShowStatisticsCommand = new RelayCommand(ShowStatistics, CanShowStatistics);
             ShowForumsCommand = new RelayCommand(ShowForums);
+            CreateRecommendationCommand = new RelayCommand(CreateRecommendation);
+            CreatePDFReport = new RelayCommand(PdfReport, CanUpdate);
             #endregion
             #region CollectionInstanting
             User = App.LoggedInUser;
             AccommodationRatings = new ObservableCollection<AccommodationRating>(accommodationRatingService.GetAll());
             RescheduleRequests = new ObservableCollection<ReschedulingReservationViewModel>(rescheduleRequestService.GetAll().Where(rescheduleRequest => rescheduleRequest.Status == RequestStatus.Pending).Select(rescheduleRequest => new ReschedulingReservationViewModel(rescheduleRequest, this)));
-            GuestRatingNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("GuestRate"));
+            GuestRatingNotifications = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("GuestRate").Select(notification => new NotificationViewModel(notification)));
             ReviewNotifications = new ObservableCollection<Notification>(notificationService.GetAllByType("Reviews").Where(notification => notification.IsNotified == false));
-            AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)));
-            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false));
+            AccommodationView = new ObservableCollection<AccommodationViewModel>(accommodationService.GetAll().Select(accommodation => new AccommodationViewModel(accommodation)).OrderBy(o => !o.Accommodation.IsRecentlyRenovated));
+            Forums = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("Forum").Where(notification => notification.IsNotified == false).Select(notification => new NotificationViewModel(notification)));
+            RecommendationsByReservation = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderByDescending(o => o.ReservationNo));
+            BestLocationByReservation = RecommendationsByReservation.First();
+            WorstLocationByReservation = RecommendationsByReservation.Last();
+            RecommendationsByOccupancy = new ObservableCollection<LocationStatisticsViewModel>(accommodationService.GetLocationsIds(User.Id).Select(id => new LocationStatisticsViewModel(id)).OrderByDescending(o => o.Occupancy));
+            BestLocationByOccupancy = RecommendationsByOccupancy.First();
+            WorstLocationByOccupancy = RecommendationsByOccupancy.Last();
             #endregion
             Rating = accommodationRatingService.getRating().ToString("F3");
-            showSuper();
         }
         #region CommandsLogic
         public void Create()
@@ -160,8 +198,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Delete()
         {
-            var messageBoxResult = MessageBox.Show($"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}", "Deleting an accommodation", MessageBoxButton.YesNo);
-            if (messageBoxResult != MessageBoxResult.Yes) return;
+            if (!messageService.ShowDismissalDialog(
+                    $"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}",
+                    "Deleting an accommodation"))
+                return;
             accommodationService.Delete(SelectedAccommodation.Accommodation.Id);
             accommodationView.Remove(SelectedAccommodation);
         }
@@ -172,7 +212,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Rate()
         {
-            var rateWindow = new RateGuestWindow(SelectedRating, this);
+            var rateWindow = new RateGuestWindow(SelectedRating.Notification, this);
             rateWindow.ShowDialog();
         }
         public static bool CanRate()
@@ -199,7 +239,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public void LogOut()
         {
             var loginWindow = new LoginWindow();
-            OwnerMainWindow.Close();
+            bindableBase.CloseWindow();
             loginWindow.ShowDialog();
         }
         public void ConfirmReschedule()
@@ -256,28 +296,44 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             showStatistics.ShowDialog();
         }
 
+        public bool CanShowStatistics()
+        {
+            return SelectedAccommodation != null;
+        }
+
         public void ShowForums()
         {
             var showForums = new Forums();
             foreach (var notification in Forums)
             {
-                notification.IsNotified = true;
-                notificationService.Update(notification);
+                notification.Notification.IsNotified = true;
+                notificationService.Update(notification.Notification);
             }
             Forums.Clear();
-            Forums = new ObservableCollection<Notification>(notificationService.GetAllByType("Forum"));
+            Forums = new ObservableCollection<NotificationViewModel>(notificationService.GetAllByType("Forum").Select(notification => new NotificationViewModel(notification)));
             showForums.ShowDialog();
         }
-        #endregion
 
-        public void showSuper()
+        public void CreateRecommendation()
         {
-            OwnerMainWindow.Super.Visibility = userService.IsSuper(User) ? Visibility.Visible : Visibility.Hidden;
+            var createRecommendation = new Recommendations(RecommendationsByReservation, RecommendationsByOccupancy);
+            createRecommendation.ShowDialog();
         }
 
+        public static void PdfReport()
+        {
+            var createReport = new GeneratePDF(SelectedAccommodation);
+            createReport.ShowDialog();
+        }
+        #endregion
         public void GuestRateUpdate(Notification notification)
         {
-            GuestRatingNotifications.Remove(notification);
+            foreach (var guestRatingNotification in GuestRatingNotifications)
+            {
+                if (guestRatingNotification.Notification != notification) continue;
+                GuestRatingNotifications.Remove(guestRatingNotification);
+                return;
+            }
         }
 
         public void RescheduleRequestUpdate(ReschedulingReservationViewModel reschedulingReservationViewModel)

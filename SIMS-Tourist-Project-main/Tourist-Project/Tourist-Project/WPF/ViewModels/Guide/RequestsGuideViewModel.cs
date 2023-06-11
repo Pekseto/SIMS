@@ -19,6 +19,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private readonly TourRequestService tourRequestService = new();
         private readonly LocationService locationService = new();
         private Window window;
+        private App app = (App)System.Windows.Application.Current;
 
         private string pickedFilter;
 
@@ -80,7 +81,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
-        public string CurrentLanguage { get; set; }
         public User LoggedInUser { get; set; }
 
         public List<string> Filters { get; set; } = new List<string>()
@@ -105,12 +105,14 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand StatisticsCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand AcceptPartCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public RequestsGuideViewModel(Window window, User user)
         {
             this.window = window;
-            CurrentLanguage = "en-US";
             LoggedInUser = user;
 
             LoadRequests();
@@ -124,30 +126,70 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             StatisticsCommand = new RelayCommand(StatisticsWindow);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+            AcceptPartCommand = new RelayCommand(AcceptPart, CanAcceptPart);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
+        }
+
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
+        }
+
+        private void AcceptPart()
+        {
+            var acceptPart = new AcceptComplexTourPartView(LoggedInUser, SelectedRequest);
+            acceptPart.Show();
+        }
+
+        private bool CanAcceptPart()
+        {
+            if(SelectedRequest != null)
+                return SelectedRequest.ComplexTourId != -1;
+            return false;
         }
 
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void StatisticsWindow()
@@ -164,7 +206,9 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanAccept()
         {
-            return SelectedRequest != null;
+            if(SelectedRequest != null)
+                return SelectedRequest.ComplexTourId == -1;
+            return false;
         }
 
         private void AcceptWindow()
@@ -207,7 +251,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             {
                 request.Location = locationService.Get(request.LocationId);
             }
-
         }
+
+
     }
 }

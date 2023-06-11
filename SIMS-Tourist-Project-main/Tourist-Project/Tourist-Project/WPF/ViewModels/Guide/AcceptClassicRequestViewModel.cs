@@ -14,6 +14,36 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class AcceptClassicRequestViewModel : INotifyPropertyChanged
     {
+
+        private Window window;
+        private int numberOfPoints = 0;
+
+        public User LoggedInUser;
+        public TourRequest Request;
+
+        private string selectedLink;
+        public string SelectedLink
+        {
+            get { return selectedLink; }
+            set
+            {
+                selectedLink = value;
+                OnPropertyChanged("SelectedLink");
+            }
+        }
+
+        private string selectedCheckpoint;
+
+        public string SelectedCheckpoint
+        {
+            get { return selectedCheckpoint; }
+            set
+            {
+                selectedCheckpoint = value;
+                OnPropertyChanged("SelectedCheckpoint");
+            }
+        }
+
         #region services
         private readonly LocationService locationService = new();
         private readonly TourService tourService = new();
@@ -21,11 +51,13 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private readonly ImageService imageService = new();
         private readonly TourRequestService requestService = new();
         private readonly NotificationGuestTwoService notificationService = new();
+        private readonly TourRequestService tourRequestService = new();
         #endregion
-
+        
         #region collections
 
         private ObservableCollection<string> checkpoints;
+
 
         public ObservableCollection<string> Checkpoints
         {
@@ -50,21 +82,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
         #endregion
 
-        #region command
-        public ICommand AddCheckpointCommand { get; set; }
-        public ICommand AddImageCommand { get; set; }
-        public ICommand CreateCommand { get; set; }
-        public ICommand CancelCommand { get; set; }
-        #endregion
-
-        private readonly TourRequestService tourRequestService = new();
-
-        private Window window;
-        private int numberOfPoints = 0;
-
-        public User LoggedInUser;
-        public TourRequest Request;
-
+        #region forAdd
         private Tour tourForAdd;
 
         public Tour TourForAdd
@@ -112,6 +130,16 @@ namespace Tourist_Project.WPF.ViewModels.Guide
                 OnPropertyChanged("ImageForAdd");
             }
         }
+        #endregion
+
+        #region command
+        public ICommand AddCheckpointCommand { get; set; }
+        public ICommand AddImageCommand { get; set; }
+        public ICommand CreateCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+        public ICommand DeleteImageCommand { get; set; }
+        public ICommand DeleteCheckpointCommand { get; set; }
+        #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
@@ -133,15 +161,32 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             TourForAdd = new(Request.LocationId, Request.Description, Request.Language, Request.GuestsNumber);
             Location = new(Request.Location.City, Request.Location.Country);
 
-            AddCheckpointCommand = new RelayCommand(AddCheckpoint, CanAddCheckpoint);
-            AddImageCommand = new RelayCommand(AddImage, CanAddImage);
+            AddCheckpointCommand = new RelayCommand(AddCheckpoint);
+            AddImageCommand = new RelayCommand(AddImage);
             CreateCommand = new RelayCommand(Create, CanCreate);
-            CancelCommand = new RelayCommand(Cancel, CanCancel);
+            CancelCommand = new RelayCommand(Cancel);
+            DeleteCheckpointCommand = new RelayCommand(DeleteCheckpoint, CanDeleteCheckpoint);
+            DeleteImageCommand = new RelayCommand(DeleteImage, CanDelete);
         }
 
-        private bool CanCancel()
+        private bool CanDeleteCheckpoint()
         {
-            return true;
+            return SelectedCheckpoint != null;
+        }
+
+        private void DeleteCheckpoint()
+        {
+            Checkpoints.Remove(SelectedCheckpoint);
+        }
+
+        private bool CanDelete()
+        {
+            return SelectedLink != null;
+        }
+
+        private void DeleteImage()
+        {
+            Images.Remove(SelectedLink);
         }
 
         private void Cancel()
@@ -151,7 +196,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanCreate()
         {
-            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration) ;
+            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration) && TourForAdd.IsValid;
         }
 
         private void Create()
@@ -171,21 +216,11 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             window.Close();
         }
 
-        private bool CanAddImage()
-        {
-            return true;
-        }
-
         private void AddImage()
         {
             Images.Add(ImageForAdd.Url);
             imageService.Save(ImageForAdd);
             ImageForAdd = new Image();
-        }
-
-        private bool CanAddCheckpoint()
-        {
-            return true;
         }
 
         private void AddCheckpoint()
@@ -196,5 +231,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             PointForAdd = new TourPoint();
             numberOfPoints++;
         }
+
     }
 }

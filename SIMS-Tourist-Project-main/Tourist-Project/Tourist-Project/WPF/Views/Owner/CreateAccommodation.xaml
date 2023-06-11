@@ -30,7 +30,14 @@
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
         </Style>
         <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -227,8 +234,9 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
         <KeyBinding Key="C" Modifiers="Shift" Command="{Binding ConfirmCommand}"></KeyBinding>
+        <KeyBinding Key="D" Modifiers="Shift" Command="{Binding DemoCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="56*"/>
             <RowDefinition Height="139*"/>
@@ -242,7 +250,7 @@
         <Label Content="Min staying days:" FontSize="15" Margin="44,155,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
         <Label Content="Cancellation threshold:" FontSize="15" Margin="44,220,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
         <Label Content="Image URL (split by comma):" FontSize="15" Margin="44,290,49,25" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
-        <TextBox Name="Name" Margin="49,59,49,40" Width="256" Height="28" Focusable="True" HorizontalAlignment="Left" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <TextBox x:Name="Name" Margin="49,59,49,40" Width="256" Height="28" Focusable="True" HorizontalAlignment="Left" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <TextBox.Text>
                 <Binding Path="AccommodationToCreate.Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -251,38 +259,38 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <ComboBox ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="Country" Margin="49,78,169,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <ComboBox x:Name="Country" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" Margin="49,78,169,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left" Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <ComboBox.SelectedItem>
                 <Binding Path="LocationToCreate.Country" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
             </ComboBox.SelectedItem>
         </ComboBox>
-        <ComboBox   ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" x:Name="City" Margin="185,78,49,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left"  Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <ComboBox x:Name="City" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" IsTextSearchEnabled="True" Margin="185,78,49,394" Grid.RowSpan="2" VerticalContentAlignment="Center" Height="29" Width="120" HorizontalAlignment="Left"  Style="{StaticResource ComboBoxStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <ComboBox.SelectedItem>
                 <Binding Path="LocationToCreate.City" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True"/>
             </ComboBox.SelectedItem>
         </ComboBox>
-        <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Apartment, ValidatesOnDataErrors=True}" Content="Apartment" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-        <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=House, ValidatesOnDataErrors=True}" Content="House" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-        <RadioButton GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Cottage, ValidatesOnDataErrors=True}" Content="Cottage" FontSize="13" Margin="49,-40,53,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource RadioButtonStyle}"></RadioButton>
-        <xctk:IntegerUpDown  Name="MaxNumGuests" Margin="49,29,49,276" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <RadioButton x:Name="Accommodation" GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Apartment, ValidatesOnDataErrors=True}" Content="Apartment" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource RadioButtonStyle}"></RadioButton>
+        <RadioButton x:Name="House" GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=House, ValidatesOnDataErrors=True}" Content="House" FontSize="13" Margin="49,-40,49,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource RadioButtonStyle}"></RadioButton>
+        <RadioButton x:Name="Cottage" GroupName="Accommodation Type" IsChecked="{Binding AccommodationToCreate.Type, Converter={StaticResource RadioToEnumConverter}, ConverterParameter=Cottage, ValidatesOnDataErrors=True}" Content="Cottage" FontSize="13" Margin="49,-40,53,331" Height="28" Width="auto" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource RadioButtonStyle}"></RadioButton>
+        <xctk:IntegerUpDown  x:Name="MaxGuests" Margin="49,29,49,276" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="AccommodationToCreate.MaxGuestNum" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Name="MinStayDay" Margin="49,118,49,216" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <xctk:IntegerUpDown x:Name="MinStayingDays" Margin="49,118,49,216" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="AccommodationToCreate.MinStayingDays" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
-        <xctk:IntegerUpDown Name="CancelThreshold" Margin="49,187,49,156" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <xctk:IntegerUpDown x:Name="CancellationThreshold" Margin="49,187,49,156" Height="28" Width="256" Grid.Row="1" Minimum="1" VerticalContentAlignment="Center" Style="{StaticResource IntegerUpDownStyle}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <xctk:IntegerUpDown.Value>
                 <Binding Path="AccommodationToCreate.CancellationThreshold" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                 </Binding>
             </xctk:IntegerUpDown.Value>
         </xctk:IntegerUpDown>
-        <TextBox Name="Url" Margin="49,275,49,91" Height="28" Width="256" Grid.Row="1" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <TextBox x:Name="Url" Margin="49,275,49,91" Height="28" Width="256" Grid.Row="1" VerticalContentAlignment="Center" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <TextBox.Text>
                 <Binding Path="ImageToCreate.Url" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -291,6 +299,14 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Command="{Binding ConfirmCommand}" Content="Confirm(Shift+C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1" Style="{StaticResource ButtonStyle}"></Button>
+        <Button x:Name="Confirm" Command="{Binding ConfirmCommand}" Content="Confirm(Shift+C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1" Style="{StaticResource ButtonStyle}"></Button>
+        <Button x:Name="Demo" Command="{Binding DemoCommand}" Content="Demo(Shift+D)" FontSize="16" Height="38" Margin="49,313,49,25" Grid.Row="1" Style="{StaticResource ButtonStyle}"></Button>
+        
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

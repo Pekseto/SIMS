@@ -59,7 +59,8 @@ namespace Tourist_Project.Applications.UseCases
                     AddNewSpan(requestedDateSpan, length, possibleDateSpans);
             }
 
-            requestedDateSpan.StartingDate = reservationService.GetAllOrderedInDateSpan(requestedDateSpan, accommodationId).Last().CheckOut;
+            if(reservationService.GetAllOrderedInDateSpan(requestedDateSpan,accommodationId).Count != 0)
+                requestedDateSpan.StartingDate = reservationService.GetAllOrderedInDateSpan(requestedDateSpan, accommodationId).Last().CheckOut;
 
             while ((requestedDateSpan.EndingDate - requestedDateSpan.StartingDate).Days > length)
             {

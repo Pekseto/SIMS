@@ -23,7 +23,14 @@
             </Grid>
         </ControlTemplate>
         <Style x:Key="{x:Type Button}" TargetType="Button">
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#026D73" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -112,8 +119,8 @@
         <KeyBinding Key="Enter" Command="{Binding SignInCommand}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
-        <Image Source="../../Images/loginIcon.png" Height="100" Margin="20,0,20,280"></Image>
+    <Grid>
+      <Image Source="../../Images/loginIcon.png" Height="100" Margin="20,0,20,280"></Image>
         <Label Height="35" Margin="20, 0,20,120" Width="320" FontSize="18">Username:</Label>
         <Label Height="35" Margin="20,20,20,-40" Width="320" FontSize="18">Password:</Label>
         <TextBox Height="35" Width="290" TextWrapping="Wrap" VerticalAlignment="Center" Margin="20,0,20, 40" FontSize="18" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
@@ -127,5 +134,12 @@
         </TextBox>
         <PasswordBox Name="txtPassword" Height="35" VerticalAlignment="Center" Width="290" Margin="20, 50, 20, -80"/>
         <Button Command="{Binding SignInCommand}" Content="Sign in(Enter)" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Height="38" Width="290" Margin="20, 150, 20, -150"/>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

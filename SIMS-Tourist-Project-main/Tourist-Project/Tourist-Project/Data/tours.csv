@@ -21,7 +21,7 @@
 21|Testiranje danas|0|danasnje testiranje|srpski|30|4/19/2023 12:00:00 AM|4|0|Cancel|2
 22|Danasnja buducnost|0|buducnost|srpski|40|4/24/2023 12:00:00 AM|5|0|Cancel|2
 23|Testiranje hci|0|primer za test|srpski|11|5/15/2023 12:33:59 AM|3|0|Cancel|2
-24|Prihvatanje zahteva 1|2|Subaja do jaja|madjarski|7|5/26/2023 12:27:28 AM|3|0|Cancel|2
+24|Prihvatanje zahteva 1|2|Subaja do jaja|madjarski|7|6/15/2023 12:27:28 AM|3|0|Cancel|2
 25|Prihvatanje zahteva 2|2|Subaja do jaja|madjarski|7|5/26/2023 12:30:24 AM|3|0|Cancel|2
 26|Tura da zauzme termin|0|testiranje prihvatanje zahteva|srpski|5|5/20/2023 2:00:00 PM|2|0|Cancel|2
 27|Testiranje na osnovu lokacije|2|test|engleski|6|5/22/2023 5:22:29 PM|3|0|Cancel|2
@@ -54,3 +54,4 @@
 54|Uz Dunav NS|1|Setnja uz obalu reke|srpski|12|6/12/2023 7:04:28 PM|4|0|NotBegin|2
 55|Uz Palic|2|Setnja uz Palic|madjarski|7|6/12/2023 7:05:57 PM|3|0|NotBegin|2
 56|Grad Sunca|10|Setnja kroz grad sunca|hercegovacki|5|6/12/2023 9:07:36 PM|3|0|End|2
+57|Tesitranje validacije|3|Proveravam validaciju|srpski|6|6/16/2023 10:00:00 PM|2|91|NotBegin|2

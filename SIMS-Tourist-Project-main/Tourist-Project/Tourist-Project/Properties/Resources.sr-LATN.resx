@@ -150,6 +150,9 @@
   <data name="CancelTour" xml:space="preserve">
     <value>Otkaži turu</value>
   </data>
+  <data name="CancelTourText" xml:space="preserve">
+    <value>Da li ste sigurni da želite da otkažete turu?</value>
+  </data>
   <data name="CheckButton" xml:space="preserve">
     <value>Oznaka ključne tačke</value>
   </data>
@@ -177,8 +180,17 @@
   <data name="CreateTourFromRequest" xml:space="preserve">
     <value>Kreiranje ture po zahtevu</value>
   </data>
+  <data name="CreateTourPart" xml:space="preserve">
+    <value>Kreiranje dela kompleksne ture</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Tamna pozadina</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Datum</value>
+  </data>
+  <data name="DatePick" xml:space="preserve">
+    <value>Datum održavanja ture:</value>
   </data>
   <data name="DatesTable" xml:space="preserve">
     <value>Opseg datuma</value>
@@ -200,6 +212,9 @@
   </data>
   <data name="EmergencyEnd" xml:space="preserve">
     <value>Hitan završetak</value>
+  </data>
+  <data name="EmptyFieldText" xml:space="preserve">
+    <value>Polje ne sme da bude prazno!</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>engleski</value>
@@ -261,6 +276,12 @@
   <data name="Profile" xml:space="preserve">
     <value>Nalog korisnika</value>
   </data>
+  <data name="QuitJob" xml:space="preserve">
+    <value>Otkaz</value>
+  </data>
+  <data name="QuitJobText" xml:space="preserve">
+    <value>Da li ste sigurni da želite da date otkaz?</value>
+  </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Broj zahteva</value>
   </data>
@@ -278,6 +299,9 @@
   </data>
   <data name="Serbian" xml:space="preserve">
     <value>srpski</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Vreme početka ture:</value>
   </data>
   <data name="StartTour" xml:space="preserve">
     <value>Započni turu</value>

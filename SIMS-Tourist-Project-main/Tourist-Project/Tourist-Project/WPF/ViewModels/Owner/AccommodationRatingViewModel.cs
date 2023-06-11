@@ -110,11 +110,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public bool CanUpdate()
         {
-            return false;
+            return true;
         }
         public void Renovate()
         {
-            //TODO
+            var renovateWindow = new ScheduleRenovation(new AccommodationViewModel(Accommodation));
+            renovateWindow.ShowDialog();
         }
         public event PropertyChangedEventHandler? PropertyChanged;
 

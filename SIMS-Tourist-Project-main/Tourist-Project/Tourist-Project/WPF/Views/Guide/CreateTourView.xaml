@@ -25,7 +25,10 @@
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding CreateCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>

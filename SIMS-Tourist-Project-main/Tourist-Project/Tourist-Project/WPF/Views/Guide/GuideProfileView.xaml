@@ -7,7 +7,7 @@
         xmlns:ns="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="GuideProfileView" Height="550" Width="800">
+        Title="Tourists Application" Height="550" Width="800">
     <Window.Resources>
         <Style x:Key="ProfileImage" TargetType="Image">
             <Setter Property="Effect">
@@ -31,7 +31,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="DismissalButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -60,6 +60,7 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
@@ -67,7 +68,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="StatisticsButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -96,23 +97,15 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="LanguageLabel" TargetType="Label">
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="Margin" Value="50,20,0,0" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-            <Setter Property="Cursor" Value="Hand" />
-        </Style>
     </Window.Resources>
-    <Grid x:Name="WindowGrid">
+    <Grid x:Name="WindowGrid" Style="{StaticResource MainGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="170"/>
             <RowDefinition Height="*"/>
@@ -122,16 +115,16 @@
             <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="ImageGrid" Grid.Row="0"  Grid.Column="0">
+        <Grid x:Name="ImageGrid" Grid.Row="0"  Grid.Column="0" Style="{StaticResource LeftGrid}">
             <Image Height="156" Width="200" Source="/Images/profile.jpg" Style="{StaticResource ProfileImage}"></Image>
         </Grid>
         <Border x:Name="InfoBorder" Height="156" Width="541" BorderBrush="Black" BorderThickness="3" CornerRadius="20" Grid.Row="0" Grid.Column="1">
             <Grid x:Name="InfoGrid">
                 <Label x:Name="NameOfGuide" Content="{Binding LoggedInUser.FullName}" FontSize="40" FontWeight="Bold"/>
-                <Label Content="{Binding LoggedInUser.Role}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="0,8,105,0" Height="55"></Label>
+                <Label Content="{Binding Role}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="30" Margin="0,8,25,0" Height="55" HorizontalContentAlignment="Center"></Label>
                 <Label Content="{ns:Loc Birth}" HorizontalAlignment="Left" FontSize="25" Margin="0 60 0 0"></Label>
                 <Label Content="{Binding LoggedInUser.BirthDate}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="25" Margin="0 60 240 0" Width="120"></Label>
-                <ListBox ItemsSource="{Binding SuperLanguages}" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,35,0" Height="80" Width="200">
+                <ListBox ItemsSource="{Binding SuperLanguages}" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Right" Margin="0,60,25,0" Height="80" Width="200">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -141,14 +134,14 @@
                 </ListBox>
             </Grid>
         </Border>
-        <Grid x:Name="ButtonsGrid" Grid.Row="1" Grid.Column="0">
+        <Grid x:Name="ButtonsGrid" Grid.Row="1" Grid.Column="0" Style="{StaticResource LeftGrid}">
             <xctk:IconButton x:Name="HomeButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,26,0,238" Command="{Binding HomeViewCommand}" Style="{StaticResource HomeButtonGuide}"></xctk:IconButton>
             <xctk:IconButton x:Name="DismissalButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,53,0,151" Command="{Binding QuitJobCommand}" Style="{StaticResource DismissalButton}"></xctk:IconButton>
-            <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}" Margin="20,0,0,24">
-                <Label.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />
-                </Label.InputBindings>
-            </Label>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 50"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 20"></xctk:IconButton>
+
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 50"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 20"></xctk:IconButton>
         </Grid>
         <Border x:Name="StatisticsBorder" Grid.Row="1" Grid.Column="1" Width="541" Height="298" BorderBrush="Black" BorderThickness="3" CornerRadius="20">
             <Grid x:Name="BestTourGrid" Grid.Row="1" Grid.Column="1">
@@ -161,10 +154,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid x:Name="TourNameGrid" Grid.Row="0" Grid.Column="0">
-                    <Label x:Name="TourName" Content="{Binding Tour.Name, Mode=TwoWay}" FontSize="30" VerticalAlignment="Center" FontWeight="Bold"></Label>
+                    <Label x:Name="TourName" Content="{Binding Tour.Name, Mode=TwoWay}" FontSize="25" VerticalAlignment="Center" FontWeight="Bold"></Label>
                 </Grid>
                 <Grid x:Name="ComboboxGrid" Grid.Row="0" Grid.Column="1">
-                        <ComboBox x:Name="CriteriaOfStatistics" Height="27" Width="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0" Cursor="Hand"
+                        <ComboBox x:Name="CriteriaOfStatistics" Height="27" Width="200" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 25 0" Cursor="Hand" BorderThickness="3"
                                   ItemsSource="{Binding Years}"
                                   SelectedItem="{Binding SelectedYear, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
                 </Grid>
@@ -188,8 +181,6 @@
                     <Label Grid.Row="0" Grid.Column="1" x:Name="TourLocationInfo" Content="{Binding Tour.Language}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                     <Label Grid.Row="1" Grid.Column="1" x:Name="TourGuestsInfo" Content="{Binding Tour.MaxGuestsNumber}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                     <Label Grid.Row="2" Grid.Column="1" x:Name="TourDurationInfo" Content="{Binding Tour.Duration}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-
-
                 </Grid>
             </Grid>
         </Border>

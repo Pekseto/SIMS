@@ -9,10 +9,10 @@
              Background="#252530">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="75"></RowDefinition>
-            <RowDefinition Height="550"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="550"/>
+            <RowDefinition/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
 
         <Label Margin="30,15,0,0"
@@ -32,8 +32,20 @@
         </DataGrid>
         <Button Command="{Binding ReviewCommand}" Content="Review"
                 HorizontalAlignment="Center" FontSize="15"
-                Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top"
+                ToolTip="Preview selected tour" Grid.Row="2" VerticalAlignment="Top"
                 Height="40" Width="100"/>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                       FontSize="13" Margin="0,0,0,15"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

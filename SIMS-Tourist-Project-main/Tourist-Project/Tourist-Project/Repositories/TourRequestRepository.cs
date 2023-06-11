@@ -96,7 +96,7 @@ namespace Tourist_Project.Repositories
         }
         public List<TourRequest> GetAllPending()
         {
-            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending && tr.ComplexTourId == -1);
+            return GetAll().FindAll(tr => tr.Status == TourRequestStatus.Pending);
         }
 
         public List<TourRequest> GetAllLastYear()
@@ -133,6 +133,13 @@ namespace Tourist_Project.Repositories
         public int GetUsersLatestRequestId(int loggedUserId)
         {
             return GetAllForUser(loggedUserId).Max(tr => tr.Id);
+        }
+
+        public List<string> GetAllYears(int userId)
+        {
+            var years = GetAllForUser(userId).Select(request => request.CreateDate.Year.ToString()).ToList();
+            years.Add("Overall");
+            return years.Distinct().ToList();
         }
     }
 }

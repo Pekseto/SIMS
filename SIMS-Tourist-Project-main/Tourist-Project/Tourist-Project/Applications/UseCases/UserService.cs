@@ -39,5 +39,14 @@ namespace Tourist_Project.Applications.UseCases
             user.IsEmployed = false;
             Update(user);
         }
+
+        public string SetRole(User user, int languageCounter)
+        {
+            if (languageCounter == 0) return "Guide";
+            user.IsSuper = true;
+            repository.Update(user);
+            return "Super Guide";
+
+        }
     }
 }

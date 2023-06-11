@@ -9,7 +9,7 @@
         Title="Tourist application" Height="800" Width="1100">
     <Window.Resources>
         <Style x:Key="AcceptButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -46,7 +46,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="AcceptPartButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -75,6 +75,7 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
@@ -82,7 +83,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="RequestsStat" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -111,20 +112,26 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="SerbianStyle" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="White"></Setter>
+        <Style x:Key="SearchButton" TargetType="xctk:IconButton">
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type xctk:IconButton}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                        <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -132,48 +139,19 @@
                 <Setter.Value>
                     <ItemContainerTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../../Images/serbia.png" Margin="5" Height="15"></Image>
-                            <TextBlock Text="{ns:Loc Serbian}" VerticalAlignment="Center"></TextBlock>
+                            <Image Source="../../../Images/search.png" Margin="5" Height="15"></Image>
                         </StackPanel>
                     </ItemContainerTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.5"></Setter>
-                </Trigger>
                 <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="LightSlateGray"></Setter>
                     <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="EnglishStyle" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="White"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="0"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type xctk:IconButton}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <ItemContainerTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="../../../Images/uk.png" Margin="5" Height="15"></Image>
-                            <TextBlock Text="{ns:Loc English}" VerticalAlignment="Center"></TextBlock>
-                        </StackPanel>
-                    </ItemContainerTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Opacity" Value="0.5"></Setter>
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Cursor" Value="Hand"></Setter>
+                    <Setter Property="Opacity" Value="0.5" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -192,7 +170,7 @@
                 <RowDefinition Height="300"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid x:Name="ProfileGrid" Grid.Row="0">
+            <Grid x:Name="ProfileGrid" Grid.Row="0" Style="{StaticResource LeftGrid}">
                 <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30" Style="{StaticResource GuideProfileImage}" >
                     <Image.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding ProfileViewCommand, Mode=OneTime}" />
@@ -201,17 +179,20 @@
                 <Label Margin="10 240 10 25" Content="Luka Todorovic" HorizontalAlignment="Center" FontSize="20" Style="{StaticResource GuideName}"></Label>
                 <Label Margin="10 270 10 0" Content="Guide" HorizontalAlignment="Center" FontSize="15"></Label>
             </Grid>
-            <Grid x:Name="ButtonsGrid" Grid.Row="1">
+            <Grid x:Name="ButtonsGrid" Grid.Row="1" Style="{StaticResource LeftGrid}">
                 <xctk:IconButton Width="200" Height="40" Margin="50,14,50,377"  Command="{Binding HomeCommand}" Style="{StaticResource HomeButtonGuide}"/>
                 <xctk:IconButton Width="200" Height="40" Margin="50,60,50,304" Command="{Binding AcceptCommand}"  Style="{StaticResource AcceptButton}" />
-                <xctk:IconButton Width="200" Height="40" Margin="50,107,50,227"   Style="{StaticResource AcceptPartButton}" IsEnabled="False"/>
+                <xctk:IconButton Width="200" Height="40" Margin="50,107,50,227"   Style="{StaticResource AcceptPartButton}" Command="{Binding AcceptPartCommand}"/>
                 <xctk:IconButton Width="200" Height="40" Margin="50,171,50,163" Command="{Binding StatisticsCommand}" Style="{StaticResource RequestsStat}"/>
 
-                <xctk:IconButton Width="70" Height="24" Style="{StaticResource SerbianStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 20"></xctk:IconButton>
-                <xctk:IconButton Width="70" Height="24" Style="{StaticResource EnglishStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 40"></xctk:IconButton>
+                <xctk:IconButton Width="70" Height="24" Style="{StaticResource SerbianStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 50"></xctk:IconButton>
+                <xctk:IconButton Width="70" Height="24" Style="{StaticResource EnglishStyle}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 20"></xctk:IconButton>
+
+                <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 50"></xctk:IconButton>
+                <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 20"></xctk:IconButton>
             </Grid>
         </Grid>
-        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0">
+        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0" Style="{StaticResource MainGrid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -219,11 +200,11 @@
             <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="{ns:Loc Requests}" FontSize="35" HorizontalAlignment="Left" Width="390"></Label>
             <Label x:Name="DateAndTime" Grid.Row="0" Margin="0,40,20,0" Content="{Binding CurrentTime}" FontSize="35" VerticalAlignment="Top" HorizontalAlignment="Right" Width="327" Height="50" HorizontalContentAlignment="Right"/>
 
-            <ComboBox Width="150" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,304,0" ItemsSource="{Binding Filters}" SelectedItem="{Binding PickedFilter, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
-            <TextBox Width="180" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,94,0" Text="{Binding SearchBox}"></TextBox>
-            <Button Width="30" Height="25" Margin="0,120,50,15" Command="{Binding SearchCommand}" HorizontalAlignment="Right"></Button>
+            <ComboBox Grid.Row="0" Width="150" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,304,0" ItemsSource="{Binding Filters}" SelectedItem="{Binding PickedFilter, UpdateSourceTrigger=PropertyChanged}" BorderThickness="3"></ComboBox>
+            <TextBox Grid.Row="0" Width="180" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,94,0" Text="{Binding SearchBox}"></TextBox>
+            <xctk:IconButton Grid.Row="0" Width="30" Height="25" Margin="0,120,50,15" Command="{Binding SearchCommand}" HorizontalAlignment="Right" Style="{StaticResource SearchButton}"></xctk:IconButton>
 
-            <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="0,0,20,20"
+            <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="20,0,20,20"
                       ItemsSource="{Binding TourRequests}"
                       SelectedItem="{Binding SelectedRequest}"
                       Style="{StaticResource DataGridStyle}"

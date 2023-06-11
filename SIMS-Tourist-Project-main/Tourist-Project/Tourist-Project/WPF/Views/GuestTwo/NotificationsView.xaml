@@ -27,9 +27,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="75"></RowDefinition>
-            <RowDefinition Height="600"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
 
         <Label Margin="30,15,0,0"
@@ -51,6 +51,18 @@
 
             <ContentControl Height="350" Width="350"
                             Content="{Binding CurrentViewModel}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                       FontSize="13" Margin="0,0,0,15"/>
         </StackPanel>
 
     </Grid>

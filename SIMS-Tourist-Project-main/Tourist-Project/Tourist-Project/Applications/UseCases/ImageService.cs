@@ -77,6 +77,11 @@ namespace Tourist_Project.Applications.UseCases
             ides = ides.Remove(ides.Length - 1);
             return ides;
         }
+
+        public List<Image> GetAllByTourReview(int reviewId)
+        {
+            return imageRepository.GetAllByTourReview(reviewId);
+        }
     }
 
 }

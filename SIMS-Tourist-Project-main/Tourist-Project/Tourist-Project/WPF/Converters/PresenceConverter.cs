@@ -5,19 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Resources;
 using Tourist_Project.Domain.Models;
+using Tourist_Project.Properties;
 
 namespace Tourist_Project.WPF.Converters
 {
     public class PresenceConverter : IValueConverter
     {
+        ResourceManager resourceManager = new ResourceManager(typeof(Resources));
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Convert the Presence value to Nullable<bool>
             if (value is Presence presence)
             {
-                // Define your conversion logic here
-                // For example, if presence == Presence.Present, return true; otherwise, return false.
                 return presence == Presence.Yes;
             }
 

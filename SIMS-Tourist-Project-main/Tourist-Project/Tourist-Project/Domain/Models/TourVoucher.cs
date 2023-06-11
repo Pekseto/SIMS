@@ -15,6 +15,7 @@ namespace Tourist_Project.Domain.Models
         public int TouristId { get; set; }
         public int TourId { get; set; }
         public DateTime ExpireDate { get; set; }
+        public string ExpireDateStr => ExpireDate.ToShortDateString();
         public int GuideId { get; set; }
         public string Name { get; set; }
         public string WayAcquired { get; set; }

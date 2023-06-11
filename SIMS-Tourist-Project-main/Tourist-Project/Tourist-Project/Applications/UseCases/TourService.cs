@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using LiveCharts;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
@@ -185,15 +186,13 @@ namespace Tourist_Project.Applications.UseCases
         {
             var tours = new List<TourDTO>();
 
-            foreach (var t in tourReservationService.GetAll())
+            foreach (var t in tourReservationService.GetAll().Where(tr => tr.UserId == userId))
             {
                 var tour = GetAll().Find(x => x.Id == t.TourId);
-                if (t.UserId != userId || tour.StartTime >= DateTime.Now ||
-                    (tour.Status != Status.End && tour.Status != Status.Cancel)) continue;
+                if (tour.StartTime >= DateTime.Now || tour.Status != Status.End) continue;
                 
                 var tourDTO = new TourDTO(tour)
                 {
-                    SpotsLeft = GetLeftoverSpots(tour),
                     Location = locationService.GetAll().Find(x => x.Id == tour.LocationId)
                 };
                 tours.Add(tourDTO);
@@ -290,12 +289,47 @@ namespace Tourist_Project.Applications.UseCases
                 repository.Update(tour);
                 tourVoucherService.VoucherDistributionForAnyTour(tour);
             }
-            
+        }
+
+        public List<string> GetAllYears(int guideId)
+        {
+            var years = new List<string>();
+            years.Add("Overall");
+
+            foreach (var tour in GetAll().FindAll(t => t.UserId == guideId))
+            {
+                years.Add(tour.StartTime.Year.ToString());
+            }
+
+            return years.Distinct().ToList();
         }
 
         public List<Tour> GetPastYearTours()
         {
             return repository.GetPastYearTours();
         }
+
+        public List<DateTime> GetFreeAppointments(DateTime fromDate, DateTime untilDate, int duration = 1)
+        {
+            var freeAppointments = new List<DateTime>();
+            for (DateTime i = fromDate; i < untilDate.AddDays(1); i = i.AddHours(1))
+            {
+                foreach (var reserved in GetBookedHours())
+                {
+                    if(IsAppointmentFree(reserved, i, duration)) continue;
+                    freeAppointments.Add(i);
+                }
+            }
+
+            return freeAppointments;
+        }
+
+        private bool IsAppointmentFree(DateSpan reserved, DateTime startTime, int duration)
+        {
+            return (startTime >= reserved.StartingDate && startTime <= reserved.EndingDate) ||
+                   (startTime.AddHours(duration) >= reserved.StartingDate &&
+                    startTime.AddHours(duration) <= reserved.EndingDate);
+        }
+
     }
 }

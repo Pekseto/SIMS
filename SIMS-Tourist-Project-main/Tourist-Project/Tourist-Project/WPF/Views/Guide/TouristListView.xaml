@@ -13,7 +13,7 @@
         <converters:PresenceConverter x:Key="PresenceConverter" />
 
         <Style x:Key="CallOutButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -50,7 +50,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="BackButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -86,15 +86,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="LanguageLabel" TargetType="Label">
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="VerticalAlignment" Value="Top"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="20 0,0,0" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Cursor" Value="Hand" />
-        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -107,22 +98,20 @@
             <ColumnDefinition Width="240"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource LeftGrid}">
             <TextBlock Text="{Binding ActiveTour.Name }" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"></TextBlock>
         </Grid>
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="0" Grid.Column="1" Style="{StaticResource MainGrid}">
             <TextBlock Text="{Binding CurrentTime}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0"></TextBlock>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource LeftGrid}">
             <xctk:IconButton Width="200" Height="40" Style="{StaticResource HomeButtonGuide}" VerticalAlignment="Top" Command="{Binding HomeCommand}"></xctk:IconButton>
             <xctk:IconButton Width="200" Height="40" Style="{StaticResource CallOutButton}" VerticalAlignment="Top" Margin="0 60 0 0 " Command="{Binding CallOutCommand}"></xctk:IconButton>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Style="{StaticResource MainGrid}">
             <DataGrid Margin="10 0 20 20"
                       ItemsSource="{Binding TourAttendances}"
                       SelectedItem="{Binding SelectedTourAttendance}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
                       Cursor="Hand"
                       Style="{StaticResource DataGridStyle}">
                 <DataGrid.Columns>
@@ -132,18 +121,18 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" Style="{StaticResource MainGrid}">
             <xctk:IconButton Width="200" Height="40" Style="{StaticResource BackButton}" Margin="0 0 20 0" HorizontalAlignment="Right" Command="{Binding BackCommand}"></xctk:IconButton>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="0">
-            <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}" Margin="30,0,0,0" VerticalAlignment="Center">
-                <Label.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />
-                </Label.InputBindings>
-            </Label>
+        <Grid Grid.Row="2" Grid.Column="0" Style="{StaticResource LeftGrid}">
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 25"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 0"></xctk:IconButton>
+
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 25"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 0"></xctk:IconButton>
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBox Text="{ns:Loc CallOutTourists}" FontSize="15" Height="25" VerticalAlignment="Center"></TextBox>
+            <TextBox Text="{ns:Loc CallOutTourists}" FontSize="15" Height="25" VerticalAlignment="Center" Margin="20 0 0 0"></TextBox>
         </Grid>
     </Grid>
 </Window>

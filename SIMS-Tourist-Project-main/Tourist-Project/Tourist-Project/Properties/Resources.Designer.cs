@@ -70,6 +70,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept review.
+        /// </summary>
+        internal static string AcceptReview {
+            get {
+                return ResourceManager.GetString("AcceptReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept tour.
         /// </summary>
         internal static string AcceptTour {
@@ -84,6 +93,15 @@ namespace Tourist_Project.Properties {
         internal static string AcceptTourPart {
             get {
                 return ResourceManager.GetString("AcceptTourPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age structure.
+        /// </summary>
+        internal static string AgeStructure {
+            get {
+                return ResourceManager.GetString("AgeStructure", resourceCulture);
             }
         }
         
@@ -151,6 +169,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to cancel tour?.
+        /// </summary>
+        internal static string CancelTourText {
+            get {
+                return ResourceManager.GetString("CancelTourText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check checkpoint.
         /// </summary>
         internal static string CheckButton {
@@ -205,6 +232,51 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create tour for popular language.
+        /// </summary>
+        internal static string CreateTourForLanguage {
+            get {
+                return ResourceManager.GetString("CreateTourForLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create tour for popular location.
+        /// </summary>
+        internal static string CreateTourForLocation {
+            get {
+                return ResourceManager.GetString("CreateTourForLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create tour from request.
+        /// </summary>
+        internal static string CreateTourFromRequest {
+            get {
+                return ResourceManager.GetString("CreateTourFromRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create part of complex tour.
+        /// </summary>
+        internal static string CreateTourPart {
+            get {
+                return ResourceManager.GetString("CreateTourPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DarkTheme.
+        /// </summary>
+        internal static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string Date {
@@ -214,11 +286,29 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick tour date:.
+        /// </summary>
+        internal static string DatePick {
+            get {
+                return ResourceManager.GetString("DatePick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date range.
         /// </summary>
         internal static string DatesTable {
             get {
                 return ResourceManager.GetString("DatesTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline review.
+        /// </summary>
+        internal static string DeclineReview {
+            get {
+                return ResourceManager.GetString("DeclineReview", resourceCulture);
             }
         }
         
@@ -264,6 +354,15 @@ namespace Tourist_Project.Properties {
         internal static string EmergencyEnd {
             get {
                 return ResourceManager.GetString("EmergencyEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field mustn&apos;t be empty!.
+        /// </summary>
+        internal static string EmptyFieldText {
+            get {
+                return ResourceManager.GetString("EmptyFieldText", resourceCulture);
             }
         }
         
@@ -421,6 +520,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PDF Report.
+        /// </summary>
+        internal static string PDFReport {
+            get {
+                return ResourceManager.GetString("PDFReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to english.
         /// </summary>
         internal static string PickedLanguage {
@@ -435,6 +543,24 @@ namespace Tourist_Project.Properties {
         internal static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit job.
+        /// </summary>
+        internal static string QuitJob {
+            get {
+                return ResourceManager.GetString("QuitJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to quit your job?.
+        /// </summary>
+        internal static string QuitJobText {
+            get {
+                return ResourceManager.GetString("QuitJobText", resourceCulture);
             }
         }
         
@@ -475,11 +601,38 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Review text.
+        /// </summary>
+        internal static string ReviewText {
+            get {
+                return ResourceManager.GetString("ReviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string s {
+            get {
+                return ResourceManager.GetString("s", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to serbian.
         /// </summary>
         internal static string Serbian {
             get {
                 return ResourceManager.GetString("Serbian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour start at:.
+        /// </summary>
+        internal static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
         
@@ -547,11 +700,56 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tourists between 18 and 50.
+        /// </summary>
+        internal static string TouristsBetween {
+            get {
+                return ResourceManager.GetString("TouristsBetween", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tourists list.
         /// </summary>
         internal static string TouristsList {
             get {
                 return ResourceManager.GetString("TouristsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tourists older than 18.
+        /// </summary>
+        internal static string TouristsOlder {
+            get {
+                return ResourceManager.GetString("TouristsOlder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tourists under 18.
+        /// </summary>
+        internal static string TouristsUnder {
+            get {
+                return ResourceManager.GetString("TouristsUnder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tourists without voucher(%).
+        /// </summary>
+        internal static string TouristsWithoutVoucher {
+            get {
+                return ResourceManager.GetString("TouristsWithoutVoucher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tourists with voucher(%).
+        /// </summary>
+        internal static string TouristsWithVoucher {
+            get {
+                return ResourceManager.GetString("TouristsWithVoucher", resourceCulture);
             }
         }
         
@@ -574,11 +772,29 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tour reviews.
+        /// </summary>
+        internal static string TourReviews {
+            get {
+                return ResourceManager.GetString("TourReviews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UntilDate.
         /// </summary>
         internal static string UntilDate {
             get {
                 return ResourceManager.GetString("UntilDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using voucher structure.
+        /// </summary>
+        internal static string UsingVoucherStructure {
+            get {
+                return ResourceManager.GetString("UsingVoucherStructure", resourceCulture);
             }
         }
         

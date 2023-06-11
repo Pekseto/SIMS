@@ -5,12 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
              xmlns:converters="clr-namespace:Tourist_Project.WPF.Converters"
+             xmlns:validation="clr-namespace:Tourist_Project.WPF.Validation"
              d:DataContext="{d:DesignInstance Type=viewmodels:TourReviewViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1000"
              Background="#252530">
 
     <UserControl.Resources>
+        <ControlTemplate x:Key="ValidationTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"/>
+            </Grid>
+        </ControlTemplate>
+
         <Style x:Key="MessageColor" TargetType="Label">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Message.Type}" Value="True">
@@ -34,8 +50,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="550"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
 
         <Label Margin="30,15,0,0"
@@ -49,14 +65,15 @@
                 Width="60" FontSize="14"
                 Margin="37,2"
                 Height="25" Cursor="Hand"
-                Command="{Binding BackCommand}"/>
+                Command="{Binding BackCommand}"
+                ToolTip="Go to previous page"/>
 
         <Border Grid.Row="2" Grid.Column="1"
                 BorderThickness="1.5"
                 BorderBrush="LightGray"
                 Margin="50,30"
                 CornerRadius="10"
-                Background="DarkSlateBlue">
+                Background="#FF232357">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -73,10 +90,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="Review" 
+                <TextBlock Grid.Column="0" Text="Review" TextDecorations="Underline" 
                        HorizontalAlignment="Center" Foreground="White"
                        Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2"
-                       FontSize="25" Margin="0,0"/>
+                       FontSize="25" Margin="0,5"/>
                 <Label Grid.Column="0" Content="Guides knowledge:"
                        HorizontalAlignment="Left" Foreground="White"
                        Grid.Row="1" VerticalAlignment="Top" FontSize="17"
@@ -133,20 +150,30 @@
                     <RadioButton Margin="15,0,0,0" GroupName="EntertainmentRating" Foreground="White" Content="5" IsChecked="{Binding EntertainmentRating, ConverterParameter=5, Converter={StaticResource TourRatingConverter}}" />
                 </StackPanel>
 
-                <TextBox Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"
+                <TextBox Grid.Row="4" Grid.Column="1"
                          Width="190" HorizontalAlignment="Left" FontSize="15"
-                         TextWrapping="Wrap" Cursor="IBeam"/>
+                         TextWrapping="Wrap" Cursor="IBeam" ToolTip="Write a comment"
+                         Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                    <TextBox.Text>
+                        <Binding Path="Comment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validation:EmptyStringValidation/>
+                                <validation:StringLengthValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox Text="{Binding ImageURL, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="5" Grid.Column="1" Height="25" Width="140"
                          HorizontalAlignment="Left" FontSize="15" Cursor="IBeam"/>
                 <Button Command="{Binding AddCommand}" Grid.Row="5" Grid.Column="1"
-                        Height="20" Width="26" Content="+"
+                        Height="20" Width="26" Content="+" ToolTip="Add image"
                         Margin="140,0,0,0" Cursor="Hand"
                         VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <Button Command="{Binding RateCommand}"
                         Grid.Row="6" Grid.ColumnSpan="2" Height="40" Width="100"
                         Content="Post review" FontSize="17" Cursor="Hand"
-                        Margin="0,0,0,0"/>
+                        ToolTip="Post review"/>
             </Grid>
         </Border>
 
@@ -255,6 +282,18 @@
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      FontSize="17" Margin="0,0,0,0" Width="250"
                      IsReadOnly="True" Cursor="Arrow"/></Grid>
+
+        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Image Source="/Images/White question mark.png" Height="30"
+                   Cursor="Hand" Margin="30,-5"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding HelpCommand}" />
+                </Image.InputBindings>
+            </Image>
+            <TextBlock Text="Help" Foreground="White" HorizontalAlignment="Center"
+                       FontSize="13" Margin="0,0,0,15"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

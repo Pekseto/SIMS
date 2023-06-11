@@ -10,7 +10,7 @@
         Title="Tourist application" Height="800" Width="1100">
     <Window.Resources>
         <Style x:Key="CreateButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -39,11 +39,12 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="StartButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -80,7 +81,7 @@
         </Style>
 
         <Style x:Key="HistoryButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="LightGray"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -112,19 +113,9 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style x:Key="LanguageLabel" TargetType="Label">
-            <Setter Property="Width" Value="90" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="Margin" Value="50,20,0,0" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-            <Setter Property="Cursor" Value="Hand" />
-        </Style>
     </Window.Resources>
 
-    <Grid x:Name="Window" Style="{StaticResource WindowTheme}">
+    <Grid x:Name="Window">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -138,7 +129,7 @@
                 <RowDefinition Height="300"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid x:Name="ProfileGrid" Grid.Row="0">
+            <Grid x:Name="ProfileGrid" Grid.Row="0" Style="{DynamicResource LeftGrid}">
                 <Image Source="/Images/profile.jpg" Width="200" Height="200" Margin="0 0 0 30" Style="{StaticResource GuideProfileImage}">
                     <Image.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding ProfileViewCommand, Mode=OneTime}"/>
@@ -151,21 +142,21 @@
                 </Label>
                 <Label Margin="10 270 10 0" Content="{ns:Loc Guide}" HorizontalAlignment="Center" FontSize="15"></Label>
             </Grid>
-            <Grid x:Name="ButtonsGrid" Grid.Row="1">
+            <Grid x:Name="ButtonsGrid" Grid.Row="1" Style="{DynamicResource LeftGrid}">
                 <xctk:IconButton Width="200" Height="40" VerticalAlignment="Top" Margin="50,10,50,0"  Command="{Binding CreateCommand}" Cursor="Hand" Style="{StaticResource CreateButton}"/>
                 <xctk:IconButton Width="200" Height="40" VerticalAlignment="Top" Margin="50,70,50,0" Command="{Binding StartTourCommand}" Cursor="Hand" Style="{StaticResource StartButton}"/>
                 <xctk:IconButton Width="200" Height="40" VerticalAlignment="Top" Margin="50,130,50,0" Command="{Binding FutureToursCommand}" Cursor="Hand" Style="{StaticResource FutureButton}"/>
                 <xctk:IconButton Width="200" Height="40" VerticalAlignment="Top" Margin="50,190,50,0" Command="{Binding HistoryCommand}" Cursor="Hand" Style="{StaticResource HistoryButton}"/>
                 <xctk:IconButton Width="200" Height="40" VerticalAlignment="Top" Margin="50,250,50,0" Command="{Binding RequestsCommand}" Cursor="Hand" Style="{StaticResource RequestsButton}"/>
 
-                <Label x:Name="SelectedLanguage" Content="{ns:Loc PickedLanguage}" Style="{StaticResource LanguageLabel}">
-                    <Label.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding SwitchLanguageCommand, Mode=OneTime}" />
-                    </Label.InputBindings>
-                </Label>
+                <xctk:IconButton Width="75" Height="24" Style="{DynamicResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 50"></xctk:IconButton>
+                <xctk:IconButton Width="75" Height="24" Style="{DynamicResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="50 0 0 20"></xctk:IconButton>
+
+                <xctk:IconButton Width="75" Height="24" Style="{DynamicResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 50"></xctk:IconButton>
+                <xctk:IconButton Width="75" Height="24" Style="{DynamicResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 50 20"></xctk:IconButton>
             </Grid>
         </Grid>
-        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0">
+        <Grid x:Name="RightGrid" Grid.Column="1" Grid.Row="0" Style="{DynamicResource MainGrid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -173,7 +164,7 @@
             <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="{ns:Loc TodayTitle}" FontSize="35" HorizontalAlignment="Left" Width="390"></Label>
             <Label x:Name="DateAndTime" Grid.Row="0" Margin="443,45,20,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Right" Width="327"/>
 
-            <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="0,0,20,20"
+            <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="10,0,20,20"
                       ItemsSource="{Binding TodayTours}"
                       SelectedItem="{Binding SelectedTour}"
                       AutoGenerateColumns="False" IsReadOnly="True"
@@ -190,7 +181,7 @@
             </DataGrid>
         </Grid>
         <StatusBar x:Name="StatusBar" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <TextBlock Text="Today tours" FontSize="15" Height="25" VerticalAlignment="Center"/>
+            <TextBlock Text="{ns:Loc TodayTitle}" FontSize="15" Height="25" VerticalAlignment="Center" Margin="20 0 0 0"/>
         </StatusBar>
     </Grid>
 </Window>

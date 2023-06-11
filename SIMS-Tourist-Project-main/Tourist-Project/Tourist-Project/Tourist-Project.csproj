@@ -73,7 +73,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Data\loginIcon.png" />
+    <Resource Include="Images\loginIcon.png" />
     <Resource Include="Images\acceptIcon.png" />
     <Resource Include="Images\add.png" />
     <Resource Include="Images\addGuideIcon.png" />

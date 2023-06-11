@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.WPF.ViewModels.Owner;
 

@@ -234,6 +234,7 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
         <KeyBinding Key="C" Modifiers="Shift" Command="{Binding ConfirmCommand}"></KeyBinding>
+        <KeyBinding Key="D" Modifiers="Shift" Command="{Binding DemoCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

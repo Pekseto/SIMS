@@ -335,6 +335,7 @@
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Shift" Command="{Binding FindCommand}"></KeyBinding>
         <KeyBinding Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
+        <KeyBinding Key="D" Modifiers="Shift" Command="{Binding DemoCommand}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding CloseCommand}"></KeyBinding>
     </Window.InputBindings>
     <Window.DataContext>
@@ -357,10 +358,10 @@
         </DataGrid>
         <Label Content="Enter earliest date:" Margin="25,132,10,328"></Label>
         <Label Content="Enter furthest date:" Margin="195,132,30,328"></Label>
-        <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.StartingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="30,160,0,0"></DatePicker>
-        <DatePicker IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.EndingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50"  VerticalAlignment="Top" Margin="199,160,30,0"/>
+        <DatePicker x:Name="StartingDate" IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.StartingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="30,160,0,0"></DatePicker>
+        <DatePicker x:Name="EndingDate" IsTodayHighlighted="True" SelectedDate="{Binding RequestedDateSpan.EndingDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Width="134" Height="50"  VerticalAlignment="Top" Margin="199,160,30,0"/>
         <Label Content="Enter length of renovation:" Margin="25,245,30,285"></Label>
-        <TextBox Margin="30,228,30,348" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+        <TextBox x:Name="Length" Margin="30,228,30,348" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
             <TextBox.Text>
                 <Binding Path="RenovationLength" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -369,9 +370,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="Find(Shift+F)" Command="{Binding FindCommand}" Margin="30,198,30,28"></Button>
+        <Button x:Name="FindButton" Content="Find(Shift+F)" Command="{Binding FindCommand}" Margin="30,198,30,28"></Button>
         <Label Content="Possible dates:" Margin="25,455,10,165"></Label>
-        <DataGrid Margin="30,490,30,103"
+        <DataGrid x:Name="TimeSpans" Margin="30,490,30,103"
                   ItemsSource="{Binding PossibleDateSpans, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedDateSpan, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False">
@@ -381,8 +382,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Renovation description:" Margin="25,320,30,136"></Label>
-        <TextBox Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="0,105,0,66" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
-        <Button Content="Renovate(Shift+R)" Command="{Binding RenovateCommand}" Margin="30,620,30,20"></Button>
+        <TextBox x:Name="Description" Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="0,105,0,66" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
+        <Button Content="Renovate(Shift+R)" Command="{Binding RenovateCommand}" Margin="30,550,30,20"></Button>
+        <Button Content="Demo(Shift+D)" Command="{Binding DemoCommand}" Margin="30,620,30,0"></Button>
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>

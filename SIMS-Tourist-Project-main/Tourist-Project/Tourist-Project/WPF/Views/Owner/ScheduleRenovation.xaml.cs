@@ -12,6 +12,7 @@ namespace Tourist_Project.WPF.Views.Owner
         {
             InitializeComponent();
             DataContext = new ScheduleRenovationViewModel(accommodation, this);
+            ((ScheduleRenovationViewModel)DataContext).SetControls(StartingDate, EndingDate, Length, Description, TimeSpans, FindButton);
         }
 
         public void CloseWindow()

@@ -3,6 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain;
@@ -76,6 +79,17 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
+        #region DemoFields
+
+        private DatePicker startingDate;
+        private DatePicker endingDate;
+        private TextBox length;
+        private TextBox descriptionTextBox;
+        private DataGrid timeSpans;
+        private Button findButton;
+
+        #endregion
+
         public DateSpan SelectedDateSpan { get; set; }
 
         private readonly RenovationService renovationService = new ();
@@ -85,6 +99,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public ICommand FindCommand { get; set; }
         public ICommand RenovateCommand { get; set; }
         public ICommand CloseCommand { get; set; }
+        public ICommand DemoCommand { get; set; }
         public ScheduleRenovationViewModel() {}
 
         public ScheduleRenovationViewModel(AccommodationViewModel accommodationViewModel, IBindableBase bindableBase)
@@ -94,6 +109,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             FindCommand = new RelayCommand(Find, CanFind);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
             CloseCommand = new RelayCommand(Close);
+            DemoCommand = new RelayCommand(async() => await Demo());
             RequestedDateSpan = new DateSpan(DateTime.Now, DateTime.Now);
             PossibleDateSpans = new ObservableCollection<DateSpan>();
         }
@@ -139,6 +155,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #region Validation
 
         public string Error { get; }
 
@@ -149,33 +166,33 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 switch (columnName)
                 {
                     case "Renovation Length":
-                    {
-                        if (string.IsNullOrWhiteSpace(renovationLength.ToString()))
-                            return "Length is required!";   
-                        if (renovationLength <= 0)
-                            return "Length must be positive value!";
-                        break;
-                    }
+                        {
+                            if (string.IsNullOrWhiteSpace(renovationLength.ToString()))
+                                return "Length is required!";
+                            if (renovationLength <= 0)
+                                return "Length must be positive value!";
+                            break;
+                        }
                     case "Description":
-                    {
-                        if (string.IsNullOrWhiteSpace(description))
-                            return "Description is required!";
-                        break;
-                    }
+                        {
+                            if (string.IsNullOrWhiteSpace(description))
+                                return "Description is required!";
+                            break;
+                        }
                     case "Ending date":
-                    {
-                        if (RequestedDateSpan.EndingDate < DateTime.Now)
-                            return "Ending date must be in future!";
-                        if (RequestedDateSpan.EndingDate < RequestedDateSpan.StartingDate)
-                            return "Ending date must be after starting date!";
-                        break;
-                    }
+                        {
+                            if (RequestedDateSpan.EndingDate < DateTime.Now)
+                                return "Ending date must be in future!";
+                            if (RequestedDateSpan.EndingDate < RequestedDateSpan.StartingDate)
+                                return "Ending date must be after starting date!";
+                            break;
+                        }
                     case "Starting date":
-                    {
-                        if (RequestedDateSpan.StartingDate < DateTime.Now)
-                            return "Starting date must be in future!";
-                        break;
-                    }
+                        {
+                            if (RequestedDateSpan.StartingDate < DateTime.Now)
+                                return "Starting date must be in future!";
+                            break;
+                        }
                     default:
                         return null;
                 }
@@ -184,7 +201,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
-        private readonly string[] validatedProperties = { "Renovation Length", "Ending date", "Starting date", "Description"};
+        private readonly string[] validatedProperties = { "Renovation Length", "Ending date", "Starting date", "Description" };
 
         public bool IsValid
         {
@@ -194,5 +211,49 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
         }
 
+        #endregion
+
+        public void SetControls(DatePicker startingDate, DatePicker endingDate, TextBox length,
+            TextBox descriptionTextBox, DataGrid timeSpans, Button findButton)
+        {
+            this.startingDate = startingDate;
+            this.endingDate = endingDate;
+            this.length = length;
+            this.descriptionTextBox = descriptionTextBox;
+            this.timeSpans = timeSpans;
+            this.findButton = findButton;
+        }
+
+        public async Task Demo()
+        {
+            startingDate.Focus();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            startingDate.SelectedDate = DateTime.Now.AddDays(1);
+
+            endingDate.Focus();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            endingDate.SelectedDate = DateTime.Now.AddMonths(2);
+
+            length.Focus();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            length.Text = "5";
+
+            const string demoName = "Demo accommodation";
+            StringBuilder nameBuilder = new();
+            descriptionTextBox.Focus();
+            foreach (var t in demoName)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(0.5));
+                descriptionTextBox.Text = nameBuilder.Append(t).ToString();
+            }
+
+            findButton.Focus();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            Find();
+
+            timeSpans.Focus();
+            await Task.Delay(TimeSpan.FromSeconds(1));
+            timeSpans.SelectedItem = PossibleDateSpans.First();
+        }
     }
 }

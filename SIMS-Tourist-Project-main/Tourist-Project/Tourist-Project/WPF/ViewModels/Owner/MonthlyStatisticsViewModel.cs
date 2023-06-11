@@ -51,19 +51,32 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
         CloseCommand = new RelayCommand(Close);
 
         AccommodationViewModel = accommodationViewModel;
+        InitializeStatistics(year);
+        ChartInitialization();
+    }
+
+    private void InitializeStatistics(int year)
+    {
         AccommodationStatistics = new ObservableCollection<AccommodationStatistics>();
         for (var i = 1; i < 13; i++)
         {
-            AccommodationStatistics.Add(new AccommodationStatistics(accommodationStatisticsService.GetTotalReservation(AccommodationViewModel.Accommodation.Id, year, i),
-                accommodationStatisticsService.GetTotalCancelledReservations(AccommodationViewModel.Accommodation.Id, year, i),
-                    accommodationStatisticsService.GetTotalRescheduledReservations(AccommodationViewModel.Accommodation.Id, year, i),
-                        accommodationStatisticsService.GetTotalRenovationRecommendations(AccommodationViewModel.Accommodation.Id, year, i),
-                            accommodationStatisticsService.GetOccupancy(AccommodationViewModel.Accommodation.Id, year, i),
-                            i.ToString()));
+            AccommodationStatistics.Add(new AccommodationStatistics(
+                accommodationStatisticsService.GetTotalReservation(AccommodationViewModel.Accommodation.Id, year,
+                    i),
+                accommodationStatisticsService.GetTotalCancelledReservations(AccommodationViewModel.Accommodation.Id,
+                    year, i),
+                accommodationStatisticsService.GetTotalRescheduledReservations(AccommodationViewModel.Accommodation.Id,
+                    year, i),
+                accommodationStatisticsService.GetTotalRenovationRecommendations(AccommodationViewModel.Accommodation.Id,
+                    year, i),
+                accommodationStatisticsService.GetOccupancy(AccommodationViewModel.Accommodation.Id, year, i),
+                i.ToString()));
         }
-        MostOccupiedMonth = ConvertToMonth(accommodationStatisticsService.GetMostOccupiedMonth(AccommodationViewModel.Accommodation.Id, year).ToString());
-        ChartInitialization();
+
+        MostOccupiedMonth = ConvertToMonth(accommodationStatisticsService
+            .GetMostOccupiedMonth(AccommodationViewModel.Accommodation.Id, year).ToString());
     }
+
     private void ChartInitialization()
     {
         StatsChart = new SeriesCollection();

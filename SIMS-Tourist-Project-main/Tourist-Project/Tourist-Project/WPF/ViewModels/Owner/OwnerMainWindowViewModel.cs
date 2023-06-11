@@ -112,6 +112,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private static AccommodationRatingService accommodationRatingService = new();
         private static UserService userService = new();
         private static RescheduleRequestService rescheduleRequestService = new();
+        private static MessageService messageService = new();
         #endregion
         #region SelectedProperties
         public static AccommodationViewModel SelectedAccommodation { get; set; }
@@ -197,8 +198,10 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Delete()
         {
-            var messageBoxResult = MessageBox.Show($"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}", "Deleting an accommodation", MessageBoxButton.YesNo);
-            if (messageBoxResult != MessageBoxResult.Yes) return;
+            if (!messageService.ShowDismissalDialog(
+                    $"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}",
+                    "Deleting an accommodation"))
+                return;
             accommodationService.Delete(SelectedAccommodation.Accommodation.Id);
             accommodationView.Remove(SelectedAccommodation);
         }

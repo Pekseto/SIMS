@@ -26,9 +26,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         #endregion
 
         #region collections
-
         private ObservableCollection<string> checkpoints;
-
         public ObservableCollection<string> Checkpoints
         {
             get { return checkpoints; }
@@ -40,7 +38,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private ObservableCollection<string> images;
-
         public ObservableCollection<string> Images
         {
             get { return images; }
@@ -48,6 +45,17 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             {
                 images = value;
                 OnPropertyChanged("Images");
+            }
+        }
+
+        private ObservableCollection<DateTime> appointments;
+        public ObservableCollection<DateTime> Appointments
+        {
+            get { return appointments; }
+            set
+            {
+                appointments = value;
+                OnPropertyChanged("Appointments");
             }
         }
         #endregion
@@ -113,7 +121,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private Window window;
         private int numberOfPoints = 0;
-
         public TourRequest Request;
 
         private string selectedLink;
@@ -128,7 +135,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private string selectedCheckpoint;
-
         public string SelectedCheckpoint
         {
             get { return selectedCheckpoint; }
@@ -139,12 +145,37 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
+        private int duration;
+        public int Duration
+        {
+            get { return duration; }
+            set
+            {
+                duration = value;
+                OnPropertyChanged("Duration");
+                Appointments.Clear();
+                Appointments = new ObservableCollection<DateTime>(tourService.GetFreeAppointments(Request.FromDate, Request.UntilDate, duration));
+            }
+        }
 
+        private DateTime selectedAppointment;
+        public DateTime SelectedAppointment
+        {
+            get { return selectedAppointment; }
+            set
+            {
+                selectedAppointment = value;
+                OnPropertyChanged("SelectedAppointment");
+            }
+        }
+
+        #region PropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
         public AcceptComplexTourPartViewModel(Window window, User LoggedInUser, TourRequest request)
         {
@@ -153,6 +184,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
             Images = new ObservableCollection<string>();
             Checkpoints = new ObservableCollection<string>();
+            Appointments = new ObservableCollection<DateTime>();
 
             ImageForAdd = new();
             PointForAdd = new();
@@ -201,6 +233,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         {
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
             TourForAdd.UserId = App.LoggedInUser.Id;
+            TourForAdd.Duration = Duration;
+            TourForAdd.StartTime = SelectedAppointment;
             tourService.Save(TourForAdd);
 
             Request.Status = TourRequestStatus.Accepted;

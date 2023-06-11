@@ -16,12 +16,28 @@ using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.DTO;
 using Tourist_Project.Serializer;
 using Tourist_Project.WPF.Views;
+using Image = Tourist_Project.Domain.Models.Image;
 
 namespace Tourist_Project.WPF.ViewModels.Guide
 {
     public class TourReviewsGuideViewModel : INotifyPropertyChanged
     {
         private readonly TourReviewService tourReviewService = new();
+        private readonly ImageService imageService = new();
+        private Window window;
+        public Tour Tour { get; set; }
+        public TourReview TourReview { get; set; }
+
+        private ObservableCollection<Image> images;
+        public ObservableCollection<Image> Images
+        {
+            get {return images; }
+            set
+            {
+                images = value;
+                OnPropertyChanged("Images");
+            }
+        }
 
         private ObservableCollection<TourReviewDTO> tourReview;
         public ObservableCollection<TourReviewDTO> TourReviews
@@ -34,10 +50,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
-        private Window window;
-        public Tour Tour { get; set; }
         private TourReviewDTO selectedReview;
-
         public TourReviewDTO SelectedReview
         {
             get { return selectedReview; }
@@ -45,15 +58,28 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             {
                 selectedReview = value;
                 OnPropertyChanged("SelectedReview");
+                LoadLists();
             }
         }
-        public TourReview TourReview { get; set; }
 
+        private Image selectedImage;
+        public Image SelectedImage
+        {
+            get { return selectedImage; }
+            set
+            {
+                selectedImage = value;
+                OnPropertyChanged("SelectedImage");
+            }
+        }
+
+        #region PropertyChange
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
         #region Command
         public ICommand AcceptCommand { get; set; }
@@ -71,7 +97,13 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             DeclineCommand = new RelayCommand(Decline, CanDecline);
             BackCommand = new RelayCommand(Back);
 
-            TourReviews = new ObservableCollection<TourReviewDTO>(tourReviewService.GetAllReviewDtos(tour.Id));
+            TourReviews = new ObservableCollection<TourReviewDTO>(tourReviewService.GetAllReviewDtos(Tour.Id));
+        }
+
+        private void LoadLists()
+        {
+            if(SelectedReview  != null) 
+                Images = new ObservableCollection<Image>(imageService.GetAllByTourReview(SelectedReview.Id));
         }
 
         private bool CanAccept()

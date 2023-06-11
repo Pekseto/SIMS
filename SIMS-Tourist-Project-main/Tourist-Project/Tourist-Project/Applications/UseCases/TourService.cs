@@ -310,5 +310,28 @@ namespace Tourist_Project.Applications.UseCases
         {
             return repository.GetPastYearTours();
         }
+
+        public List<DateTime> GetFreeAppointments(DateTime fromDate, DateTime untilDate, int duration = 1)
+        {
+            var freeAppointments = new List<DateTime>();
+            for (DateTime i = fromDate; i < untilDate.AddDays(1); i = i.AddHours(1))
+            {
+                foreach (var reserved in GetBookedHours())
+                {
+                    if(IsAppointmentFree(reserved, i, duration)) continue;
+                    freeAppointments.Add(i);
+                }
+            }
+
+            return freeAppointments;
+        }
+
+        private bool IsAppointmentFree(DateSpan reserved, DateTime startTime, int duration)
+        {
+            return (startTime >= reserved.StartingDate && startTime <= reserved.EndingDate) ||
+                   (startTime.AddHours(duration) >= reserved.StartingDate &&
+                    startTime.AddHours(duration) <= reserved.EndingDate);
+        }
+
     }
 }

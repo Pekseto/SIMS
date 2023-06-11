@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Resources;
 using System.Windows;
 using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
@@ -21,6 +22,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private readonly ImageService imageService = new();
         private readonly UserService userService = new ();
         private readonly TourReviewService reviewService = new ();
+        private readonly MessageService messageService = new ();
         private readonly Window window;
         private App app = (App)System.Windows.Application.Current;
         public Tour Tour { get; set; }
@@ -137,6 +139,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private void QuitJob()
         {
+            if (!messageService.ShowMessageBox("QuitJobText", "QuitJob")) return;
+
             userService.QuitJob(LoggedInUser);
             tourService.CancelAllToursByGuide(LoggedInUser.Id);
         }

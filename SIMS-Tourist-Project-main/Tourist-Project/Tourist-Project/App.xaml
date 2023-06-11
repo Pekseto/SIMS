@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:ns="clr-namespace:Tourist_Project"
+             xmlns:useCases="clr-namespace:Tourist_Project.Applications.UseCases"
              StartupUri="WPF/Views/LoginWindow.xaml">
     <Application.Resources>
          <Image x:Key="RequestsImageGuide" Source="/Images/requestGuideIcon.png" Margin="5"></Image>
@@ -14,8 +15,6 @@
         <Image x:Key="CancelImageGuide" Source="Images/cancelGuideIcon.png" Margin="5"></Image>
         <Image x:Key="StatisticsImageGuide" Source="Images/statisticsGuideIcon.png" Margin="5"></Image>
         <Image x:Key="DismissalImageGuide" Source="Images/dismissalGuideIcon.png" Margin="5"></Image>
-
-
 
         <Style x:Key="SerbianStyle" TargetType="xctk:IconButton">
             <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
@@ -510,5 +509,6 @@
         <Style x:Key="MainGrid" TargetType="Grid">
             <Setter Property="Background" Value="{DynamicResource PrimaryColor}"></Setter>
         </Style>
+
     </Application.Resources>
 </Application>

@@ -92,7 +92,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label x:Name="TitleForWindow" Grid.Row="0" Margin="10,43,0,47" Content="{ns:Loc FutureTitle}" FontSize="35" HorizontalAlignment="Left" Width="390"></Label>
-            <Label x:Name="DateAndTime" Grid.Row="0" Margin="443,45,0,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Left" Width="312"/>
+            <Label x:Name="DateAndTime" Grid.Row="0" Margin="443,45,20,45" Content="{Binding CurrentTime}" FontSize="35" HorizontalAlignment="Right" Width="327"/>
 
             <DataGrid x:Name="FutureToursGrid" Grid.Row="1" Margin="10,0,20,20"
                       ItemsSource="{Binding FutureTours}"

@@ -150,6 +150,9 @@
   <data name="CancelTour" xml:space="preserve">
     <value>Cancel tour</value>
   </data>
+  <data name="CancelTourText" xml:space="preserve">
+    <value>Are you sure you want to cancel tour?</value>
+  </data>
   <data name="CheckButton" xml:space="preserve">
     <value>Check checkpoint</value>
   </data>
@@ -270,6 +273,12 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="QuitJob" xml:space="preserve">
+    <value>Quit job</value>
+  </data>
+  <data name="QuitJobText" xml:space="preserve">
+    <value>Are you sure you want to quit your job?</value>
+  </data>
   <data name="RequestNumber" xml:space="preserve">
     <value>Request number</value>
   </data>
@@ -350,5 +359,11 @@
   </data>
   <data name="Visited" xml:space="preserve">
     <value>Visited</value>
+  </data>
+  <data name="EmptyFieldText" xml:space="preserve">
+    <value>Field mustn't be empty!</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value />
   </data>
 </root>

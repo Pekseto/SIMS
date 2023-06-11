@@ -23,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private App app = (App)System.Windows.Application.Current;
         private readonly TourService tourService = new();
         private readonly TourVoucherService voucherService = new();
+        private readonly MessageService messageService = new();
 
         public User LoggedInUser { get; set; }
 
@@ -179,6 +180,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private void CancelTour()
         {
+            if (!messageService.ShowMessageBox("CancelTourText", "CancelTour")) return;
+
             SelectedTour.Status = Status.Cancel;
             voucherService.VouchersDistribution(SelectedTour.Id);
 

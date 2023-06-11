@@ -105,6 +105,10 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding HomeViewCommand}"></KeyBinding>
+        <KeyBinding Key="S" Command="{Binding StatisticsViewCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid x:Name="WindowGrid" Style="{StaticResource MainGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="170"/>

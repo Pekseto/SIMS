@@ -7,7 +7,7 @@
         xmlns:ns="clr-namespace:Tourist_Project"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="GuideProfileView" Height="550" Width="800">
+        Title="Tourists Application" Height="550" Width="800">
     <Window.Resources>
         <Style x:Key="ProfileImage" TargetType="Image">
             <Setter Property="Effect">
@@ -31,7 +31,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="DismissalButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -60,6 +60,7 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
@@ -67,7 +68,7 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="StatisticsButton" TargetType="xctk:IconButton">
-            <Setter Property="Background" Value="{StaticResource ActionColor}"></Setter>
+            <Setter Property="Background" Value="{DynamicResource ActionColor}"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
@@ -96,6 +97,7 @@
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="FontWeight" Value="Bold"></Setter>
                     <Setter Property="Background" Value="LightSlateGray"></Setter>
+                    <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Opacity" Value="0.5" />
@@ -137,6 +139,9 @@
             <xctk:IconButton x:Name="DismissalButton" Height="40" Width="200" HorizontalAlignment="Center" Margin="0,53,0,151" Command="{Binding QuitJobCommand}" Style="{StaticResource DismissalButton}"></xctk:IconButton>
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource SerbianStyle}" Command="{Binding ToSerbianCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 50"></xctk:IconButton>
             <xctk:IconButton Width="75" Height="24" Style="{StaticResource EnglishStyle}" Command="{Binding ToEnglishCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20 0 0 20"></xctk:IconButton>
+
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource DarkStyleButton}" Command="{Binding ToDarkThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 50"></xctk:IconButton>
+            <xctk:IconButton Width="75" Height="24" Style="{StaticResource LightStyleButton}" Command="{Binding ToLightThemeCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 20 20"></xctk:IconButton>
         </Grid>
         <Border x:Name="StatisticsBorder" Grid.Row="1" Grid.Column="1" Width="541" Height="298" BorderBrush="Black" BorderThickness="3" CornerRadius="20">
             <Grid x:Name="BestTourGrid" Grid.Row="1" Grid.Column="1">
@@ -176,8 +181,6 @@
                     <Label Grid.Row="0" Grid.Column="1" x:Name="TourLocationInfo" Content="{Binding Tour.Language}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                     <Label Grid.Row="1" Grid.Column="1" x:Name="TourGuestsInfo" Content="{Binding Tour.MaxGuestsNumber}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
                     <Label Grid.Row="2" Grid.Column="1" x:Name="TourDurationInfo" Content="{Binding Tour.Duration}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-
-
                 </Grid>
             </Grid>
         </Border>

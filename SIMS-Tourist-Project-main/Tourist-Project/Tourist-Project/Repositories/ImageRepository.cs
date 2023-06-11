@@ -72,5 +72,10 @@ namespace Tourist_Project.Repositories
         {
             return images.Where(i => i.Association == association && i.AssociationId == associationId).ToList();
         }
+
+        public List<Image> GetAllByTourReview(int reviewId)
+        {
+            return GetAll().FindAll(i => i.Association == ImageAssociation.TourReview && i.AssociationId == reviewId);
+        }
     }
 }

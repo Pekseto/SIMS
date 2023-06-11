@@ -24,12 +24,8 @@ namespace Tourist_Project.Domain.Models
 
         public Tour()
         {
-            Status = Status.NotBegin;
-            Name = "";
-            Description = "";
-            Language = "";
-            MaxGuestsNumber = 1;
             Duration = 1;
+            MaxGuestsNumber = 1;
         }
 
         public Tour(int locationId, string description, string language, int guestNumber)

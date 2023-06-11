@@ -22,10 +22,11 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         
         private TourService tourService = new();
         private Window window;
-        private DateTime currentTime;
+        private App app = (App)System.Windows.Application.Current;
 
         public Tour SelectedTour { get; set; }
 
+        private DateTime currentTime;
         public DateTime CurrentTime
         {
             get { return currentTime; }
@@ -36,7 +37,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
-        public string CurrentLanguage { get; set; }
         public User LoggedInUser { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -54,6 +54,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand RequestsViewCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public HistoryOfToursViewModel(Window window, User loggedInUser) 
@@ -61,43 +63,68 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             LoggedInUser = loggedInUser;
             this.window = window;
             SelectedTour = null;
-            CurrentLanguage = "en-US";
             Tours = new ObservableCollection<Tour>(tourService.GetPastTours());
 
             startClock();
 
-            HomeViewCommand = new RelayCommand(HomeView, CanHomeView);
-            FutureViewCommand = new RelayCommand(FutureView, CanFutureView);
+            HomeViewCommand = new RelayCommand(HomeView);
+            FutureViewCommand = new RelayCommand(FutureView);
             StatisticsViewCommand = new RelayCommand(StatisticsView, CanStatisticsView);
             ReviewViewCommand = new RelayCommand(ReviewView, CanReviewView);
-            ProfileViewCommand = new RelayCommand(ProfileView, CanProfileView);
-            RequestsViewCommand = new RelayCommand(RequestsView, CanRequestsView);
+            ProfileViewCommand = new RelayCommand(ProfileView);
+            RequestsViewCommand = new RelayCommand(RequestsView);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
+        }
+
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
         }
 
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void startClock()
@@ -114,22 +141,12 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             CurrentTime = DateTime.Now;
         }
 
-        private bool CanRequestsView()
-        {
-            return true;
-        }
-
         public void RequestsView()
         {
             var requestsWindow = new RequestsGuideView(LoggedInUser);
             requestsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             requestsWindow.Show();
             window.Close();
-        }
-
-        private bool CanProfileView()
-        {
-            return true;
         }
 
         public void ProfileView()
@@ -140,22 +157,12 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             profileWindow.Show();
         }
 
-        private bool CanHomeView()
-        {
-            return true;
-        }
-
         public void HomeView()
         {
             var homeWindow = new TodayToursView(LoggedInUser);
             homeWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             homeWindow.Show();
             window.Close();
-        }
-
-        private bool CanFutureView()
-        {
-            return true;
         }
 
         public void FutureView()
@@ -168,14 +175,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanStatisticsView()
         {
-            if(SelectedTour == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return SelectedTour != null;
         }
 
         public void StatisticsView()
@@ -188,14 +188,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanReviewView()
         {
-            if (SelectedTour is null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return SelectedTour is not null;
         }
 
         public void ReviewView()

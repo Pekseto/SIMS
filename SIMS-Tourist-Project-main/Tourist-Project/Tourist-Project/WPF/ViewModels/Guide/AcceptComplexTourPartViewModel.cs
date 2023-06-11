@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.ViewModels.Guide
 {
-    public class CreateTourByLocationViewModel : INotifyPropertyChanged
+    public class AcceptComplexTourPartViewModel : INotifyPropertyChanged
     {
         #region services
         private readonly LocationService locationService = new();
@@ -20,13 +21,12 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private readonly TourPointService tourPointService = new();
         private readonly ImageService imageService = new();
         private readonly TourRequestService requestService = new();
+        private readonly NotificationGuestTwoService notificationService = new();
         private readonly TourRequestService tourRequestService = new();
         #endregion
 
         #region collections
-
         private ObservableCollection<string> checkpoints;
-
         public ObservableCollection<string> Checkpoints
         {
             get { return checkpoints; }
@@ -38,7 +38,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private ObservableCollection<string> images;
-
         public ObservableCollection<string> Images
         {
             get { return images; }
@@ -48,10 +47,22 @@ namespace Tourist_Project.WPF.ViewModels.Guide
                 OnPropertyChanged("Images");
             }
         }
+
+        private ObservableCollection<DateTime> appointments;
+        public ObservableCollection<DateTime> Appointments
+        {
+            get { return appointments; }
+            set
+            {
+                appointments = value;
+                OnPropertyChanged("Appointments");
+            }
+        }
         #endregion
 
         #region ObjectsForAdd
         private Tour tourForAdd;
+
         public Tour TourForAdd
         {
             get { return tourForAdd; }
@@ -63,6 +74,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private Location location;
+
         public Location Location
         {
             get { return location; }
@@ -74,6 +86,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private TourPoint pointForAdd;
+
         public TourPoint PointForAdd
         {
             get { return pointForAdd; }
@@ -85,6 +98,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private Image imageForAdd;
+
         public Image ImageForAdd
         {
             get { return imageForAdd; }
@@ -107,7 +121,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private Window window;
         private int numberOfPoints = 0;
-        public User LoggedInUser;
+        public TourRequest Request;
 
         private string selectedLink;
         public string SelectedLink
@@ -121,7 +135,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         }
 
         private string selectedCheckpoint;
-
         public string SelectedCheckpoint
         {
             get { return selectedCheckpoint; }
@@ -132,29 +145,56 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             }
         }
 
+        private int duration;
+        public int Duration
+        {
+            get { return duration; }
+            set
+            {
+                duration = value;
+                OnPropertyChanged("Duration");
+                Appointments.Clear();
+                Appointments = new ObservableCollection<DateTime>(tourService.GetFreeAppointments(Request.FromDate, Request.UntilDate, duration));
+            }
+        }
+
+        private DateTime selectedAppointment;
+        public DateTime SelectedAppointment
+        {
+            get { return selectedAppointment; }
+            set
+            {
+                selectedAppointment = value;
+                OnPropertyChanged("SelectedAppointment");
+            }
+        }
+
+        #region PropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
-        public CreateTourByLocationViewModel(User loggedInUser, Window window, Location location)
+        public AcceptComplexTourPartViewModel(Window window, User LoggedInUser, TourRequest request)
         {
-            LoggedInUser = loggedInUser;
             this.window = window;
+            Request = request;
 
             Images = new ObservableCollection<string>();
             Checkpoints = new ObservableCollection<string>();
+            Appointments = new ObservableCollection<DateTime>();
 
             ImageForAdd = new();
             PointForAdd = new();
-            TourForAdd = new();
-            Location = new(location.City, location.Country);
+            TourForAdd = new(Request.LocationId, Request.Description, Request.Language, Request.GuestsNumber);
+            Location = new(Request.Location.City, Request.Location.Country);
 
-            AddCheckpointCommand = new RelayCommand(AddCheckpoint);
-            AddImageCommand = new RelayCommand(AddImage);
             CreateCommand = new RelayCommand(Create, CanCreate);
             CancelCommand = new RelayCommand(Cancel);
+            AddCheckpointCommand = new RelayCommand(AddCheckpoint);
+            AddImageCommand = new RelayCommand(AddImage);
             DeleteImageCommand = new RelayCommand(DeleteImage, CanDelete);
             DeleteCheckpointCommand = new RelayCommand(DeleteCheckpoint, CanDeleteCheckpoint);
         }
@@ -192,8 +232,18 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         private void Create()
         {
             TourForAdd.LocationId = locationService.GetId(Location.City, Location.Country);
-            TourForAdd.UserId = LoggedInUser.Id;
+            TourForAdd.UserId = App.LoggedInUser.Id;
+            TourForAdd.Duration = Duration;
+            TourForAdd.StartTime = SelectedAppointment;
             tourService.Save(TourForAdd);
+
+            Request.Status = TourRequestStatus.Accepted;
+            requestService.Update(Request);
+
+            var notification = new NotificationGuestTwo(Request.UserId, TourForAdd.Id, TourForAdd.StartTime,
+                NotificationType.TourAccepted);
+            notificationService.Save(notification);
+
 
             window.Close();
         }

@@ -22,12 +22,12 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public TourAttendance SelectedTourAttendance { get; set; }
         public TourPoint SelectedTourPoint { get; set; }
         public Tour ActiveTour { get; set; }
-        public string CurrentLanguage { get; set; }
 
         private readonly UserService userService = new();
         private readonly TourPointService tourPointService = new();
         private readonly TourAttendanceService tourAttendanceService = new();
         private readonly NotificationGuestTwoService notificationService = new();
+        private App app = (App)System.Windows.Application.Current;
         private readonly Window window;
 
         private DateTime currentTime;
@@ -54,6 +54,8 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand HomeCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public TouristListViewModel(TourPoint selectedTourPoint, Tour tour, Window window) 
@@ -61,7 +63,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             this.SelectedTourPoint = selectedTourPoint;
             ActiveTour = tour;
             this.window = window;
-            CurrentLanguage = "en-US";
 
             startClock();
 
@@ -70,32 +71,58 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             HomeCommand = new RelayCommand(HomeView);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
 
             LoadTourAttendaces();
+        }
+
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
         }
 
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void startClock()

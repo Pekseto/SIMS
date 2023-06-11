@@ -11,17 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels.Guide;
 
 namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for ComplexTour.xaml
+    /// Interaction logic for AcceptComplexTourPartView.xaml
     /// </summary>
-    public partial class ComplexTour : Window
+    public partial class AcceptComplexTourPartView : Window
     {
-        public ComplexTour()
+        public AcceptComplexTourPartView(User user, TourRequest request)
         {
             InitializeComponent();
+            DataContext = new AcceptComplexTourPartViewModel(this, user, request);
         }
     }
 }

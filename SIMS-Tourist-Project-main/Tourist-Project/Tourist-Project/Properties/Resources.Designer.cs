@@ -169,6 +169,15 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to cancel tour?.
+        /// </summary>
+        internal static string CancelTourText {
+            get {
+                return ResourceManager.GetString("CancelTourText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check checkpoint.
         /// </summary>
         internal static string CheckButton {
@@ -250,11 +259,38 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create part of complex tour.
+        /// </summary>
+        internal static string CreateTourPart {
+            get {
+                return ResourceManager.GetString("CreateTourPart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DarkTheme.
+        /// </summary>
+        internal static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pick tour date:.
+        /// </summary>
+        internal static string DatePick {
+            get {
+                return ResourceManager.GetString("DatePick", resourceCulture);
             }
         }
         
@@ -318,6 +354,15 @@ namespace Tourist_Project.Properties {
         internal static string EmergencyEnd {
             get {
                 return ResourceManager.GetString("EmergencyEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field mustn&apos;t be empty!.
+        /// </summary>
+        internal static string EmptyFieldText {
+            get {
+                return ResourceManager.GetString("EmptyFieldText", resourceCulture);
             }
         }
         
@@ -502,6 +547,24 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quit job.
+        /// </summary>
+        internal static string QuitJob {
+            get {
+                return ResourceManager.GetString("QuitJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to quit your job?.
+        /// </summary>
+        internal static string QuitJobText {
+            get {
+                return ResourceManager.GetString("QuitJobText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request number.
         /// </summary>
         internal static string RequestNumber {
@@ -547,11 +610,29 @@ namespace Tourist_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string s {
+            get {
+                return ResourceManager.GetString("s", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to serbian.
         /// </summary>
         internal static string Serbian {
             get {
                 return ResourceManager.GetString("Serbian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tour start at:.
+        /// </summary>
+        internal static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
         

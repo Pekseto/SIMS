@@ -23,6 +23,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
     public class StatisticsOfTourViewModel : INotifyPropertyChanged
     {
         private readonly Window window;
+        private App app => (App)System.Windows.Application.Current;
 
         #region Services
         private readonly LocationService locationService = new();
@@ -51,17 +52,6 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public Image Image { get; set; }
 
 
-        private string currentLanguage;
-
-        public string CurrentLanguage
-        {
-            get { return currentLanguage; }
-            set
-            {
-                currentLanguage = value;
-                OnPropertyChanged("CurrentLanguage");
-            }
-        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged(string propertyName = null)
@@ -74,12 +64,13 @@ namespace Tourist_Project.WPF.ViewModels.Guide
         public ICommand PDFReportCommand { get; set; }
         public ICommand ToSerbianCommand { get; set; }
         public ICommand ToEnglishCommand { get; set; }
+        public ICommand ToDarkThemeCommand { get; set; }
+        public ICommand ToLightThemeCommand { get; set; }
         #endregion
 
         public StatisticsOfTourViewModel(Window window, Tour tour, User user)
         {
             this.window = window;
-            CurrentLanguage = "en-US";
             Tour = tour;
             LoggedInUser = user;
             Location = locationService.Get(Tour.LocationId);
@@ -89,34 +80,60 @@ namespace Tourist_Project.WPF.ViewModels.Guide
             PDFReportCommand = new RelayCommand(PDFReport);
             ToSerbianCommand = new RelayCommand(ToSerbian, CanToSerbian);
             ToEnglishCommand = new RelayCommand(ToEnglish, CanToEnglish);
+            ToDarkThemeCommand = new RelayCommand(ToDarkTheme, CanToDarkTheme);
+            ToLightThemeCommand = new RelayCommand(ToLightTheme, CanToLightTheme);
 
             TourAgeStatistics();
             TourVoucherStatistics();
             GenerateSeriesCollection();
         }
 
+        private void ToDarkTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Dark";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToDarkTheme()
+        {
+            return app.CurrentTheme == "Light";
+        }
+
+        private void ToLightTheme()
+        {
+            var app = (App)Application.Current;
+            app.CurrentTheme = "Light";
+            app.SwitchTheme(app.CurrentTheme);
+        }
+
+        private bool CanToLightTheme()
+        {
+            return app.CurrentTheme == "Dark";
+        }
+
         private void ToSerbian()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "sr-LATN";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "sr-LATN";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToSerbian()
         {
-            return CurrentLanguage.Equals("en-US");
+            return app.CurrentLanguage.Equals("en-US");
         }
 
         private void ToEnglish()
         {
             var app = (App)Application.Current;
-            CurrentLanguage = "en-US";
-            app.ChangeLanguage(CurrentLanguage);
+            app.CurrentLanguage = "en-US";
+            app.ChangeLanguage(app.CurrentLanguage);
         }
 
         private bool CanToEnglish()
         {
-            return CurrentLanguage.Equals("sr-LATN");
+            return app.CurrentLanguage.Equals("sr-LATN");
         }
 
         private void PDFReport()

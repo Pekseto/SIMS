@@ -156,6 +156,12 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="S" Command="{Binding StatisticsCommand}"></KeyBinding>
+        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"></KeyBinding>
+    </Window.InputBindings>
+
     <Grid x:Name="Window">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>

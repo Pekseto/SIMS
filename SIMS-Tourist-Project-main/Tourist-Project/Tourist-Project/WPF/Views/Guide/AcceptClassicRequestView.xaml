@@ -61,28 +61,28 @@
             <Label x:Name="Date" Grid.Column="0" Grid.Row="5" Content="{ns:Loc TourDate}" VerticalAlignment="Center" FontSize="20"/>
             <Label x:Name="Duration" Grid.Column="0" Grid.Row="6" Content="{ns:Loc TourDuration}" VerticalAlignment="Center" FontSize="20"/>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" >
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <TextBox.Text>
-                    <Binding Path="TourForAdd.Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="TourForAdd.Name" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
                             <val:EmptyStringValidation></val:EmptyStringValidation>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" IsEnabled="False">
+            <TextBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" IsEnabled="False" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged" Mode="OneWay">
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" IsEnabled="False">
+            <TextBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" IsEnabled="False" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged" Mode="OneWay">
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False">
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="TourForAdd.Description" UpdateSourceTrigger="PropertyChanged" Mode="OneWay">
                         <Binding.ValidationRules>
@@ -91,7 +91,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False">
+            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="TourForAdd.Language" UpdateSourceTrigger="PropertyChanged" Mode="OneWay">
                         <Binding.ValidationRules>
@@ -100,7 +100,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False">
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsEnabled="False" VerticalContentAlignment="Center">
                 <xctk:IntegerUpDown.Value>
                     <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged" Mode="OneWay">
                         <Binding.ValidationRules>
@@ -109,15 +109,15 @@
                     </Binding>
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
-            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Watermark="MM/DD/YYYY hh:mm:ss" Format="ShortDate">
+            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <xctk:DateTimePicker.Value>
-                    <Binding Path="TourForAdd.StartTime" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource">
+                    <Binding Path="TourForAdd.StartTime" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                     </Binding>
                 </xctk:DateTimePicker.Value>
             </xctk:DateTimePicker>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <xctk:IntegerUpDown.Value>
-                    <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
                             <val:MinValueValidation></val:MinValueValidation>
                         </Binding.ValidationRules>
@@ -143,7 +143,7 @@
                 <Image Source="{Binding SelectedLink}"></Image>
             </Border>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" >
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="PointForAdd.Name" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -154,7 +154,7 @@
             </TextBox>
             <xctk:IconButton Grid.Column="1" Grid.Row="0" Command="{Binding AddCheckpointCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0" Style="{StaticResource PlusButton}">
             </xctk:IconButton>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="ImageForAdd.Url" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

@@ -84,6 +84,12 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="S" Command="{Binding StatisticsViewCommand}"></KeyBinding>
+        <KeyBinding Key="R" Command="{Binding ReviewViewCommand}"></KeyBinding>
+    </Window.InputBindings>
+
     <Grid x:Name="Window">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"></ColumnDefinition>

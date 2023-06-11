@@ -72,12 +72,12 @@
             </TextBox>
             <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Left" Margin="15,0,0,0" BorderThickness="3" ItemsSource="{Binding Cities, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsTextSearchEnabled="True" VerticalContentAlignment="Center">
                 <ComboBox.SelectedItem>
-                    <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+                    <Binding Path="Location.City" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True"/>
                 </ComboBox.SelectedItem>
             </ComboBox>
             <ComboBox Grid.Column="1" Grid.Row="1" Width="125" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0" BorderThickness="3" ItemsSource="{Binding Countries, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" IsTextSearchEnabled="True" VerticalContentAlignment="Center">
                 <ComboBox.SelectedItem>
-                    <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+                    <Binding Path="Location.Country" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True"/>
                 </ComboBox.SelectedItem>
             </ComboBox>
             <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
@@ -89,7 +89,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalAlignment="Center">
+            <TextBox Grid.Column="1" Grid.Row="3" Width="270" Height="40"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalAlignment="Center" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="TourForAdd.Language" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
@@ -98,7 +98,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="4" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <xctk:IntegerUpDown.Value>
                     <Binding Path="TourForAdd.MaxGuestsNumber" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -107,14 +107,14 @@
                     </Binding>
                 </xctk:IntegerUpDown.Value>
             </xctk:IntegerUpDown>
-            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:DateTimePicker Grid.Column="1" Grid.Row="5" Width="270" Height="40" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <xctk:DateTimePicker.Value>
-                    <Binding Path="TourForAdd.StartTime" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource">
+                    <Binding Path="TourForAdd.StartTime" UpdateSourceTrigger="PropertyChanged" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                     </Binding>
                 </xctk:DateTimePicker.Value>
 
             </xctk:DateTimePicker>
-            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="6" Width="270" Height="40" Minimum="1" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <xctk:IntegerUpDown.Value>
                     <Binding Path="TourForAdd.Duration" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -142,7 +142,7 @@
                 <Image Source="{Binding SelectedLink}"></Image>
             </Border>
 
-            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" >
+            <TextBox Grid.Column="1" Grid.Row="0" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="PointForAdd.Name" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -153,7 +153,7 @@
             </TextBox>
             <xctk:IconButton Grid.Column="1" Grid.Row="0" Command="{Binding AddCheckpointCommand}" Width="40" Height="40" HorizontalAlignment="Right" Margin="0 0 20 0" Style="{StaticResource PlusButton}">
             </xctk:IconButton>
-            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+            <TextBox Grid.Column="1" Grid.Row="2" Width="270" Height="40" HorizontalAlignment="Left" Margin="10 0 0 0" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" VerticalContentAlignment="Center">
                 <TextBox.Text>
                     <Binding Path="ImageForAdd.Url" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

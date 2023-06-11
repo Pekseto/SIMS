@@ -196,7 +196,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanCreate()
         {
-            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration) ;
+            return numberOfPoints >= 2 && !tourRequestService.IsAlreadyBooked(TourForAdd.StartTime, TourForAdd.Duration) && TourForAdd.IsValid;
         }
 
         private void Create()

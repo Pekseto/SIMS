@@ -85,6 +85,12 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding BackCommand}"></KeyBinding>
+        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"></KeyBinding>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>

@@ -178,12 +178,12 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="SelectionUnit" Value="FullRow"/>
             <Setter Property="SelectionMode" Value="Single"/>
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Background" Value="WhiteSmoke" />
             <Setter Property="BorderBrush" Value="#CCCCCC" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="RowBackground" Value="White" />
             <Setter Property="AlternatingRowBackground" Value="AliceBlue" />
-            <Setter Property="GridLinesVisibility" Value="Vertical" />
+            <Setter Property="GridLinesVisibility" Value="None" />
             <Setter Property="RowHeight" Value="30" />
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="AutoGenerateColumns" Value="False" />

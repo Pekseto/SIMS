@@ -183,7 +183,7 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="RowBackground" Value="White" />
             <Setter Property="AlternatingRowBackground" Value="AliceBlue" />
-            <Setter Property="GridLinesVisibility" Value="None" />
+            <Setter Property="GridLinesVisibility" Value="Vertical" />
             <Setter Property="RowHeight" Value="30" />
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="AutoGenerateColumns" Value="False" />

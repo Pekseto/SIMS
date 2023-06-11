@@ -38,7 +38,7 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#026D73" Offset="0.8"></GradientStop>
                         <GradientStop Color="#0da2a5"></GradientStop>
                     </LinearGradientBrush>
                 </Setter.Value>
@@ -241,8 +241,7 @@
                                         <Storyboard>
                                             <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
                                                 Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                <EasingColorKeyFrame KeyTime="0"
-                                                    Value="{DynamicResource ControlLightColor}" />
+                                                <EasingColorKeyFrame KeyTime="0"/>
                                             </ColorAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -336,6 +335,7 @@
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Shift" Command="{Binding FindCommand}"></KeyBinding>
         <KeyBinding Key="R" Modifiers="Shift" Command="{Binding RenovateCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"></KeyBinding>
     </Window.InputBindings>
     <Window.DataContext>
         <vm:ScheduleRenovationViewModel/>
@@ -383,5 +383,11 @@
         <Label Content="Renovation description:" Margin="25,320,30,136"></Label>
         <TextBox Text="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Margin="0,105,0,66" HorizontalAlignment="Center" VerticalContentAlignment="Center" Width="304" Height="28"></TextBox>
         <Button Content="Renovate(Shift+R)" Command="{Binding RenovateCommand}" Margin="30,620,30,20"></Button>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

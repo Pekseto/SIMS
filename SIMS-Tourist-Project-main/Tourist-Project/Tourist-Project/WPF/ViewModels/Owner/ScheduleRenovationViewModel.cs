@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
@@ -81,18 +80,20 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         private readonly RenovationService renovationService = new ();
 
-        public ScheduleRenovation ScheduleRenovation;
+        private readonly IBindableBase bindableBase;
 
         public ICommand FindCommand { get; set; }
         public ICommand RenovateCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
         public ScheduleRenovationViewModel() {}
 
-        public ScheduleRenovationViewModel(AccommodationViewModel accommodationViewModel, ScheduleRenovation scheduleRenovation)
+        public ScheduleRenovationViewModel(AccommodationViewModel accommodationViewModel, IBindableBase bindableBase)
         {
-            ScheduleRenovation = scheduleRenovation;
+            this.bindableBase = bindableBase;
             AccommodationViewModel = new ObservableCollection<AccommodationViewModel> { accommodationViewModel };
             FindCommand = new RelayCommand(Find, CanFind);
             RenovateCommand = new RelayCommand(Renovate, CanRenovate);
+            CloseCommand = new RelayCommand(Close);
             RequestedDateSpan = new DateSpan(DateTime.Now, DateTime.Now);
             PossibleDateSpans = new ObservableCollection<DateSpan>();
         }
@@ -116,7 +117,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         {
             SelectedDateSpan ??= possibleDateSpans.FirstOrDefault();
             renovationService.Create(new Renovation(AccommodationViewModel.First().Accommodation.Id, SelectedDateSpan, Description));
-            ScheduleRenovation.Close();
+            bindableBase.CloseWindow();
         }
 
         public bool CanRenovate()
@@ -124,6 +125,11 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             return SelectedDateSpan != null && IsValid;
         }
 
+        public void Close()
+        {
+            bindableBase.CloseWindow();
+        }
+        
         #endregion
 
 

@@ -444,9 +444,16 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="C" Modifiers="Shift" Command="{Binding SelectedComment.ReportCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <ListBox Background="#d9eeef" Width="585" Height="465" ItemsSource="{Binding Forums, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ForumDataTemplate}"></ListBox>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

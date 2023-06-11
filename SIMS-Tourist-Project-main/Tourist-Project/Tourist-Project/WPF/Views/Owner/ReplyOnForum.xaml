@@ -192,7 +192,8 @@
         </Style>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Key="Enter" Command="{Binding ExitCommand}"></KeyBinding>
+        <KeyBinding Key="Enter" Command="{Binding ReplyCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding ExitCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
         <Label Content="Comment to respond:" Margin="20,10,20,0"></Label>
@@ -202,5 +203,11 @@
         <Label Content="Enter your response:" Margin="20,130,0,240"></Label>
         <TextBox Text="{Binding NewComment.CommentText}" Margin="20,170,20,100"></TextBox>
         <Button Content="Reply(Enter)" Margin="20" VerticalAlignment="Bottom" Command="{Binding ReplyCommand}"></Button>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

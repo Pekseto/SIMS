@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using Tourist_Project.Applications.UseCases;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.Views.Owner;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
@@ -18,11 +17,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public ICommand ReplyCommand { get; set; }
         public ICommand ExitCommand { get; set; }
-        public ReplyOnForum ReplyOnForum;
+
+        private readonly IBindableBase bindableBase;
+
         public ReplyOnForumViewModel()
         {
         }
-        public ReplyOnForumViewModel(Forum forum, Comment comment, ReplyOnForum replyOnForum)
+        public ReplyOnForumViewModel(Forum forum, Comment comment, IBindableBase bindableBase)
         {
             NewComment = new Comment();
             Forum = forum;
@@ -30,7 +31,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             User = userService.GetOne(Comment.AuthorId);
             ReplyCommand = new RelayCommand(Reply);
             ExitCommand = new RelayCommand(Exit);
-            ReplyOnForum = replyOnForum;
+            this.bindableBase = bindableBase;
         }
 
         public void Reply()
@@ -40,12 +41,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             commentService.Create(NewComment);
             Forum.CommentsIds.Add(commentService.Create(NewComment).Id);
             forumService.Update(Forum);
-            ReplyOnForum.Close();
+            bindableBase.CloseWindow();
         }
 
         public void Exit()
         {
-            ReplyOnForum.Close();
+            bindableBase.CloseWindow();
         }
     }
 

@@ -18,14 +18,18 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         private readonly ReservationService reservationService = new();
         private readonly UserService userService = new();
         public ICommand GenerateCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
         public List<Reservation> Reservations { get; set; }
-        public List<DateTime> BlackoutDates { get; set; }
-        public GeneratePdfViewModel(AccommodationViewModel accommodationViewModel)
+
+        private readonly IBindableBase bindableBase;
+        public GeneratePdfViewModel(AccommodationViewModel accommodationViewModel, IBindableBase bindableBase)
         {
+            this.bindableBase = bindableBase;
             Reservations = reservationService.GetAllByAccommodation(accommodationViewModel.Accommodation.Id).OrderBy(o => o.CheckIn).ToList();
             DateSpan = Reservations.Count != 0 ? new DateSpan(Reservations.First().CheckIn, Reservations.Last().CheckOut) : new DateSpan(DateTime.Now, DateTime.Now);
             AccommodationViewModel = accommodationViewModel;
             GenerateCommand = new RelayCommand(Generate, CanGenerate);
+            CloseCommand = new RelayCommand(Close);
         }
 
         public void Generate()
@@ -36,6 +40,11 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public bool CanGenerate()
         {
             return true;
+        }
+
+        public void Close()
+        {
+            bindableBase.CloseWindow();
         }
 
         private void PDFReport()

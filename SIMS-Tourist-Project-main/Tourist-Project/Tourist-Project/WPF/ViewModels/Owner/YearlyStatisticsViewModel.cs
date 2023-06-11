@@ -49,9 +49,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public AccommodationStatistics SelectedStatistics { get; set; }
         public ICommand SwitchToMonthlyCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
 
-        public YearlyStatisticsViewModel(AccommodationViewModel accommodationViewModel)
+        private readonly IBindableBase bindableBase;
+
+        public YearlyStatisticsViewModel(AccommodationViewModel accommodationViewModel, IBindableBase bindableBase)
         {
+            this.bindableBase = bindableBase;
             AccommodationViewModel = accommodationViewModel;
             Years = accommodationStatisticsService.GetYears(AccommodationViewModel.Accommodation.Id);
             AccommodationStatistics = new ObservableCollection<AccommodationStatistics>();
@@ -66,6 +70,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             }
             MostOccupiedYear = accommodationStatisticsService.GetMostOccupiedYear(AccommodationViewModel.Accommodation.Id);
             SwitchToMonthlyCommand = new RelayCommand(SwitchToMonthly, CanSwitch);
+            CloseCommand = new RelayCommand(Close);
 
             ChartInitialization();
         }
@@ -105,6 +110,11 @@ namespace Tourist_Project.WPF.ViewModels.Owner
         public bool CanSwitch()
         {
             return true;
+        }
+
+        public void Close()
+        {
+            bindableBase.CloseWindow();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

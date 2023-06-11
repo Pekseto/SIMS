@@ -249,6 +249,9 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"></KeyBinding>
+    </Window.InputBindings>
     <Grid>
         <DataGrid Height="100" Margin="12,401,2,53" Width="723" IsReadOnly="True"
             ItemsSource="{Binding AccommodationStatistics, UpdateSourceTrigger=PropertyChanged}"></DataGrid>

@@ -14,7 +14,8 @@
                 <wpf:Gauge Height="100" Width="100" Uses360Mode="True"
                            From="0" To="100"
                            Value="{Binding Occupancy}"
-                           Margin="10,30,10,10"></wpf:Gauge>
+                           Margin="10,30,10,10"
+                           Foreground="#03888f"></wpf:Gauge>
                 <Separator Margin="0,140,0,0" Background="#acbcbc"></Separator>
             </Grid>
         </DataTemplate>
@@ -179,7 +180,10 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#d9eeef">
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"/>
+    </Window.InputBindings>
+    <Grid>
         <Label Content="Percentage of occupancy" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="650,10,0,10"></Label>
         <Label Content="by location:" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="650,35,0,10"></Label>
         <Label Content="No of reservations by location:" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="20,10,0,10"></Label>
@@ -192,6 +196,13 @@
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
         <ListBox ItemsSource="{Binding LocationStatisticsByOccupancy}" HorizontalAlignment="Right" Margin="20,0,20,10" Height="400" Width="220"
-                 ItemTemplate="{StaticResource GaugeDataTemplate}"></ListBox>
+                 ItemTemplate="{StaticResource GaugeDataTemplate}">
+        </ListBox>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

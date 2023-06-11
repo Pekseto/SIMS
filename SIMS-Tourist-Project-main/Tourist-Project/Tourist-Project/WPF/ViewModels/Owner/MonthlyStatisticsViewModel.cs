@@ -41,9 +41,15 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
     public string[] Labels { get; set; }
     public Func<double, string> Formatter { get; set; }
 
-    public ICommand SwitchToYearlyCommand { get; set; }
-    public MonthlyStatisticsViewModel(AccommodationViewModel accommodationViewModel, int year)
+    public ICommand CloseCommand { get; set; }
+
+    private readonly IBindableBase bindableBase;
+    public MonthlyStatisticsViewModel(AccommodationViewModel accommodationViewModel, int year, IBindableBase bindableBase)
     {
+        this.bindableBase = bindableBase;
+
+        CloseCommand = new RelayCommand(Close);
+
         AccommodationViewModel = accommodationViewModel;
         AccommodationStatistics = new ObservableCollection<AccommodationStatistics>();
         for (var i = 1; i < 13; i++)
@@ -101,6 +107,11 @@ public class MonthlyStatisticsViewModel : INotifyPropertyChanged
             "11" => "November",
             "12" => "December"
         };
+    }
+
+    public void Close()
+    {
+        bindableBase.CloseWindow();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -293,7 +293,7 @@
         <KeyBinding Key="C" Modifiers="Shift" Command="{Binding ConfirmCommand}"></KeyBinding>
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="56*"/>
             <RowDefinition Height="139*"/>
@@ -358,5 +358,11 @@
             </TextBox.Text>
         </TextBox>
         <Button Command="{Binding ConfirmCommand}" Content="Confirm(Shift+C)" FontSize="16" Height="38" Margin="49,413,49,25" Grid.Row="1"></Button>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

@@ -17,13 +17,19 @@
                         Background="#88dcdc">
                     <Grid>
                         <Label Content="Accommodation name:" FontSize="22" FontWeight="SemiBold" Margin="10,5"></Label>
-                        <Label Content="{Binding Accommodation.Name}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315,5,0,5"></Label>
+                        <Label Content="{Binding Accommodation.Name}" Foreground="#F76A14" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315,5,0,5"></Label>
                         <Label Content="Guest name:" FontSize="22" FontWeight="SemiBold" Margin="10, 50, 10,5"></Label>
-                        <Label Content="{Binding Guest.FullName}" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315, 50, 10, 5"></Label>
+                        <Label Content="{Binding Guest.FullName}" Foreground="#F76A14" FontStyle="Italic" FontWeight="SemiBold" FontSize="22" Margin="315, 50, 10, 5"></Label>
                         <Label Content="Checked in:" FontSize="16" FontWeight="SemiBold" Margin="10,95,10,5"></Label>
-                        <Label Content="{Binding Reservation.CheckIn}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,95,10,5"></Label>
+                        <Label Content="{Binding Reservation.CheckIn}" Foreground="#F76A14" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,95,10,5"></Label>
                         <Label Content="Checked out:" FontSize="16" FontWeight="SemiBold" Margin="10,140,10,5"></Label>
-                        <Label Content="{Binding Reservation.CheckOut}" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,140,10,5"></Label>
+                        <Label Content="{Binding Reservation.CheckOut}" Foreground="#F76A14" FontStyle="Italic" FontWeight="SemiBold" FontSize="16" Margin="315,140,10,5"></Label>
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                                <GradientStop Color="#d9eeef"></GradientStop>
+                            </LinearGradientBrush>
+                        </Grid.Background>
                     </Grid>
                 </Border>
                 <Grid Grid.Row="1">
@@ -48,7 +54,13 @@
                     <Label Content="Additional comment:" Margin="10,130,0,10"></Label>
                     <TextBox Text="{Binding AccommodationRating.Comment}" HorizontalAlignment="Left" IsReadOnly="True" Width="290" Height="50" Focusable="False" FontSize="16" Margin="10,120,0,10"></TextBox>
                     <Button Content="Update accommodation(U)" Command="{Binding UpdateCommand}" Height="38" Width="290" HorizontalAlignment="Left" Margin="10,240,100,10"></Button>
-                    <Button Content="Renovate accommodation(R)" Command="{Binding RenovateCommand}" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,240,10,10" IsEnabled="False"></Button>
+                    <Button Content="Renovate accommodation(R)" Command="{Binding RenovateCommand}" Height="38" Width="290" HorizontalAlignment="Right" Margin="10,240,10,10"></Button>
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                            <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+                        </LinearGradientBrush>
+                    </Grid.Background>
                 </Grid>
             </Grid>
         </DataTemplate>
@@ -238,10 +250,17 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
         <KeyBinding Key="U" Command="{Binding UpdateCommand}"></KeyBinding>
+        <KeyBinding Key="R" Command="{Binding RenovateCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <ListBox Background="#d9eeef" Height="475" ItemsSource="{Binding Reviews, UpdateSourceTrigger=PropertyChanged}"
                  ItemTemplate="{StaticResource ReviewDataTemplate}"
                  SelectedItem="{Binding SelectedReview}"></ListBox>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

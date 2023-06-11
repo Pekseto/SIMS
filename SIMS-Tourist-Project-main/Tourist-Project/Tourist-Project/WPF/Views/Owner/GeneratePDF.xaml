@@ -49,7 +49,7 @@
     <Window.InputBindings>
         <KeyBinding Key="G" Command="{Binding GenerateCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <Label Content="Enter date span for report:" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="20,130,20,20"></Label>
         <Border BorderThickness="1" CornerRadius="20,10,20,10" BorderBrush="#03888f" Margin="10,20,10,190">
             <Grid Margin="10">
@@ -74,5 +74,11 @@
         <DatePicker Margin="20,90,10,10" Height="30" Width="150" HorizontalAlignment="Left" SelectedDate="{Binding DateSpan.StartingDate}"></DatePicker>
         <DatePicker Margin="100,90,20,10" Height="30" Width="150" HorizontalAlignment="Right" SelectedDate="{Binding DateSpan.EndingDate}"></DatePicker>
         <Button Content="Generate(G)" Width="200" VerticalAlignment="Bottom" Margin="20,0,20,20" Command="{Binding GenerateCommand}"/>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

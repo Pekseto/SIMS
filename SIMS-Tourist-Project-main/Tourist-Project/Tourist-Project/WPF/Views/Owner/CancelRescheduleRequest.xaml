@@ -73,9 +73,15 @@
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
         <KeyBinding Key="C" Command="{Binding ConfirmCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
+    <Grid>
         <Label Content="Explanation(optional):" FontSize="26" Margin="22"></Label>
-        <TextBox x:Name="Comment" Margin="26,82,26,82"></TextBox>
+        <TextBox x:Name="Comment" Margin="26,82,26,82" Text="{Binding RescheduleRequestViewModel.RescheduleRequest.Comment}"></TextBox>
         <Button Height="38" Margin="26,250,26,0" Content="Confirm(C)" Command="{Binding ConfirmCommand}"></Button>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

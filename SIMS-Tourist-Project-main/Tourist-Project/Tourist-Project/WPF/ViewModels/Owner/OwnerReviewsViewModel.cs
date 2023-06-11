@@ -24,17 +24,20 @@ public class OwnerReviewsViewModel : INotifyPropertyChanged
     }
     private readonly AccommodationRatingService ratingService = new();
     public AccommodationRatingViewModel SelectedReview { get; set; }
-    public OwnerReviewsView Window;
     public OwnerMainWindowViewModel OwnerMainWindowViewModel;
     public ICommand CancelCommand { get; set; }
     public ICommand UpdateCommand { get; set; }
-    public OwnerReviewsViewModel(OwnerReviewsView window, OwnerMainWindowViewModel ownerMainWindowViewModel)
+    public ICommand RenovateCommand { get; set; }
+
+    private readonly IBindableBase bindableBase;
+    public OwnerReviewsViewModel(IBindableBase bindableBase, OwnerMainWindowViewModel ownerMainWindowViewModel)
     {
         OwnerMainWindowViewModel = ownerMainWindowViewModel;
         Reviews = new ObservableCollection<AccommodationRatingViewModel>(ratingService.GetAll().Select(rating => new AccommodationRatingViewModel(rating, OwnerMainWindowViewModel)));
         CancelCommand = new RelayCommand(Cancel);
         UpdateCommand = new RelayCommand(Update, CanUpdate);
-        Window = window;
+        RenovateCommand = new RelayCommand(Renovate, CanUpdate);
+        this.bindableBase = bindableBase;
     }
     public void Update()
     {
@@ -46,9 +49,16 @@ public class OwnerReviewsViewModel : INotifyPropertyChanged
     {
         return SelectedReview != null;
     }
+
+    public void Renovate()
+    {
+        var renovateWindow = new ScheduleRenovation(new AccommodationViewModel(SelectedReview.Accommodation));
+        renovateWindow.ShowDialog();
+    }
+
     public void Cancel()
     {
-        Window.Close();
+        bindableBase.CloseWindow();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

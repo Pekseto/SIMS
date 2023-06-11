@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Tourist_Project.Domain.Models;
 
 namespace Tourist_Project.WPF.ViewModels.Owner
 {
@@ -44,8 +46,13 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public string[] Labels { get; set; }
 
-        public RecommendationViewModel(ObservableCollection<LocationStatisticsViewModel> locationStatisticsByReservation, ObservableCollection<LocationStatisticsViewModel> locationStatisticsByOccupancy)
+        private readonly IBindableBase bindableBase;
+        public ICommand CloseCommand { get; set; }
+
+        public RecommendationViewModel(ObservableCollection<LocationStatisticsViewModel> locationStatisticsByReservation, ObservableCollection<LocationStatisticsViewModel> locationStatisticsByOccupancy, IBindableBase bindableBase)
         {
+            this.bindableBase = bindableBase;
+            CloseCommand = new RelayCommand(Close);
             Labels = new string[] { };
             LocationStatisticsByReservation = locationStatisticsByReservation;
             LocationStatisticsByOccupancy = locationStatisticsByOccupancy;
@@ -62,6 +69,12 @@ namespace Tourist_Project.WPF.ViewModels.Owner
                 });
             }
         }
+
+        public void Close()
+        {
+            bindableBase.CloseWindow();
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

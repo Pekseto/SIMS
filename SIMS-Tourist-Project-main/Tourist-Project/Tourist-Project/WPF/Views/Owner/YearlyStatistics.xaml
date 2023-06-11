@@ -251,6 +251,7 @@
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding SwitchToMonthlyCommand}"></KeyBinding>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}"></KeyBinding>
     </Window.InputBindings>
     <Grid>
         <DataGrid Height="100" Margin="22,401,2,53" Width="703" IsReadOnly="True"
@@ -259,15 +260,27 @@
         <Button Width="150" Margin="310,536,290,10" HorizontalAlignment="Center" Content="Monthly(Space)" Command="{Binding SwitchToMonthlyCommand}"></Button>
         <Label Content="Most occupied year:" FontWeight="DemiBold" FontSize="15" Margin="32,178,558,02"></Label>
         <Label Content="{Binding MostOccupiedYear}" Margin="202,178,342,98" FontSize="15" FontWeight="Bold" Foreground="#F76A14"></Label>
-        <Border BorderThickness="1" BorderBrush="#03888f" Margin="20,10,20,450" CornerRadius="20,10,20,10" Background="#acdcdc">
-            <Grid Margin="5,15,15,5" Background="#acdcdc">
+        <Border BorderThickness="1" BorderBrush="#03888f" Margin="20,10,20,450" CornerRadius="20,10,20,10">
+            <Grid Margin="5,15,15,5">
                 <Label Content="Accommodation Name:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="10,-10,10,10"></Label>
                 <Label Content="{Binding AccommodationViewModel.Accommodation.Name}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="80,-10,40,10"></Label>
                 <Label Content="Location:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="10,30,10,10"></Label>
                 <Label Content="{Binding AccommodationViewModel.Location}" HorizontalAlignment="Center" Foreground="#F76A14" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="158,30,10,10"></Label>
                 <Label Content="Owner:" HorizontalAlignment="Left" FontSize="26" FontWeight="Bold" VerticalAlignment="Top" Margin="10,70,0,0" Height="52"></Label>
                 <Label Content="{Binding AccommodationViewModel.User.FullName}" HorizontalAlignment="Center" FontSize="26" FontWeight="Bold" Foreground="#F76A14" VerticalAlignment="Top" Margin="140,70,0,0" Height="86" Width="203"></Label>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#d9eeef"></GradientStop>
+                    </LinearGradientBrush>
+                </Grid.Background>
             </Grid>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                    <GradientStop Color="#d9eeef"></GradientStop>
+                </LinearGradientBrush>
+            </Border.Background>
         </Border>
         <wpf:CartesianChart Series="{Binding StatsChart}" LegendLocation="Right" Height="220" Width="680" Margin="42,186,0,178" HorizontalAlignment="Left">
             <wpf:CartesianChart.AxisX>
@@ -277,5 +290,11 @@
                 <wpf:Axis LabelFormatter="{Binding Formatter}" Foreground="#03888f"></wpf:Axis>
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

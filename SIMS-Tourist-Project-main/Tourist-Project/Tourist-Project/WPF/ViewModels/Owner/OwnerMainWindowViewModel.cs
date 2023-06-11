@@ -198,7 +198,7 @@ namespace Tourist_Project.WPF.ViewModels.Owner
 
         public void Delete()
         {
-            if (!messageService.ShowDismissalDialog(
+            if (!messageService.ShowMessageBox(
                     $"Are you sure you want to delete {SelectedAccommodation.Accommodation.Name}",
                     "Deleting an accommodation"))
                 return;

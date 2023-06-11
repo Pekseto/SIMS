@@ -73,7 +73,7 @@
                 BorderBrush="LightGray"
                 Margin="50,30"
                 CornerRadius="10"
-                Background="DarkSlateBlue">
+                Background="#FF232357">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -90,10 +90,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="Review" 
+                <TextBlock Grid.Column="0" Text="Review" TextDecorations="Underline" 
                        HorizontalAlignment="Center" Foreground="White"
                        Grid.Row="0" VerticalAlignment="Top" Grid.ColumnSpan="2"
-                       FontSize="25" Margin="0,0"/>
+                       FontSize="25" Margin="0,5"/>
                 <Label Grid.Column="0" Content="Guides knowledge:"
                        HorizontalAlignment="Left" Foreground="White"
                        Grid.Row="1" VerticalAlignment="Top" FontSize="17"
@@ -158,6 +158,7 @@
                         <Binding Path="Comment" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
                             <Binding.ValidationRules>
                                 <validation:EmptyStringValidation/>
+                                <validation:StringLengthValidation/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

@@ -153,7 +153,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanRate()
         {
-            return KnowledgeRating != 0 && LanguageRating != 0 && EntertainmentRating != 0 && Comment != string.Empty;
+            return KnowledgeRating != 0 && LanguageRating != 0 && EntertainmentRating != 0 && Comment != string.Empty && Comment.Length >= 15;
         }
 
         private async Task ShowMessageAndHide(Message message)

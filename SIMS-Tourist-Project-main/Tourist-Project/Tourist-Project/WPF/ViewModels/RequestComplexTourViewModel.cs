@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -180,7 +181,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanAddTour()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
+            return Description != string.Empty && Description.Length >= 15 && GuestsNumber > 0;
         }
 
         private void AddTourClick()
@@ -194,7 +195,6 @@ namespace Tourist_Project.WPF.ViewModels
             TourRequests.Add(newRequest);
 
             Description = string.Empty;
-            Language = string.Empty;
         }
 
         private async Task ShowMessageAndHide(Message message)

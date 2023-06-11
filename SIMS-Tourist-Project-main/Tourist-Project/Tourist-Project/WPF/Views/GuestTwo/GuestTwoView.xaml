@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:stores="clr-namespace:Tourist_Project.WPF.Stores"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:views="clr-namespace:Tourist_Project.WPF.Views.GuestTwo"
         xmlns:viewmodels="clr-namespace:Tourist_Project.WPF.ViewModels"
@@ -19,6 +20,7 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ShowWizardCommand}" />
+            <i:InvokeCommandAction Command="{Binding UpdateDataCommand}"/>
         </i:EventTrigger>
 
         <i:EventTrigger EventName="Closing">
@@ -96,6 +98,9 @@
         <DataTemplate DataType="{x:Type viewmodels:NotificationsHelpViewModel}">
             <views:NotificationsHelpView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SimilarToursHelpViewModel}">
+            <views:SimilarToursHelpView/>
+        </DataTemplate>
 
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
                TargetType="{x:Type RadioButton}"
@@ -108,9 +113,19 @@
                                   HorizontalAlignment="Stretch"
                                   Background="{TemplateBinding Background}">
 
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding Path=(stores:RadioButtonImageStore.ImageSource), RelativeSource={RelativeSource TemplatedParent}}"
+                                       VerticalAlignment="Center" Height="27" Width="27"
+                                       Margin="20,0,0,0"/>
+
                                 <TextBlock Text="{TemplateBinding Content}"
+                                           Grid.Column="1"
                                            VerticalAlignment="Center"
-                                           Margin="50,0,0,0"
+                                           Margin="15,0,0,0"
                                            Foreground="White"/>
 
                             </Grid>
@@ -132,6 +147,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+
 
         <Style TargetType="{x:Type TextBox}">
             <Style.Setters>
@@ -161,6 +178,50 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="SelectionUnit" Value="FullRow"/>
             <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="RowBackground" Value="White" />
+            <Setter Property="AlternatingRowBackground" Value="AliceBlue" />
+            <Setter Property="GridLinesVisibility" Value="Vertical" />
+            <Setter Property="RowHeight" Value="30" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+
+            <Setter Property="CellStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1"
+                                            >
+                                        <ContentPresenter VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ColumnHeaderStyle">
+                <Setter.Value>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F5F5F5" />
+                        <Setter Property="BorderBrush" Value="#CCCCCC" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        <Setter Property="Foreground" Value="#222222" />
+                        <Setter Property="FontSize" Value="12" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    </Style>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style TargetType="DataGridRow">
@@ -272,43 +333,50 @@
                                  FontSize="24"
                                  ToolTip="Go to Home page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding HomeCommand}"/>
+                                 Command="{Binding HomeCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/Home.png"/>
                     <RadioButton Content="My Tours"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go to My Tours page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding MyToursCommand}"/>
+                                 Command="{Binding MyToursCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/MyTours.png"/>
                     <RadioButton Content="History"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go to History page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding TourHistoryCommand}"/>
+                                 Command="{Binding TourHistoryCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/History.png"/>
                     <RadioButton Content="Requests/Stats"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go to Requests/Stats page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding RequestsStatsCommand}"/>
+                                 Command="{Binding RequestsStatsCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/Requests.png"/>
                     <RadioButton Content="Complex tours"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go too Complex Tours page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding ComplexToursCommand}"/>
+                                 Command="{Binding ComplexToursCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/ComplexTours.png"/>
                     <RadioButton Content="Vouchers"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go to Vouchers page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding VouchersCommand}"/>
+                                 Command="{Binding VouchersCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/Vouchers.png"/>
                     <RadioButton Content="Notifications"
                                  Height="50"
                                  FontSize="24"
                                  ToolTip="Go to Notifications page"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding NotificationsCommand}"/>
+                                 Command="{Binding NotificationsCommand}"
+                                 stores:RadioButtonImageStore.ImageSource="/Images/Notifications.png"/>
                 </StackPanel>
 
                 <GroupBox Grid.Row="2" Header="Profile"
@@ -363,17 +431,19 @@
                 </StackPanel>
 
                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                        Content="Sign out" Grid.Row="3" Cursor="Hand"
-                        Height="35" Width="90" FontSize="17"
-                        Margin="20,0,0,20"
-                        Command="{Binding SignOutCommand}"
-                        ToolTip="Sign out"/>
-                <Button VerticalAlignment="Bottom" HorizontalAlignment="Right"
                         Content="Exit" Grid.Row="3" Cursor="Hand"
                         Height="35" Width="90" FontSize="17"
-                        Margin="0,0,20,20"
+                        Margin="20,20"
                         Command="{Binding ExitCommand}"
                         ToolTip="Exit"/>
+
+                <Button VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                        Content="Sign out" Grid.Row="3" Cursor="Hand"
+                        Height="35" Width="90" FontSize="17"
+                        Margin="20,20"
+                        Command="{Binding SignOutCommand}"
+                        ToolTip="Sign out"/>
+                
             </Grid>
 
             <ContentControl Grid.Column="1"

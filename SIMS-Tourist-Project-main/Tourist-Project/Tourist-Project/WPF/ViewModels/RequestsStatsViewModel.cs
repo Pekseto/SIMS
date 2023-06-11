@@ -31,6 +31,7 @@ namespace Tourist_Project.WPF.ViewModels
         private ObservableCollection<TourRequest> requests;
         private Message message;
         private Message undoMessage;
+        private string description;
 
         public Message Message
         {
@@ -192,7 +193,16 @@ namespace Tourist_Project.WPF.ViewModels
                 }
             }
         }
-        public string Description { get; set; }
+
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
+        }
         public string Language { get; set; }
         public int GuestsNumber { get; set; }
         public DateTime FromDate { get; set; }
@@ -238,7 +248,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private bool CanPostRequest()
         {
-            return Description != string.Empty && Language != string.Empty && GuestsNumber > 0;
+            return Description != string.Empty && Description.Length >= 15 && Language != string.Empty && GuestsNumber > 0;
         }
 
         private void PostRequestClick()
@@ -253,6 +263,7 @@ namespace Tourist_Project.WPF.ViewModels
             Requests.Add(newRequest);
 
             _ = ShowMessageAndHide(new Message(true, "Successfully posted request!"));
+            Description = string.Empty;
 
             LanguagesChart = requestService.GetLanguageSeriesCollection(LoggedUser.Id);
             LocationsChart = requestService.GetLocationSeriesCollection(LoggedUser.Id);

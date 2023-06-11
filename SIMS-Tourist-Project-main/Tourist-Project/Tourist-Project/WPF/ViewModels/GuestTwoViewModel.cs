@@ -47,6 +47,7 @@ namespace Tourist_Project.WPF.ViewModels
         public ICommand ComplexToursCommand { get; set; }
         public ICommand ShowWizardCommand => new RelayCommand(ShowWizard);
         public ICommand SaveSettingsCommand => new RelayCommand(SaveSettings);
+        public ICommand UpdateDataCommand => new RelayCommand(UpdateData);
 
         public GuestTwoViewModel(User user, NavigationStore navigationStore, GuestTwoView guestTwoWindow)
         {
@@ -66,6 +67,10 @@ namespace Tourist_Project.WPF.ViewModels
             SignOutCommand = new RelayCommand(SignOutClick);
             ExitCommand = new RelayCommand(ExitClick);
 
+        }
+
+        private void UpdateData()
+        {
             voucherService.DeleteInvalidVouchers(LoggedUser.Id);
             voucherService.ClaimFiveToursInAYearVoucher(LoggedUser.Id);
             requestService.UpdateInvalidRequests(LoggedUser.Id);

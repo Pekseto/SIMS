@@ -186,7 +186,7 @@ namespace Tourist_Project.WPF.ViewModels.Guide
 
         private bool CanCreate()
         {
-            return numberOfPoints >= 2;
+            return numberOfPoints >= 2 && TourForAdd.IsValid;
         }
 
         private void Create()

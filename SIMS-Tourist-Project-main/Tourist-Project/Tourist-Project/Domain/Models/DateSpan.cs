@@ -1,13 +1,36 @@
 ﻿using System;
-using Tourist_Project.Serializer;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Tourist_Project.Domain.Models
 {
-    public class DateSpan 
+    public class DateSpan : INotifyPropertyChanged
     {
-        public DateTime StartingDate { get; set; }
+        private DateTime startingDate;
 
-        public DateTime EndingDate { get; set; }
+        public DateTime StartingDate
+        {
+            get => startingDate;
+            set
+            {
+                if (startingDate == value) return;
+                startingDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime endingDate;
+
+        public DateTime EndingDate
+        {
+            get => endingDate;
+            set
+            {
+                if (endingDate == value) return;
+                endingDate = value;
+                OnPropertyChanged();
+            }
+        }
 
         public DateSpan()
         {
@@ -18,6 +41,7 @@ namespace Tourist_Project.Domain.Models
             StartingDate = startingDate;
             EndingDate = endingDate;
         }
+
 /*
         public string[] ToCSV()
         {
@@ -33,5 +57,12 @@ namespace Tourist_Project.Domain.Models
             StartingDate = DateTime.Parse(values[1]);
             EndingDate = DateTime.Parse(values[2]);
         }*/
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

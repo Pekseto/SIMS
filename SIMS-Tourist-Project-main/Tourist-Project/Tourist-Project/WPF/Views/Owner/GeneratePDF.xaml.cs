@@ -4,14 +4,14 @@ using Tourist_Project.WPF.ViewModels.Owner;
 namespace Tourist_Project.WPF.Views.Owner
 {
     /// <summary>
-    /// Interaction logic for OwnerReviewsView.xaml
+    /// Interaction logic for GeneratePDF.xaml
     /// </summary>
-    public partial class OwnerReviewsView : Window, IBindableBase
+    public partial class GeneratePDF : Window, IBindableBase
     {
-        public OwnerReviewsView(OwnerMainWindowViewModel ownerMainWindowViewModel)
+        public GeneratePDF(AccommodationViewModel accommodationViewModel)
         {
             InitializeComponent();
-            DataContext = new OwnerReviewsViewModel(this, ownerMainWindowViewModel);
+            DataContext = new GeneratePdfViewModel(accommodationViewModel, this);
         }
 
         public void CloseWindow()

@@ -41,10 +41,10 @@ namespace Tourist_Project.WPF.ViewModels
         public RenovationViewModel SelectedRenovation { get; set; }
 
         private readonly RenovationService renovationService = new();
-        public ShowRenovations ShowRenovations;
-        public ShowRenovationsViewModel(ShowRenovations showRenovations)
+        private readonly IBindableBase bindableBase;
+        public ShowRenovationsViewModel(IBindableBase bindableBase)
         {
-            ShowRenovations = showRenovations;
+            this.bindableBase = bindableBase;
             ScheduledRenovations = new ObservableCollection<RenovationViewModel>(renovationService.GetAll().Where(renovation => renovation.RenovatingSpan.StartingDate > DateTime.Now || renovation.RenovatingSpan.EndingDate > DateTime.Now).Select(renovation => new RenovationViewModel(renovation)));
             PreviousRenovations = new ObservableCollection<RenovationViewModel>(renovationService.GetAll().Where(renovation => renovation.RenovatingSpan.StartingDate < DateTime.Now && renovation.RenovatingSpan.EndingDate < DateTime.Now).Select(renovation => new RenovationViewModel(renovation)));
             CancelCommand = new RelayCommand(Cancel, CanCancel);
@@ -64,7 +64,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         public void Exit()
         {
-            ShowRenovations.Close();
+            bindableBase.CloseWindow();
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -27,7 +27,14 @@
             <Setter Property="Foreground" Value="#0da2a5"></Setter>
         </Style>
         <Style x:Key="{x:Type Button}" TargetType="Button">
-            <Setter Property="Background" Value="#03888f"></Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#03888f" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#0da2a5"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="#d9eeef"></Setter>
             <Setter Property="BorderThickness" Value="2"></Setter>
             <Setter Property="BorderBrush" Value="#67c9cb"></Setter>
@@ -95,20 +102,33 @@
         <KeyBinding Key="Escape" Command="{Binding CancelCommand}"></KeyBinding>
         <KeyBinding Key="R" Modifiers="Shift" Command="{Binding RateCommand}"></KeyBinding>
     </Window.InputBindings>
-    <Grid Background="#d9eeef">
-        <Border Background="#acdcdc" 
+    <Grid>
+        <Border BorderThickness="1"
+                BorderBrush="#03888f"
                 Margin="20,20,20,550"
                 CornerRadius="20,10,20,10">
-            <Grid >
-            <Label Content="Guest name:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,10"></Label>
-            <Label Content="{Binding GuestRate.User.FullName}" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,10"></Label>
-            <Label Content="Accommodation name:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,40, 10, 0"></Label>
-            <Label Content="{Binding GuestRate.Accommodation.Name}" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,40,0, 0"></Label>
-            <Label Content="Checked in:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,70, 20, 0"></Label>
-            <Label Content="{Binding GuestRate.Reservation.CheckIn}" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,70,0,0"></Label>
-            <Label Content="Checked out:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,100, 10, 0"></Label>
-            <Label Content="{Binding GuestRate.Reservation.CheckOut}" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,100, 0, 0"></Label>
+            <Grid Margin="5">
+                <Label Content="Guest name:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,10"></Label>
+                <Label Content="{Binding GuestRate.User.FullName}" Foreground="#F76A14" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,10"></Label>
+                <Label Content="Accommodation name:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,40, 10, 0"></Label>
+                <Label Content="{Binding GuestRate.Accommodation.Name}" Foreground="#F76A14" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,40,0, 0"></Label>
+                <Label Content="Checked in:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,70, 20, 0"></Label>
+                <Label Content="{Binding GuestRate.Reservation.CheckIn}" Foreground="#F76A14" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,70,0,0"></Label>
+                <Label Content="Checked out:" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="18" FontWeight="Bold" Margin="0,100, 10, 0"></Label>
+                <Label Content="{Binding GuestRate.Reservation.CheckOut}" Foreground="#F76A14" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Margin="0,100, 0, 0"></Label>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                        <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                        <GradientStop Color="#d9eeef"></GradientStop>
+                    </LinearGradientBrush>
+                </Grid.Background>
             </Grid>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#acdcdc" Offset="0.8"></GradientStop>
+                    <GradientStop Color="#d9eeef"></GradientStop>
+                </LinearGradientBrush>
+            </Border.Background>
         </Border>
         <Label HorizontalAlignment="Left" Content="Cleanness:"  Margin="20,176,20,416" Width="306" FontSize="20"></Label>
         <Label HorizontalAlignment="Left" Content="Rules:" Margin="20,268,20,233" Width="306" FontSize="20"></Label>
@@ -135,5 +155,11 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="Rate(Shift+R)" FontSize="20" Height="38" Margin="20,599,20,0" Command="{Binding RateCommand}"></Button>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#acdcdc" Offset="0.6"></GradientStop>
+                <GradientStop Color="#d9eeef" Offset="0.1"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
     </Grid>
 </Window>

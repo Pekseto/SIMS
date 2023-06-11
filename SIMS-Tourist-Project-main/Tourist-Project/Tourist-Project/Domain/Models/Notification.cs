@@ -30,14 +30,14 @@ namespace Tourist_Project.Domain.Models
             }
         }
 
-        private bool isIsNotified;
+        private bool isNotified;
         public bool IsNotified
         {
-            get => isIsNotified;
+            get => isNotified;
             set
             {
-                if(value == isIsNotified) return;
-                isIsNotified = value;
+                if(value == isNotified) return;
+                isNotified = value;
                 OnPropertyChanged("IsNotified");
             }
         }

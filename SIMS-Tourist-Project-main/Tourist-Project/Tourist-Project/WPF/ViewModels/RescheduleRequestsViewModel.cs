@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Tourist_Project.Domain.Models;
 using Tourist_Project.Applications.UseCases;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Tourist_Project.WPF.ViewModels
 {
@@ -26,16 +28,35 @@ namespace Tourist_Project.WPF.ViewModels
         public List<Reservation> ReservationsForAccommodation { get; set; } = new List<Reservation>();  
         public List<RescheduleRequest> RescheduleRequestsForReservations{ get; set; } = new List<RescheduleRequest>();
 
+        public ObservableCollection<RescheduleRequest> PendingRequests { get; set; } = new ObservableCollection<RescheduleRequest>();
+        public ObservableCollection<RescheduleRequest> AcceptedRequests { get; set; } = new ObservableCollection<RescheduleRequest>();
+
+        public ObservableCollection<RescheduleRequest> DeclinedRequests { get; set; } = new ObservableCollection<RescheduleRequest>();
+
+        public ICommand Home_Command { get; set; } 
         public RescheduleRequestsViewModel(Window window,Reservation selectedReservation)
         {
+
+            Home_Command = new RelayCommand(Home, CanHome);
             this._window = window;
             SelectedReservation = selectedReservation;
             SeekedAccommodation = FindAccommodationForReservation();
             ReservationsForAccommodation = FindReservationsForAccommodation();
             RescheduleRequestsForReservations = FindRescheduleRequests();
-
+            PendingRequests = rescheduleRequestService.GetPending();
+            AcceptedRequests = rescheduleRequestService.GetAccepted();
+            DeclinedRequests = rescheduleRequestService.GetDeclined();
         }
 
+        private bool CanHome()
+        {
+            return true;
+        }
+
+        private void Home()
+        {
+            _window.Close();
+        }
         public Accommodation FindAccommodationForReservation()
         {
             foreach(Accommodation accommodation in _accommodationService.GetAll())
@@ -51,7 +72,7 @@ namespace Tourist_Project.WPF.ViewModels
         {
             foreach(Reservation reservation in _reservationService.GetAll())
             {
-                if(reservation.Accommodation.Id == SeekedAccommodation.Id)
+                if(reservation.AccommodationId == SeekedAccommodation.Id)
                     ReservationsForAccommodation.Add(reservation);
             }
             return ReservationsForAccommodation;

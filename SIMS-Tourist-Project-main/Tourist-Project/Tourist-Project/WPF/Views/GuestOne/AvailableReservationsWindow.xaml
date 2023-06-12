@@ -5,25 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
-        Title="AvailableReservationsWindow" Height="450" Width="800">
-    <Grid Margin="0,0,0,-6">
+        Title="AvailableReservationsWindow" Height="500" Width="800">
+    <Grid Margin="0,0,0,-6" Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Column="0" Content="Accommodation:" ></Label>
-        <TextBox Grid.Column="0" Text="{Binding Path=Name}" Margin="110,0,565,0"></TextBox>
-        <DataGrid x:Name="availableReservations" Grid.Row="1"
+        <Label Grid.Column="0" Grid.Row="1" Content="Accommodation:" ></Label>
+        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding Path=Name}" Margin="110,4,565,11" BorderThickness="0" Height="30"></TextBox>
+        <DataGrid x:Name="availableReservations" Grid.Row="2"
                   ItemsSource="{Binding ReservationsForDisplay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False" IsReadOnly="True" Height="322" VerticalAlignment="Top">
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,19" Background="LightBlue">
             <DataGrid.Columns>
                 <DataGridTextColumn Header ="From" Width="*" Binding="{Binding CheckIn}"/>
                 <DataGridTextColumn Header="To" Width="*" Binding="{Binding CheckOut}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="455,349,0,10" Grid.RowSpan="2" Command="{Binding ConfirmReservation_Command}"></Button>
-        <Button Grid.Row="1" Width="120" HorizontalAlignment="Left" Content="Cancel" Margin="625,349,0,10" Command="{Binding Cancel_Command}" Grid.RowSpan="2"/>
+        <Menu>
+            <MenuItem Header="Home" Command="{Binding Cancel_Command}" Height="40" Width="120"></MenuItem>
+            <MenuItem Header="Back" Command="{Binding Back_Command}" Height="40" Width="120"></MenuItem>
+            <MenuItem Header="Confirm Reservation" Command="{Binding ConfirmReservation_Command}" Height="40" Width="120"></MenuItem>
+        </Menu>
+        <Button Grid.Row="3" Width="120" Height ="30" HorizontalAlignment="Left" Content="Confirm Reservation" Margin="455,9,0,31" Command="{Binding ConfirmReservation_Command}"/>
+        <Button Grid.Row="3" Width="120" Height="30" HorizontalAlignment="Left" Content="Cancel" Margin="625,9,0,31" Command="{Binding Cancel_Command}"/>
     </Grid>
 </Window>

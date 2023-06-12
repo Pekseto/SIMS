@@ -10,11 +10,11 @@ using Tourist_Project.WPF.Views;
 namespace Tourist_Project.WPF.Converters
 {
     public class RatingConverter : IValueConverter
-    { 
-        
+    {
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
+            /*try
             {
                 var accommodationRatingValue = (int)value;
                 int Rating = 1;
@@ -42,39 +42,47 @@ namespace Tourist_Project.WPF.Converters
             catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
-            }
+            }*/
+            return value.Equals(int.Parse((string)parameter));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
-            {
-                int AccommodationGrade;
-                switch (parameter)
-                {
-                    case "1":
-                        AccommodationGrade = 1;
-                        break;
-                    case "2":
-                        AccommodationGrade = 2;
-                        break;
-                    case "3":
-                        AccommodationGrade = 3;
-                        break;
-                    case "4":
-                        AccommodationGrade = 4;
-                        break;
-                    case "5":
-                        AccommodationGrade = 5;
-                        break;
-                    default: return 0;
-                }
-                return AccommodationGrade;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }      
+            //try
+            //{
+            //    int AccommodationGrade;
+            //    switch (parameter)
+            //    {
+            //        case "1":
+            //            AccommodationGrade = 1;
+            //            break;
+            //        case "2":
+            //            AccommodationGrade = 2;
+            //            break;
+            //        case "3":
+            //            AccommodationGrade = 3;
+            //            break;
+            //        case "4":
+            //            AccommodationGrade = 4;
+            //            break;
+            //        case "5":
+            //            AccommodationGrade = 5;
+            //            break;
+            //        default: return 0;
+            //    }
+            //    return AccommodationGrade;
+
+
+
+            //catch (Exception ex)
+            //{
+            //    throw new ArgumentException(ex.Message);
+            //}
+
+            if ((bool)value)
+                return int.Parse((string)parameter);
+            else
+                return Binding.DoNothing;
+        }
     }
 }

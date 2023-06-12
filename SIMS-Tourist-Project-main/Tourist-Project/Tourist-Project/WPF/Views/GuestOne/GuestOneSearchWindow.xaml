@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="GuestOneSearchWindow" Height="450" Width="800">
-    <Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="D1" Modifiers="Control" Command="{Binding Search_Command}"/>
+        <KeyBinding Key="D2" Modifiers="Control" Command="{Binding Close_Command}"/>
+        <KeyBinding Key="D3" Modifiers="Control" Command="{Binding ShowAll_Command}"/>
+    </Window.InputBindings>
+    <Grid Margin="0,1,0,-1" Background="LightBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25">
+            <RowDefinition Height="45">
             </RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition>
             </RowDefinition>
-            <RowDefinition Height="60">
-            </RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition>
@@ -24,13 +28,13 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0" Height="40">
         </DockPanel>
-        <Menu Grid.Column="0">
-            <MenuItem Header="Search" Command="{Binding Search_Command}">
+        <Menu Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="Home" Command="{Binding Close_Command}" Height="40" Width="130"></MenuItem>
+            <MenuItem Header="Search" Command="{Binding Search_Command}" Width="130" Height="40">
             </MenuItem>
-            <MenuItem Header="Show All" Command="{Binding ShowAll_Command}"></MenuItem>
-            <MenuItem Header="Home" Command="{Binding Close_Command}"></MenuItem>
+            <MenuItem Header="Show All" Command="{Binding ShowAll_Command}" Height="40" Width="130"></MenuItem>
         </Menu>
-        <Menu Grid.Column="1"></Menu>
+
         <StackPanel Grid.Row="2" Grid.Column="0">
             <Label Content="Name" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
             <Label Content="Type" HorizontalAlignment="Left" Margin="80,8" Width="130" VerticalAlignment="Center"/>
@@ -46,13 +50,14 @@
             <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Width="130" VerticalAlignment="Center" Margin="80,12" Grid.Column="1"/>
             <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Margin="80,12" Width="130" VerticalAlignment="Top"/>
             <TextBox Text="{Binding SearchedStayingDays}" Width="130" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="80,14"></TextBox>
-             <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SearchedCancelationThreshold}" Width="130" VerticalAlignment="Center" Grid.Column="1" Margin="80,13"/>
+            <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SearchedCancelationThreshold}" Width="130" VerticalAlignment="Center" Grid.Column="1" Margin="80,13"/>
             <TextBox TextWrapping="Wrap" Text="{Binding SearchedGuestNum}" Width="130" Margin="80,12" HorizontalAlignment="Center" Grid.Column="1"/>
         </StackPanel>
-        <DockPanel Grid.Column="1" Grid.Row="3">
-            <Button Content="Search" Width="60" Command="{Binding Search_Command}" Height="20"  Margin="20,10" HorizontalAlignment="Left"></Button>
-            <Button Content="Show All" Width="60" Command="{Binding ShowAll_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"/>
-            <Button Content="Close" Width="60" Command="{Binding Close_Command}" Height="20" Margin="20,10" HorizontalAlignment="Left"></Button>
+        <DockPanel Grid.Column="1" Grid.Row="4">
+            <Button Content="Search" Width="130" Command="{Binding Search_Command}" Margin="-70,8" Height="30"/>
+            <Button Content="Show All" Width="130" Command="{Binding ShowAll_Command}" Height="30" Margin="80,10" HorizontalAlignment="Left"/>
+            <Button Content="Close" Width="130" Command="{Binding Close_Command}" Height="30" Margin="-60,10" HorizontalAlignment="Left"></Button>
         </DockPanel>
+        <Label Content="Search available accommodations" Grid.Row="1" FontSize="15"></Label>
     </Grid>
 </Window>

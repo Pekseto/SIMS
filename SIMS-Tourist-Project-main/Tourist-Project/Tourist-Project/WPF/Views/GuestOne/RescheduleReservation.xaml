@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="RescheduleReservation" Height="450" Width="800">
-    <Grid>
+    <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -15,13 +15,32 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Content="New Begginig Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"></Label>
-        <Label Content="New Ending Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"></Label>
-        <DatePicker Grid.Row="0" Grid.Column="1" Height="30" Width="150"/>
-        <DatePicker Grid.Row="1" Grid.Column="1" Height="30" Width="150"/>
-        <Button Content="Confirm" Command="{Binding ConfirmRescheduling_Command}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
-
-
+        <Label Content="New Begginig Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="6"></Label>
+        <Label Content="New Ending Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="7"></Label>
+        <Label Content="Old Begginig Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="4"></Label>
+        <Label Content="Old Ending Date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="5"></Label>
+        <DatePicker Grid.Row="6" Grid.Column="1" Height="30" Width="150"/>
+        <DatePicker Grid.Row="7" Grid.Column="1" Height="30" Width="150"/>
+        <DatePicker Grid.Row="5" Grid.Column="1" Height="30" Width="150"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" Height="30" Width="150"/>
+        <Label Grid.Row="1" FontSize="20" Content="Reschedule Your Reservation" ></Label>
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="Confirm" Command="{Binding ConfirmRescheduling_Command}" Width="130" Height="45"></MenuItem>
+            <MenuItem Header="Back" Width="130" Height="45" Command="{Binding Back_Command}"></MenuItem>
+            <MenuItem Header="Home" Command="{Binding Home_Command}" Width="130" Height="45"></MenuItem>
+        </Menu>
+        <Label Content="Accommodation:" Grid.Column="1" Grid.Row="2" FontSize="20"></Label>
+        <TextBox Text="{Binding Path=Accommodation.Name}" Grid.Row="1" Grid.Column="1" Width="130" Margin="171,48,99,48" Grid.RowSpan="3"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding Path=User.Username}" Width="140" Margin="14,0,246,48" Grid.RowSpan="2" BorderThickness="1"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="0" Text="{Binding Path=User.Role}" Width="140" Margin="198,2,62,46" Grid.RowSpan="2" BorderThickness="1"></TextBox>
+        <Button  Content="Confirm" Command="{Binding ConfirmRescheduling_Command}" Grid.Column="1" Grid.Row="8" Width ="120" Height="35" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="208,0,0,0"></Button>
+        <Button  Content="Cancel" Command="{Binding Cancel_Command}" Grid.Column="1" Grid.Row="8" Width ="120" Height="35" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0,0,0"/>
     </Grid>
 </Window>

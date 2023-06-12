@@ -13,37 +13,38 @@ using Tourist_Project.WPF.Views;
 using Tourist_Project.View;
 using System.Windows.Controls;
 using Tourist_Project.WPF.ViewModels.Owner;
+using Tourist_Project.WPF.Views.GuestOne;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace Tourist_Project.WPF.ViewModels;
 
 
 
-public class GuestOneViewModel
+public class GuestOneViewModel : INotifyPropertyChanged
 {
     //name, locationFullName, MaxGuestNum, CancelationThreshold, MinStayingDays
     private LocationService _locationService = new LocationService();
     private AccommodationService _accommodationService = new AccommodationService();
 
-    #region SearchParameters
-    public List<String> Countries { get; set; }
-    public List<String> Cities { get; set; }
-
-    public List<String> AccommodationsType { get; set; }
-
-    public String SelectedType { get; set; }
-
-    public int MaxGuestNum { get; set; }
-    public int MinStayingDays { get; set; }
-
-    public int SearchedCancelationThreshold { get; set; }
-    public String SelectedCountry { get; set; }
-    public String SelectedCity { get; set; }
+    
     public String Username { get; set; }
     public AccommodationViewModel SelectedAccommodationViewModel { get; set; }
 
     public Accommodation SelectedAccommodation { get; set; }
-    public String AccommodationName { get; set; }
-    #endregion
+
+
+    private int id;
+    public int Id
+    {
+        get => id;
+        set
+        {
+            if (value == id) return;
+            id = value;
+            OnPropertyChanged("Id");
+        }
+    }
 
     #region Presentation
 
@@ -61,6 +62,7 @@ public class GuestOneViewModel
     public ICommand ViewAccommodation_Command { get; set; }
     public ICommand UserGraph_Command { get; set; }
 
+    public ICommand Forum_Command { get; set; }
     public ICommand ShowUserRatings_Command { get; set; }
 
     public DataGrid GuestOneDataGrid;
@@ -82,8 +84,19 @@ public class GuestOneViewModel
         ViewAccommodation_Command = new RelayCommand(ViewAccommodation, CanView);
         UserGraph_Command = new RelayCommand(ShowUserGraph, CanShowUserGraph);
         ShowUserRatings_Command = new RelayCommand(ShowRatings, CanShowRatings);
+        Forum_Command = new RelayCommand(ForumCommand, CanForum);
     }
 
+    private bool CanForum()
+    {
+        return true;
+    }
+
+    private void ForumCommand()
+    {
+        var newForum = new ForumWindow(User);
+        newForum.Show();
+    }
     #region Search
     private bool CanSearch()
     {
@@ -176,8 +189,15 @@ public class GuestOneViewModel
         var userRatings = new GuestRatingView(User);
         userRatings.Show();
     }
-        #endregion
+    #endregion
     #region Shortcuts
 
     #endregion
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

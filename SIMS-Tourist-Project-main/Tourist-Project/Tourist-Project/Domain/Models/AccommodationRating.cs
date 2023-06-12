@@ -74,13 +74,25 @@ namespace Tourist_Project.Domain.Models
                 OnPropertyChanged("Comment");
             }
         }
+        private String imageUrl;
+        public String ImageUrl
+        {
+            get => imageUrl;
+            set
+            {
+                if (value == imageUrl) return;
+                imageUrl = value;
+                OnPropertyChanged("ImageUrl");
+            }
+        }
+
         private int imageId;
         public int ImageId
         {
             get => imageId;
             set
             {
-                if (value == imageId) return;
+                if(value == imageId) return;
                 imageId = value;
                 OnPropertyChanged("ImageId");
             }
@@ -98,15 +110,16 @@ namespace Tourist_Project.Domain.Models
         }
 
         public AccommodationRating() { }
-        public AccommodationRating(int userId, int cleanness, string comment, int imageId, int reservationId, int ownerRating, int accommodationGrade)
+        public AccommodationRating(int userId, int cleanness, string comment, string imageUrl, int imageId,int reservationId, int ownerRating, int accommodationGrade)
         {
             UserId = userId;
             Cleanness = cleanness;
             Comment = comment;
-            ImageId = imageId;
+            ImageUrl = imageUrl ;
             ReservationId = reservationId;
             OwnerRating = ownerRating;
             AccommodationGrade = accommodationGrade;
+            ImageId = imageId;
         }
         public string[] ToCSV()
         {
@@ -119,6 +132,7 @@ namespace Tourist_Project.Domain.Models
                 OwnerRating.ToString(),
                 AccommodationGrade.ToString(),
                 Comment,
+                ImageUrl,
                 ImageId.ToString()
             };
             return csvValues;
@@ -132,7 +146,8 @@ namespace Tourist_Project.Domain.Models
             OwnerRating = Convert.ToInt32(values[4]);
             AccommodationGrade = Convert.ToInt32(values[5]);
             Comment = values[6];
-            ImageId = Convert.ToInt32(values[7]);
+            ImageUrl = values[7];
+            ImageId= Convert.ToInt32(values[8]);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

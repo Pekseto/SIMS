@@ -58,6 +58,14 @@ namespace Tourist_Project.WPF.ViewModels.Owner
             LocationId = forum.LocationId;
         }
 
+        public CommentViewModel(Comment comment, Forum forum)
+        {
+            Comment = comment;
+            User = userService.GetOne(Comment.AuthorId);
+            Forum = forum;
+            LocationId = forum.LocationId;
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

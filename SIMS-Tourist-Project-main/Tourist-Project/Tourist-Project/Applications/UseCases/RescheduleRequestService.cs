@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourist_Project.Domain.RepositoryInterfaces;
 using Tourist_Project.Domain.Models;
+using System.Collections.ObjectModel;
 
 namespace Tourist_Project.Applications.UseCases
 {
@@ -48,5 +49,45 @@ namespace Tourist_Project.Applications.UseCases
         {
            rescheduleRequestRepository.Delete(id);
         }
+
+        public ObservableCollection<RescheduleRequest> GetPending()
+        {
+            ObservableCollection<RescheduleRequest> pendingRequests = new ObservableCollection<RescheduleRequest>();
+            foreach (var rescheduleRequest in rescheduleRequestRepository.GetAll())
+            {
+                if(rescheduleRequest.Status == RequestStatus.Pending)
+                {
+                    pendingRequests.Add(rescheduleRequest);
+                }
+            }
+            return pendingRequests;
+        }
+
+        public ObservableCollection<RescheduleRequest> GetDeclined()
+        {
+            ObservableCollection<RescheduleRequest> declinedRequests = new ObservableCollection<RescheduleRequest>();
+            foreach (var rescheduleRequest in rescheduleRequestRepository.GetAll())
+            {
+                if (rescheduleRequest.Status == RequestStatus.Declined)
+                {
+                    declinedRequests.Add(rescheduleRequest);
+                }
+            }
+            return declinedRequests;
+        }
+
+        public ObservableCollection<RescheduleRequest> GetAccepted()
+        {
+            ObservableCollection<RescheduleRequest> acceptedRequests = new ObservableCollection<RescheduleRequest>();
+            foreach (var rescheduleRequest in rescheduleRequestRepository.GetAll())
+            {
+                if (rescheduleRequest.Status == RequestStatus.Declined)
+                {
+                    acceptedRequests.Add(rescheduleRequest);
+                }
+            }
+            return acceptedRequests;
+        }
+
     }
 }

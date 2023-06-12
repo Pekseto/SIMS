@@ -13,19 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Tourist_Project.WPF.ViewModels;
 using Tourist_Project.Domain.Models;
-using Tourist_Project.WPF.Converters;
 
-namespace Tourist_Project.WPF.Views
+namespace Tourist_Project.WPF.Views.GuestOne
 {
     /// <summary>
-    /// Interaction logic for RateAccommodationWindow.xaml
+    /// Interaction logic for ForumWindow.xaml
     /// </summary>
-    public partial class RateAccommodationWindow : Window
+    public partial class ForumWindow : Window
     {
-        public RateAccommodationWindow(Accommodation SelectedAccommodation, User user)
+        public ForumWindow(User user)
         {
             InitializeComponent();
-            this.DataContext = new RateAccommodationViewModel(this, user, SelectedAccommodation);
+            this.DataContext = new GuestForumViewModel(user,this);
         }
     }
 }

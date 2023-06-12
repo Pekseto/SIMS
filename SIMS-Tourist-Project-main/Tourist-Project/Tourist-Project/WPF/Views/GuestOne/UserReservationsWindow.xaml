@@ -6,13 +6,16 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="UserReservationsWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Background="LightBlue">  
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="userReservationsDataGrid" Grid.Row="1" Margin="10"
+        <DataGrid x:Name="userReservationsDataGrid" Grid.Row="3" Margin="10"
                   ItemsSource="{Binding ReservationsForUser, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedReservation, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -31,6 +34,10 @@
             <MenuItem Header="Cancel Reservation" Width="125" Command="{Binding CancelReservation_Command}"></MenuItem>
             <MenuItem Header="Reschedule Reservation" Width="135" Command="{Binding RescheduleReservation_Command}"></MenuItem>
         </Menu>
-        
+        <Label Content="Your reservations" Grid.Row="1" FontSize="20"></Label>
+        <Button Grid.Row="4" Width="130" Height="40" Content="Home" Command="{Binding Home_Command}" Margin="619,1,51,4"></Button>
+        <Button Grid.Row="4" Width="130" Height="40" Content="Back" Command="{Binding Home_Command}" Margin="459,1,211,4"></Button>
+        <TextBox Grid.Row="2" Width="130" Height="40" Text="{Binding Path=User.Username}" Margin="29,3,641,2" BorderThickness="0"></TextBox>
+        <TextBox Grid.Row="2" Width="130" Height="40" Text="{Binding Path=User.Role}" Margin="167,3,503,2" BorderThickness="0"></TextBox>
     </Grid>
 </Window>

@@ -15,6 +15,7 @@ namespace Tourist_Project.WPF.ViewModels
 
         private Window _window;
         private AccommodationRatingService _accommodationRatingService = new AccommodationRatingService();
+        private ReservationService _reservationService = new ReservationService();
         private AccommodationService _accommodationService = new AccommodationService();
         //sad samo treba da prihvatim parametre i da ih upisem u fajlove
 
@@ -27,22 +28,37 @@ namespace Tourist_Project.WPF.ViewModels
         public String OwnerComment { get; set; }
 
         public int OwnerRating { get; set; }
-        
+
         //treba da sacuvam AccommodationRating
 
         public Accommodation SelectedAccommodation { get; set; }
-        public AccommodationRating NewAccommodationRating { get; set; } = new();    
+        public AccommodationRating NewAccommodationRating { get; set; } = new();
 
         public ICommand Confirm_Command { get; set; }
 
-        public RateAccommodationViewModel(Window window, User user)
+        public ICommand Home_Command { get; set; }
+
+
+        public RateAccommodationViewModel(Window window, User user, Accommodation selectedAccommodation)
         {
+            SelectedAccommodation = selectedAccommodation;
             this._window = window;
             _user = user;
             NewAccommodationRating.UserId = _user.Id;
             Confirm_Command = new RelayCommand(RateAccommodation, CanCreate);
+            Home_Command = new RelayCommand(HomeCommand, CanHome);
+
         }
 
+        private bool CanHome()
+        {
+            return true;
+        }
+
+        private void HomeCommand()
+        {
+            _window.Close();
+        }
         private bool CanCreate()
         {
             return true;
@@ -51,8 +67,8 @@ namespace Tourist_Project.WPF.ViewModels
         private void RateAccommodation()
         {
             _accommodationRatingService.Create(NewAccommodationRating);
-
+            MessageBox.Show("You have rated this accommodation");
         }
-        //sad jos moram da preuzmem podatke od SelectedAccommodation-a za upis u fajlove i to bi trebalo da je to
+        
     }
 }

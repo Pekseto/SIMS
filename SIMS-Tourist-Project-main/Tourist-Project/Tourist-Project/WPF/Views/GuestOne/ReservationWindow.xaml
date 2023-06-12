@@ -6,38 +6,42 @@
         xmlns:local="clr-namespace:Tourist_Project.View"
         xmlns:val="clr-namespace:Tourist_Project.WPF.Validation"
         mc:Ignorable="d"
-        Title="ReservationWindow" Height="450" Width="800">
-    <Grid>
+        Title="ReservationWindow" Height="550" Width="1200">
+    <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto">
             </RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Height="60" Content="Name:" HorizontalAlignment="Left"/>
-            <Label Grid.Row="1" Grid.Column="0" Height="60" Content="Type:" HorizontalAlignment="Left"/>
-            <Label Grid.Row="2" Grid.Column="0" Height="60" Content="Staying Days:" HorizontalAlignment="Left"/>
-            <Label Grid.Row="3" Grid.Column="0" Height="60" Content="Number of Guests:" HorizontalAlignment="Left"/>
-            <Label Grid.Row="4" Grid.Column="0" Height="60" Content="From:" HorizontalAlignment="Left"/>
-            <Label Grid.Row="5" Grid.Column="0" Height="60" Content="To:" HorizontalAlignment="Left"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
+            <Label Content="Input data to book accommodation" Grid.Row="1" FontSize="20"></Label>
+            <Menu Grid.ColumnSpan="2">
+                <MenuItem Header="Home" Command="{Binding Home_Command}" Width="130" Height="40"></MenuItem>
+                <MenuItem Header="Back" Command="{Binding Back_Command}" Width="130" Height="40"></MenuItem>
+            </Menu>
+            <Label Grid.Row="2" Grid.Column="0" Height="40" Content="Name:"  HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="0" Height="40" Content="Type:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="4" Grid.Column="0" Height="40" Content="Staying Days:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="5" Grid.Column="0" Height="40" Content="Number of Guests:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="6" Grid.Column="0" Height="40" Content="From:" HorizontalAlignment="Left"/>
+            <Label Grid.Row="7" Grid.Column="0" Height="40" Content="To:" HorizontalAlignment="Left"/>
+            <TextBox IsEnabled="False" Grid.Row="2" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
+            <TextBox IsEnabled ="False" Grid.Row="3" Grid.Column="1" Height="30" Width="150" Text="{Binding Path= Type, UpdateSourceTrigger=PropertyChanged}" Margin="109,15,141,15"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
                 <TextBox.Text>
                     <Binding Path="StayingDays" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -63,7 +67,7 @@
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
+            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Width="150" Margin="109,15,141,15">
                 <TextBox.Text>
                     <Binding Path="SearchedGuestNum" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -83,15 +87,15 @@
                             </Grid.ColumnDefinitions>
 
                             <AdornedElementPlaceholder Grid.Column="0" Grid.Row="0" x:Name="textBox"/>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="109,15,141,15"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding [0].ErrorContent}" Foreground="Red" Margin="10,10,10,10"/>
                         </Grid>
                     </ControlTemplate>
                 </Validation.ErrorTemplate>
             </TextBox>
-            <DatePicker Grid.Row="4" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding From}" Margin="109,15,141,15"/>
-            <DatePicker Grid.Row="5" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding To}" Margin="109,15,141,15"/>
-            <Button Content="See Available Reservations" Grid.Row="9" Command="{Binding SeeAvailableReservations_Command}" Width="150" HorizontalAlignment="Left" Margin="390,8,0,-14" Grid.ColumnSpan="2"/>
-            <Button Content="Home" Grid.Row="9" Grid.Column="1" Command ="{Binding Home_Command}" Width="150" HorizontalAlignment="Left" Margin="205,8,0,-17"/>
+            <DatePicker Grid.Row="6" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding From}" Margin="109,15,141,15"/>
+            <DatePicker Grid.Row="7" Grid.Column="1" Height="30" Width="150" SelectedDate="{Binding To}" Margin="109,15,141,15"/>
+            <Button Content="Available Reservations" Grid.Row="8" Command="{Binding SeeAvailableReservations_Command}" Width="130" HorizontalAlignment="Left" Height="40" Margin="390,14,0,26" Grid.ColumnSpan="2"/>
+            <Button Content="Home" Grid.Row="8" Grid.Column="1" Command ="{Binding Home_Command}" Width="130" Height="40" HorizontalAlignment="Left" Margin="205,14,0,26"/>
         </Grid>
 
     </Grid>

@@ -12,38 +12,46 @@
         <converters:OwnerRatingConverter x:Key="OwnerRatingConverter"/>
 
     </Window.Resources>
-    
-    <Grid>
+
+    <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Cleanliness" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <Label Grid.Row="1" Grid.Column="0" Content="Image Url" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <Label Grid.Row="2" Grid.Column="0" Content="Accommodation Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <Label Grid.Row="3" Grid.Column="0" Content="Owner Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <Label Grid.Row="4" Grid.Column="0" Content="Owner Rating" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-        <RadioButton Grid.Column="1" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="124,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=1}"/>
-        <RadioButton Grid.Column="1" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="169,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=2}"/>
-        <RadioButton Grid.Column="1" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="214,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=3}"/>
-        <RadioButton Grid.Column="1" Content="4" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="259,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=4}"/>
-        <RadioButton Grid.Column="1" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="304,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=5}"/>
-        <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=NewAccommodationRating.ImageUrl}"></TextBox>
-        <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=NewAccommodationRating.Comment}"></TextBox>
-        <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="63" Text="{Binding Path=NewOwnerComment}"></TextBox>
-        <Button Content="Confirm" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding Confirm_Command}"></Button>
-        <RadioButton GroupName="Owner Rating" Grid.Column="1" Grid.Row ="4" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="124,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=1}"/>
-        <RadioButton GroupName="Owner Rating" Grid.Column="1" Grid.Row ="4" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="169,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=2}"/>
-        <RadioButton GroupName="Owner Rating" Grid.Column="1" Grid.Row ="4" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="214,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=3}"/>
-        <RadioButton GroupName="Owner Rating" Grid.Column="1" Grid.Row ="4" Content="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="259,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=4}"/>
-        <RadioButton GroupName="Owner Rating" Grid.Column="1" Grid.Row ="4" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="304,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=5}"/>
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="Home" Command="{Binding Home_Command}" Width="130" Height="40" ></MenuItem>
+            <MenuItem Header="Back" Command="{Binding Home_Command}" Width="130" Height="40"></MenuItem>
+        </Menu>
+        <Label Content="Rate accommodation" Grid.Row="1" FontSize="20"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Cleanliness" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Image Url" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="Accommodation Comment" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        
+        <Label Grid.Row="5" Grid.Column="0" Content="Owner Rating" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <RadioButton Grid.Column="2" Grid.Row="2" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="60,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=1}"/>
+        <RadioButton Grid.Column="2" Grid.Row="2" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=2}" Margin="107,0,0,0"/>
+        <RadioButton Grid.Column="2" Grid.Row="2" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="155,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=3}"/>
+        <RadioButton Grid.Column="2" Grid.Row="2" Content="4" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="200,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=4}"/>
+        <RadioButton Grid.Column="2" Grid.Row="2" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" GroupName="Accommodation Rating" Margin="247,0,0,0" IsChecked="{Binding NewAccommodationRating.AccommodationGrade, Converter={StaticResource RatingConverter}, ConverterParameter=5}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="40" Text="{Binding Path=NewAccommodationRating.ImageUrl}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="276" Margin="64,0,0,0" Height="40" Text="{Binding Path=NewAccommodationRating.Comment}"></TextBox>
+        
+        <Button Content="Confirm" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left" Width="130" Height="40" Command="{Binding Confirm_Command}" Margin="187,0,0,0"></Button>
+        <Button Content="Cancel" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left" Width="130" Height="40" Command="{Binding Home_Command}" Margin="27,0,0,0" Grid.Column="1"/>
+        <RadioButton GroupName="Owner Rating" Grid.Column="2" Grid.Row ="5" Content="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="64,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=1}"/>
+        <RadioButton GroupName="Owner Rating" Grid.Column="2" Grid.Row ="5" Content="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="105,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=2}"/>
+        <RadioButton GroupName="Owner Rating" Grid.Column="2" Grid.Row ="5" Content="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="153,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=3}"/>
+        <RadioButton GroupName="Owner Rating" Grid.Column="2" Grid.Row ="5" Content="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="200,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=4}"/>
+        <RadioButton GroupName="Owner Rating" Grid.Column="2" Grid.Row ="5" Content="5" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="244,0,0,0" IsChecked="{Binding NewAccommodationRating.OwnerRating, Converter={StaticResource RatingConverter}, ConverterParameter=5}"/>
     </Grid>
 </Window>

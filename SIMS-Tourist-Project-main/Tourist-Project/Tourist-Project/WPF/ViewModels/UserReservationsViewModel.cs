@@ -42,7 +42,7 @@ namespace Tourist_Project.WPF.ViewModels
             User = user;
             //UserReservationsWindow = userReservationsWindow;
             _window = userReservationsWindow;
-            ReservationsForUser = GetReservationsForUser(user);
+            ReservationsForUser = _reservationService.GetReservationsForUser(user);
             //GenerateReservations();
             RescheduleReservation_Command = new RelayCommand(RescheduleSelectedReservation, CanReschedule);
             RateAccommodation_Command = new RelayCommand(RateAccommodation, CanRateAccommodation);
@@ -50,6 +50,24 @@ namespace Tourist_Project.WPF.ViewModels
             ShowRescheduleRequests_Command = new RelayCommand(GetRescheduleRequests, CanShowRescheduleRequests);
             Home_Command = new RelayCommand(HomeCommand, CanHome);
         }
+
+        private bool CheckIfUserCanRate()
+        {
+            if (SelectedReservation.CheckOut.Date > DateTime.Now)
+            {
+                MessageBox.Show("You are not able to rate accommodation before you checkout");
+                return false;
+            }
+            else if (SelectedReservation.CheckOut.Date.AddDays(5) < DateTime.Now)
+            {
+                MessageBox.Show("You can rate accommodation only five days after checking out");
+                return false;
+            }
+            else
+                return true;
+        }
+
+
 
         private void GetRescheduleRequests()
         {
@@ -76,17 +94,20 @@ namespace Tourist_Project.WPF.ViewModels
         {
             _reservationService.Delete(SelectedReservation.Id);
             MessageBox.Show("Reservation Cancelled");
-            //ReservationsForUser.Remove(SelectedReservation);
+            ReservationsForUser.Remove(SelectedReservation);
         }
 
         public void RateAccommodation()
         {
-            Accommodation SuitngAccommodation = FindAccommodationForSelectedReservation(SelectedReservation);
-            var rateAccommodationWindow = new RateAccommodationWindow(SuitngAccommodation, User);
-            rateAccommodationWindow.Show();
+            if (CheckIfUserCanRate())
+            {
+                Accommodation SuitngAccommodation = _reservationService.FindAccommodationForSelectedReservation(SelectedReservation);
+                var rateAccommodationWindow = new RateAccommodationWindow(SuitngAccommodation, User);
+                rateAccommodationWindow.Show();
+            }
         }
 
-        public Accommodation FindAccommodationForSelectedReservation(Reservation selectedReservation)
+        /*public Accommodation FindAccommodationForSelectedReservation(Reservation selectedReservation)
         {
             foreach (Accommodation accommodation in _accommodationService.GetAll())
             {
@@ -99,17 +120,9 @@ namespace Tourist_Project.WPF.ViewModels
             }
 
             return null;
-        }
+        }*/
 
-        public void GenerateReservations()
-        {
-            foreach (Reservation reservation in ReservationsForUser)
-            {
-                reservation.Accommodation = _accommodationService.Get(reservation.Accommodation.Id);
-            }
-        }
-
-        public List<Reservation> GetReservationsForUser(User loggedUser)
+        /*public List<Reservation> GetReservationsForUser(User loggedUser)
         {
             foreach(Reservation reservation in _reservationService.GetAll())
             {
@@ -121,7 +134,7 @@ namespace Tourist_Project.WPF.ViewModels
             }
             return ReservationsForUser;
 
-        }
+        }*/
 
         public bool CanReschedule()
         {

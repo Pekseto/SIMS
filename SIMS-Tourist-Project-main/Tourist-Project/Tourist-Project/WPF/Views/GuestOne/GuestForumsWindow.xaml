@@ -1,0 +1,23 @@
+﻿<Window x:Class="Tourist_Project.WPF.Views.GuestOne.GuestForumsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestOne"
+        mc:Ignorable="d"
+        Title="GuestForums" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45">
+            </RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Home" Command="{Binding Home_Command}" Width="130" Height="40"></MenuItem>
+        </Menu>
+        <Label Content="Read on location you are interested in" Grid.Row="1" FontSize="15"></Label>
+        
+    </Grid>
+</Window>

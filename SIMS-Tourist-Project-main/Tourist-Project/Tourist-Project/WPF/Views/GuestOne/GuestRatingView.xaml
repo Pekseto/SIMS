@@ -6,17 +6,21 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="GuestRatingView" Height="450" Width="800">
-    <Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="D1" Modifiers="Control" Command="{Binding Home_Command}"/>
+    </Window.InputBindings>
+    <Grid Background="LightBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="45"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="45"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu></Menu>
         <DataGrid ItemsSource="{Binding FilteredGuestRatings, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedGuestRating, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="false" Grid.Row="2">
+                  AutoGenerateColumns="false" Grid.Row="3">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Cleanliness" Width="*" Binding="{Binding CleanlinessGrade}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Rule Compliance" Width="*" Binding="{Binding RuleCompliance}"></DataGridTextColumn>
@@ -27,9 +31,10 @@
             <MenuItem Header="Home" Command="{Binding Home_Command}" Height="40" Width="130"></MenuItem>
             <MenuItem Header="Back" Command="{Binding Back_Command}" Height="40" Width="130"></MenuItem>
         </Menu>
-        <TextBox Grid.Row="1" Width="130" HorizontalAlignment="Left" Text="{Binding Path=User.Username}"></TextBox>
-        <TextBox Grid.Row="1" Width="130" HorizontalAlignment="Left" Text="{Binding Path=User.Role}" Margin="132,0,0,0"></TextBox>
-        <Button Grid.Row="3" Content="Home" Command="{Binding Home_Command}" Width="140" Height="40" HorizontalAlignment="Left" Margin="616,3,0,2"></Button>
-        <Button Grid.Row="3" Content="Back" Command="{Binding Back_Command}" Width="140" Height="40" HorizontalAlignment="Left" Margin="470,3,0,2"></Button>
+        <TextBox Grid.Row="2" Width="130" HorizontalAlignment="Left" Text="{Binding Path=User.Username}"></TextBox>
+        <TextBox Grid.Row="2" Width="130" HorizontalAlignment="Left" Text="{Binding Path=User.Role}" Margin="132,0,0,0"></TextBox>
+        <Button Grid.Row="4" Content="Home" Command="{Binding Home_Command}" Width="140" Height="40" HorizontalAlignment="Left" Margin="616,3,0,2"></Button>
+        <Button Grid.Row="4" Content="Back" Command="{Binding Back_Command}" Width="140" Height="40" HorizontalAlignment="Left" Margin="470,3,0,2"></Button>
+        <Label Content="View your ratings" Grid.Row="1" FontSize="20"></Label>
     </Grid>
 </Window>

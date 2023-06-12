@@ -28,6 +28,30 @@ namespace Tourist_Project.WPF.ViewModels
         public ObservableCollection<String> AccommodationTypes { get; set; } = new ObservableCollection<String>();
         #endregion
 
+        private String selectedCity;
+        public String SelectedCity
+        {
+            get => selectedCity;
+            set
+            {
+                if (value == selectedCity) return;
+                selectedCity = value;
+                OnPropertyChanged("SelectedCity");
+            }
+        }
+
+        private String selectedCountry;
+        public String SelectedCountry
+        {
+            get => selectedCountry;
+            set
+            {
+                if (value == selectedCountry) return;
+                selectedCity = value;
+                OnPropertyChanged("SelectedCountry");
+            }
+        }
+
         private LocationRepository _locationRepository = new();
         private AccommodationRepository _accommodationRepository = new();
 
@@ -49,13 +73,8 @@ namespace Tourist_Project.WPF.ViewModels
         #region SearchParameters
         public String AccommodationName { get; set; }
         public String SelectedType { get; set; }
-
-        public String SelectedCountry { get; set; }
-        public String SelectedCity { get; set; }
-
         public int SearchedCancelationThreshold { get; set; }
         public int SearchedGuestNum { get; set; }
-
         public int SearchedStayingDays { get; set; }
         public String SelectedTypeChanged { get; set; }
         public String SelectedCityChanged { get; set; }

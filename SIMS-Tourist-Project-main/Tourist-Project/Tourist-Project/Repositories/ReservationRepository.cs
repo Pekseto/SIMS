@@ -73,7 +73,7 @@ namespace Tourist_Project.Repositories
         {
            foreach(Reservation reservation in reservations)
             {
-                if(reservation.Accommodation.Id == selectedAccommodation.Id)
+                if(reservation.AccommodationId == selectedAccommodation.Id)
                 {
                     reservationsForAccommodation.Add(reservation);
                 }

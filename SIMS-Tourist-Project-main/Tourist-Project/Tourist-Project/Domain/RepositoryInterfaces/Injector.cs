@@ -29,7 +29,8 @@ namespace Tourist_Project.Domain.RepositoryInterfaces
             {typeof(IRenovationRecommendationRepository), new RenovationRecommendationRepository()},
             {typeof(IComplexTourRepository), new ComplexTourRepository()},
             {typeof(IForumRepository), new ForumRepository()},
-            {typeof(ICommentRepository), new CommentRepository()}
+            {typeof(ICommentRepository), new CommentRepository()},
+            {typeof(IGuestRepository), new GuestRepository()},
         };
 
         public T CreateInstance<T>()

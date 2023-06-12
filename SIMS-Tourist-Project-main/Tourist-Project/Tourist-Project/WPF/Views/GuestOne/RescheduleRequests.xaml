@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:Tourist_Project.WPF.Views"
         mc:Ignorable="d"
         Title="RescheduleRequests" Height="450" Width="800">
-    <Grid>
+    <Grid Background="LightBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="rescheduleRequestsDataGrid" Grid.Row="1" Margin="10"
+        <DataGrid x:Name="rescheduleRequestsDataGrid" Grid.Row="2" Margin="10"
                   ItemsSource="{Binding RescheduleRequestsForReservation, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedRescheduleRequest, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False" IsReadOnly="True">
@@ -25,7 +27,12 @@
             </DataGrid.Columns>
         </DataGrid>
         <Menu>
-            
+            <MenuItem Header="Home" Command="{Binding Home_Command}" Height="40" Width="130"></MenuItem>
+            <MenuItem Header="Back" Command="{Binding Home_Command}" Height="40" Width="130"></MenuItem>
         </Menu>
+        <Label Content="Accommodation:" Grid.Row="1" Width="130" HorizontalAlignment="Left" FontSize="14" Height="35" Margin="0,3,0,2"></Label>
+        <TextBox Grid.Row="1" Text="{Binding Path=SeekedAccommodation.Name}" Width="130" HorizontalAlignment="Left" BorderThickness="0" Margin="130,0,0,0"></TextBox>
+        <Button Grid.Row="3" Content="Home" Command="{Binding Home_Command}" Width="130" Height="40" Margin="593,1,77,4"></Button>
+        <Button Grid.Row="3" Content="Back" Command="{Binding Home_Command}" Width="130" Height="40" Margin="451,1,219,4"></Button>
     </Grid>
 </Window>

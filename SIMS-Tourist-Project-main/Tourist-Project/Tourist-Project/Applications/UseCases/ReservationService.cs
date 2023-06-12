@@ -15,6 +15,8 @@ namespace Tourist_Project.Applications.UseCases
         private readonly IAccommodationRepository accommodationRepository =
             injector.CreateInstance<IAccommodationRepository>();
 
+        
+
         public ReservationService()
         {
         }
@@ -65,6 +67,42 @@ namespace Tourist_Project.Applications.UseCases
         public bool WasOnLocation(int userId, int locationId)
         {
             return GetAll().Any(reservation => reservation.GuestId == userId && accommodationRepository.GetById(reservation.AccommodationId).LocationId == locationId);
+        }
+
+        public int GetAccommodationIdByReservationId(int id)
+        {
+            Reservation res = Get(id);
+            return res.AccommodationId;
+        }
+
+        public List<Reservation> GetReservationsForUser(User loggedUser)
+        {
+            List<Reservation> ReservationsForUser = new List<Reservation>();
+            foreach (Reservation reservation in GetAll())
+            {
+                if (reservation.GuestId == loggedUser.Id)
+                {
+                    ReservationsForUser.Add(reservation);
+                    reservation.Accommodation = accommodationRepository.GetById(reservation.AccommodationId);
+                }
+            }
+            return ReservationsForUser;
+
+        }
+
+        public Accommodation FindAccommodationForSelectedReservation(Reservation selectedReservation)
+        {
+            foreach (Accommodation accommodation in accommodationRepository.GetAll())
+            {
+                if (accommodation.Id == selectedReservation.Accommodation.Id)
+                    return accommodation;
+                else
+                {
+                    return null;
+                }
+            }
+
+            return null;
         }
     }
 

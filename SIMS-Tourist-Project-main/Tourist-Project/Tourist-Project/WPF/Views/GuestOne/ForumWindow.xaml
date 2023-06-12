@@ -1,0 +1,32 @@
+﻿<Window x:Class="Tourist_Project.WPF.Views.GuestOne.ForumWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tourist_Project.WPF.Views.GuestOne"
+        mc:Ignorable="d"
+        Title="ForumWindow" Height="450" Width="800">
+    <Grid Background="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="Home" Command="{Binding Home_Command}" Width="130" Height="40"></MenuItem>
+            <MenuItem Header="Back" Command="{Binding Home_Command}" Width="130" Height="40"></MenuItem>
+        </Menu>
+        <Label Grid.Row="1" Content="Create or read existing forums" FontSize="20"></Label>
+        <Label Content="Country" Grid.Row="2" Grid.Column="0" FontSize="15" ></Label>
+        <Label Content="City" Grid.Row="2" Grid.Column="0" FontSize="15" Margin="0,68,0,21" Height="40" />
+        <ComboBox ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" Grid.Column="1" Grid.Row="2" Margin="99,28,200,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" Grid.Column="1" Grid.Row="2" Margin="99,80,200,0" VerticalAlignment="Top"/>
+        <Button Content="Create forum" Grid.Column="1" Grid.Row="3" Height="30" Width="100" Margin="213,40,57,60" Command="{Binding CreateForum_Command}"></Button>
+        <Button Content="Read forum" Grid.Column="1" Grid.Row="3" Height="30" Width="100" Margin="19,38,251,62" Command="{Binding ReadForum_Command}"></Button>
+    </Grid>
+</Window>

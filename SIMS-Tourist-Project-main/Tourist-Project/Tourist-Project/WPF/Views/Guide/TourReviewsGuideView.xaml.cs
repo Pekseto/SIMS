@@ -10,19 +10,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tourist_Project.Domain.Models;
+using Tourist_Project.WPF.ViewModels;
+using Tourist_Project.WPF.ViewModels.Guide;
 
-namespace Tourist_Project
+namespace Tourist_Project.WPF.Views.Guide
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TourReviewsGuideView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TourReviewsGuideView : Window
     {
-        public MainWindow()
+        public TourReviewsGuideView(Tour tour)
         {
             InitializeComponent();
+            DataContext = new TourReviewsGuideViewModel(this, tour);
         }
     }
 }
